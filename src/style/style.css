@@ -1,6 +1,6 @@
 @import url('./custom_tailwind/custom_tailwind.css');
-@import url('./desktop/desktop.css') only screen and (min-width: 1550px);
-@import url('./mobile/mobile.css') only screen and (max-width: 1550px);
+@import url('./desktop/desktop.css') only screen and (min-width: 1400px);
+@import url('./mobile/mobile.css') only screen and (max-width: 1400px);
 
 @tailwind base;
 @tailwind components;

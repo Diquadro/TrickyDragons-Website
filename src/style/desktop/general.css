@@ -50,4 +50,5 @@ body {
     grid-area: last-cta;
 
     width: 800px;
+    max-width: 45svw;
 }

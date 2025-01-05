@@ -11,7 +11,7 @@ hr {
   align-items: center;
 }
 
-@media only screen and (min-width: 1550px) {
+@media only screen and (min-width: 1400px) {
   .hide-desktop {
     display: none;
   }
@@ -62,6 +62,7 @@ hr {
   #last-cta {
     grid-area: last-cta;
     width: 800px;
+    max-width: 45svw;
   }
 
   #hero {
@@ -76,7 +77,7 @@ hr {
     margin-left: 5svw;
     color: white;
     text-align: justify;
-    gap: 40px;
+    gap: 3svh;
   }
 
   #hero > #hero-image-desktop {
@@ -84,7 +85,7 @@ hr {
     left: 0;
     z-index: -1;
     width: 100%;
-    height: inherit;
+    height: 100svh;
     min-height: 100svh;
     -o-object-position: right;
        object-position: right;
@@ -183,7 +184,7 @@ hr {
   }
 }
 
-@media only screen and (max-width: 1550px) {
+@media only screen and (max-width: 1400px) {
   :root {
     font-size: 10px;
   }
