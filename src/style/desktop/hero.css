@@ -1,0 +1,41 @@
+#hero {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+
+    box-sizing: border-box;
+
+    width: 680px;
+    height: max-content;
+    min-height: 100svh;
+
+    margin-left: 5svw;
+    color: white;
+
+    text-align: justify;
+    gap: 40px;
+}
+
+#hero > #hero-image-desktop {
+    position: absolute;
+    left: 0;
+    z-index: -1;
+
+    width: 100%;
+    height: inherit;
+    min-height: 100svh;
+
+    object-position: right;
+    object-fit: cover;
+}
+
+#hero > .slogan {
+    font-size: 4rem;
+}
+
+#hero > #hero-infografic {
+    width: 100%;
+
+    display: flex;
+    justify-content: space-evenly;
+}

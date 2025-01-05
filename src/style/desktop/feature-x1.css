@@ -1,0 +1,8 @@
+.feature-x1 {
+    width: 550px;
+}
+
+.feature-x1 > img {
+    height: 350px;
+    object-fit: cover;
+}

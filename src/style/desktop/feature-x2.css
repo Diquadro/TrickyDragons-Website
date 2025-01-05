@@ -1,0 +1,27 @@
+.feature-x2 {
+    width: 90%;
+    gap: 75px;
+}
+
+.feature-x2 > .container {
+    display: flex;
+    justify-content: space-evenly;
+}
+
+.feature-x2 > .container > .item {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 50px;
+}
+
+.feature-x2 > .container > .item > .text {
+    width: 20svw;
+    text-align: center;
+}
+
+.feature-x2 > .container > .item > img {
+    height: 200px;
+    object-fit: contain;
+}

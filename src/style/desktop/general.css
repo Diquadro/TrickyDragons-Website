@@ -1,0 +1,53 @@
+.hide-desktop {
+    display: none;
+}
+
+body {
+    padding-bottom: 50px;
+
+    display: grid;
+    grid-template-columns: 50% 50%;
+    row-gap: 50px;
+    grid-template-areas:
+        'hero hero'
+        'feature-dragons feature-elements'
+        'hr-02 hr-02'
+        'feature-challenge feature-challenge'
+        'hr-03 hr-03'
+        'feature-adventure last-cta';
+}
+
+#hero {
+    grid-area: hero;
+    align-items: center;
+}
+
+#feature-dragons {
+    grid-area: feature-dragons;
+}
+
+#feature-elements {
+    grid-area: feature-elements;
+}
+
+#hr-02 {
+    grid-area: hr-02;
+}
+
+#feature-challenge {
+    grid-area: feature-challenge;
+}
+
+#hr-03 {
+    grid-area: hr-03;
+}
+
+#feature-adventure {
+    grid-area: feature-adventure;
+}
+
+#last-cta {
+    grid-area: last-cta;
+
+    width: 800px;
+}

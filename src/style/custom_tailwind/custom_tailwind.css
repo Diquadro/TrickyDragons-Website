@@ -1,0 +1,6 @@
+@import url('./hr.css');
+
+.grid-center {
+    justify-self: center;
+    align-items: center;
+}
