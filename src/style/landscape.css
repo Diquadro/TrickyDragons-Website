@@ -1,0 +1,182 @@
+@media screen and (min-width: 1550px) {
+    body {
+        display: grid;
+        grid-template-columns: 50% 50%;
+        grid-template-areas:
+            'hero hero'
+            'feature-dragons feature-elements'
+            'hr1 hr1'
+            'feature-challenge feature-challenge'
+            'hr2 hr2'
+            'feature-adventure last-cta';
+    }
+
+    #hero-image-portrait {
+        display: none;
+    }
+
+    #hero {
+        grid-area: hero;
+
+        box-sizing: border-box;
+        padding: 5svh 5svw;
+
+        background-image: url('../imgs/hero_images/hero_image_landscape_desktop.webp');
+        background-size: cover;
+        background-position: right;
+
+        height: max-content;
+        min-height: 100svh;
+
+        display: flex;
+        align-items: center;
+    }
+
+    #hero > .text {
+        width: 680px;
+
+        text-align: justify;
+        color: white;
+
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        gap: 30px;
+    }
+
+    #hero #infografic {
+        display: flex;
+        justify-content: space-evenly;
+    }
+
+    #hero #infografic > * {
+        height: 100px;
+    }
+
+    #feature-dragons {
+        grid-area: feature-dragons;
+    }
+
+    #feature-dragons > img {
+        height: 400px;
+    }
+
+    #feature-elements {
+        grid-area: feature-elements;
+    }
+
+    #feature-elements > img {
+        height: 400px;
+    }
+
+    #feature-challenge {
+        grid-area: feature-challenge;
+
+        margin: 75px 0;
+
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 75px;
+    }
+
+    #feature-challenge img {
+        height: 250px;
+    }
+
+    #feature-challenge .container2 {
+        width: 95svw;
+
+        display: flex;
+        justify-content: space-evenly;
+    }
+
+    #feature-challenge .container2 .item {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        gap: 50px;
+    }
+
+    #feature-challenge .container2 .item .text {
+        width: 20svw;
+        text-align: center;
+    }
+
+    #feature-adventure {
+        grid-area: feature-adventure;
+    }
+
+    #last-cta {
+        grid-area: last-cta;
+        justify-self: center;
+
+        width: 700px;
+        margin: 75px 0;
+    }
+
+    .feature {
+        justify-self: center;
+        text-align: justify;
+
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        gap: 25px;
+
+        margin: 75px 0;
+        max-width: 550px;
+    }
+
+    #hr1 {
+        grid-area: hr1;
+        margin: 0 2svw;
+    }
+
+    #hr2 {
+        grid-area: hr2;
+        margin: 0 2svw;
+    }
+
+    hr {
+        border: 1px solid black;
+    }
+
+    .cta {
+        background-color: #da2d2a;
+        box-sizing: border-box;
+        padding: 25px 60px;
+        gap: 10px;
+
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+
+        color: white;
+    }
+
+    .cta > .text {
+        text-align: center;
+    }
+
+    .cta > input {
+        width: 100%;
+        height: 40px;
+        border-radius: 10px;
+
+        box-sizing: border-box;
+        padding-left: 25px;
+    }
+
+    .cta > button {
+        width: 100%;
+        height: 40px;
+        border-radius: 10px;
+
+        background-color: black;
+        color: white;
+    }
+}

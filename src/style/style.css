@@ -1,0 +1,17 @@
+@import url('./landscape.css');
+@import url('./portrait.css');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+* {
+    border: 0;
+    padding: 0;
+    margin: 0;
+}
+
+:root {
+    font-family: lexend;
+    font-weight: 200;
+}
