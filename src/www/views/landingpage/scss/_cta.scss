@@ -1,0 +1,82 @@
+@use '../../../custom-tailwind/custom-tailwind';
+
+$desktop-pixel: 1400px !default;
+$mobile-pixel: 1400px !default;
+
+.cta {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+    box-sizing: border-box;
+    background-color: #da2d2a;
+
+    color: white;
+    text-align: center;
+
+    > input {
+        box-sizing: border-box;
+        border-radius: 10px;
+        padding-left: 30px;
+        width: 100%;
+        height: 40px;
+
+        color: black;
+    }
+
+    > button {
+        border-radius: 10px;
+        background-color: black;
+        width: 100%;
+        height: 40px;
+
+        color: white;
+    }
+}
+
+@media only screen and (min-width: $desktop-pixel) {
+    .cta {
+        padding: 20px 40px;
+
+        > .title {
+            font-weight: 900;
+            @include custom-tailwind.text-5xl;
+        }
+
+        > .subtitle {
+            @include custom-tailwind.text-xl;
+        }
+
+        > input {
+            @include custom-tailwind.text-xl;
+        }
+
+        > button {
+            @include custom-tailwind.text-2xl;
+        }
+    }
+}
+
+@media only screen and (max-width: $mobile-pixel) {
+    .cta {
+        padding: 20px;
+
+        > .title {
+            font-weight: 900;
+            @include custom-tailwind.text-5xl;
+        }
+
+        > .subtitle {
+            @include custom-tailwind.text-2xl;
+        }
+
+        > input {
+            @include custom-tailwind.text-2xl;
+        }
+
+        > button {
+            @include custom-tailwind.text-3xl;
+        }
+    }
+}

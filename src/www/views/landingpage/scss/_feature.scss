@@ -1,0 +1,20 @@
+$desktop-pixel: 1400px !default;
+$mobile-pixel: 1400px !default;
+
+.feature {
+    display: flex;
+    flex-direction: column;
+    gap: 25px;
+}
+
+@media only screen and (min-width: $desktop-pixel) {
+    .feature {
+        justify-content: center;
+    }
+}
+
+@media only screen and (max-width: $mobile-pixel) {
+    .feature {
+        align-items: center;
+    }
+}

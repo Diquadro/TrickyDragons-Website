@@ -1,0 +1,23 @@
+.font-light {
+    font-weight: 300;
+}
+
+.font-bold {
+    font-weight: 700;
+}
+
+.font-black {
+    font-weight: 900;
+}
+
+@mixin font-light {
+    font-weight: 300;
+}
+
+@mixin font-bold {
+    font-weight: 700;
+}
+
+@mixin font-black {
+    font-weight: 900;
+}

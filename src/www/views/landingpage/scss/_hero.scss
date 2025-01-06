@@ -1,0 +1,89 @@
+@use '../../../custom-tailwind/custom-tailwind';
+@use './mixins';
+
+$desktop-pixel: 1400px !default;
+$mobile-pixel: 1400px !default;
+
+#hero {
+    display: flex;
+    flex-direction: column;
+    gap: 3svh;
+
+    > .slogan {
+        @include custom-tailwind.font-black;
+        text-align: center;
+    }
+
+    > .title {
+        @include custom-tailwind.text-4xl;
+        @include custom-tailwind.font-bold;
+        text-align: justify;
+    }
+
+    > .subtitle {
+        @include custom-tailwind.text-2xl;
+        text-align: justify;
+    }
+}
+
+@media only screen and (min-width: $desktop-pixel) {
+    #hero {
+        justify-content: center;
+
+        box-sizing: border-box;
+
+        margin-left: 5svw;
+
+        width: 680px;
+        height: max-content;
+        min-height: 100svh;
+        color: white;
+
+        text-align: justify;
+
+        > #hero-image-desktop {
+            position: absolute;
+            left: 0;
+            z-index: -1;
+
+            width: 100%;
+            height: 100svh;
+            min-height: 100svh;
+            object-fit: cover;
+
+            object-position: right;
+        }
+
+        > .slogan {
+            @include custom-tailwind.text-7xl;
+        }
+
+        > #hero-infografic {
+            display: flex;
+            justify-content: space-evenly;
+            width: 100%;
+        }
+    }
+}
+
+@media only screen and (max-width: $mobile-pixel) {
+    #hero {
+        > .slogan {
+            @include custom-tailwind.text-5xl;
+            @include mixins.margin-mobile;
+        }
+
+        > .title {
+            @include mixins.margin-mobile;
+        }
+
+        > .subtitle {
+            @include mixins.margin-mobile;
+        }
+
+        > #hero-image-mobile {
+            width: 100%;
+            object-fit: cover;
+        }
+    }
+}

@@ -1,0 +1,97 @@
+@use './mixins';
+
+$desktop-pixel: 1400px !default;
+$mobile-pixel: 1400px !default;
+
+* {
+    margin: 0;
+    border: 0;
+    padding: 0;
+}
+
+:root {
+    font-weight: 200;
+    font-family: lexend;
+}
+
+@media only screen and (min-width: $desktop-pixel) {
+    .hide-desktop {
+        display: none;
+    }
+
+    body {
+        display: grid;
+        grid-template-columns: 50% 50%;
+        grid-template-areas:
+            'hero hero'
+            'feature-dragons feature-elements'
+            'hr-02 hr-02'
+            'feature-challenge feature-challenge'
+            'hr-03 hr-03'
+            'feature-adventure last-cta';
+        row-gap: 50px;
+        padding-bottom: 50px;
+    }
+
+    #hero {
+        grid-area: hero;
+        align-items: center;
+    }
+
+    #feature-dragons {
+        grid-area: feature-dragons;
+        @include mixins.grid-center;
+    }
+
+    #feature-elements {
+        grid-area: feature-elements;
+        @include mixins.grid-center;
+    }
+
+    #hr-02 {
+        grid-area: hr-02;
+    }
+
+    #feature-challenge {
+        grid-area: feature-challenge;
+        @include mixins.grid-center;
+    }
+
+    #hr-03 {
+        grid-area: hr-03;
+    }
+
+    #feature-adventure {
+        grid-area: feature-adventure;
+        @include mixins.grid-center;
+    }
+
+    #last-cta {
+        grid-area: last-cta;
+        @include mixins.grid-center;
+
+        width: 800px;
+        max-width: 45svw;
+    }
+}
+
+@media only screen and (max-width: $mobile-pixel) {
+    :root {
+        font-size: 10px;
+    }
+
+    .hide-mobile {
+        display: none;
+    }
+
+    body {
+        display: flex;
+        flex-direction: column;
+        gap: 50px;
+    }
+
+    #feature-elements > img {
+        height: 300px;
+        object-fit: contain;
+    }
+}

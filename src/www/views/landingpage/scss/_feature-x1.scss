@@ -1,0 +1,52 @@
+@use '../../../custom-tailwind/custom-tailwind';
+@use './mixins';
+
+$desktop-pixel: 1400px !default;
+$mobile-pixel: 1400px !default;
+
+.feature-x1 {
+    display: flex;
+    flex-direction: column;
+    gap: 25px;
+
+    > .title {
+        @include custom-tailwind.text-5xl;
+        @include custom-tailwind.font-black;
+
+        text-align: center;
+    }
+
+    > img {
+        height: 350px;
+        object-fit: cover;
+    }
+
+    > .description {
+        @include custom-tailwind.text-2xl;
+
+        text-align: justify;
+    }
+}
+
+@media only screen and (min-width: $desktop-pixel) {
+    .feature-x1 {
+        justify-content: center;
+        width: 550px;
+    }
+}
+
+@media only screen and (max-width: $mobile-pixel) {
+    .feature-x1 {
+        align-items: center;
+        overflow-x: hidden;
+
+        > .title {
+            // @include mixins.margin-mobile;
+            margin: 0 2svw;
+        }
+
+        > .description {
+            @include mixins.margin-mobile;
+        }
+    }
+}

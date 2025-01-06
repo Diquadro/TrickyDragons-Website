@@ -1,13 +1,14 @@
 const path = require('path')
 const PugPlugin = require('pug-plugin')
-const MiniCssExtractPlugin = require('mini-css-extract-plugin')
-const CssMinimizerPlugin = require('css-minimizer-webpack-plugin')
 
 module.exports = {
-    mode: 'production',
-    devtool: 'source-map',
+    mode: 'development',
+    entry: './src/www/ts/main.ts',
+    devtool: 'inline-source-map',
     plugins: [
         new PugPlugin({
+            pretty: 'auto',
+            //☝🏽 Format HTML (only in dev mode)
             entry: {
                 // Insert your PUG templates here
                 index: './src/www/views/landingpage/landingpage.pug',
@@ -21,7 +22,6 @@ module.exports = {
                 filename: 'assets/css/[name].[contenthash:8].css',
             },
         }),
-        // new MiniCssExtractPlugin(),
     ],
     module: {
         rules: [
@@ -60,8 +60,20 @@ module.exports = {
         path: path.resolve(__dirname, 'dist/www'),
         clean: true,
     },
+    devServer: {
+        static: {
+            directory: path.join(__dirname, 'dist/www'),
+        },
+        hot: true,
+        // watchFiles: {
+        //     paths: ['src/**/*.*'],
+        //     //☝🏽 Enables live reload in these folders
+
+        // },
+    },
     optimization: {
-        minimizer: [new CssMinimizerPlugin()],
         runtimeChunk: 'single',
     },
+    // stats: 'errors-only',
+    //☝🏽 For a cleaner dev-server run
 }

@@ -1,0 +1,20 @@
+doctype html
+head
+    meta(charset='UTF-8')
+    meta(name='viewport', content='width=device-width, initial-scale=1.0')
+    title Tricky Dragons
+    link(rel='stylesheet', href='./landingpage.scss')
+    link(rel='preconnect', href='https://fonts.googleapis.com')
+    link(rel='preconnect', href='https://fonts.gstatic.com', crossorigin='')
+    link(rel='stylesheet', href='https://fonts.googleapis.com/css2?family=Lexend:wght@100..900&display=swap')
+body
+    include ./templates/_hero.pug
+    include ./templates/_feature-dragons.pug
+    hr#hr-01.hr.hide-desktop
+    include ./templates/_feature-elements.pug
+    hr#hr-02.hr
+    include ./templates/_feature-challenge.pug
+    hr#hr-03.hr
+    include ./templates/_feature-adventure.pug
+    include ./templates/_last-cta.pug
+    script(src='landingpage.js') 
