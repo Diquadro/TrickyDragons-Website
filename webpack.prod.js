@@ -11,6 +11,7 @@ module.exports = {
             entry: {
                 // Insert your PUG templates here
                 index: './src/www/views/landingpage/landingpage.pug',
+                404: './src/www/views/404/404.pug',
             },
             js: {
                 // JS output filename with hash for unique id
@@ -19,6 +20,24 @@ module.exports = {
             css: {
                 // CSS output filename with hash for unique id
                 filename: 'assets/css/[name].[contenthash:8].css',
+            },
+            loaderOptions: {
+                sources: [
+                    {
+                        tag: 'meta',
+                        attributes: ['content'],
+                        // allow to handeln an image in the 'content' attribute of the 'meta' tag
+                        // when the 'property' attribute contains one of: 'og:image', 'og:video'
+                        filter: ({ attributes }) => {
+                            const attrName = 'property'
+                            const attrValues = ['og:image', 'og:video']
+                            if (!attributes[attrName] || attrValues.indexOf(attributes[attrName]) < 0) {
+                                return false // return false to disable processing
+                            }
+                            // return true // or undefined to enable processing
+                        },
+                    },
+                ],
             },
         }),
         // new MiniCssExtractPlugin(),
@@ -49,6 +68,20 @@ module.exports = {
                 type: 'asset/resource',
                 generator: {
                     filename: 'assets/fonts/[name][ext][query]',
+                },
+            },
+            {
+                test: /\.xml/,
+                type: 'asset/resource',
+                generator: {
+                    filename: 'sitemap.xml',
+                },
+            },
+            {
+                test: /\.txt/,
+                type: 'asset/resource',
+                generator: {
+                    filename: 'robots.txt',
                 },
             },
         ],

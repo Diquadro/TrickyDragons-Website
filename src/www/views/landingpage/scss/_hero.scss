@@ -22,6 +22,7 @@ $mobile-pixel: 1400px !default;
 
     > .subtitle {
         @include custom-tailwind.text-2xl;
+        @include custom-tailwind.font-light;
         text-align: justify;
     }
 }

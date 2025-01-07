@@ -1,8 +1,10 @@
 doctype html
 head
-    meta(charset='UTF-8')
-    meta(name='viewport', content='width=device-width, initial-scale=1.0')
-    title Tricky Dragons
+    include ./templates/_headers.pug
+
+    //- Meta Title
+    title Tricky Dragons™ - A Fast-Paced Card Game
+
     link(rel='stylesheet', href='./landingpage.scss')
     link(rel='preconnect', href='https://fonts.googleapis.com')
     link(rel='preconnect', href='https://fonts.gstatic.com', crossorigin='')
@@ -17,4 +19,4 @@ body
     hr#hr-03.hr
     include ./templates/_feature-adventure.pug
     include ./templates/_last-cta.pug
-    script(src='landingpage.js') 
+    script(src='landingpage.ts') 
