@@ -33,6 +33,10 @@ module.exports = {
                     from: 'src/www/sitemap.xml',
                     to: '',
                 },
+                {
+                    from: 'src/www/robots.txt',
+                    to: '',
+                },
             ],
         }),
     ],

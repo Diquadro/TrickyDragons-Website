@@ -15,11 +15,9 @@ module.exports = {
                 404: './src/www/views/404/404.pug',
             },
             js: {
-                // JS output filename with hash for unique id
                 filename: 'assets/js/[name].[contenthash:8].js',
             },
             css: {
-                // CSS output filename with hash for unique id
                 filename: 'assets/css/[name].[contenthash:8].css',
             },
         }),
@@ -31,6 +29,10 @@ module.exports = {
                 },
                 {
                     from: 'src/www/sitemap.xml',
+                    to: '',
+                },
+                {
+                    from: 'src/www/robots.txt',
                     to: '',
                 },
             ],
