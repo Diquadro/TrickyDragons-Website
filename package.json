@@ -5,6 +5,7 @@
     "private": true,
     "devDependencies": {
         "@prettier/plugin-pug": "^3.2.0",
+        "copy-webpack-plugin": "^12.0.2",
         "css-loader": "^7.1.2",
         "css-minimizer-webpack-plugin": "^7.0.0",
         "html-webpack-plugin": "^5.6.3",
@@ -23,7 +24,8 @@
     },
     "scripts": {
         "build": "webpack --config webpack.prod.js",
-        "watch": "webpack --watch --config webpack.dev.js"
+        "watch": "webpack --watch --config webpack.dev.js",
+        "dev": "webpack --config webpack.dev.js"
     },
     "author": "Daniele 'Diquadro' D'Ambrosio"
 }

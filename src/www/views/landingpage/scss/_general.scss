@@ -28,9 +28,10 @@ $mobile-pixel: 1400px !default;
             'hr-02 hr-02'
             'feature-challenge feature-challenge'
             'hr-03 hr-03'
-            'feature-adventure last-cta';
+            'feature-adventure last-cta'
+            'footer footer';
         row-gap: 50px;
-        padding-bottom: 50px;
+        // padding-bottom: 50px;
     }
 
     #hero {
@@ -72,6 +73,10 @@ $mobile-pixel: 1400px !default;
 
         width: 800px;
         max-width: 45svw;
+    }
+
+    #footer {
+        grid-area: footer;
     }
 }
 

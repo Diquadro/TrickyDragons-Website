@@ -1,5 +1,6 @@
 const path = require('path')
 const PugPlugin = require('pug-plugin')
+const CopyPlugin = require('copy-webpack-plugin')
 
 module.exports = {
     mode: 'development',
@@ -21,24 +22,18 @@ module.exports = {
                 // CSS output filename with hash for unique id
                 filename: 'assets/css/[name].[contenthash:8].css',
             },
-            loaderOptions: {
-                sources: [
-                    {
-                        tag: 'meta',
-                        attributes: ['content'],
-                        // allow to handeln an image in the 'content' attribute of the 'meta' tag
-                        // when the 'property' attribute contains one of: 'og:image', 'og:video'
-                        filter: ({ attributes }) => {
-                            const attrName = 'property'
-                            const attrValues = ['og:image', 'og:video']
-                            if (!attributes[attrName] || attrValues.indexOf(attributes[attrName]) < 0) {
-                                return false // return false to disable processing
-                            }
-                            // return true // or undefined to enable processing
-                        },
-                    },
-                ],
-            },
+        }),
+        new CopyPlugin({
+            patterns: [
+                {
+                    from: 'src/www/imgs/social_images/Open_Graph_1200x630.webp',
+                    to: 'assets/img/Open_Graph_1200x630.webp',
+                },
+                {
+                    from: 'src/www/sitemap.xml',
+                    to: '',
+                },
+            ],
         }),
     ],
     module: {

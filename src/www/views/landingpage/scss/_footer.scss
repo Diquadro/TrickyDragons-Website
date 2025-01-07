@@ -1,0 +1,73 @@
+@use '../../../custom-tailwind/custom-tailwind';
+
+$desktop-pixel: 1400px !default;
+$mobile-pixel: 1400px !default;
+
+#footer {
+    background-color: black;
+    padding: 4svw;
+    color: white;
+
+    .container {
+        display: flex;
+
+        > .title {
+            @include custom-tailwind.font-bold;
+        }
+
+        > .links {
+            display: flex;
+            justify-content: space-between;
+            align-items: bottom;
+        }
+
+        > a {
+            text-decoration: none;
+        }
+    }
+
+    > hr {
+        border: 0.1px solid white;
+    }
+}
+
+@media only screen and (min-width: $desktop-pixel) {
+    #footer {
+        height: 100px;
+
+        > .container {
+            align-items: bottom;
+
+            > .title {
+                @include custom-tailwind.text-5xl;
+            }
+
+            > .links {
+                gap: 1svw;
+                margin-left: 2svw;
+            }
+        }
+    }
+}
+
+@media only screen and (max-width: $mobile-pixel) {
+    #footer {
+        margin-top: -50px;
+        height: 150px;
+
+        > .container {
+            flex-direction: column;
+            align-items: center;
+            gap: 1svh;
+
+            > .title {
+                @include custom-tailwind.text-4xl;
+            }
+
+            > .links {
+                gap: 2svw;
+                margin-bottom: 4svw;
+            }
+        }
+    }
+}
