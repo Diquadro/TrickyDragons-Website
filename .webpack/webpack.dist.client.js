@@ -1,10 +1,14 @@
-const path = require('path')
-const PugPlugin = require('pug-plugin')
-const MiniCssExtractPlugin = require('mini-css-extract-plugin')
-const CssMinimizerPlugin = require('css-minimizer-webpack-plugin')
-const CopyPlugin = require('copy-webpack-plugin')
+import path from 'path'
+import { fileURLToPath } from 'url'
+import PugPlugin from 'pug-plugin'
+import MiniCssExtractPlugin from 'mini-css-extract-plugin'
+import CssMinimizerPlugin from 'css-minimizer-webpack-plugin'
+import CopyPlugin from 'copy-webpack-plugin'
 
-module.exports = {
+const __filename = fileURLToPath(import.meta.url) // get the resolved path to the file
+const __dirname = path.dirname(__filename) // get the name of the directory
+
+export default {
     mode: 'production',
     devtool: 'source-map',
     plugins: [
@@ -72,7 +76,7 @@ module.exports = {
         extensions: ['.tsx', '.ts', '.js'],
     },
     output: {
-        path: path.resolve(__dirname, 'dist/www'),
+        path: path.resolve(__dirname, '../dist/www'),
         clean: true,
     },
     optimization: {

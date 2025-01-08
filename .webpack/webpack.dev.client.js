@@ -1,8 +1,12 @@
-const path = require('path')
-const PugPlugin = require('pug-plugin')
-const CopyPlugin = require('copy-webpack-plugin')
+import path from 'path'
+import { fileURLToPath } from 'url'
+import PugPlugin from 'pug-plugin'
+import CopyPlugin from 'copy-webpack-plugin'
 
-module.exports = {
+const __filename = fileURLToPath(import.meta.url) // get the resolved path to the file
+const __dirname = path.dirname(__filename) // get the name of the directory
+
+export default {
     mode: 'development',
     devtool: 'inline-source-map',
     plugins: [
@@ -24,6 +28,7 @@ module.exports = {
             },
         }),
         new CopyPlugin({
+            // Copy unhandled files to folder
             patterns: [
                 {
                     from: 'src/www/imgs/social_images/Open_Graph_1200x630.webp',
@@ -74,7 +79,7 @@ module.exports = {
         extensions: ['.tsx', '.ts', '.js'],
     },
     output: {
-        path: path.resolve(__dirname, 'dev/www'),
+        path: path.resolve(__dirname, '../dev/www'),
         clean: true,
     },
     optimization: {

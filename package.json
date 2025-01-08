@@ -5,11 +5,13 @@
     "private": true,
     "devDependencies": {
         "@prettier/plugin-pug": "^3.2.0",
+        "concurrently": "^9.1.2",
         "copy-webpack-plugin": "^12.0.2",
         "css-loader": "^7.1.2",
         "css-minimizer-webpack-plugin": "^7.0.0",
         "html-webpack-plugin": "^5.6.3",
         "mini-css-extract-plugin": "^2.9.2",
+        "nodemon": "^3.1.9",
         "prettier": "^3.4.2",
         "prettier-plugin-css-order": "^2.1.2",
         "pug-plugin": "^5.3.0",
@@ -20,12 +22,29 @@
         "webpack": "^5.97.1",
         "webpack-cli": "^6.0.1",
         "webpack-dev-server": "^5.2.0",
-        "webpack-merge": "^6.0.1"
+        "webpack-merge": "^6.0.1",
+        "webpack-node-externals": "^3.0.0"
     },
     "scripts": {
-        "build": "webpack --config webpack.prod.js",
-        "watch": "webpack --watch --config webpack.dev.js",
-        "dev": "webpack --config webpack.dev.js"
+        "dist:client:build": "webpack --config .webpack/webpack.dist.client.js",
+        "dist:server:build": "webpack --config .webpack/webpack.dist.server.js",
+        "dist:server:start": "node dist/server/server.cjs",
+        "watch:dev": "concurrently --kill-others \"npm:watch:dev:*\"",
+        "watch:dev:client:build": "webpack --config .webpack/webpack.dev.client.js --watch",
+        "watch:dev:server:build": "webpack --config .webpack/webpack.dev.server.js --watch",
+        "watch:dev:server:start": "nodemon ./dev/server/server.cjs",
+        "dev:client:build": "webpack --config .webpack/webpack.dev.client.js",
+        "dev:server:build": "webpack --config .webpack/webpack.dev.server.js"
     },
-    "author": "Daniele 'Diquadro' D'Ambrosio"
+    "author": "Daniele 'Diquadro' D'Ambrosio",
+    "type": "module",
+    "dependencies": {
+        "dotenv": "^16.4.7",
+        "express": "^4.21.2",
+        "express-promise-router": "^4.1.1",
+        "geoip-lite": "^1.4.10",
+        "isbot": "^5.1.20",
+        "nodemailer": "^6.9.16",
+        "pg": "^8.13.1"
+    }
 }
