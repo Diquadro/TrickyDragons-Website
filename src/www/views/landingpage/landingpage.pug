@@ -11,14 +11,18 @@ html(lang='en')
             href='https://fonts.googleapis.com/css2?family=Lexend:wght@100..900&display=swap'
         )
     body
+        include ./templates/_cta_mixin.pug
+
         include ./templates/_hero.pug
-        include ./templates/_feature-dragons.pug
+        include ./templates/_feature_dragons.pug
         hr#hr-01.hr.hide-desktop
-        include ./templates/_feature-elements.pug
+        include ./templates/_feature_elements.pug
         hr#hr-02.hr
-        include ./templates/_feature-challenge.pug
+        include ./templates/_feature_challenge.pug
         hr#hr-03.hr
-        include ./templates/_feature-adventure.pug
-        include ./templates/_last-cta.pug
+        include ./templates/_feature_adventure.pug
+        +cta('last-cta', 'START YOUR JOURNEY NOW!')
         include ./templates/_footer.pug
+
+        include ./templates/_cta_modal.pug
         script(src='landingpage.ts') 

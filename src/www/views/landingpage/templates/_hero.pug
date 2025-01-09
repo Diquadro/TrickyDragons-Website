@@ -1,3 +1,5 @@
+include ./_cta_mixin.pug
+
 #hero
     img#hero-image-mobile.hide-desktop(
         src='../../imgs/hero_images/hero_image_portrait.webp',
@@ -7,30 +9,23 @@
         src='../../imgs/hero_images/hero_image_landscape_desktop_v2.webp',
         alt='hero image desktop'
     )
-    h3.slogan DRAW &bull; PLAY &bull; WIN
-    h1.title
-        | Tricky Dragons™ a Fast-Paced Card Game Where 2-6 Players Face Off In Unpredictable, Twist-Filled Games!
-    h2.subtitle
-        | Master the elements and outsmart your friends. Play your cards cleverly, disrupt the game, and
-        | edge closer to winning!
-        br
-        br
-        |
-        | Can you handle the power of the
-        |
-        span.font-bold Tricky Dragons&trade;
-        |
-        | ?
-    #hero-infografic.hide-mobile
-        img(src='../../imgs/infografic/rsz_time.webp', alt='playtime 15 to 60 minutes')
-        img(src='../../imgs/infografic/rsz_age.webp', alt='ages 10 and up')
-        img(src='../../imgs/infografic/rsz_players.webp', alt='players 2 to 6')
-    .cta
-        h3.title COMING SOON ON KICKSTARTER
-        p.subtitle
-            span.font-bold Don&rsquo;t miss out!
+    .content
+        h3.slogan DRAW &bull; PLAY &bull; WIN
+        h1.title
+            | Tricky Dragons™ a Fast-Paced Card Game Where 2-6 Players Face Off In Unpredictable, Twist-Filled Games!
+        h2.subtitle
+            | Master the elements and outsmart your friends. Play your cards cleverly, disrupt the game, and
+            | edge closer to winning!
+            br
+            br
             |
-            | We&rsquo;ll notify you when the game launches, so you can grab limited early bird discounts!
-        input(type='email', placeholder='Email Address')
-        button(type='button')
-            span.font-black START YOUR ADVENTURE!
+            | Can you handle the power of the
+            |
+            span.font-bold Tricky Dragons&trade;
+            |
+            | ?
+        #hero-infografic.hide-mobile
+            img(src='../../imgs/infografic/rsz_time.webp', alt='playtime 15 to 60 minutes')
+            img(src='../../imgs/infografic/rsz_age.webp', alt='ages 10 and up')
+            img(src='../../imgs/infografic/rsz_players.webp', alt='players 2 to 6')
+        +cta('', 'COMING SOON ON KICKSTARTER')

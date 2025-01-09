@@ -2,9 +2,10 @@
 @use './scss/general';
 @use './scss/hero';
 @use './scss/feature';
-@use './scss/feature-x1';
-@use './scss/feature-x2';
+@use './scss/feature_x1';
+@use './scss/feature_x2';
 @use './scss/hr';
 @use './scss/footer';
+@use './scss/cta_modal';
 
-@use '../../custom-tailwind/custom-tailwind';
+@use '../../custom_tailwind/custom_tailwind';

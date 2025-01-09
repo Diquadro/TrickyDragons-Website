@@ -3,6 +3,7 @@ import 'dotenv/config'
 import pg from 'pg'
 import site_accesses from './routes/site_accesses.js'
 import email_subscription from './routes/email_subscription.js'
+import cors from 'cors'
 
 const { Pool } = pg
 const app = express()
@@ -16,6 +17,14 @@ const pool = new Pool({
 
 // Middleware for parsing JSON requests
 app.use(express.json())
+
+// Enable cors
+app.use(
+    cors({
+        origin: process.env.ALLOWED_ORIGIN, // Replace with your domains
+        methods: ['GET', 'POST'],
+    }),
+)
 
 // Routes
 app.use('/email-subscription', email_subscription(pool))

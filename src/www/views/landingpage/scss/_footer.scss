@@ -1,4 +1,4 @@
-@use '../../../custom-tailwind/custom-tailwind';
+@use '../../../custom_tailwind/custom_tailwind';
 
 $desktop-pixel: 1400px !default;
 $mobile-pixel: 1400px !default;
@@ -12,7 +12,7 @@ $mobile-pixel: 1400px !default;
         display: flex;
 
         > .title {
-            @include custom-tailwind.font-bold;
+            @include custom_tailwind.font-bold;
         }
 
         > .links {
@@ -39,7 +39,7 @@ $mobile-pixel: 1400px !default;
             align-items: bottom;
 
             > .title {
-                @include custom-tailwind.text-5xl;
+                @include custom_tailwind.text-5xl;
             }
 
             > .links {
@@ -61,7 +61,7 @@ $mobile-pixel: 1400px !default;
             gap: 1svh;
 
             > .title {
-                @include custom-tailwind.text-4xl;
+                @include custom_tailwind.text-4xl;
             }
 
             > .links {
