@@ -4,12 +4,9 @@ html(lang='en')
         include ./templates/_headers.pug
 
         link(rel='stylesheet', href='./landingpage.scss')
-        link(rel='preconnect', href='https://fonts.googleapis.com')
-        link(rel='preconnect', href='https://fonts.gstatic.com', crossorigin='')
-        link(
-            rel='stylesheet',
-            href='https://fonts.googleapis.com/css2?family=Lexend:wght@100..900&display=swap'
-        )
+
+        include ../../components/google_analytics/google_analytics.pug
+        include ../../components/meta_pixel/meta_pixel.pug
     body
         include ./templates/_cta_mixin.pug
 

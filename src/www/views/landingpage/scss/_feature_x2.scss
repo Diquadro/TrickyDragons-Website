@@ -78,6 +78,10 @@ $mobile-pixel: 1400px !default;
                 > img {
                     height: 150px;
                 }
+
+                > .description {
+                    @include custom_tailwind.text-3xl;
+                }
             }
         }
     }

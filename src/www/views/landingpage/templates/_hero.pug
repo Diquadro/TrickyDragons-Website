@@ -1,14 +1,14 @@
 include ./_cta_mixin.pug
 
 #hero
-    img#hero-image-mobile.hide-desktop(
-        src='../../imgs/hero_images/hero_image_portrait.webp',
-        alt='hero image mobile'
-    )
-    img#hero-image-desktop.hide-mobile(
-        src='../../imgs/hero_images/hero_image_landscape_desktop_v2.webp',
-        alt='hero image desktop'
-    )
+    picture#hero-image
+        source(
+            srcset='../../imgs/hero_images/hero_image_landscape_desktop_v2.webp',
+            media='(min-width: 1400px)'
+        )
+        source(srcset='../../imgs/hero_images/hero_image_portrait.webp', media='(max-width: 1400px)')
+        img(src='../../imgs/hero_images/hero_image_portrait.webp', alt='hero image', loading='lazy')
+
     .content
         h3.slogan DRAW &bull; PLAY &bull; WIN
         h1.title

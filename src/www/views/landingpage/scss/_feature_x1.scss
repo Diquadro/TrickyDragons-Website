@@ -17,8 +17,9 @@ $mobile-pixel: 1400px !default;
     }
 
     > img {
+        // width: 100%;
         height: 350px;
-        object-fit: cover;
+        object-fit: contain;
     }
 
     > .description {
@@ -39,6 +40,7 @@ $mobile-pixel: 1400px !default;
     .feature-x1 {
         align-items: center;
         overflow-x: hidden;
+        overflow-y: hidden;
 
         > .title {
             // @include mixins.margin-mobile;
@@ -46,6 +48,7 @@ $mobile-pixel: 1400px !default;
         }
 
         > .description {
+            @include custom_tailwind.text-3xl;
             @include mixins.margin-mobile;
         }
     }
