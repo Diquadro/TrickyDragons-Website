@@ -1,26 +1,41 @@
 import fs from 'fs-extra'
 import path from 'path'
 
-async function cloneFolder(sourceDir, targetDir) {
+// run script
+run()
+
+async function clone_folder(source_dir, target_dir) {
     try {
-        // Step 1: Elimina la cartella di destinazione (se esiste)
-        if (await fs.pathExists(targetDir)) {
-            console.log(`Deleting folder: ${targetDir}`)
-            await fs.remove(targetDir)
-            console.log(`Folder deleted: ${targetDir}`)
+        // Step 1: Delete target dir if exist
+        if (await fs.pathExists(target_dir)) {
+            console.log(`Deleting folder: ${target_dir}`)
+            await fs.remove(target_dir)
+            console.log(`Folder deleted: ${target_dir}`)
         }
 
-        // Step 2: Clona la cartella sorgente nella destinazione
-        console.log(`Cloning folder from ${sourceDir} to ${targetDir}`)
-        await fs.copy(sourceDir, targetDir)
-        console.log(`Folder cloned to: ${targetDir}`)
+        // Step 2: Clone soruce into target
+        console.log(`Cloning folder from ${source_dir} to ${target_dir}`)
+        await fs.copy(source_dir, target_dir)
+        console.log(`Folder cloned to: ${target_dir}`)
     } catch (error) {
         console.error('Error during folder cloning:', error)
     }
 }
 
-// Esempio: Specifica la cartella sorgente e la destinazione
-const sourceDir = path.resolve('./src/server') // Cambia il path
-const targetDir = path.resolve('./dist/server') // Cambia il path
+async function run() {
+    try {
+        // Clone server in dist
+        const server_source_dir = path.resolve('./src/server')
+        const server_target_dir = path.resolve('./dist/server')
 
-cloneFolder(sourceDir, targetDir)
+        await clone_folder(server_source_dir, server_target_dir)
+
+        // Clone geoip-data into ./node_modules/geoip-lite/data
+        const geoip_source_dir = path.resolve('./.cache/geoip-data')
+        const geoip_target_dir = path.resolve('./node_modules/geoip-lite/data')
+
+        await clone_folder(geoip_source_dir, geoip_target_dir)
+    } catch (error) {
+        console.log('server_build error : ', error.error)
+    }
+}

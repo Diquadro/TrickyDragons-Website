@@ -43,9 +43,9 @@ export default function email_subscription(pool) {
             }
 
             // Sends email to user
-            const from = 'no-reply@trickydragons.com'
+            const from = 'trickydragons.cardgame@gmail.com'
             const to = email
-            const subject = 'Welcome to the world of Tricky Dragons – Your Adventure Awaits!'
+            const subject = 'Welcome to the world of Tricky Dragons – Your Adventure Awaits'
             const body_template_path = path.resolve(__dirname, '../emails/welcome_email/welcome_email.pug') //'../emails/welcome_email/welcome_email.pug'
             const body__template_locals = {
                 email_opened: `https://api.trickydragons.com/email_opened/${base64url.encode(email)}`,
