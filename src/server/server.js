@@ -4,6 +4,7 @@ import pg from 'pg'
 import site_accesses from './routes/site_accesses.js'
 import email_subscription from './routes/email_subscription.js'
 import cors from 'cors'
+import * as request_ip from 'request-ip'
 
 const { Pool } = pg
 const app = express()
@@ -14,6 +15,11 @@ const pool = new Pool({
     connectionString: process.env.PGURI,
     ssl: { rejectUnauthorized: false },
 })
+
+// app.set('trust proxy', true)
+
+// Middleware for ip lookup
+app.use(request_ip.mw())
 
 // Middleware for parsing JSON requests
 app.use(express.json())

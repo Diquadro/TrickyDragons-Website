@@ -5,6 +5,7 @@
     "private": true,
     "devDependencies": {
         "@prettier/plugin-pug": "^3.2.0",
+        "clean-webpack-plugin": "^4.0.0",
         "concurrently": "^9.1.2",
         "copy-webpack-plugin": "^12.0.2",
         "css-loader": "^7.1.2",
@@ -26,15 +27,12 @@
         "webpack-node-externals": "^3.0.0"
     },
     "scripts": {
-        "dist:client:build": "webpack --config .webpack/webpack.dist.client.js",
-        "dist:server:build": "webpack --config .webpack/webpack.dist.server.js",
+        "dist:build": "webpack --config .webpack/webpack.dist.js",
         "dist:server:start": "node dist/server/server.cjs",
         "watch:dev": "concurrently --kill-others \"npm:watch:dev:*\"",
-        "watch:dev:client:build": "webpack --config .webpack/webpack.dev.client.js --watch",
-        "watch:dev:server:build": "webpack --config .webpack/webpack.dev.server.js --watch",
-        "watch:dev:server:start": "nodemon ./dev/server/server.cjs",
-        "dev:client:build": "webpack --config .webpack/webpack.dev.client.js",
-        "dev:server:build": "webpack --config .webpack/webpack.dev.server.js"
+        "watch:dev:build": "webpack --config .webpack/webpack.dev.js --watch",
+        "watch:dev:server:start": "nodemon ./dev/server/server.js",
+        "dev:build": "webpack --config .webpack/webpack.dev.js"
     },
     "author": "Daniele 'Diquadro' D'Ambrosio",
     "type": "module",
@@ -46,6 +44,8 @@
         "geoip-lite": "^1.4.10",
         "isbot": "^5.1.20",
         "nodemailer": "^6.9.16",
-        "pg": "^8.13.1"
+        "nodemailer-express-handlebars": "^7.0.0",
+        "pg": "^8.13.1",
+        "request-ip": "^3.3.0"
     }
 }

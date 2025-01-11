@@ -1,0 +1,93 @@
+* {
+    margin: 0;
+    border: 0;
+    padding: 0;
+}
+
+#email_body {
+    margin: 50px auto;
+    max-width: 600px;
+
+    font-weight: 200;
+    font-family: sans-serif;
+}
+
+#email_body > * {
+    margin: 15px auto;
+}
+
+#hero_image {
+    width: 100%;
+    min-width: 300px;
+    object-fit: cover;
+}
+
+h1,
+h2,
+h3,
+p {
+    width: 90%;
+    text-align: justify;
+}
+
+p {
+    line-height: 1.5rem;
+}
+
+#instagram_link,
+#kickstarter_link {
+    transition: 0, 3s;
+    padding: 0 2px;
+    font-weight: bold;
+    text-decoration: none;
+}
+
+#kickstarter_link {
+    color: #05ce78;
+}
+
+#instagram_link {
+    color: #e1306c;
+}
+
+#kickstarter_link:hover,
+#instagram_link:hover {
+    border-radius: 4px;
+    color: white;
+}
+
+#kickstarter_link:hover {
+    background-color: #05ce78;
+}
+
+#instagram_link:hover {
+    background-color: #e1306c;
+}
+
+.wrapper_center {
+    text-align: center;
+}
+
+#instagram_button {
+    display: inline-block;
+    transition: 0, 3s;
+    border: 1px solid #da2d2a;
+    border-radius: 5px;
+    background-color: #da2d2a;
+    padding: 10px 20px;
+    color: white;
+    font-weight: bold;
+    text-align: center;
+    text-decoration: none;
+}
+
+#instagram_button:hover {
+    box-sizing: border-box;
+    background-color: white;
+    color: #da2d2a;
+}
+
+.horizontal_line {
+    border: 1px solid black;
+    width: 90%;
+}

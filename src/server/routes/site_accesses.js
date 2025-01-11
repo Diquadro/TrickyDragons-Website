@@ -8,12 +8,16 @@ export default function site_accesses(pool) {
     router.post('/', async (req, res) => {
         console.log('REQUEST - site_accesses')
 
+        console.log('LOG IP')
+        console.log(req.clientIp)
+        console.log(req.headers['x-forwarded-for'])
+        console.log(req.connection.remoteAddress)
+
         if (isbot(req.get('user-agent'))) {
             return res.status(403).json({ error: 'Bot detected. Access skipped.' })
         }
 
-        // Retrieve IP Address & Geo Infos
-        const ip_address = req.ip ?? req.headers['x-forwarded-for'] ?? req.connection.remoteAddress
+        const ip_address = req.clientIp
         const geo = geoip.lookup(ip_address) ?? {}
         const today = new Date().toISOString().split('T')[0]
 
@@ -43,10 +47,12 @@ export default function site_accesses(pool) {
             }
 
             await client.query('COMMIT')
-            res.status(200).json({ message: 'Access logged successfully' })
+
+            return res.status(200).json({ message: 'Access logged successfully' })
         } catch (err) {
             await client.query('ROLLBACK')
-            res.status(500).json({ error: err.message })
+
+            return res.status(500).json({ error: err.message })
         } finally {
             client.release()
         }

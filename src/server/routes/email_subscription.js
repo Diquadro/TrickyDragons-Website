@@ -1,7 +1,12 @@
+import path from 'path'
+import { fileURLToPath } from 'url'
 import Router from 'express-promise-router'
 import geoip from 'geoip-lite'
-import nodemailer from 'nodemailer'
 import 'dotenv/config'
+import send_email from '../utils/send_email.js'
+
+const __filename = fileURLToPath(import.meta.url) // get the resolved path to the file
+const __dirname = path.dirname(__filename) // get the name of the directory
 
 const router = new Router()
 
@@ -27,7 +32,7 @@ export default function email_subscription(pool) {
         }
 
         // Retrieve IP & Geo Infos
-        const ip_address = req.ip ?? req.headers['x-forwarded-for'] ?? req.connection.remoteAddress
+        const ip_address = req.clientIp
         const geo = geoip.lookup(ip_address) ?? {}
 
         // Check if email is already in database
@@ -36,52 +41,22 @@ export default function email_subscription(pool) {
         }
 
         // Sends email to user
-        const notified = await send_email(email)
+        const from = 'no-reply@trickydragons.com'
+        const to = email
+        const subject = 'Welcome to the world of Tricky Dragons – Your Adventure Awaits!'
+        const body_template_path = path.resolve(__dirname, '../emails/welcome_email/welcome_email.pug') //'../emails/welcome_email/welcome_email.pug'
+        const body__template_locals = {}
+        const notified = await send_email(from, to, subject, body_template_path, body__template_locals)
 
         // Save email to database
         if (!(await save_email(pool, email, ip_address, geo, notified))) {
-            res.status(500).json({ error: 'Failed to save on database' })
+            return res.status(500).json({ error: 'Failed to save on database' })
         }
 
-        res.status(201).json({ message: 'Email subscribed successfully' })
+        return res.status(201).json({ message: 'Email subscribed successfully' })
     })
 
     return router
-}
-
-async function send_email(recipient) {
-    try {
-        // email transporter configuration
-        let transporter = nodemailer.createTransport({
-            host: 'smtp.gmail.com',
-            port: 465,
-            secure: true,
-            auth: {
-                type: 'OAuth2',
-                user: process.env.EMAIL_USER,
-                clientId: process.env.G_API_CLIENTE_ID,
-                clientSecret: process.env.G_API_CLIENT_SECRET,
-                refreshToken: process.env.G_API_REFRESH_TOKEN,
-            },
-        })
-
-        // email options
-        let mailOptions = {
-            from: 'no-reply@trickydragons.com',
-            to: recipient,
-            subject: 'Mail Subscription Confirmation - [NO REPLY]',
-            text: 'Thank you for subscribing!',
-        }
-
-        // send email
-        await transporter.sendMail(mailOptions)
-
-        return true
-    } catch (err) {
-        console.error('send_email - error message\n', err.message)
-
-        return false
-    }
 }
 
 async function is_email_valid(pool, email) {

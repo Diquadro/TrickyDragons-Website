@@ -2,6 +2,7 @@ import path from 'path'
 import { fileURLToPath } from 'url'
 import PugPlugin from 'pug-plugin'
 import CopyPlugin from 'copy-webpack-plugin'
+import { CleanWebpackPlugin } from 'clean-webpack-plugin'
 
 const __filename = fileURLToPath(import.meta.url) // get the resolved path to the file
 const __dirname = path.dirname(__filename) // get the name of the directory
@@ -10,6 +11,11 @@ export default {
     mode: 'development',
     devtool: 'inline-source-map',
     plugins: [
+        new CleanWebpackPlugin({
+            dry: false,
+            dangerouslyAllowCleanPatternsOutsideProject: true,
+            cleanOnceBeforeBuildPatterns: ['../server'],
+        }),
         new PugPlugin({
             pretty: 'auto',
             //☝🏽 Format HTML (only in dev mode)
@@ -31,8 +37,8 @@ export default {
             // Copy unhandled files to folder
             patterns: [
                 {
-                    from: 'src/www/imgs/social_images/Open_Graph_1200x630.webp',
-                    to: 'assets/img/Open_Graph_1200x630.webp',
+                    from: 'src/www/imgs/_hosted',
+                    to: 'assets/imgs/hosted',
                 },
                 {
                     from: 'src/www/sitemap.xml',
@@ -41,6 +47,11 @@ export default {
                 {
                     from: 'src/www/robots.txt',
                     to: '',
+                },
+                {
+                    // Copy Server
+                    from: path.resolve(__dirname, '../src/server'),
+                    to: path.resolve(__dirname, '../dev/server'),
                 },
             ],
         }),
@@ -57,7 +68,7 @@ export default {
                 test: /\.(png|jpg|jpeg|ico|webp)/,
                 type: 'asset/resource',
                 generator: {
-                    filename: 'assets/img/[name].[hash:8][ext]',
+                    filename: 'assets/imgs/[name].[hash:8][ext]',
                 },
             },
             {
@@ -84,5 +95,8 @@ export default {
     },
     optimization: {
         runtimeChunk: 'single',
+    },
+    cache: {
+        type: 'filesystem',
     },
 }
