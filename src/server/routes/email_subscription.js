@@ -84,8 +84,6 @@ async function save_email(pool, email, ip_address, geo, notified) {
     const client = await pool.connect()
 
     try {
-        await client.query('BEGIN')
-
         // Insert new email  into the database
         await client.query(
             `INSERT INTO email_subscriptions (email, ip_address, country, region, city, postal_code, notified) 

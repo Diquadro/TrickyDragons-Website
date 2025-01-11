@@ -9,14 +9,17 @@ export default function email_opened(pool) {
     router.get('/:id', async (req, res) => {
         console.log('REQUEST - email_opened')
 
-        const { id } = req.params
+        res.setHeader('Content-Type', 'image/gif')
+        res.send(Buffer.alloc(1)) // Immagine GIF vuota
 
+        if (isbot(req.get('user-agent'))) {
+            return
+        }
+
+        const { id } = req.params
         const email = base64url.decode(id)
 
         update_opened_mail(pool, email)
-
-        res.setHeader('Content-Type', 'image/gif')
-        res.send(Buffer.alloc(1)) // Immagine GIF vuota
     })
 
     return router

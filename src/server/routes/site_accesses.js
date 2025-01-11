@@ -19,8 +19,6 @@ export default function site_accesses(pool) {
         const client = await pool.connect()
 
         try {
-            await client.query('BEGIN')
-
             // Check if the IP has accessed the site today
             const existing = await client.query(
                 'SELECT * FROM site_accesses WHERE ip_address = $1 AND last_accessed = $2',
