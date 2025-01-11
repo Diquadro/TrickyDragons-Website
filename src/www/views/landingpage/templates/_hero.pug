@@ -7,7 +7,7 @@ include ./_cta_mixin.pug
             media='(min-width: 1400px)'
         )
         source(srcset='../../imgs/hero_images/hero_image_portrait.webp', media='(max-width: 1400px)')
-        img(src='../../imgs/hero_images/hero_image_portrait.webp', alt='hero image', loading='lazy')
+        img(src='../../imgs/hero_images/hero_image_portrait.webp', alt='hero image')
 
     .content
         h3.slogan DRAW &bull; PLAY &bull; WIN
@@ -25,7 +25,7 @@ include ./_cta_mixin.pug
             |
             | ?
         #hero-infografic.hide-mobile
-            img(src='../../imgs/infografic/rsz_time.webp', alt='playtime 15 to 60 minutes')
-            img(src='../../imgs/infografic/rsz_age.webp', alt='ages 10 and up')
-            img(src='../../imgs/infografic/rsz_players.webp', alt='players 2 to 6')
+            img(src='../../imgs/infografic/rsz_time.webp', alt='playtime 15 to 60 minutes', loading='lazy')
+            img(src='../../imgs/infografic/rsz_age.webp', alt='ages 10 and up', loading='lazy')
+            img(src='../../imgs/infografic/rsz_players.webp', alt='players 2 to 6', loading='lazy')
         +cta('', 'COMING SOON ON KICKSTARTER')
