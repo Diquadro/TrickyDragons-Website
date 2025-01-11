@@ -123,7 +123,7 @@ function close_modal() {
 
 
 
-console.log('TEST');
+console.log('Welcome to the Tricky Dragons™ World');
 var API_URL =  true ? 'https://api.trickydragons.com' : 0;
 site_accesses(API_URL);
 cta(API_URL);
@@ -138,4 +138,4 @@ cta_modal();
 /******/ var __webpack_exports__ = (__webpack_exec__(491));
 /******/ }
 ]);
-//# sourceMappingURL=landingpage.bb554bcd.js.map
+//# sourceMappingURL=landingpage.3b7f5838.js.map

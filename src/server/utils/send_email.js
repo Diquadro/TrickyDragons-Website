@@ -19,7 +19,6 @@ export default async function send_email(from, to, subject, body_template_path, 
         })
 
         const html = pug.renderFile(body_template_path, body__template_locals)
-        console.log(html)
 
         // email options
         const mailOptions = {

@@ -8,11 +8,6 @@ export default function site_accesses(pool) {
     router.post('/', async (req, res) => {
         console.log('REQUEST - site_accesses')
 
-        console.log('LOG IP')
-        console.log(req.clientIp)
-        console.log(req.headers['x-forwarded-for'])
-        console.log(req.connection.remoteAddress)
-
         if (isbot(req.get('user-agent'))) {
             return res.status(403).json({ error: 'Bot detected. Access skipped.' })
         }
@@ -46,11 +41,9 @@ export default function site_accesses(pool) {
                 )
             }
 
-            await client.query('COMMIT')
-
             return res.status(200).json({ message: 'Access logged successfully' })
         } catch (err) {
-            await client.query('ROLLBACK')
+            console.error('site_accesses - error message : ', err.message)
 
             return res.status(500).json({ error: err.message })
         } finally {

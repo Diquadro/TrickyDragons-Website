@@ -4,6 +4,7 @@ import pg from 'pg'
 import site_accesses from './routes/site_accesses.js'
 import email_subscription from './routes/email_subscription.js'
 import cors from 'cors'
+import email_opened from './routes/email_opened.js'
 import * as request_ip from 'request-ip'
 
 const { Pool } = pg
@@ -15,8 +16,6 @@ const pool = new Pool({
     connectionString: process.env.PGURI,
     ssl: { rejectUnauthorized: false },
 })
-
-// app.set('trust proxy', true)
 
 // Middleware for ip lookup
 app.use(request_ip.mw())
@@ -35,6 +34,7 @@ app.use(
 // Routes
 app.use('/email-subscription', email_subscription(pool))
 app.use('/site-accesses', site_accesses(pool))
+app.use('/email_opened', email_opened(pool))
 
 // Graceful Shutdown to close database connections
 process.on('SIGINT', async () => {
