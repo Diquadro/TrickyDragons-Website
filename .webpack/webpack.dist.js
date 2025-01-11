@@ -45,11 +45,6 @@ export default {
                     from: 'src/www/robots.txt',
                     to: '',
                 },
-                {
-                    // Copy Server
-                    from: path.resolve(__dirname, '../src/server'),
-                    to: path.resolve(__dirname, '../dist/server'),
-                },
             ],
         }),
     ],

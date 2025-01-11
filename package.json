@@ -27,7 +27,8 @@
         "webpack-node-externals": "^3.0.0"
     },
     "scripts": {
-        "dist:build": "webpack --config .webpack/webpack.dist.js",
+        "dist:client:build": "webpack --config .webpack/webpack.dist.js",
+        "dist:server:build": "node server_build.js",
         "dist:server:start": "node dist/server/server.cjs",
         "watch:dev": "concurrently --kill-others \"npm:watch:dev:*\"",
         "watch:dev:build": "webpack --config .webpack/webpack.dev.js --watch",
@@ -41,6 +42,7 @@
         "dotenv": "^16.4.7",
         "express": "^4.21.2",
         "express-promise-router": "^4.1.1",
+        "fs-extra": "^11.2.0",
         "geoip-lite": "^1.4.10",
         "isbot": "^5.1.20",
         "nodemailer": "^6.9.16",
