@@ -41,7 +41,7 @@ export default async function send_email(from, to, subject, body_template_path, 
 const EMAILS_AVAILABLE = {
     'no-reply@trickydragons.com': {
         from_formated: `"Tricky Dragons Team" <${process.env.NO_REPLY_EMAIL_USER}>`,
-        transporter_settings: nodemailer.createTransport({
+        transporter: nodemailer.createTransport({
             host: process.env.NO_REPLY_EMAIL_HOST,
             port: 465,
             secure: true,
