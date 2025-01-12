@@ -4,9 +4,9 @@ import { CLIENT_URL } from '../utils/constants.js'
 
 const router = new Router()
 
-export default function email_unsubscription(pool) {
+export default function email_deactivation(pool) {
     router.get('/:id', async (req, res) => {
-        console.log('REQUEST - email_unsubscription')
+        console.log('REQUEST - email_deactivation')
 
         const { id } = req.params
         const email = base64url.decode(id)
@@ -15,7 +15,7 @@ export default function email_unsubscription(pool) {
             return res.status(400).send('Error: Unable to unsubscribe. Email not found.')
         }
 
-        return res.redirect(CLIENT_URL + '/email_unsubscription')
+        return res.redirect(CLIENT_URL + '/email_deactivation')
     })
 
     return router

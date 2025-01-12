@@ -1,6 +1,6 @@
 <mxfile host="65bd71144e">
     <diagram id="gPhGICZARcINRB3xnSQG" name="Page-1">
-        <mxGraphModel dx="1602" dy="594" grid="0" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="0" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0">
+        <mxGraphModel dx="1602" dy="792" grid="0" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="0" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0">
             <root>
                 <mxCell id="0"/>
                 <mxCell id="1" parent="0"/>
@@ -103,11 +103,14 @@
                 <mxCell id="27" value="EMAIL&lt;br&gt;email_subscription" style="rounded=1;whiteSpace=wrap;html=1;" parent="1" vertex="1">
                     <mxGeometry x="71.185546875" y="580" width="120" height="60" as="geometry"/>
                 </mxCell>
-                <mxCell id="29" value="PAGE&lt;br&gt;email_unsubscription" style="whiteSpace=wrap;html=1;rounded=1;" parent="1" vertex="1">
+                <mxCell id="29" value="PAGE&lt;br&gt;email_deactivation" style="whiteSpace=wrap;html=1;rounded=1;" parent="1" vertex="1">
                     <mxGeometry x="71.185546875" y="740" width="120" height="60" as="geometry"/>
                 </mxCell>
                 <mxCell id="32" value="VIEW&lt;br&gt;error_toast" style="rounded=1;whiteSpace=wrap;html=1;" parent="1" vertex="1">
                     <mxGeometry x="677" y="420" width="120" height="60" as="geometry"/>
+                </mxCell>
+                <mxCell id="35" style="edgeStyle=none;html=1;" edge="1" parent="1" source="34" target="2">
+                    <mxGeometry relative="1" as="geometry"/>
                 </mxCell>
                 <mxCell id="34" value="PAGE&lt;br&gt;404" style="rounded=1;whiteSpace=wrap;html=1;" parent="1" vertex="1">
                     <mxGeometry x="551" y="100" width="120" height="60" as="geometry"/>

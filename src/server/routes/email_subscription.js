@@ -66,7 +66,7 @@ export default function email_subscription(pool) {
             )
             const body__template_locals = {
                 email_opened: `${API_URL}/email_opened/${base64url.encode(email)}`,
-                email_unsubscription: `${API_URL}/email_unsubscription/${base64url.encode(email)}`,
+                email_deactivation: `${API_URL}/email_deactivation/${base64url.encode(email)}`,
             }
 
             const notified = await send_email(from, to, subject, body_template_path, body__template_locals)

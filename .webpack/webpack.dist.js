@@ -23,6 +23,7 @@ export default {
                 // Insert your PUG templates here
                 index: './src/www/views/landingpage/landingpage.pug',
                 404: './src/www/views/404/404.pug',
+                email_deactivation: './src/www/views/email_deactivation/email_deactivation.pug',
             },
             js: {
                 filename: 'assets/js/[name].[contenthash:8].js',
