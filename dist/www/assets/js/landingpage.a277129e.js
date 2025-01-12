@@ -1,13 +1,13 @@
 "use strict";
 (self["webpackChunktrickydragons_webserver"] = self["webpackChunktrickydragons_webserver"] || []).push([[237],{
 
-/***/ 491:
+/***/ 781:
 /***/ (() => {
 
 
-;// ./src/www/scripts/api/site_accesses.ts
+;// ./src/www/scripts/api/site_access.ts
 function site_accesses(API_URL) {
-    fetch("".concat(API_URL, "/site-access"), {
+    fetch("".concat(API_URL, "/site_access"), {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({}),
@@ -18,7 +18,7 @@ function site_accesses(API_URL) {
 
 ;// ./src/www/scripts/api/send_email.ts
 function send_email(API_URL, email) {
-    fetch("".concat(API_URL, "/email-subscription"), {
+    fetch("".concat(API_URL, "/email_subscription"), {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
@@ -135,7 +135,7 @@ cta_modal();
 },
 /******/ __webpack_require__ => { // webpackRuntimeModules
 /******/ var __webpack_exec__ = (moduleId) => (__webpack_require__(__webpack_require__.s = moduleId))
-/******/ var __webpack_exports__ = (__webpack_exec__(491));
+/******/ var __webpack_exports__ = (__webpack_exec__(781));
 /******/ }
 ]);
-//# sourceMappingURL=landingpage.48543f5b.js.map
+//# sourceMappingURL=landingpage.a277129e.js.map

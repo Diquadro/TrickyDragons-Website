@@ -1,13 +1,12 @@
 import geoip from 'geoip-lite'
-import country_region_data from 'country-region-data'
-const { CountryRegionData } = country_region_data
+import { allCountries } from 'country-region-data'
 
 export default function get_geo_infos(ip_address) {
     const geo_infos = geoip.lookup(ip_address)
 
     if (!geo_infos) return {}
 
-    const country = CountryRegionData.find((c) => c.countryShortCode === geo_infos.country)
+    const country = allCountries?.find((c) => c.countryShortCode === geo_infos.country)
     const region = country?.regions.find((r) => r.shortCode === geo_infos.region)
 
     return {

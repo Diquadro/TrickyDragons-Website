@@ -1,5 +1,5 @@
 export default function send_email(API_URL: string, email: string): void {
-    fetch(`${API_URL}/email-subscription`, {
+    fetch(`${API_URL}/email_subscription`, {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',

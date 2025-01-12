@@ -33,8 +33,8 @@ app.use(
 )
 
 // Routes
-app.use('/email-subscription', email_subscription(pool))
-app.use('/site-access', site_access(pool))
+app.use('/email_subscription', email_subscription(pool))
+app.use('/site_access', site_access(pool))
 app.use('/email_opened', email_opened(pool))
 app.use('/email_unsubscription', email_unsubscription(pool))
 
