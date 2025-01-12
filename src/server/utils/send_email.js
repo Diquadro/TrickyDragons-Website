@@ -25,7 +25,7 @@ async function email(from, to, subject, body_template_path, body__template_local
 
         // email options
         const mailOptions = {
-            from: process.env.NO_REPLY_EMAIL_USER,
+            from: `"Tricky Dragons" <${process.env.NO_REPLY_EMAIL_USER}>`,
             to: to,
             subject: subject,
             html: html,
