@@ -1,10 +1,11 @@
 import path from 'path'
 import { fileURLToPath } from 'url'
 import Router from 'express-promise-router'
-import geoip from 'geoip-lite'
 import 'dotenv/config'
 import send_email from '../utils/send_email.js'
 import base64url from 'base64-url'
+import get_geo_infos from '../utils/get_geo_infos.js'
+import { API_URL } from '../utils/constants.js'
 
 const __filename = fileURLToPath(import.meta.url) // get the resolved path to the file
 const __dirname = path.dirname(__filename) // get the name of the directory
@@ -35,7 +36,7 @@ export default function email_subscription(pool) {
 
             // Retrieve IP & Geo Infos
             const ip_address = req.clientIp
-            const geo = geoip.lookup(ip_address) ?? {}
+            const geo_infos = get_geo_infos(ip_address)
 
             // Check if email is already in database
             if (!(await is_email_valid(pool, email))) {
@@ -46,14 +47,19 @@ export default function email_subscription(pool) {
             const from = 'trickydragons.cardgame@gmail.com'
             const to = email
             const subject = 'Welcome to the world of Tricky Dragons – Your Adventure Awaits'
-            const body_template_path = path.resolve(__dirname, '../emails/welcome_email/welcome_email.pug') //'../emails/welcome_email/welcome_email.pug'
+            const body_template_path = path.resolve(
+                __dirname,
+                '../emails/email_subscription/email_subscription.pug',
+            )
             const body__template_locals = {
-                email_opened: `https://api.trickydragons.com/email_opened/${base64url.encode(email)}`,
+                email_opened: `${API_URL}/email_opened/${base64url.encode(email)}`,
+                email_unsubscription: `${API_URL}/email_unsubscription/${base64url.encode(email)}`,
             }
+
             const notified = await send_email(from, to, subject, body_template_path, body__template_locals)
 
             // Save email to database
-            if (!(await save_email(pool, email, ip_address, geo, notified))) {
+            if (!(await save_email(pool, email, ip_address, geo_infos, notified))) {
                 return res.status(500).json({ error: 'Failed to save on database' })
             }
 
@@ -80,15 +86,15 @@ async function is_email_valid(pool, email) {
     }
 }
 
-async function save_email(pool, email, ip_address, geo, notified) {
+async function save_email(pool, email, ip_address, geo_infos, notified) {
     const client = await pool.connect()
 
     try {
         // Insert new email  into the database
         await client.query(
-            `INSERT INTO email_subscriptions (email, ip_address, country, region, city, postal_code, notified) 
+            `INSERT INTO email_subscriptions (email, ip_address, country, region, city, notified, subscribed) 
                 VALUES ($1, $2, $3, $4, $5, $6, $7)`,
-            [email, ip_address, geo.country, geo.region, geo.city, geo.postal, notified],
+            [email, ip_address, geo_infos.country, geo_infos.region, geo_infos.city, notified, true],
         )
 
         return true

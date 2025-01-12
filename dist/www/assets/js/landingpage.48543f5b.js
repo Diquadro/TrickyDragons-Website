@@ -7,7 +7,7 @@
 
 ;// ./src/www/scripts/api/site_accesses.ts
 function site_accesses(API_URL) {
-    fetch("".concat(API_URL, "/site-accesses"), {
+    fetch("".concat(API_URL, "/site-access"), {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({}),
@@ -138,4 +138,4 @@ cta_modal();
 /******/ var __webpack_exports__ = (__webpack_exec__(491));
 /******/ }
 ]);
-//# sourceMappingURL=landingpage.3b7f5838.js.map
+//# sourceMappingURL=landingpage.48543f5b.js.map
