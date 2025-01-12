@@ -12,15 +12,12 @@ async function email(from, to, subject, body_template_path, body__template_local
     try {
         // email transporter configuration
         const transporter = nodemailer.createTransport({
-            host: 'smtp.gmail.com',
+            host: process.env.NO_REPLY_EMAIL_HOST,
             port: 465,
             secure: true,
             auth: {
-                type: 'OAuth2',
-                user: process.env.EMAIL_USER,
-                clientId: process.env.G_API_CLIENTE_ID,
-                clientSecret: process.env.G_API_CLIENT_SECRET,
-                refreshToken: process.env.G_API_REFRESH_TOKEN,
+                user: process.env.NO_REPLY_EMAIL_USER,
+                pass: process.env.NO_REPLY_EMAIL_PASS,
             },
         })
 
@@ -28,7 +25,7 @@ async function email(from, to, subject, body_template_path, body__template_local
 
         // email options
         const mailOptions = {
-            from: from,
+            from: process.env.NO_REPLY_EMAIL_USER,
             to: to,
             subject: subject,
             html: html,
@@ -77,3 +74,17 @@ async function test_email(subject, body_template_path, body__template_locals) {
         return false
     }
 }
+
+// CONFIGURAZIONE GMAIL
+// const transporter = nodemailer.createTransport({
+//     host: 'smtp.gmail.com',
+//     port: 465,
+//     secure: true,
+//     auth: {
+//         type: 'OAuth2',
+//         user: process.env.EMAIL_USER,
+//         clientId: process.env.G_API_CLIENTE_ID,
+//         clientSecret: process.env.G_API_CLIENT_SECRET,
+//         refreshToken: process.env.G_API_REFRESH_TOKEN,
+//     },
+// })
