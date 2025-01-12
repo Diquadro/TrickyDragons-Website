@@ -1,7 +1,7 @@
 "use strict";
 (self["webpackChunktrickydragons_webserver"] = self["webpackChunktrickydragons_webserver"] || []).push([[237],{
 
-/***/ 781:
+/***/ 740:
 /***/ (() => {
 
 
@@ -69,6 +69,19 @@ function error_toast(message) {
     }, 2500);
 }
 
+;// ./src/www/views/landingpage/components/spinner/spinner.ts
+function show_spinner(show) {
+    var spinner_overlay = document.getElementById('spinner-overlay');
+    if (!spinner_overlay)
+        return;
+    if (show) {
+        spinner_overlay.classList.remove('hidden');
+    }
+    else {
+        spinner_overlay.classList.add('hidden');
+    }
+}
+
 ;// ./src/www/views/landingpage/scripts/cta_modal.ts
 function show_modal(id) {
     var modal = document.getElementById(id);
@@ -131,73 +144,68 @@ var __generator = (undefined && undefined.__generator) || function (thisArg, bod
 
 
 
+
 var EMAIL_REGEX = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
 /* harmony default export */ function cta(API_URL) {
-    var _this = this;
     var buttons = document.querySelectorAll('.cta > .button');
     buttons.forEach(function (button) {
-        button.addEventListener('click', function (event) { return __awaiter(_this, void 0, void 0, function () {
-            var target, _cta, _input, email, response, err_1;
-            return __generator(this, function (_a) {
-                switch (_a.label) {
-                    case 0:
-                        event.preventDefault();
-                        target = event.target;
-                        _cta = target.closest('.cta');
-                        if (!_cta) {
-                            return [2 /*return*/];
-                        }
-                        _input = _cta.querySelector('input[type="email"]');
-                        // Validate email format
-                        if (!_input || !EMAIL_REGEX.test(_input.value)) {
-                            // _input.classList.add('error')
-                            // setTimeout(() => _input.classList.remove('error'), 500)
-                            error_toast('Invalid email!');
-                            return [2 /*return*/];
-                        }
-                        email = _input.value;
-                        toggle_controls(_input, button);
-                        _a.label = 1;
-                    case 1:
-                        _a.trys.push([1, 3, 4, 5]);
-                        return [4 /*yield*/, send_email(API_URL, email)
-                            // Handle response based on server status
-                        ];
-                    case 2:
-                        response = _a.sent();
-                        // Handle response based on server status
-                        switch (response.status) {
-                            case 409: // Email already exists
-                                show_modal('modal_email_duplicate');
-                                break;
-                            case 200: // Subscription reactivated
-                                show_modal('modal_email_reactivated');
-                                break;
-                            case 201: // New subscription
-                                show_modal('modal_email_sent');
-                                break;
-                            default: // Unknown error
-                                error_toast('Something went wrong. Please try again later.');
-                        }
-                        return [3 /*break*/, 5];
-                    case 3:
-                        err_1 = _a.sent();
-                        error_toast('Unable to reach the server. Please try again later.');
-                        return [3 /*break*/, 5];
-                    case 4:
-                        _input.value = '';
-                        toggle_controls(_input, button);
-                        return [7 /*endfinally*/];
-                    case 5: return [2 /*return*/];
-                }
-            });
-        }); });
+        button.addEventListener('click', handle_button_click(API_URL));
     });
 }
-// Utility function to disable/enable input and button
-function toggle_controls(input, button) {
-    input.disabled = !input.disabled;
-    button.disabled = !button.disabled;
+function handle_button_click(API_URL) {
+    var _this = this;
+    return function (event) { return __awaiter(_this, void 0, void 0, function () {
+        var target, cta_container, email_input, email, response, err_1;
+        return __generator(this, function (_a) {
+            switch (_a.label) {
+                case 0:
+                    event.preventDefault();
+                    target = event.target;
+                    cta_container = target.closest('.cta');
+                    if (!cta_container)
+                        return [2 /*return*/];
+                    email_input = cta_container.querySelector('input[type="email"]');
+                    if (!email_input || !EMAIL_REGEX.test(email_input.value)) {
+                        error_toast('Invalid email!');
+                        return [2 /*return*/];
+                    }
+                    email = email_input.value.trim();
+                    show_spinner(true);
+                    _a.label = 1;
+                case 1:
+                    _a.trys.push([1, 3, 4, 5]);
+                    return [4 /*yield*/, send_email(API_URL, email)];
+                case 2:
+                    response = _a.sent();
+                    handle_response(response.status);
+                    return [3 /*break*/, 5];
+                case 3:
+                    err_1 = _a.sent();
+                    error_toast('Unable to reach the server. Please try again later.');
+                    return [3 /*break*/, 5];
+                case 4:
+                    show_spinner(false);
+                    email_input.value = '';
+                    return [7 /*endfinally*/];
+                case 5: return [2 /*return*/];
+            }
+        });
+    }); };
+}
+function handle_response(status) {
+    switch (status) {
+        case 409:
+            show_modal('modal_email_duplicate');
+            break;
+        case 200:
+            show_modal('modal_email_reactivated');
+            break;
+        case 201:
+            show_modal('modal_email_sent');
+            break;
+        default:
+            error_toast('Something went wrong. Please try again later.');
+    }
 }
 
 ;// ./src/www/views/landingpage/landingpage.ts
@@ -216,7 +224,7 @@ cta_modal();
 },
 /******/ __webpack_require__ => { // webpackRuntimeModules
 /******/ var __webpack_exec__ = (moduleId) => (__webpack_require__(__webpack_require__.s = moduleId))
-/******/ var __webpack_exports__ = (__webpack_exec__(781));
+/******/ var __webpack_exports__ = (__webpack_exec__(740));
 /******/ }
 ]);
-//# sourceMappingURL=landingpage.d3e932d2.js.map
+//# sourceMappingURL=landingpage.0924a031.js.map

@@ -10,28 +10,26 @@ import { API_URL } from '../utils/constants.js'
 const __filename = fileURLToPath(import.meta.url) // get the resolved path to the file
 const __dirname = path.dirname(__filename) // get the name of the directory
 
-const router = new Router()
-
 // Importa regex per validare le email - https://stackoverflow.com/questions/46155/how-can-i-validate-an-email-address-in-javascript
 const EMAIL_REGEX =
     /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
 
 export default function email_subscription(pool) {
-    router.post('/', async (req, res) => {
+    const router = new Router()
+    router.post('/', handle_email_subscription(pool))
+    return router
+}
+
+function handle_email_subscription(pool) {
+    return async (req, res) => {
         try {
             console.log('REQUEST - email_subscription')
 
-            let { email } = req.body
+            const email = req.body.email?.toLowerCase()
+            const is_email_valid = validate(email)
 
-            if (!email) {
-                return res.status(400).json({ error: 'Email is required' })
-            }
-
-            email = email?.toLowerCase()
-
-            // Validate email format
-            if (!EMAIL_REGEX.test(email)) {
-                return res.status(400).json({ error: 'Invalid email format' })
+            if (!is_email_valid.result) {
+                return res.status(400).json({ error: is_email_valid.error })
             }
 
             // Retrieve IP & Geo Infos
@@ -41,51 +39,30 @@ export default function email_subscription(pool) {
             // Check if the email already exists in the database
             const existing_email = await get_email_status(pool, email)
 
-            if (existing_email && existing_email.subscribed === false) {
-                // Reactivate subscription
-                await reactivate_subscription(pool, email)
-
-                return res.status(200).json({
-                    status: 'reactivated',
-                    message: 'Subscription reactivated successfully',
-                })
-            } else if (existing_email) {
-                return res.status(409).json({
-                    status: 'duplicate',
-                    message: 'Email is already subscribed',
-                })
+            if (existing_email) {
+                return handle_existing_email(res, pool, email, existing_email)
             }
 
-            // Sends email to user
-            const from = 'no-reply@trickydragons.com'
-            const to = email
-            const subject = 'Welcome to the world of Tricky Dragons – Your Adventure Awaits'
-            const body_template_path = path.resolve(
-                __dirname,
-                '../emails/email_subscription/email_subscription.pug',
-            )
-            const body__template_locals = {
-                email_opened: `${API_URL}/email_opened/${base64url.encode(email)}`,
-                email_deactivation: `${API_URL}/email_deactivation/${base64url.encode(email)}`,
-            }
-
-            const notified = await send_email(from, to, subject, body_template_path, body__template_locals)
-
-            // Save email to database
-            if (!(await save_email(pool, email, ip_address, geo_infos, notified))) {
-                return res.status(500).json({ error: 'Failed to save on database' })
-            }
-
-            return res.status(201).json({
-                status: 'subscribed',
-                message: 'Email subscribed successfully',
-            })
+            await handle_new_subscription(res, pool, email, ip_address, geo_infos)
         } catch (error) {
-            console.error('email_subscription - error message :', err.message)
+            console.error('email_subscription - error message :', error.message)
+            res.status(500).json({ error: 'Internal server error' })
         }
-    })
+    }
+}
 
-    return router
+function validate(email) {
+    // Email required
+    if (!email) {
+        return { result: false, error: 'Email is required' }
+    }
+
+    // Validate email format
+    if (!EMAIL_REGEX.test(email)) {
+        return { result: false, error: 'Invalid email format' }
+    }
+
+    return { result: true, error: '' }
 }
 
 async function get_email_status(pool, email) {
@@ -138,4 +115,48 @@ async function save_email(pool, email, ip_address, geo_infos, notified) {
     } finally {
         client.release()
     }
+}
+
+async function handle_existing_email(res, pool, email, existing_email) {
+    if (existing_email.subscribed === false) {
+        const reactivated = await reactivate_subscription(pool, email)
+
+        if (reactivated) {
+            return res.status(200).json({
+                status: 'reactivated',
+                message: 'Subscription reactivated successfully',
+            })
+        }
+
+        return res.status(500).json({ error: 'Failed to reactivate subscription' })
+    }
+
+    return res.status(409).json({
+        status: 'duplicate',
+        message: 'Email is already subscribed',
+    })
+}
+
+async function handle_new_subscription(res, pool, email, ip_address, geo_infos) {
+    const from = 'no-reply@trickydragons.com'
+    const to = email
+    const subject = 'Welcome to the world of Tricky Dragons – Your Adventure Awaits'
+    const body_template_path = path.resolve(__dirname, '../emails/email_subscription/email_subscription.pug')
+    const body__template_locals = {
+        email_opened: `${API_URL}/email_opened/${base64url.encode(email)}`,
+        email_deactivation: `${API_URL}/email_deactivation/${base64url.encode(email)}`,
+    }
+
+    const notified = await send_email(from, to, subject, body_template_path, body__template_locals)
+
+    const saved = await save_email(pool, email, ip_address, geo_infos, notified)
+
+    if (!saved) {
+        return res.status(500).json({ error: 'Failed to save on database' })
+    }
+
+    return res.status(201).json({
+        status: 'subscribed',
+        message: 'Email subscribed successfully',
+    })
 }

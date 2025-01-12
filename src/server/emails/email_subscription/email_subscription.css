@@ -34,20 +34,20 @@ p {
     line-height: 1.5rem;
 }
 
-#instagram_link,
-#kickstarter_link {
-    transition: 0, 3s;
+#instagram_link {
+    transition: 0.3s;
     padding: 0 2px;
+    color: #e1306c;
     font-weight: bold;
     text-decoration: none;
 }
 
 #kickstarter_link {
+    transition: 0.3s;
+    padding: 0 2px;
     color: #05ce78;
-}
-
-#instagram_link {
-    color: #e1306c;
+    font-weight: bold;
+    text-decoration: none;
 }
 
 #kickstarter_link:hover,
@@ -70,7 +70,7 @@ p {
 
 #instagram_button {
     display: inline-block;
-    transition: 0, 3s;
+    transition: 0.3s;
     border: 1px solid #da2d2a;
     border-radius: 5px;
     background-color: #da2d2a;
@@ -94,8 +94,8 @@ p {
 
 #footer {
     font-size: 0.75rem;
+}
 
-    > a {
-        text-decoration: none;
-    }
+#footer > a {
+    text-decoration: none;
 }
