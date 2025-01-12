@@ -38,9 +38,22 @@ export default function email_subscription(pool) {
             const ip_address = req.clientIp
             const geo_infos = get_geo_infos(ip_address)
 
-            // Check if email is already in database
-            if (!(await is_email_valid(pool, email))) {
-                return res.status(409).json({ error: 'Email already exists' })
+            // Check if the email already exists in the database
+            const existing_email = await get_email_status(pool, email)
+
+            if (existing_email && existing_email.subscribed === false) {
+                // Reactivate subscription
+                await reactivate_subscription(pool, email)
+
+                return res.status(200).json({
+                    status: 'reactivated',
+                    message: 'Subscription reactivated successfully',
+                })
+            } else if (existing_email) {
+                return res.status(409).json({
+                    status: 'duplicate',
+                    message: 'Email is already subscribed',
+                })
             }
 
             // Sends email to user
@@ -63,26 +76,46 @@ export default function email_subscription(pool) {
                 return res.status(500).json({ error: 'Failed to save on database' })
             }
 
-            return res.status(201).json({ message: 'Email subscribed successfully' })
+            return res.status(201).json({
+                status: 'subscribed',
+                message: 'Email subscribed successfully',
+            })
         } catch (error) {
-            console.error('email_subscription - error message\n', err.message)
+            console.error('email_subscription - error message :', err.message)
         }
     })
 
     return router
 }
 
-async function is_email_valid(pool, email) {
+async function get_email_status(pool, email) {
     try {
         const result = await pool.query('SELECT * FROM email_subscriptions WHERE LOWER(email) = LOWER($1)', [
             email,
         ])
-
-        return result.rows.length === 0
+        return result?.rows[0] || null
     } catch (error) {
-        console.error('is_email_valid - error message : ', err.message)
+        console.error('get_email_status - error message :', error.message)
+
+        return null
+    }
+}
+
+async function reactivate_subscription(pool, email) {
+    const client = await pool.connect()
+
+    try {
+        await client.query(
+            'UPDATE email_subscriptions SET subscribed = true WHERE LOWER(email) = LOWER($1)',
+            [email],
+        )
+        return true
+    } catch (error) {
+        console.error('reactivate_subscription - error message :', error.message)
 
         return false
+    } finally {
+        client.release()
     }
 }
 
@@ -99,7 +132,7 @@ async function save_email(pool, email, ip_address, geo_infos, notified) {
 
         return true
     } catch (err) {
-        console.error('save_email - error message\n', err.message)
+        console.error('save_email - error message :', err.message)
 
         return false
     } finally {

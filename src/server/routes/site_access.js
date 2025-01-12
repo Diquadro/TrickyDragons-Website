@@ -6,13 +6,14 @@ const router = new Router()
 
 export default function site_accesses(pool) {
     router.post('/', async (req, res) => {
-        console.log('REQUEST - site_accesses')
-
-        if (isbot(req.get('user-agent'))) {
-            return res.status(403).json({ error: 'Bot detected. Access skipped.' })
-        }
+        console.log('REQUEST - site_access')
 
         const ip_address = req.clientIp
+
+        if (isbot(req.get('user-agent')) || ['::1', '::ffff:127.0.0.1'].includes(ip_address)) {
+            return res.status(204).json({ error: 'Bot detected. Access skipped.' })
+        }
+
         const geo_infos = get_geo_infos(ip_address)
         const today = new Date().toISOString().split('T')[0]
 

@@ -1,16 +1,22 @@
-export function show_modal() {
-    const modal = document.getElementById('modal') as HTMLElement
+export function show_modal(id: string): void {
+    const modal = document.getElementById(id) as HTMLElement | null
     if (modal) modal.classList.add('show')
 }
 
-export default function cta_modal() {
-    const actionButton = document.getElementById('modal-action') as HTMLElement
+export default function cta_modal(): void {
+    // Seleziona tutti i bottoni con la classe `modal-action`
+    const modal_buttons = document.querySelectorAll('.modal-content > .action-button')
 
-    // Close modal on action button click
-    actionButton.addEventListener('click', close_modal)
+    modal_buttons.forEach((button) => {
+        button.addEventListener('click', (event: MouseEvent) => close_modal(event))
+    })
 }
 
-function close_modal() {
-    const modal = document.getElementById('modal') as HTMLElement
+function close_modal(event: MouseEvent): void {
+    // Trova il modale più vicino al bottone cliccato
+    console.log('HELLO')
+    const target = event.target as HTMLElement
+    const modal = target.closest('.modal-overlay') as HTMLElement | null
+
     if (modal) modal.classList.remove('show')
 }

@@ -1,3 +1,8 @@
+@use '../../../custom_tailwind/custom_tailwind';
+
+$desktop-pixel: 1400px !default;
+$mobile-pixel: 1400px !default;
+
 .modal-overlay {
     display: none;
     position: fixed;
@@ -20,20 +25,23 @@
         box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
         border-radius: 15px;
         background: #fff;
-        padding: 20px;
+        padding: 30px;
         width: 80svw;
         max-width: 400px;
         text-align: center;
 
         > h2 {
-            margin-bottom: 10px;
+            // margin-bottom: 10px;
             color: #da2d2a;
-            font-size: 1.8rem;
+            @include custom_tailwind.text-3xl;
         }
 
         > p {
-            margin-bottom: 20px;
-            font-size: 1.2rem;
+            margin: 10px auto 20px;
+            // margin-bottom: 20px;
+            width: 95%;
+            text-align: justify;
+            @include custom_tailwind.text-xl;
         }
 
         > .action-button {
@@ -43,10 +51,42 @@
             background-color: #da2d2a;
             padding: 10px 20px;
             color: #fff;
-            font-size: 1rem;
+            @include custom_tailwind.text-xl;
+            @include custom_tailwind.font-bold;
 
             &:hover {
                 background-color: #b32726;
+            }
+        }
+    }
+}
+
+@media only screen and (min-width: $desktop-pixel) {
+    .modal-overlay {
+        > .modal-content {
+            width: 30svw;
+            min-width: 500px;
+            max-width: 30svw;
+        }
+    }
+}
+
+@media only screen and (max-width: $mobile-pixel) {
+    .modal-overlay {
+        > .modal-content {
+            padding: 20px;
+            max-width: 80svw;
+
+            > h2 {
+                @include custom_tailwind.text-4xl;
+            }
+
+            > p {
+                @include custom_tailwind.text-2xl;
+            }
+
+            > .action-button {
+                @include custom_tailwind.text-2xl;
             }
         }
     }

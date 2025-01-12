@@ -4,6 +4,12 @@ html(lang='en')
         include ./templates/_headers.pug
 
         link(rel='stylesheet', href='./landingpage.scss')
+        link(rel='preconnect', href='https://fonts.googleapis.com')
+        link(rel='preconnect', href='https://fonts.gstatic.com', crossorigin='')
+        link(
+            rel='stylesheet',
+            href='https://fonts.googleapis.com/css2?family=Lexend:wght@100..900&display=swap'
+        )
 
         include ../../components/google_analytics/google_analytics.pug
         include ../../components/meta_pixel/meta_pixel.pug
@@ -21,5 +27,8 @@ html(lang='en')
         +cta('last-cta', 'START YOUR JOURNEY NOW!')
         include ./templates/_footer.pug
 
-        include ./templates/_cta_modal.pug
+        include ./templates/_cta_email_duplicate.pug
+        include ./templates/_cta_email_sent.pug
+        include ./templates/_cta_email_reactivated.pug
+
         script(src='landingpage.ts') 

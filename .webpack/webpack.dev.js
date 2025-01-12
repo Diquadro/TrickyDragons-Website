@@ -23,6 +23,7 @@ export default {
                 // Insert your PUG templates here
                 index: './src/www/views/landingpage/landingpage.pug',
                 404: './src/www/views/404/404.pug',
+                email_unsubscription: './src/www/views/email_unsubscription/email_unsubscription.pug',
             },
             js: {
                 // JS output filename with hash for unique id
