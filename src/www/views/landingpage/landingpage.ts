@@ -1,6 +1,6 @@
 import site_access from '../../scripts/api/site_access'
-import cta from './scripts/cta'
-import cta_modal from './scripts/cta_modal'
+import cta from './components/cta/cta'
+import cta_modal from './components/cta_modal/cta_modal'
 
 console.log('Welcome to the Tricky Dragons™ World')
 

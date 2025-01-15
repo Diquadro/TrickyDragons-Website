@@ -1,7 +1,7 @@
 "use strict";
 (self["webpackChunktrickydragons_webserver"] = self["webpackChunktrickydragons_webserver"] || []).push([[237],{
 
-/***/ 740:
+/***/ 238:
 /***/ (() => {
 
 
@@ -82,7 +82,7 @@ function show_spinner(show) {
     }
 }
 
-;// ./src/www/views/landingpage/scripts/cta_modal.ts
+;// ./src/www/views/landingpage/components/cta_modal/cta_modal.ts
 function show_modal(id) {
     var modal = document.getElementById(id);
     if (modal)
@@ -104,7 +104,7 @@ function close_modal(event) {
         modal.classList.remove('show');
 }
 
-;// ./src/www/views/landingpage/scripts/cta.ts
+;// ./src/www/views/landingpage/components/cta/cta.ts
 var __awaiter = (undefined && undefined.__awaiter) || function (thisArg, _arguments, P, generator) {
     function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
     return new (P || (P = Promise))(function (resolve, reject) {
@@ -224,7 +224,7 @@ cta_modal();
 },
 /******/ __webpack_require__ => { // webpackRuntimeModules
 /******/ var __webpack_exec__ = (moduleId) => (__webpack_require__(__webpack_require__.s = moduleId))
-/******/ var __webpack_exports__ = (__webpack_exec__(740));
+/******/ var __webpack_exports__ = (__webpack_exec__(238));
 /******/ }
 ]);
-//# sourceMappingURL=landingpage.0924a031.js.map
+//# sourceMappingURL=landingpage.87a35501.js.map

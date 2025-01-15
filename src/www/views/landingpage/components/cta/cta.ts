@@ -1,7 +1,7 @@
-import send_email from '../../../scripts/api/send_email'
-import error_toast from '../../../scripts/error_toast'
-import { show_spinner } from '../components/spinner/spinner'
-import { show_modal } from './cta_modal'
+import send_email from '../../../../scripts/api/send_email'
+import error_toast from '../../../../scripts/error_toast'
+import { show_spinner } from '../spinner/spinner'
+import { show_modal } from '../cta_modal/cta_modal'
 
 const EMAIL_REGEX =
     /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/

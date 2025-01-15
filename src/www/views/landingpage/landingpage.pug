@@ -1,7 +1,7 @@
 doctype html
 html(lang='en')
     head
-        include ./templates/_headers.pug
+        include ./components/html_head_tags/html_head_tags.pug
 
         link(rel='stylesheet', href='./landingpage.scss')
         link(rel='preconnect', href='https://fonts.googleapis.com')
@@ -14,23 +14,23 @@ html(lang='en')
         include ../../components/google_analytics/google_analytics.pug
         include ../../components/meta_pixel/meta_pixel.pug
     body
-        include ./templates/_cta_mixin.pug
+        include ./components/cta/cta.pug
 
-        include ./templates/_hero.pug
-        include ./templates/_feature_dragons.pug
+        include ./components/hero/hero.pug
+        include ./components/feature_x1/feature_x1_dragons.pug
         hr#hr-01.hr.hide-desktop
-        include ./templates/_feature_elements.pug
+        include ./components/feature_x1/feature_x1_elements.pug
         hr#hr-02.hr
-        include ./templates/_feature_challenge.pug
+        include ./components/feature_x2/feature_x2_challenge.pug
         hr#hr-03.hr
-        include ./templates/_feature_adventure.pug
+        include ./components/feature_x1/feature_x1_adventure.pug
         +cta('last-cta', 'START YOUR JOURNEY NOW!')
-        include ./templates/_footer.pug
+        include ./components/footer/footer.pug
 
-        include ./templates/_cta_email_duplicate.pug
-        include ./templates/_cta_email_sent.pug
-        include ./templates/_cta_email_reactivated.pug
+        include ./components/cta_modal/cta_modal_email_duplicate.pug
+        include ./components/cta_modal/cta_modal_email_sent.pug
+        include ./components/cta_modal/cta_modal_email_reactivated.pug
 
-        include ./components/spinner/_spinner.pug
+        include ./components/spinner/spinner.pug
 
-        script(src='landingpage.ts') 
+        script(src='./landingpage.ts') 

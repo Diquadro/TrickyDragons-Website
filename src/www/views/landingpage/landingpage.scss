@@ -1,12 +1,117 @@
-@use './scss/cta';
-@use './scss/general';
-@use './scss/hero';
-@use './scss/feature';
-@use './scss/feature_x1';
-@use './scss/feature_x2';
-@use './scss/hr';
-@use './scss/footer';
-@use './scss/cta_modal';
+@use './components/cta/cta';
+@use './components/hero/hero';
+@use './components/feature_x1/feature_x1';
+@use './components/feature_x2/feature_x2';
+@use './components/footer/footer';
+@use './components/cta_modal/cta_modal';
 @use './components/spinner/spinner';
-
 @use '../../custom_tailwind/custom_tailwind';
+
+$desktop-pixel: 1400px !default;
+$mobile-pixel: 1400px !default;
+
+* {
+    margin: 0;
+    border: 0;
+    padding: 0;
+}
+
+:root {
+    font-weight: 300;
+    font-family: 'Lexend', sans-serif;
+}
+
+.hr {
+    margin: 0 2svw;
+}
+
+hr {
+    border: 1px solid black;
+}
+
+@media only screen and (min-width: $desktop-pixel) {
+    .hide-desktop {
+        display: none;
+    }
+
+    body {
+        display: grid;
+        grid-template-columns: 50% 50%;
+        grid-template-areas:
+            'hero hero'
+            'feature-dragons feature-elements'
+            'hr-02 hr-02'
+            'feature-challenge feature-challenge'
+            'hr-03 hr-03'
+            'feature-adventure last-cta'
+            'footer footer';
+        row-gap: 50px;
+        // padding-bottom: 50px;
+    }
+
+    #hero {
+        grid-area: hero;
+        align-items: center;
+    }
+
+    #feature-dragons {
+        grid-area: feature-dragons;
+        @include custom_tailwind.grid-center;
+    }
+
+    #feature-elements {
+        grid-area: feature-elements;
+        @include custom_tailwind.grid-center;
+    }
+
+    #hr-02 {
+        grid-area: hr-02;
+    }
+
+    #feature-challenge {
+        grid-area: feature-challenge;
+        @include custom_tailwind.grid-center;
+    }
+
+    #hr-03 {
+        grid-area: hr-03;
+    }
+
+    #feature-adventure {
+        grid-area: feature-adventure;
+        @include custom_tailwind.grid-center;
+    }
+
+    #last-cta {
+        grid-area: last-cta;
+        @include custom_tailwind.grid-center;
+
+        width: 800px;
+        max-width: 45svw;
+    }
+
+    #footer {
+        grid-area: footer;
+    }
+}
+
+@media only screen and (max-width: $mobile-pixel) {
+    :root {
+        font-size: 10px;
+    }
+
+    .hide-mobile {
+        display: none;
+    }
+
+    body {
+        display: flex;
+        flex-direction: column;
+        gap: 50px;
+    }
+
+    #feature-elements > img {
+        height: 300px;
+        object-fit: contain;
+    }
+}

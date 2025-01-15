@@ -1,5 +1,4 @@
-@use '../../../custom_tailwind/custom_tailwind';
-@use './mixins';
+@use '../../../../custom_tailwind/custom_tailwind';
 
 $desktop-pixel: 1400px !default;
 $mobile-pixel: 1400px !default;
@@ -49,7 +48,7 @@ $mobile-pixel: 1400px !default;
 
         > .description {
             @include custom_tailwind.text-3xl;
-            @include mixins.margin-mobile;
+            @include custom_tailwind.margin-mobile;
         }
     }
 }
