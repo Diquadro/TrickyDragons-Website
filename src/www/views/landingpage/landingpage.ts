@@ -4,7 +4,7 @@ import cta from './components/cta/cta'
 import cta_modal from './components/cta_modal/cta_modal'
 
 document.addEventListener('DOMContentLoaded', () => {
-    console.log('Welcome to the Tricky Dragons™ World')
+    console.log('Welcome to the Tricky Dragons World')
 
     site_access(API_URL)
     cta(API_URL)

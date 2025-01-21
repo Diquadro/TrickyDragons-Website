@@ -263,7 +263,7 @@ var landingpage_generator = (undefined && undefined.__generator) || function (th
 
 
 document.addEventListener('DOMContentLoaded', function () {
-    console.log('Welcome to the Tricky Dragons™ World');
+    console.log('Welcome to the Tricky Dragons World');
     site_accesses(costants/* API_URL */.H);
     cta(costants/* API_URL */.H);
     cta_modal();
@@ -304,4 +304,4 @@ function handle_redirect() {
 /******/ var __webpack_exports__ = (__webpack_exec__(238));
 /******/ }
 ]);
-//# sourceMappingURL=landingpage.ceda1546.js.map
+//# sourceMappingURL=landingpage.aec8ceda.js.map
