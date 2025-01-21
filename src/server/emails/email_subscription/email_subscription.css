@@ -50,7 +50,7 @@ p {
     text-decoration: none;
 }
 
-#kickstarter_link:hover,
+/* #kickstarter_link:hover,
 #instagram_link:hover {
     border-radius: 4px;
     color: white;
@@ -62,7 +62,7 @@ p {
 
 #instagram_link:hover {
     background-color: #e1306c;
-}
+} */
 
 .wrapper_center {
     text-align: center;
@@ -81,11 +81,11 @@ p {
     text-decoration: none;
 }
 
-#instagram_button:hover {
+/* #instagram_button:hover {
     box-sizing: border-box;
     background-color: white;
     color: #da2d2a;
-}
+} */
 
 .horizontal_line {
     border: 1px solid black;

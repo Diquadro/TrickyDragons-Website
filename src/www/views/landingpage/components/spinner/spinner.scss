@@ -1,4 +1,5 @@
-// spinner.scss
+@use '../../../../custom_tailwind/custom_tailwind' as *;
+
 .spinner-overlay {
     display: flex;
     position: fixed;

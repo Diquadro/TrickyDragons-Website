@@ -5,7 +5,7 @@ import 'dotenv/config'
 import send_email from '../utils/send_email.js'
 import base64url from 'base64-url'
 import get_geo_infos from '../utils/get_geo_infos.js'
-import { API_URL } from '../utils/constants.js'
+import { API_URL, CLIENT_URL } from '../utils/constants.js'
 
 const __filename = fileURLToPath(import.meta.url) // get the resolved path to the file
 const __dirname = path.dirname(__filename) // get the name of the directory
@@ -40,10 +40,35 @@ function handle_email_subscription(pool) {
             const existing_email = await get_email_status(pool, email)
 
             if (existing_email) {
-                return handle_existing_email(res, pool, email, existing_email)
+                if (existing_email.subscribed === false) {
+                    const reactivated = await reactivate_subscription(pool, email)
+
+                    if (reactivated) {
+                        return res.status(200).json({
+                            status: 'reactivated',
+                            message: 'Subscription reactivated successfully',
+                        })
+                    }
+
+                    return res.status(500).json({ error: 'Failed to reactivate subscription' })
+                }
+
+                return res.status(409).json({
+                    status: 'duplicate',
+                    message: 'Email is already subscribed',
+                })
             }
 
-            await handle_new_subscription(res, pool, email, ip_address, geo_infos)
+            const saved = await handle_new_subscription(res, pool, email, ip_address, geo_infos)
+
+            if (!saved) {
+                return res.status(500).json({ error: 'Failed to save on database' })
+            }
+
+            return res.status(201).json({
+                status: 'subscribed',
+                message: 'Email subscribed successfully',
+            })
         } catch (error) {
             console.error('email_subscription - error message :', error.message)
             res.status(500).json({ error: 'Internal server error' })
@@ -117,26 +142,6 @@ async function save_email(pool, email, ip_address, geo_infos, notified) {
     }
 }
 
-async function handle_existing_email(res, pool, email, existing_email) {
-    if (existing_email.subscribed === false) {
-        const reactivated = await reactivate_subscription(pool, email)
-
-        if (reactivated) {
-            return res.status(200).json({
-                status: 'reactivated',
-                message: 'Subscription reactivated successfully',
-            })
-        }
-
-        return res.status(500).json({ error: 'Failed to reactivate subscription' })
-    }
-
-    return res.status(409).json({
-        status: 'duplicate',
-        message: 'Email is already subscribed',
-    })
-}
-
 async function handle_new_subscription(res, pool, email, ip_address, geo_infos) {
     const from = 'no-reply@trickydragons.com'
     const to = email
@@ -144,19 +149,30 @@ async function handle_new_subscription(res, pool, email, ip_address, geo_infos) 
     const body_template_path = path.resolve(__dirname, '../emails/email_subscription/email_subscription.pug')
     const body__template_locals = {
         email_opened: `${API_URL}/email_opened/${base64url.encode(email)}`,
-        email_deactivation: `${API_URL}/email_deactivation/${base64url.encode(email)}`,
+        email_deactivation: `${API_URL}/redirect/${base64url.encode(
+            JSON.stringify({
+                origin: 1, // Email
+                event: 1, // unsubscribe
+                redirect_url: `${CLIENT_URL}/email_deactivation?email=${base64url.encode(email)}`,
+            }),
+        )}`,
+        kickstarter_url: `${API_URL}/redirect/${base64url.encode(
+            JSON.stringify({
+                origin: 1, // Email
+                event: 0, // click
+                redirect_url: 'https://www.kickstarter.com/projects/2076650099/tricky-dragons',
+            }),
+        )}`,
+        instagram_url: `${API_URL}/redirect/${base64url.encode(
+            JSON.stringify({
+                origin: 1, // Email
+                event: 0, // click
+                redirect_url: 'https://www.instagram.com/trickydragons',
+            }),
+        )}`,
     }
 
     const notified = await send_email(from, to, subject, body_template_path, body__template_locals)
 
-    const saved = await save_email(pool, email, ip_address, geo_infos, notified)
-
-    if (!saved) {
-        return res.status(500).json({ error: 'Failed to save on database' })
-    }
-
-    return res.status(201).json({
-        status: 'subscribed',
-        message: 'Email subscribed successfully',
-    })
+    return await save_email(pool, email, ip_address, geo_infos, notified)
 }

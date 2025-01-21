@@ -1,3 +1,4 @@
+@use '../../custom_tailwind/custom_tailwind' as *;
 @use './components/cta/cta';
 @use './components/hero/hero';
 @use './components/feature_x1/feature_x1';
@@ -5,7 +6,6 @@
 @use './components/footer/footer';
 @use './components/cta_modal/cta_modal';
 @use './components/spinner/spinner';
-@use '../../custom_tailwind/custom_tailwind';
 
 $desktop-pixel: 1400px !default;
 $mobile-pixel: 1400px !default;
@@ -29,7 +29,7 @@ hr {
     border: 1px solid black;
 }
 
-@media only screen and (min-width: $desktop-pixel) {
+@include desktop {
     .hide-desktop {
         display: none;
     }
@@ -56,12 +56,12 @@ hr {
 
     #feature-dragons {
         grid-area: feature-dragons;
-        @include custom_tailwind.grid-center;
+        @include grid-center;
     }
 
     #feature-elements {
         grid-area: feature-elements;
-        @include custom_tailwind.grid-center;
+        @include grid-center;
     }
 
     #hr-02 {
@@ -70,7 +70,7 @@ hr {
 
     #feature-challenge {
         grid-area: feature-challenge;
-        @include custom_tailwind.grid-center;
+        @include grid-center;
     }
 
     #hr-03 {
@@ -79,12 +79,12 @@ hr {
 
     #feature-adventure {
         grid-area: feature-adventure;
-        @include custom_tailwind.grid-center;
+        @include grid-center;
     }
 
     #last-cta {
         grid-area: last-cta;
-        @include custom_tailwind.grid-center;
+        @include grid-center;
 
         width: 800px;
         max-width: 45svw;
@@ -95,7 +95,7 @@ hr {
     }
 }
 
-@media only screen and (max-width: $mobile-pixel) {
+@include mobile {
     :root {
         font-size: 10px;
     }

@@ -1,4 +1,4 @@
-@use '../../../../custom_tailwind/custom_tailwind';
+@use '../../../../custom_tailwind/custom_tailwind' as *;
 
 $desktop-pixel: 1400px !default;
 $mobile-pixel: 1400px !default;
@@ -12,25 +12,25 @@ $mobile-pixel: 1400px !default;
         gap: 3svh;
 
         > .slogan {
-            @include custom_tailwind.font-black;
+            @include font-black;
             text-align: center;
         }
 
         > .title {
-            @include custom_tailwind.text-4xl;
-            @include custom_tailwind.font-bold;
+            @include text-4xl;
+            @include font-bold;
             text-align: justify;
         }
 
         > .subtitle {
-            @include custom_tailwind.text-2xl;
-            @include custom_tailwind.font-light;
+            @include text-2xl;
+            @include font-light;
             text-align: justify;
         }
     }
 }
 
-@media only screen and (min-width: $desktop-pixel) {
+@include desktop {
     #hero {
         display: flex;
         position: relative;
@@ -66,7 +66,7 @@ $mobile-pixel: 1400px !default;
             width: 680px;
             text-align: justify;
             > .slogan {
-                @include custom_tailwind.text-6xl;
+                @include text-6xl;
             }
 
             > #hero-infografic {
@@ -78,7 +78,7 @@ $mobile-pixel: 1400px !default;
     }
 }
 
-@media only screen and (max-width: $mobile-pixel) {
+@include mobile {
     #hero {
         > #hero-image {
             > img {
@@ -92,17 +92,17 @@ $mobile-pixel: 1400px !default;
             margin-top: 25px;
 
             > .slogan {
-                @include custom_tailwind.text-5xl;
-                @include custom_tailwind.margin-mobile;
+                @include text-5xl;
+                @include margin-mobile;
             }
 
             > .title {
-                @include custom_tailwind.margin-mobile;
+                @include margin-mobile;
             }
 
             > .subtitle {
-                @include custom_tailwind.text-3xl;
-                @include custom_tailwind.margin-mobile;
+                @include text-3xl;
+                @include margin-mobile;
             }
         }
     }

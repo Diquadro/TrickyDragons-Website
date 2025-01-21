@@ -7,6 +7,7 @@ import cors from 'cors'
 import email_opened from './routes/email_opened.js'
 import * as request_ip from 'request-ip'
 import email_deactivation from './routes/email_deactivation.js'
+import redirect from './routes/redirect.js'
 
 const { Pool } = pg
 const app = express()
@@ -37,6 +38,7 @@ app.use('/email_subscription', email_subscription(pool))
 app.use('/site_access', site_access(pool))
 app.use('/email_opened', email_opened(pool))
 app.use('/email_deactivation', email_deactivation(pool))
+app.use('/redirect', redirect(pool))
 
 // Graceful Shutdown to close database connections
 process.on('SIGINT', async () => {

@@ -1,4 +1,4 @@
-@use '../../../../custom_tailwind/custom_tailwind';
+@use '../../../../custom_tailwind/custom_tailwind' as *;
 
 $desktop-pixel: 1400px !default;
 $mobile-pixel: 1400px !default;
@@ -40,48 +40,48 @@ $mobile-pixel: 1400px !default;
     }
 }
 
-@media only screen and (min-width: $desktop-pixel) {
+@include desktop {
     .cta {
         padding: 20px 40px;
 
         > .title {
             font-weight: 900;
-            @include custom_tailwind.text-5xl;
+            @include text-5xl;
         }
 
         > .subtitle {
-            @include custom_tailwind.text-xl;
+            @include text-xl;
         }
 
         > input {
-            @include custom_tailwind.text-xl;
+            @include text-xl;
         }
 
         > button {
-            @include custom_tailwind.text-2xl;
+            @include text-2xl;
         }
     }
 }
 
-@media only screen and (max-width: $mobile-pixel) {
+@include mobile {
     .cta {
         padding: 20px;
 
         > .title {
             font-weight: 900;
-            @include custom_tailwind.text-5xl;
+            @include text-5xl;
         }
 
         > .subtitle {
-            @include custom_tailwind.text-2xl;
+            @include text-2xl;
         }
 
         > input {
-            @include custom_tailwind.text-2xl;
+            @include text-2xl;
         }
 
         > button {
-            @include custom_tailwind.text-3xl;
+            @include text-3xl;
         }
     }
 }

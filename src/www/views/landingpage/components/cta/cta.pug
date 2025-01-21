@@ -1,5 +1,5 @@
 mixin cta(id, title)
-    +option_id(id)
+    +div_cta(id)
         h3.title= title
         p.subtitle
             span.font-bold Don&rsquo;t miss out!
@@ -9,7 +9,7 @@ mixin cta(id, title)
         button.button(type='submit')
             span.font-black START YOUR ADVENTURE!
 
-mixin option_id(id)
+mixin div_cta(id)
     if id
         .cta(id=id)
             block

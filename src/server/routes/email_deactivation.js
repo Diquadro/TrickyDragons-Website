@@ -1,21 +1,29 @@
 import Router from 'express-promise-router'
 import base64url from 'base64-url'
-import { CLIENT_URL } from '../utils/constants.js'
-
-const router = new Router()
 
 export default function email_deactivation(pool) {
-    router.get('/:id', async (req, res) => {
+    const router = new Router()
+
+    router.get('/:data', async (req, res) => {
         console.log('REQUEST - email_deactivation')
 
-        const { id } = req.params
-        const email = base64url.decode(id)
+        const { data } = req.params
+        const email = base64url.decode(data)
 
-        if (!(await update_server(pool, email))) {
-            return res.status(400).send('Error: Unable to unsubscribe. Email not found.')
+        try {
+            const updated = await update_server(pool, email)
+
+            if (updated) {
+                console.log(`Email ${email} unsubscribed successfully.`)
+                return res.status(200).send('Successfully unsubscribed.')
+            } else {
+                console.warn(`Email ${email} not found or already unsubscribed.`)
+                return res.status(400).send('Error: Unable to unsubscribe. Email not found.')
+            }
+        } catch (error) {
+            console.error('Error unsubscribing email:', error.message)
+            return res.status(500).send('Internal server error.')
         }
-
-        return res.redirect(CLIENT_URL + '/email_deactivation')
     })
 
     return router

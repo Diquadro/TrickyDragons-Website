@@ -1,4 +1,4 @@
-@use '../../../../custom_tailwind/custom_tailwind';
+@use '../../../../custom_tailwind/custom_tailwind' as *;
 
 $desktop-pixel: 1400px !default;
 $mobile-pixel: 1400px !default;
@@ -12,7 +12,7 @@ $mobile-pixel: 1400px !default;
         display: flex;
 
         > .title {
-            @include custom_tailwind.font-bold;
+            @include font-bold;
         }
 
         > .links {
@@ -36,7 +36,7 @@ $mobile-pixel: 1400px !default;
     }
 }
 
-@media only screen and (min-width: $desktop-pixel) {
+@include desktop {
     #footer {
         height: 100px;
 
@@ -44,7 +44,7 @@ $mobile-pixel: 1400px !default;
             align-items: bottom;
 
             > .title {
-                @include custom_tailwind.text-5xl;
+                @include text-5xl;
             }
 
             > .links {
@@ -55,7 +55,7 @@ $mobile-pixel: 1400px !default;
     }
 }
 
-@media only screen and (max-width: $mobile-pixel) {
+@include mobile {
     #footer {
         margin-top: -50px;
         height: 150px;
@@ -66,7 +66,7 @@ $mobile-pixel: 1400px !default;
             gap: 1svh;
 
             > .title {
-                @include custom_tailwind.text-4xl;
+                @include text-4xl;
             }
 
             > .links {

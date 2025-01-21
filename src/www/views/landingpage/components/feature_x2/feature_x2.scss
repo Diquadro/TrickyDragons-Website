@@ -1,4 +1,4 @@
-@use '../../../../custom_tailwind/custom_tailwind';
+@use '../../../../custom_tailwind/custom_tailwind' as *;
 
 $desktop-pixel: 1400px !default;
 $mobile-pixel: 1400px !default;
@@ -9,8 +9,8 @@ $mobile-pixel: 1400px !default;
     gap: 25px;
 
     > .title {
-        @include custom_tailwind.text-5xl;
-        @include custom_tailwind.font-black;
+        @include text-5xl;
+        @include font-black;
 
         text-align: center;
     }
@@ -28,7 +28,7 @@ $mobile-pixel: 1400px !default;
             }
 
             > .description {
-                @include custom_tailwind.text-2xl;
+                @include text-2xl;
 
                 text-align: center;
             }
@@ -36,7 +36,7 @@ $mobile-pixel: 1400px !default;
     }
 }
 
-@media only screen and (min-width: $desktop-pixel) {
+@include desktop {
     .feature-x2 {
         justify-content: center;
         gap: 75px;
@@ -62,9 +62,9 @@ $mobile-pixel: 1400px !default;
     }
 }
 
-@media only screen and (max-width: $mobile-pixel) {
+@include mobile {
     .feature-x2 {
-        @include custom_tailwind.margin-mobile;
+        @include margin-mobile;
 
         > .container {
             display: flex;
@@ -79,7 +79,7 @@ $mobile-pixel: 1400px !default;
                 }
 
                 > .description {
-                    @include custom_tailwind.text-3xl;
+                    @include text-3xl;
                 }
             }
         }
