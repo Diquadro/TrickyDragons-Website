@@ -25,15 +25,9 @@ export default function redirect(pool) {
 
         const { data_base_64 } = req.params
 
-        // Decodifica l'URL
-        // const decoded_data_base_64 = decodeURIComponent(data_base_64)
-        // const decoded_data = base64url.decode(decoded_data_base_64)
+        // Decode URL
         const decoded_data = Buffer.from(data_base_64, 'base64').toString('utf-8')
         const data = JSON.parse(decoded_data)
-
-        console.log('Decoded data:', data)
-
-        console.log(EVENT, EVENT[data.event], data.event)
 
         const is_data_valid = validate_data(data)
         if (!is_data_valid.ok) {

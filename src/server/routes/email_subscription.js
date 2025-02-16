@@ -143,7 +143,7 @@ async function save_email(pool, email, ip_address, geo_infos, notified) {
 }
 
 async function handle_new_subscription(res, pool, email, ip_address, geo_infos) {
-    const from = 'no-reply@trickydragons.com'
+    const from = 'no_reply'
     const to = email
     const subject = 'Welcome to the world of Tricky Dragons – Your Adventure Awaits'
     const body_template_path = path.resolve(__dirname, '../emails/email_subscription/email_subscription.pug')

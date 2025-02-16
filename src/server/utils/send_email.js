@@ -5,10 +5,12 @@ import juice from 'juice'
 
 export default async function send_email(from, to, subject, body_template_path, body__template_locals) {
     try {
-        const { from_formated, transporter } =
-            process.env.NODE_ENV === 'production'
-                ? EMAILS_AVAILABLE[from]
-                : EMAILS_AVAILABLE['ethereal_email']
+        // Test Evinroment set from with the test email
+        if (process.env.NODE_ENV !== 'production') {
+            from = 'test_email'
+        }
+
+        const { from_formated, transporter } = EMAILS_AVAILABLE[from]
 
         // Render Pug template
         const raw_html = pug.renderFile(body_template_path, {
@@ -39,41 +41,26 @@ export default async function send_email(from, to, subject, body_template_path, 
 }
 
 const EMAILS_AVAILABLE = {
-    'no-reply@trickydragons.com': {
-        from_formated: `"Tricky Dragons Team" <${process.env.NO_REPLY_EMAIL_USER}>`,
+    no_reply: {
+        from_formated: `"Tricky Dragons Team" <no-reply@trickydragons.com>`,
         transporter: nodemailer.createTransport({
-            host: process.env.NO_REPLY_EMAIL_HOST,
+            host: 'smtp.zoho.eu',
             port: 465,
             secure: true,
             auth: {
-                user: process.env.NO_REPLY_EMAIL_USER,
+                user: 'no-reply@trickydragons.com',
                 pass: process.env.NO_REPLY_EMAIL_PASS,
             },
         }),
     },
-    ethereal_email: {
-        from_formated: `"Test Environment 👻" <${process.env.TEST_EMAIL_USER}>`,
+    test_email: {
+        from_formated: `"Test Environment 👻" <roselyn.sauer63@ethereal.email>`,
         transporter: nodemailer.createTransport({
             host: 'smtp.ethereal.email',
             port: 587,
             auth: {
-                user: process.env.TEST_EMAIL_USER,
+                user: 'roselyn.sauer63@ethereal.email',
                 pass: process.env.TEST_EMAIL_PASS,
-            },
-        }),
-    },
-    'trickydragons.cardgame@gmail.com': {
-        from_formated: `"Tricky Dragons Team" <${process.env.EMAIL_USER}>`,
-        transporter: nodemailer.createTransport({
-            host: 'smtp.gmail.com',
-            port: 465,
-            secure: true,
-            auth: {
-                type: 'OAuth2',
-                user: process.env.EMAIL_USER,
-                clientId: process.env.G_API_CLIENTE_ID,
-                clientSecret: process.env.G_API_CLIENT_SECRET,
-                refreshToken: process.env.G_API_REFRESH_TOKEN,
             },
         }),
     },
