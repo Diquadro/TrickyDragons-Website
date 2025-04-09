@@ -1,0 +1,8 @@
+mixin feature_x2(id, title, items)
+    .feature-x2(id=id)
+        h3.title= title
+        .container
+            each item in items
+                .item
+                    img(src=item.imgSrc, alt=item.imgAlt, loading='lazy')
+                    p.description !{ item.description }

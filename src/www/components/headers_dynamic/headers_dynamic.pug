@@ -1,0 +1,37 @@
+//- Open Graph Meta Tags
+meta(property='og:title', content=title)
+meta(property='og:description', content=description)
+meta(property='og:image', content=og_image)
+meta(property='og:url', content='https://www.trickydragons.com/assets/imgs/hosted/Open_Graph_1200x630.webp')
+meta(property='og:type', content='website')
+meta(property='og:site_name', content='Tricky Dragons')
+meta(property='og:locale', content='en_US')
+
+//- Twitter Card
+meta(name='twitter:card', content='summary_large_image')
+meta(name='twitter:title', content=title)
+meta(name='twitter:description', content=description)
+meta(
+    name='twitter:image',
+    content='https://www.trickydragons.com/assets/imgs/hosted/Open_Graph_1200x630.webp'
+)
+meta(name='twitter:image:alt', content='Illustration of Tricky Dragons game')
+meta(name='twitter:site', content='@TrickyDragons') 
+meta(name='twitter:creator', content='@DanieleDAmbrosio') 
+
+//- Meta Description
+meta(name='description', content=description)
+
+//- Keywords (se definiti)
+if keywords
+    meta(name='keywords', content=keywords.join(', '))
+
+//- Robots meta tag
+if robots
+    meta(name='robots', content=robots)
+
+//- Canonical Link
+link(rel='canonical', href=url)
+
+//- Page Title
+title= title

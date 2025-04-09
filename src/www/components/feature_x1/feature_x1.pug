@@ -1,0 +1,6 @@
+mixin feature_x1(id, title, imgSrc, imgAlt, content)
+    .feature-x1(id=id)
+        h3.title= title
+        if imgSrc
+            img(src=imgSrc, alt=imgAlt, loading='lazy')
+        p.description !{ content }

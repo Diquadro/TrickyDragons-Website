@@ -1,0 +1,50 @@
+doctype html
+html(lang='en')
+    head
+        meta(charset='UTF-8')
+
+        style
+            include ./email_subscription.css
+    body
+        #email_body
+            img#hero_image(
+                src='https://www.trickydragons.com/assets/imgs/hosted/Open_Graph_600x315.webp',
+                alt='hero_image'
+            )
+
+            h2 Welcome To The Magical World Of Tricky Dragons&trade;.
+
+            h3 Thank you for joining us 🙏
+
+            p The
+                |
+                |
+                b Tricky Dragons&trade;
+                |
+                |
+                | are preparing to bring fun to your table!
+                br
+                br
+                | As we gear up for the launch, be sure to follow us on
+                |
+                a#kickstarter_link(href=kickstarter_url) Kickstarter
+                |
+                | 🚀 and
+                |
+                a#instagram_link(href=instagram_url) Instagram
+                |
+                | 📸, where our dragons
+                | will keep you updated on all the exciting news, sneak peeks, and exclusive offers.
+                br
+                br
+                | Stay tuned—your journey with the trickiest dragons has just begun!
+
+            .wrapper_center
+                a#instagram_button(href=instagram_url, alt='Follow The Dragons on Instagram') FOLLOW THE DRAGONS
+
+            .horizontal_line
+
+            #footer
+                p Copyright © 2025 Daniele D'Ambrosio. All rights reserved
+
+                a(href=email_deactivation) Unsubscribe

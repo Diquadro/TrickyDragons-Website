@@ -1,0 +1,111 @@
+// Enums for categorizing contacts based on their stage in the sales funnel.
+enum contact_status {
+  lead                      // Initial stage of a contact in the sales funnel.
+  prospect                  // Contact with a higher likelihood of conversion.
+  customer                  // Successfully converted contact.
+}
+
+// Enums for defining different types of subscriptions a contact can have.
+enum contact_subscriptions {
+  newsletter                // Subscription to receive newsletters.
+}
+
+// Enums defining where an event originated from.
+enum event_origin {
+  www                       // Event originated from the website.
+  server                    // System-generated event from the backend.
+  email                     // Event triggered via email communication.
+}
+
+// Enums defining the types of actions tracked as events.
+enum event_action {
+  email_send                // An email was sent to the contact.
+  contact_create
+  contact_subscribe         // Contact subscribed to recive some updates.
+  contact_unsubscribe       // Contact unsubscribed to recive some updates.
+  link_redirect             // Contact clicked on a redirect link.
+}
+
+// Enums representing the general outcome of an event.
+enum event_outcome {
+  success                   // The event was successfully completed.
+  failure                   // The event encountered an issue.
+}
+
+Table contacts {
+  Note: 'Stores contact details including leads, prospects, and customers.'
+
+  // PK
+  uuid            uuid                    [pk, unique, not null, note: 'Universally unique identifier for the contact.']
+
+  // Fields
+  email           text                    [unique, not null, note: 'Primary email used for contact identification and communication.']
+  status          contact_status          [not null, note: 'Stage of the contact in the sales funnel: lead, prospect, or customer.']
+  subscriptions   contact_subscriptions[] [not null, note: 'List of subscriptions assigned to the contact.']
+
+  // System & Audits
+  created_by      text                    [not null, note: 'User who created the record.']
+  created_date    timestamptz             [not null, note: 'Timestamp when the record was created.']
+  updated_by      text                    [not null, note: 'User who last updated the record.']
+  updated_date    timestamptz             [not null, note: 'Timestamp when the record was last updated.']
+  deleted_by      text                    [note: 'User who deleted the record.']
+  deleted_date    timestamptz             [note: 'Timestamp when the record was deleted.']
+}
+
+Table addresses {
+  Note: 'Stores geographic locations associated with events.'
+
+  // PK
+  uuid            uuid                    [pk, unique, not null, note: 'Universally unique identifier for the address.']
+
+  // Fields
+  city            text                    [note: 'City of the address.']
+  state           text                    [note: 'State/Region of the address.']
+  country         text                    [note: 'Country of the address.']
+
+  // System & Audits
+  created_by      text                    [not null, note: 'User who created the record.']
+  created_date    timestamptz             [not null, note: 'Timestamp when the record was created.']
+  updated_by      text                    [not null, note: 'User who last updated the record.']
+  updated_date    timestamptz             [not null, note: 'Timestamp when the record was last updated.']
+  deleted_by      text                    [note: 'User who deleted the record.']
+  deleted_date    timestamptz             [note: 'Timestamp when the record was deleted.']
+
+}
+
+Table events {
+  Note: 'Tracks all events, including system-generated communications and user actions, even for anonymous visitors.'
+
+  // PK
+  uuid              uuid                  [pk, unique, not null, note: 'Universally unique identifier for the event.']
+
+  // Relationships
+  contact_uuid      uuid                  [note: 'Reference to the contact involved in the event. Nullable for anonymous visitors.']
+  address_uuid      uuid                  [note: 'Reference to the geographic location (IP-based) of the event.']
+
+  // Fields
+  origin            event_origin          [not null, note: 'Origin of the event: website, email, etc.']
+  referrer          text                  [note: 'Origin name from which the event originated.']
+  action            event_action          [not null, note: 'Defines the nature of the event: email_send, newsletter_subscribe, etc.']
+  outcome           event_outcome         [not null, note: 'Outcome of the event, success or failure.']
+  details           text                  [note: 'Descriptive field capturing what happened, e.g., the URL clicked or the action taken.']
+  occurred_at       timestamptz           [not null, note: 'Timestamp indicating when the event took place.']
+
+  // System & Audits
+  created_by        text                  [not null, note: 'User who created the record.']
+  created_date      timestamptz           [not null, note: 'Timestamp when the record was created.']
+  updated_by        text                  [not null, note: 'User who last updated the record.']
+  updated_date      timestamptz           [not null, note: 'Timestamp when the record was last updated.']
+  deleted_by        text                  [note: 'User who deleted the record.']
+  deleted_date      timestamptz           [note: 'Timestamp when the record was deleted.']
+
+
+  Indexes {
+    contact_uuid [type: btree, name: 'idx_events_contact']
+    address_uuid [type: btree, name: 'idx_events_address']
+  }
+}
+
+// Foreign Key Constraints for events
+Ref: events.contact_uuid > contacts.uuid [delete: set null]
+Ref: events.address_uuid > addresses.uuid [delete: set null]

@@ -1,0 +1,15 @@
+mixin cta(id, title)
+    .cta(id=id)
+        h3.title= title
+        p.subtitle
+            span.font-bold Don’t miss out!
+            |
+            | We’ll notify you when the game launches, so you can grab limited early bird discounts!
+        input(type='email', placeholder='Email Address', name='email', required)
+
+        label.checkbox-container
+            input(type='checkbox', id=`consent-${id}`, name='consent', required)
+            span.checkbox-text I agree to receive the newsletter.
+
+        button.button(type='submit')
+            span.font-black START YOUR ADVENTURE!

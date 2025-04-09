@@ -1,0 +1,84 @@
+@use '@www_components/styles_common/styles_common' as *;
+
+.feature-x2 {
+    display: flex;
+    flex-direction: column;
+    gap: 25px;
+
+    > .title {
+        @include text-5xl;
+        @include font-black;
+
+        text-align: center;
+    }
+
+    > .container {
+        > .item {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+
+            > img {
+                width: 100%;
+                object-fit: contain;
+            }
+
+            > .description {
+                @include text-2xl;
+
+                text-align: center;
+            }
+        }
+    }
+}
+
+@include desktop {
+    .feature-x2 {
+        justify-content: center;
+        gap: 75px;
+        width: 90%;
+
+        > .container {
+            display: flex;
+            justify-content: space-evenly;
+            width: 100%;
+
+            > .item {
+                gap: 50px;
+
+                > img {
+                    height: 200px;
+                }
+
+                > .description {
+                    width: 20svw;
+                }
+            }
+        }
+    }
+}
+
+@include mobile {
+    .feature-x2 {
+        @include margin-mobile;
+
+        > .container {
+            display: flex;
+            flex-direction: column;
+            gap: 50px;
+
+            > .item {
+                gap: 25px;
+
+                > img {
+                    height: 150px;
+                }
+
+                > .description {
+                    @include text-3xl;
+                }
+            }
+        }
+    }
+}

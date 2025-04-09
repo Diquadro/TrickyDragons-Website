@@ -1,0 +1,107 @@
+@use '@www_components/styles_common/styles_common' as *;
+
+* {
+    margin: 0;
+    border: 0;
+    padding: 0;
+}
+
+:root {
+    font-weight: 300;
+    font-family: 'Lexend', sans-serif;
+}
+
+.hr {
+    margin: 0 2svw;
+}
+
+hr {
+    border: 1px solid black;
+}
+
+@include desktop {
+    .hide-desktop {
+        display: none;
+    }
+
+    body {
+        display: grid;
+        grid-template-columns: 50% 50%;
+        grid-template-areas:
+            'hero hero'
+            'feature-dragons feature-elements'
+            'hr-02 hr-02'
+            'feature-challenge feature-challenge'
+            'hr-03 hr-03'
+            'feature-adventure last-cta'
+            'footer footer';
+        row-gap: 50px;
+        // padding-bottom: 50px;
+    }
+
+    #hero {
+        grid-area: hero;
+        align-items: center;
+    }
+
+    #feature-dragons {
+        grid-area: feature-dragons;
+        @include grid-center;
+    }
+
+    #feature-elements {
+        grid-area: feature-elements;
+        @include grid-center;
+    }
+
+    #hr-02 {
+        grid-area: hr-02;
+    }
+
+    #feature-challenge {
+        grid-area: feature-challenge;
+        @include grid-center;
+    }
+
+    #hr-03 {
+        grid-area: hr-03;
+    }
+
+    #feature-adventure {
+        grid-area: feature-adventure;
+        @include grid-center;
+    }
+
+    #last-cta {
+        grid-area: last-cta;
+        @include grid-center;
+
+        width: 800px;
+        max-width: 45svw;
+    }
+
+    #footer {
+        grid-area: footer;
+    }
+}
+
+@include mobile {
+    :root {
+        font-size: 10px;
+    }
+
+    .hide-mobile {
+        display: none;
+    }
+
+    body {
+        display: flex;
+        flex-direction: column;
+        gap: 50px;
+    }
+
+    #feature-elements > img {
+        height: 300px;
+        object-fit: contain;
+    }
+}

@@ -1,0 +1,26 @@
+//- General settings
+meta(charset='UTF-8')
+meta(name='viewport', content='width=device-width, initial-scale=1.0')
+
+//- Favicon and Icons
+link(rel='icon', href='@www_imgs/favicon/favicon.ico')
+link(rel='icon', type='image/png', sizes='32x32', href='@www_imgs/favicon/favicon-32x32.png')
+link(rel='icon', type='image/png', sizes='16x16', href='@www_imgs/favicon/favicon-16x16.png')
+link(rel='apple-touch-icon', sizes='180x180', href='@www_imgs/favicon/apple-touch-icon.png')
+
+//- link(rel='manifest', href='/site.webmanifest')
+
+//- Default hreflang
+link(rel='alternate', href='https://www.trickydragons.com/', hreflang='x-default')
+
+//- Security Headers
+meta(http-equiv='Strict-Transport-Security', content='max-age=31536000; includeSubDomains')
+meta(name='referrer', content='strict-origin-when-cross-origin')
+meta(http-equiv='Permissions-Policy', content='geolocation=(), microphone=(), camera=()')
+meta(
+    http-equiv='Content-Security-Policy',
+    content='default-src \'self\'; script-src \'self\' https://connect.facebook.net https://cloud.umami.is https://api-gateway.umami.dev; style-src \'self\' https://fonts.bunny.net; img-src \'self\' https://www.facebook.com; font-src \'self\' https://fonts.bunny.net; connect-src \'self\' https://graph.facebook.com https://api.trickydragons.com https://api-gateway.umami.dev; object-src \'none\'; upgrade-insecure-requests;'
+)
+
+//- Fonts
+link(rel='stylesheet', href='https://fonts.bunny.net/css?family=lexend:100,200,300,400,500,600,700,800,900')

@@ -1,6 +1,6 @@
-/.old
-/node_modules
-/.env
-/.vscode
-/dist/server
-/dev
+**/.old
+**/node_modules
+**/.env
+**/.vscode
+**/dist
+**/dev

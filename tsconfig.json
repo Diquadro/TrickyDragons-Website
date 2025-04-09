@@ -3,10 +3,27 @@
         "outDir": "/",
         "sourceMap": true,
         "noImplicitAny": true,
-        "module": "es6",
-        "target": "es5",
+        "esModuleInterop": true,
+        "module": "esnext",
+        "target": "esnext",
         "jsx": "react",
         "allowJs": true,
-        "moduleResolution": "node"
+        "moduleResolution": "node",
+        "baseUrl": ".",
+        "paths": {
+            "@www_components/*": ["src/www/components/*"],
+            "@www_pages/*": ["src/www/pages/*"],
+            "@www_layouts/*": ["src/www/layouts/*"],
+            "@www_imgs/*": ["src/www/imgs/*"],
+            "@www_ts/*": ["src/www/ts/*"],
+            "@shared/*": ["src/shared/*"],
+            "@api_controllers/*": ["src/api/controllers/*"],
+            "@api_services/*": ["src/api/services/*"],
+            "@api_routes/*": ["src/api/routes/*"],
+            "@api_models/*": ["src/api/models/*"],
+            "@api_middlewares/*": ["src/api/middlewares/*"],
+            "@api_utils/*": ["src/api/utils/*"],
+            "@api_emails/*": ["src/api/emails/*"]
+        }
     }
 }
