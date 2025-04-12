@@ -11,19 +11,19 @@
         "moduleResolution": "node",
         "baseUrl": ".",
         "paths": {
-            "@www_components/*": ["src/www/components/*"],
-            "@www_pages/*": ["src/www/pages/*"],
-            "@www_layouts/*": ["src/www/layouts/*"],
-            "@www_imgs/*": ["src/www/imgs/*"],
-            "@www_ts/*": ["src/www/ts/*"],
+            "@client_components/*": ["src/client/components/*"],
+            "@client_pages/*": ["src/client/pages/*"],
+            "@client_layouts/*": ["src/client/layouts/*"],
+            "@client_imgs/*": ["src/client/imgs/*"],
+            "@client_ts/*": ["src/client/ts/*"],
             "@shared/*": ["src/shared/*"],
-            "@api_controllers/*": ["src/api/controllers/*"],
-            "@api_services/*": ["src/api/services/*"],
-            "@api_routes/*": ["src/api/routes/*"],
-            "@api_models/*": ["src/api/models/*"],
-            "@api_middlewares/*": ["src/api/middlewares/*"],
-            "@api_utils/*": ["src/api/utils/*"],
-            "@api_emails/*": ["src/api/emails/*"]
+            "@server_controllers/*": ["src/server/controllers/*"],
+            "@server_services/*": ["src/server/services/*"],
+            "@server_routes/*": ["src/server/routes/*"],
+            "@server_models/*": ["src/server/models/*"],
+            "@server_middlewares/*": ["src/server/middlewares/*"],
+            "@server_utils/*": ["src/server/utils/*"],
+            "@server_emails/*": ["src/server/emails/*"]
         }
     }
 }

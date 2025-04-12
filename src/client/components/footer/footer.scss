@@ -1,0 +1,125 @@
+@use '@client_components/styles_common/styles_common' as *;
+
+#footer {
+    background-color: black;
+    padding: 4svw;
+    color: white;
+
+    > .container-socials {
+        display: flex;
+
+        > .title {
+            @include font-bold;
+        }
+
+        > .links {
+            display: flex;
+            justify-content: space-between;
+            align-items: bottom;
+
+            > a {
+                text-decoration: none;
+
+                > img {
+                    width: 50px;
+                    height: 50px;
+                }
+            }
+        }
+    }
+
+    > hr {
+        border: 0.1px solid white;
+    }
+
+    > .container-text {
+        display: flex;
+        flex-direction: column;
+        gap: 1svh;
+        margin: 1svh 0;
+
+        > .legal-links {
+            display: flex;
+            justify-content: left;
+            gap: 1.5svw;
+            @include text-sm;
+
+            > a {
+                color: white;
+                text-decoration: underline;
+
+                &:hover {
+                    color: #e63946;
+                }
+            }
+
+            > button {
+                cursor: pointer;
+                border: none;
+                background: none;
+                color: white;
+                @include text-sm;
+                text-decoration: underline;
+
+                &:hover {
+                    color: #e63946;
+                }
+            }
+        }
+
+        > #contacts {
+            a {
+                color: white; // Un giallo che spicca come oro magico
+                @include font-black;
+                text-decoration: none;
+
+                &:hover {
+                    color: #e63946;
+                    text-decoration: underline;
+                }
+            }
+        }
+    }
+}
+
+@include desktop {
+    #footer {
+        height: 100px;
+
+        > .container-socials {
+            align-items: bottom;
+
+            > .title {
+                @include text-5xl;
+            }
+
+            > .links {
+                gap: 1svw;
+                margin-left: 2svw;
+            }
+        }
+    }
+}
+
+@include mobile {
+    #footer {
+        margin-top: -50px;
+        padding-bottom: 2rem;
+        height: auto;
+
+        > .container-socials {
+            flex-direction: column;
+            align-items: center;
+            gap: 1svh;
+
+            > .title {
+                @include text-4xl;
+            }
+
+            > .links {
+                gap: 2svw;
+                margin-bottom: 4svw;
+            }
+        }
+    }
+}

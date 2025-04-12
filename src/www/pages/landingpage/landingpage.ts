@@ -1,7 +1,0 @@
-import './landingpage.scss'
-import '@www_components/hero/hero'
-import '@www_components/feature_x1/feature_x1'
-import '@www_components/feature_x2/feature_x2'
-import '@www_components/cta/cta'
-import '@www_components/footer/footer'
-import '@www_components/redirect_link/redirect_link'

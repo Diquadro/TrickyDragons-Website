@@ -8,7 +8,7 @@ export default merge(common, {
     mode: 'development',
     devtool: 'inline-source-map',
     output: {
-        path: path.resolve('dev/www'), // Must be an absolute path
+        path: path.resolve('dev/client'), // Must be an absolute path
         clean: true,
     },
     devServer: {
@@ -31,6 +31,9 @@ export default merge(common, {
     plugins: [
         new webpack.DefinePlugin({
             'process.env.NODE_ENV': JSON.stringify('dev'),
+        }),
+        new CopyPlugin({
+            patterns: [{ from: 'src/client/robots/robots.dev.txt', to: 'robots.txt' }],
         }),
     ],
 })

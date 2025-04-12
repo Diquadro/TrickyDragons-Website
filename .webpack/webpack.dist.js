@@ -10,7 +10,7 @@ export default merge(common, {
     mode: 'production',
     devtool: 'source-map',
     output: {
-        path: path.resolve('dist/www'),
+        path: path.resolve('dist/client'),
         clean: true,
     },
     optimization: {
@@ -34,6 +34,9 @@ export default merge(common, {
         new CompressionPlugin({
             algorithm: 'gzip',
             test: /\.(js|css|html|svg)$/,
+        }),
+        new CopyPlugin({
+            patterns: [{ from: 'src/client/robots/robots.prod.txt', to: 'robots.txt' }],
         }),
     ],
 })

@@ -3,7 +3,7 @@ const BASE_URL = 'https://www.trickydragons.com'
 export default [
     {
         filename: 'index.html',
-        import: './src/www/pages/landingpage/landingpage.pug',
+        import: './src/client/pages/landingpage/landingpage.pug',
         data: {
             url: `${BASE_URL}/`,
             title: 'Tricky Dragons - Fast-Paced Card Game of Strategy & Chaos',
@@ -27,7 +27,7 @@ export default [
     },
     {
         filename: 'email_deactivation/index.html',
-        import: './src/www/pages/email_deactivation/email_deactivation.pug',
+        import: './src/client/pages/email_deactivation/email_deactivation.pug',
         data: {
             url: `${BASE_URL}/email_deactivation`,
             title: 'Email Deactivation - Tricky Dragons',
@@ -37,7 +37,7 @@ export default [
     },
     {
         filename: 'privacy_policy/index.html',
-        import: './src/www/pages/privacy_policy/privacy_policy.pug',
+        import: './src/client/pages/privacy_policy/privacy_policy.pug',
         data: {
             url: `${BASE_URL}/privacy_policy`,
             title: 'Privacy Policy - Tricky Dragons',
@@ -47,7 +47,7 @@ export default [
     },
     {
         filename: 'terms_and_conditions/index.html',
-        import: './src/www/pages/terms_and_conditions/terms_and_conditions.pug',
+        import: './src/client/pages/terms_and_conditions/terms_and_conditions.pug',
         data: {
             url: `${BASE_URL}/terms_and_conditions`,
             title: 'Terms and Conditions - Tricky Dragons',
@@ -57,7 +57,7 @@ export default [
     },
     {
         filename: '404.html',
-        import: './src/www/pages/404/404.pug',
+        import: './src/client/pages/404/404.pug',
         data: {
             url: `${BASE_URL}/404`,
             title: '404 - Page Not Found | Tricky Dragons',
@@ -67,7 +67,7 @@ export default [
     },
     {
         filename: 'cookie_policy/index.html',
-        import: './src/www/pages/cookie_policy/cookie_policy.pug',
+        import: './src/client/pages/cookie_policy/cookie_policy.pug',
         data: {
             url: `${BASE_URL}/cookie_policy`,
             title: 'Cookie Policy - Tricky Dragons',

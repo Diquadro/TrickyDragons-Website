@@ -1,6 +1,4 @@
-/* develblock:start */
-import(/* webpackIgnore: true */ 'dotenv/config')
-/* develblock:end */
+if (!process.env.NODE_ENV) throw new Error('NODE_ENV not defined')
 
 export const EMAIL_STRING = 'email'
 

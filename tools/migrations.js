@@ -4,7 +4,8 @@
 import fs from 'fs'
 import path from 'path'
 import postgres from 'postgres'
-import 'dotenv/config'
+import dotenv from 'dotenv'
+dotenv.config({ path: ['/etc/secrets/.env', '.env'] })
 
 const join = path.join
 
@@ -92,8 +93,6 @@ async function postgres_shift({
 }
 
 ;(async () => {
-    console.log('AAA -> ', process.env.PG_URI)
-
     const sql = postgres(process.env.PG_URI, {
         ssl: 'prefer',
         idle_timeout: 30,
@@ -102,7 +101,7 @@ async function postgres_shift({
     try {
         await postgres_shift({
             sql,
-            path: path.join(process.cwd(), 'src/db/migrations'),
+            path: path.join(process.cwd(), 'src/database/migrations'),
             before: ({ migration_id, name }) => {
                 console.log('Migrating', migration_id, name)
             },

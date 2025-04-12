@@ -1,0 +1,16 @@
+{
+    "extends": "./tsconfig.json",
+    "compilerOptions": {
+        "rootDir": "./src",
+        "outDir": "./dist/server",
+        "module": "CommonJS",
+        "target": "ES2020",
+        "allowJs": false,
+        "esModuleInterop": true,
+        "resolveJsonModule": true,
+        "noEmit": false,
+        "strict": true
+    },
+    "include": ["src/server/**/*", "src/shared/**/*", "src/schemas/**/*"],
+    "exclude": ["src/www", "node_modules"]
+}

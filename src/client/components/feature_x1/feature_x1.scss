@@ -1,0 +1,51 @@
+@use '@client_components/styles_common/styles_common' as *;
+
+.feature-x1 {
+    display: flex;
+    flex-direction: column;
+    gap: 25px;
+
+    > .title {
+        @include text-5xl;
+        @include font-black;
+
+        text-align: center;
+    }
+
+    > img {
+        // width: 100%;
+        height: 350px;
+        object-fit: contain;
+    }
+
+    > .description {
+        @include text-2xl;
+
+        text-align: justify;
+    }
+}
+
+@include desktop {
+    .feature-x1 {
+        justify-content: center;
+        width: 550px;
+    }
+}
+
+@include mobile {
+    .feature-x1 {
+        align-items: center;
+        overflow-x: hidden;
+        overflow-y: hidden;
+
+        > .title {
+            // @include mixins.margin-mobile;
+            margin: 0 2svw;
+        }
+
+        > .description {
+            @include text-3xl;
+            @include margin-mobile;
+        }
+    }
+}

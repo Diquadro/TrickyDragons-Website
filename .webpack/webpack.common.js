@@ -20,7 +20,7 @@ export default {
             },
             {
                 test: /\.tsx?$/,
-                exclude: [/node_modules/, '/src/api/'],
+                exclude: [/node_modules/, '/src/server/'],
                 use: [
                     {
                         loader: 'webpack-strip-block',
@@ -41,11 +41,11 @@ export default {
     },
     resolve: {
         alias: {
-            '@www_imgs': path.resolve('src/www/imgs'),
-            '@www_components': path.resolve('src/www/components'),
-            '@www_pages': path.resolve('src/www/pages'),
-            '@www_layouts': path.resolve('src/www/layouts'),
-            '@www_ts': path.resolve('src/www/ts'),
+            '@client_imgs': path.resolve('src/client/imgs'),
+            '@client_components': path.resolve('src/client/components'),
+            '@client_pages': path.resolve('src/client/pages'),
+            '@client_layouts': path.resolve('src/client/layouts'),
+            '@client_ts': path.resolve('src/client/ts'),
             '@shared': path.resolve('src/shared'),
         },
         extensions: ['.tsx', '.ts', '.js', '.css', '.scss'],
@@ -53,10 +53,9 @@ export default {
     plugins: [
         new CopyPlugin({
             patterns: [
-                { from: 'src/www/imgs/_hosted', to: 'assets/imgs/hosted' },
-                { from: 'src/www/sitemap.xml', to: '' },
-                { from: 'src/www/robots.txt', to: '' },
-                { from: 'src/www/site.webmanifest', to: '' },
+                { from: 'src/client/imgs/_hosted', to: 'assets/imgs/hosted' },
+                { from: 'src/client/sitemap.xml', to: '' },
+                { from: 'src/client/site.webmanifest', to: '' },
             ],
         }),
         new PugPlugin({
@@ -80,7 +79,9 @@ export default {
             ],
         }),
     ],
-    stats: {
-        warningsFilter: [/Conflicting values for 'process.env.NODE_ENV'/],
-    },
+    ignoreWarnings: [
+        {
+            message: /Conflicting values for 'process.env.NODE_ENV'/,
+        },
+    ],
 }

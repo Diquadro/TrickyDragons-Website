@@ -1,0 +1,37 @@
+include @client_components/redirect_link/redirect_link.pug
+
+#footer
+    .container-socials
+        .title FOLLOW US ALSO ON
+        .links
+            +redirect_link('https://www.instagram.com/trickydragons/')
+                img(src='@client_imgs/social_images/instagram-50.webp', alt='instagram link', loading='lazy')
+
+            +redirect_link('https://www.facebook.com/TrickyDragons/')
+                img(src='@client_imgs/social_images/facebook-50.webp', alt='facebook link', loading='lazy')
+
+            +redirect_link('https://www.kickstarter.com/projects/2076650099/tricky-dragons')
+                img(
+                    src='@client_imgs/social_images/kickstarter-50.webp',
+                    alt='kickstarter link',
+                    loading='lazy'
+                )
+
+            +redirect_link('https://x.com/TrickyDragons')
+                img(src='@client_imgs/social_images/x-50-white.webp', alt='x link', loading='lazy')
+
+            +redirect_link('https://boardgamegeek.com/boardgame/436445/tricky-dragons')
+                img(src='@client_imgs/social_images/bgg-50.webp', alt='boardgamegeek link', loading='lazy')
+
+    hr
+
+    .container-text
+        .legal-links
+            a(href='/privacy_policy') Privacy Policy
+            a(href='/terms_and_conditions') Terms & Conditions
+            a(href='/cookie_policy') Cookie Policy
+            button#cookie-settings(type='button', data-cc='show-preferencesModal') Manage cookie preferences
+
+        p#contacts !{ "Got questions, ideas, or just want to say hi? Send a dragon (or an email) to: <a href='mailto:contact-us@trickydragons.com'> contact-us@trickydragons.com </a>" }
+
+        p#copyright Copyright © 2025 Daniele D'Ambrosio. All rights reserved.
