@@ -4,13 +4,16 @@
     "description": "trickydragons-webserver",
     "private": true,
     "scripts": {
-        "watch:dev": "concurrently --kill-others \"npm:watch:dev:*\"",
-        "watch:dev:serve": "webpack serve --config .webpack/webpack.dev.js",
-        "watch:dev:server:start": "tsx watch src/server/server.ts --exclude node_modules --include src/server --include src/shared --include src/schemas",
-        "dist:database:migrate": "node tools/migrations.js && npx kanel",
-        "dist:server:build": "tsc --project tsconfig.server.json",
-        "dist:server:start": "node dist/server/server.js",
-        "dist:client:build": "webpack --config .webpack/webpack.dist.js"
+        "watch:local": "concurrently --kill-others \"npm:watch:dev:*\"",
+        "watch:local:serve": "webpack serve --config .configs/.webpack/webpack.dev.js",
+        "watch:local:server": "tsx watch src/server/server.ts --exclude node_modules --include src/server --include src/shared --include src/schemas",
+        "dev:client:build": "webpack --config .configs/.webpack/webpack.dev.js",
+        "dev:server:build": "tsc --project .configs/.tsconfig/tsconfig.server.dev.json",
+        "dev:server:start": "node dev/server/server.js",
+        "prod:client:build": "webpack --config .configs/.webpack/webpack.prod.js",
+        "prod:server:build": "tsc --project .configs/.tsconfig/tsconfig.server.prod.json",
+        "prod:server:start": "node prod/server/server.js",
+        "database:migrate": "node tools/migrations.js && npx kanel"
     },
     "author": "Daniele 'Diquadro' D'Ambrosio",
     "type": "module",

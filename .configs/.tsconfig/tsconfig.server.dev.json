@@ -1,0 +1,7 @@
+// tsconfig.server.dev
+{
+    "extends": "./tsconfig.server.common.json",
+    "compilerOptions": {
+        "outDir": "../../dev/server"
+    }
+}

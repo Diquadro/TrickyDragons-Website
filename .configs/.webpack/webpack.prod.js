@@ -5,12 +5,13 @@ import path from 'path'
 import CssMinimizerPlugin from 'css-minimizer-webpack-plugin'
 import TerserPlugin from 'terser-webpack-plugin'
 import CompressionPlugin from 'compression-webpack-plugin'
+import CopyPlugin from 'copy-webpack-plugin'
 
 export default merge(common, {
     mode: 'production',
     devtool: 'source-map',
     output: {
-        path: path.resolve('dist/client'),
+        path: path.resolve('prod/client'),
         clean: true,
     },
     optimization: {

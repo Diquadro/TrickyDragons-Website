@@ -1,0 +1,7 @@
+// tsconfig.server.prod
+{
+    "extends": "./tsconfig.server.common.json",
+    "compilerOptions": {
+        "outDir": "./prod/server"
+    }
+}
