@@ -1,3 +1,4 @@
+//tsconfig.paths
 {
     "compilerOptions": {
         "baseUrl": "../../",

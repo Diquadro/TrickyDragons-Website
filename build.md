@@ -16,7 +16,7 @@ Perchè ho cambiato la gestione inserisc un file in render
 
 Build Filters "src/server/\*\*" "src/database/\*\*"
 Build Command run script "npm install && npm run database:migrate && npm run dev:server:build"
-Start Command "yarn run dist:server:start"
+Start Command "yarn run dev:server:start"
 
 BUILD DB
 Run script "database:migrate"

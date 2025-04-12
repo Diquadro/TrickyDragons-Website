@@ -1,10 +1,10 @@
+import dotenv from 'dotenv'
+dotenv.config({ path: ['/etc/secrets/.env', '.env'] })
+
 import express from 'express'
 import { apply_middlewares } from '@server_middlewares/middlewares'
 import { apply_routes } from '@server_routes/routes'
 import { sql } from '@server_models/models'
-
-import dotenv from 'dotenv'
-dotenv.config({ path: ['/etc/secrets/.env', '.env'] })
 
 const app = express()
 
