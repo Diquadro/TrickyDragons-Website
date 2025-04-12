@@ -1,6 +1,6 @@
 
 -- Audit trigger handler function (INSERT, UPDATE)
-CREATE OR REPLACE FUNCTION audit_trigger_handler()
+CREATE OR REPLACE FUNCTION audit_fields_handler()
 RETURNS TRIGGER AS $$
 BEGIN
     -- Set creation info only on INSERT
