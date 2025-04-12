@@ -1,0 +1,34 @@
+{
+    "compilerOptions": {
+        "allowJs": true,
+        "baseUrl": "../../",
+        "esModuleInterop": true,
+        "forceConsistentCasingInFileNames": true,
+        "jsx": "react",
+        "module": "esnext",
+        "moduleResolution": "node",
+        "noImplicitAny": true,
+        "paths": {
+            "@client_components/*": ["src/client/components/*"],
+            "@client_imgs/*": ["src/client/imgs/*"],
+            "@client_layouts/*": ["src/client/layouts/*"],
+            "@client_pages/*": ["src/client/pages/*"],
+            "@client_ts/*": ["src/client/ts/*"],
+            "@server_controllers/*": ["src/server/controllers/*"],
+            "@server_emails/*": ["src/server/emails/*"],
+            "@server_middlewares/*": ["src/server/middlewares/*"],
+            "@server_models/*": ["src/server/models/*"],
+            "@server_routes/*": ["src/server/routes/*"],
+            "@server_services/*": ["src/server/services/*"],
+            "@server_utils/*": ["src/server/utils/*"],
+            "@shared/*": ["src/shared/*"]
+        },
+        "rootDir": "../../src/client",
+        "skipLibCheck": true,
+        "sourceMap": true,
+        "strict": true,
+        "target": "esnext"
+    },
+    "exclude": ["../../src/server", "../../src/schemas", "../../src/database", "../../node_modules"],
+    "include": ["../../src/client/**/*", "../../src/shared/**/*"]
+}

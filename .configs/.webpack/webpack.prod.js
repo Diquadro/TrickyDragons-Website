@@ -40,4 +40,19 @@ export default merge(common, {
             patterns: [{ from: 'src/client/robots/robots.prod.txt', to: 'robots.txt' }],
         }),
     ],
+    module: {
+        rules: [
+            {
+                test: /\.tsx?$/,
+                use: [
+                    {
+                        loader: 'ts-loader',
+                        options: {
+                            configFile: path.resolve('./.configs/.tsconfig/tsconfig.client.prod.json'),
+                        },
+                    },
+                ],
+            },
+        ],
+    },
 })

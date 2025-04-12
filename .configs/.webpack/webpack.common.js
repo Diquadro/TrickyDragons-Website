@@ -19,18 +19,6 @@ export default {
                 },
             },
             {
-                test: /\.tsx?$/,
-                exclude: [/node_modules/, '/src/server/'],
-                use: [
-                    {
-                        loader: 'webpack-strip-block',
-                    },
-                    {
-                        loader: 'ts-loader',
-                    },
-                ],
-            },
-            {
                 test: /\.(woff|woff2|eot|ttf|otf|svg)$/i,
                 type: 'asset/resource',
                 generator: {
