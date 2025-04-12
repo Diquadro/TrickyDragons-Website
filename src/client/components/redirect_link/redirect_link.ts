@@ -4,7 +4,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const redirectLinks = document.querySelectorAll('.redirect_link')
 
     redirectLinks.forEach((link) => {
-        link.addEventListener('click', (event: MouseEvent) => {
+        link.addEventListener('click', (event) => {
             event.preventDefault()
 
             const anchor = link as HTMLAnchorElement

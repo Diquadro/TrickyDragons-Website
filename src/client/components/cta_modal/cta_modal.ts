@@ -9,7 +9,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const modal_buttons = document.querySelectorAll('.cta-modal-content > .action-button')
 
     modal_buttons.forEach((button) => {
-        button.addEventListener('click', (event: MouseEvent) => close_modal(event))
+        button.addEventListener('click', (event) => close_modal(event as MouseEvent))
     })
 })
 

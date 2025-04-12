@@ -14,7 +14,7 @@ const EMAIL_REGEX =
 document.addEventListener('DOMContentLoaded', () => {
     const buttons = document.querySelectorAll('.cta > .button')
 
-    buttons.forEach((button: HTMLButtonElement) => {
+    buttons.forEach((button) => {
         button.addEventListener('click', handle_button_click())
     })
 })
