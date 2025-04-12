@@ -19,4 +19,4 @@ Build Command run script "npm install && npm run database:migrate && npm run dev
 Start Command "yarn run dist:server:start"
 
 BUILD DB
-Run script "node tools/migrations.js"
+Run script "database:migrate"

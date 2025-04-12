@@ -41,10 +41,6 @@ COMMENT ON COLUMN contacts.updated_date IS 'Timestamp when the record was last u
 COMMENT ON COLUMN contacts.deleted_by IS 'User who deleted the record.';
 COMMENT ON COLUMN contacts.deleted_date IS 'Timestamp when the record was deleted.';
 
-CREATE TRIGGER audit_contacts_trg
-BEFORE INSERT OR UPDATE ON contacts
-FOR EACH ROW EXECUTE FUNCTION audit_fields_handler();
-
 -- Table: addresses
 CREATE TABLE addresses (
   uuid UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
@@ -70,10 +66,6 @@ COMMENT ON COLUMN addresses.updated_by IS 'User who last updated the record.';
 COMMENT ON COLUMN addresses.updated_date IS 'Timestamp when the record was last updated.';
 COMMENT ON COLUMN addresses.deleted_by IS 'User who deleted the record.';
 COMMENT ON COLUMN addresses.deleted_date IS 'Timestamp when the record was deleted.';
-
-CREATE TRIGGER audit_addresses_trg
-BEFORE INSERT OR UPDATE ON addresses
-FOR EACH ROW EXECUTE FUNCTION audit_fields_handler();
 
 -- Table: events
 CREATE TABLE events (
@@ -114,7 +106,3 @@ COMMENT ON COLUMN events.deleted_date IS 'Timestamp when the record was deleted.
 -- Indexes for events
 CREATE INDEX idx_events_contact_uuid ON events(contact_uuid);
 CREATE INDEX idx_events_address_uuid ON events(address_uuid);
-
-CREATE TRIGGER audit_events_trg
-BEFORE INSERT OR UPDATE ON events
-FOR EACH ROW EXECUTE FUNCTION audit_fields_handler();
