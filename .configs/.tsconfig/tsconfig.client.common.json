@@ -8,7 +8,7 @@
         "module": "esnext",
         "moduleResolution": "node",
         "noImplicitAny": true,
-        "rootDir": "../../src/client",
+        "rootDir": "../../src",
         "skipLibCheck": true,
         "sourceMap": true,
         "strict": true,
