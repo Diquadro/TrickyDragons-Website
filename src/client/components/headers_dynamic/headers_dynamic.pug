@@ -35,3 +35,17 @@ link(rel='canonical', href=url)
 
 //- Page Title
 title= title
+
+//- Content-Security-Policy
+- const is_dev = env === 'dev'
+- const script_src = ["'self'", "'nonce-beasties-critical-css-001'", 'https://connect.facebook.net', 'https://cloud.umami.is', 'https://api-gateway.umami.dev']
+- const style_src = ["'self'", "'nonce-beasties-critical-css-001'", 'https://fonts.bunny.net']
+- const img_src = ["'self'", 'https://www.facebook.com']
+- const font_src = ["'self'", 'https://fonts.bunny.net']
+- const connect_src = ["'self'", 'https://graph.facebook.com', 'https://api.trickydragons.com', 'https://api-gateway.umami.dev']
+- if (is_dev) connect_src.push('https://dev-trickydragons-server.onrender.com')
+
+meta(
+    http-equiv='Content-Security-Policy',
+    content=`default-src 'self'; script-src ${script_src.join(' ')}; style-src ${style_src.join(' ')}; img-src ${img_src.join(' ')}; font-src ${font_src.join(' ')}; connect-src ${connect_src.join(' ')}; object-src 'none'; upgrade-insecure-requests;`
+)

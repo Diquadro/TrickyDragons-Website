@@ -1,11 +1,16 @@
 // pages.config.mjs
+import dotenv from 'dotenv'
+dotenv.config({ path: ['/etc/secrets/.env', '.env'] })
+
 const BASE_URL = 'https://www.trickydragons.com'
+const env = process.env.NODE_ENV
 
 export default [
     {
         filename: 'index.html',
         import: './src/client/pages/landingpage/landingpage.pug',
         data: {
+            env: env,
             url: `${BASE_URL}/`,
             title: 'Tricky Dragons - Fast-Paced Card Game of Strategy & Chaos',
             description:
@@ -30,6 +35,7 @@ export default [
         filename: 'email_deactivation/index.html',
         import: './src/client/pages/email_deactivation/email_deactivation.pug',
         data: {
+            env: env,
             url: `${BASE_URL}/email_deactivation`,
             title: 'Email Deactivation - Tricky Dragons',
             description: 'Deactivate your email subscription from Tricky Dragons.',
@@ -40,6 +46,7 @@ export default [
         filename: 'privacy_policy/index.html',
         import: './src/client/pages/privacy_policy/privacy_policy.pug',
         data: {
+            env: env,
             url: `${BASE_URL}/privacy_policy`,
             title: 'Privacy Policy - Tricky Dragons',
             description: 'Read our Privacy Policy to learn how we handle your data.',
@@ -50,6 +57,7 @@ export default [
         filename: 'terms_and_conditions/index.html',
         import: './src/client/pages/terms_and_conditions/terms_and_conditions.pug',
         data: {
+            env: env,
             url: `${BASE_URL}/terms_and_conditions`,
             title: 'Terms and Conditions - Tricky Dragons',
             description: 'Read the Terms and Conditions of Tricky Dragons.',
@@ -60,6 +68,7 @@ export default [
         filename: '404.html',
         import: './src/client/pages/404/404.pug',
         data: {
+            env: env,
             url: `${BASE_URL}/404`,
             title: '404 - Page Not Found | Tricky Dragons',
             description: "Oops! The page you're looking for doesn't exist.",
@@ -70,6 +79,7 @@ export default [
         filename: 'cookie_policy/index.html',
         import: './src/client/pages/cookie_policy/cookie_policy.pug',
         data: {
+            env: env,
             url: `${BASE_URL}/cookie_policy`,
             title: 'Cookie Policy - Tricky Dragons',
             description: 'Learn how we use cookies to enhance your experience on our website.',

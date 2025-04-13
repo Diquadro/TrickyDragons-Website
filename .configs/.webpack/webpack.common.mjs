@@ -1,4 +1,8 @@
 // webpack.common.js
+import dotenv from 'dotenv'
+dotenv.config({ path: ['/etc/secrets/.env', '.env'] })
+
+import webpack from 'webpack'
 import PugPlugin from 'pug-plugin'
 import CopyPlugin from 'copy-webpack-plugin'
 import path from 'path'
@@ -50,6 +54,9 @@ export default {
         extensions: ['.tsx', '.ts', '.js', '.css', '.scss'],
     },
     plugins: [
+        new webpack.DefinePlugin({
+            'process.env.NODE_ENV': JSON.stringify(process.env.NODE_ENV),
+        }),
         new CopyPlugin({
             patterns: [
                 { from: 'src/client/imgs/_hosted', to: 'assets/imgs/hosted' },
