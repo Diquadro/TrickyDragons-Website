@@ -64,7 +64,7 @@ build({
         }),
         nodeExternalsPlugin(), // Exclude node_modules from the bundle (keeps bundle small)
     ],
-    tsconfig: '/.configs/.tsconfig/tsconfig.server.json',
+    tsconfig: resolve(__dirname, '..', '.configs/.tsconfig/tsconfig.server.json'),
 })
     .then(() => {
         console.log(`Build completed successfully: ${join(outDirPath, 'server.cjs')}`)
