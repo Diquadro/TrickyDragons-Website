@@ -3,7 +3,7 @@ import { Contacts_Services } from '@server_services/contacts.services'
 import { Events_Services } from '@server_services/events.services'
 import { Addresses_Services } from '@server_services/addresses.services'
 import { handle_error } from '@server_utils/handle_error'
-import EventOutcome from 'src/schemas/public/EventOutcome'
+import EventOutcome from '@schemas/public/EventOutcome'
 
 export class Contacts_Controllers {
     static async create_lead(req: Request, res: Response): Promise<Response> {

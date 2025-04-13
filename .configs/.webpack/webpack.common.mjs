@@ -2,7 +2,7 @@
 import PugPlugin from 'pug-plugin'
 import CopyPlugin from 'copy-webpack-plugin'
 import path from 'path'
-import pagesConfig from './pages.config.js'
+import pagesConfig from './pages.config.mjs'
 
 export default {
     module: {
@@ -24,6 +24,17 @@ export default {
                 generator: {
                     filename: 'assets/fonts/[name][ext][query]',
                 },
+            },
+            {
+                test: /\.tsx?$/,
+                use: [
+                    {
+                        loader: 'ts-loader',
+                        options: {
+                            configFile: path.resolve('./.configs/.tsconfig/tsconfig.client.json'),
+                        },
+                    },
+                ],
             },
         ],
     },

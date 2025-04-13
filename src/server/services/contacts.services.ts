@@ -1,8 +1,7 @@
-import Contacts from 'src/schemas/public/Contacts'
-import ContactSubscriptions from 'src/schemas/public/ContactSubscriptions'
-import ContactStatus from 'src/schemas/public/ContactStatus'
+import Contacts from '@schemas/public/Contacts'
+import ContactSubscriptions from '@schemas/public/ContactSubscriptions'
+import ContactStatus from '@schemas/public/ContactStatus'
 import { Contacts_Models } from '@server_models/contacts.models'
-import { z } from 'zod'
 import {
     custom_error,
     ALREADY_ASSOCIATED,

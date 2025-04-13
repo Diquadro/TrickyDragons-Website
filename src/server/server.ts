@@ -11,6 +11,8 @@ const app = express()
 apply_middlewares(app)
 apply_routes(app)
 
+const c = __dirname
+
 // Graceful Shutdown to close database connections
 process.on('SIGINT', async () => {
     await sql.end()

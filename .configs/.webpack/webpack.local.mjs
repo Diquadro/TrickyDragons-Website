@@ -1,7 +1,7 @@
 // webpack.dev.js
 import webpack from 'webpack'
 import { merge } from 'webpack-merge'
-import common from './webpack.common.js'
+import common from './webpack.common.mjs'
 import path from 'path'
 import CopyPlugin from 'copy-webpack-plugin'
 
@@ -31,25 +31,10 @@ export default merge(common, {
     },
     plugins: [
         new webpack.DefinePlugin({
-            'process.env.NODE_ENV': JSON.stringify('dev'),
+            'process.env.NODE_ENV': JSON.stringify('local'),
         }),
         new CopyPlugin({
             patterns: [{ from: 'src/client/robots/robots.dev.txt', to: 'robots.txt' }],
         }),
     ],
-    module: {
-        rules: [
-            {
-                test: /\.tsx?$/,
-                use: [
-                    {
-                        loader: 'ts-loader',
-                        options: {
-                            configFile: path.resolve('./.configs/.tsconfig/tsconfig.client.dev.json'),
-                        },
-                    },
-                ],
-            },
-        ],
-    },
 })

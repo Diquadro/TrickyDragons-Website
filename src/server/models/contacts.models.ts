@@ -1,5 +1,5 @@
 import { sql } from '@server_models/models'
-import Contacts from 'src/schemas/public/Contacts'
+import Contacts from '@schemas/public/Contacts'
 
 export class Contacts_Models {
     static async get_by_emails(emails: string[]) {

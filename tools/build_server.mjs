@@ -64,10 +64,10 @@ build({
         }),
         nodeExternalsPlugin(), // Exclude node_modules from the bundle (keeps bundle small)
     ],
-    tsconfig: './.configs/.tsconfig/tsconfig.server.common.json',
+    tsconfig: '/.configs/.tsconfig/tsconfig.server.json',
 })
     .then(() => {
-        console.log(`Build completed successfully: ${join(outDirPath, 'server.js')}`)
+        console.log(`Build completed successfully: ${join(outDirPath, 'server.cjs')}`)
     })
     .catch((error) => {
         console.error('Build failed:', error)

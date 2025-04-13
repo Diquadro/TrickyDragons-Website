@@ -2,9 +2,9 @@ import nodemailer, { Transporter } from 'nodemailer'
 import pug from 'pug'
 import juice from 'juice'
 import SMTPTransport from 'nodemailer/lib/smtp-transport'
-import { API_URL, CLIENT_URL, IS_PROD } from '@shared/constants'
+import { API_URL, CLIENT_URL, IS_DEV, IS_LOCAL } from '@shared/constants'
 import { custom_error, VALIDATION_ERROR } from '@server_utils/custom_errors'
-import Contacts from 'src/schemas/public/Contacts'
+import Contacts from '@schemas/public/Contacts'
 import base64url from 'base64url'
 import { Emails_Helpers } from '../helpers/emails.helpers'
 import path from 'path'
@@ -18,7 +18,7 @@ export class Emails_Services {
         }
 
         for (const contact of contacts) {
-            const from = 'no_reply'
+            const from = 'zoho_no_reply'
             const to = contact.email
             const subject = 'Welcome to the world of Tricky Dragons – Your Adventure Awaits'
             const body_template_path = path.resolve(
@@ -67,8 +67,12 @@ export class Emails_Services {
         body_template_locals: any,
     ) {
         // Test Evinroment set from with the test email
-        if (!IS_PROD) {
-            from = 'test_email'
+        if (IS_LOCAL) {
+            from = 'ethereal_test_local'
+        }
+
+        if (IS_DEV) {
+            from = 'zoho_test_dev'
         }
 
         const { from_formatted, transporter } = Emails_Services.EMAILS_AVAILABLE[from]
@@ -101,7 +105,7 @@ export class Emails_Services {
             transporter: Transporter<SMTPTransport.SentMessageInfo>
         }
     > = {
-        no_reply: {
+        zoho_no_reply: {
             from_formatted: `"Tricky Dragons Team" <no-reply@trickydragons.com>`,
             transporter: nodemailer.createTransport({
                 host: 'smtp.zoho.eu',
@@ -109,18 +113,30 @@ export class Emails_Services {
                 secure: true,
                 auth: {
                     user: 'no-reply@trickydragons.com',
-                    pass: process.env.NO_REPLY_EMAIL_PASS,
+                    pass: process.env.ZOHO_NO_REPLY_EMAIL_PASS,
                 },
             }),
         },
-        test_email: {
+        zoho_test_dev: {
+            from_formatted: `"Test001-Dev001 Tricky Dragons Team" <test001.dev001@trickydragons.com>`,
+            transporter: nodemailer.createTransport({
+                host: 'smtp.zoho.eu',
+                port: 465,
+                secure: true,
+                auth: {
+                    user: 'test001.dev001@trickydragons.com',
+                    pass: process.env.ZOHO_TEST_DEV_EMAIL_PASS,
+                },
+            }),
+        },
+        ethereal_test_local: {
             from_formatted: `"Test Environment 👻" <roselyn.sauer63@ethereal.email>`,
             transporter: nodemailer.createTransport({
                 host: 'smtp.ethereal.email',
                 port: 587,
                 auth: {
                     user: 'roselyn.sauer63@ethereal.email',
-                    pass: process.env.TEST_EMAIL_PASS,
+                    pass: process.env.ETHEREAL_TEST_LOCAL_EMAIL_PASS,
                 },
             }),
         },

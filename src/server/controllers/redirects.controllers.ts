@@ -3,7 +3,7 @@ import { Contacts_Services } from '@server_services/contacts.services'
 import { Events_Services } from '@server_services/events.services'
 import { handle_error } from '@server_utils/handle_error'
 import { Request, Response } from 'express'
-import EventOutcome from 'src/schemas/public/EventOutcome'
+import EventOutcome from '@schemas/public/EventOutcome'
 import { Redirects_Services } from '@server_services/redirects.services'
 
 export class Redirects_Controllers {

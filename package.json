@@ -3,18 +3,17 @@
     "version": "1.0.0",
     "description": "trickydragons-webserver",
     "private": true,
-    "type": "module",
     "scripts": {
         "watch:local": "concurrently --kill-others \"npm:watch:dev:*\"",
-        "watch:local:serve": "webpack serve --config .configs/.webpack/webpack.dev.js",
-        "watch:local:server": "tsx watch src/server/server.ts --exclude node_modules --include src/server --include src/shared --include src/schemas",
-        "dev:client:build": "webpack --config .configs/.webpack/webpack.dev.js && node tools/critical_css.mjs",
+        "watch:local:serve": "webpack serve --config .configs/.webpack/webpack.local.mjs",
+        "watch:local:server": "tsx watch --env-file=.env src/server/server.ts --tsconfig ./.configs/.tsconfig/tsconfig.server.json",
+        "dev:client:build": "webpack --config .configs/.webpack/webpack.dev.mjs && node tools/critical_css.mjs",
         "dev:server:build": "node tools/build_server.mjs",
         "dev:server:start": "node dev/server/server.cjs",
-        "prod:client:build": "webpack --config .configs/.webpack/webpack.prod.js && node tools/critical_css.mjs",
+        "prod:client:build": "webpack --config .configs/.webpack/webpack.prod.mjs && node tools/critical_css.mjs",
         "prod:server:build": "node tools/build_server.mjs",
-        "prod:server:start": "node prod/server/server.cjs",
-        "database:migrate": "node tools/migrations.js && npx kanel"
+        "prod:server:start": "node prod/server/server.mjs",
+        "database:migrate": "node tools/migrations.mjs && npx kanel"
     },
     "author": "Daniele 'Diquadro' D'Ambrosio",
     "dependencies": {

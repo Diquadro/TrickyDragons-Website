@@ -1,4 +1,4 @@
-import Contacts from 'src/schemas/public/Contacts'
+import Contacts from '@schemas/public/Contacts'
 import { z } from 'zod'
 
 export class Emails_Helpers {

@@ -1,4 +1,5 @@
-import * as CookieConsent from 'vanilla-cookieconsent'
+// @ts-nocheck
+import CookieConsent from 'vanilla-cookieconsent'
 
 export default function () {
     if (CookieConsent.acceptedCategory('marketing')) {

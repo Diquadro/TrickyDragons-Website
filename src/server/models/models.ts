@@ -30,13 +30,13 @@ export const sql = postgres(process.env.PG_URI, {
     transform: {
         undefined: null,
     },
-    debug: !IS_PROD
-        ? (connection, sql, params) => {
-              console.log('[CONNECTION]', connection)
-              console.log('[SQL]', sql)
-              console.log('[PARAMS]', params)
-          }
-        : undefined,
+    // debug: !IS_PROD
+    //     ? (connection, sql, params) => {
+    //           console.log('[CONNECTION]', connection)
+    //           console.log('[SQL]', sql)
+    //           console.log('[PARAMS]', params)
+    //       }
+    //     : undefined,
 }) as Sql_Extended
 
 // Configurazione

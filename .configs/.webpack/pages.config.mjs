@@ -1,4 +1,4 @@
-// pages.config.cjs
+// pages.config.mjs
 const BASE_URL = 'https://www.trickydragons.com'
 
 export default [

@@ -1,5 +1,4 @@
-import { Contacts_Models } from '@server_models/contacts.models'
-import Contacts from 'src/schemas/public/Contacts'
+import Contacts from '@schemas/public/Contacts'
 import { z } from 'zod'
 
 export class Contacts_Helpers {

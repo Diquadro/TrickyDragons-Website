@@ -1,4 +1,4 @@
-import EventOutcome from 'src/schemas/public/EventOutcome'
+import EventOutcome from '@schemas/public/EventOutcome'
 import { custom_error, VALIDATION_ERROR } from '@server_utils/custom_errors'
 import { sql } from '@server_models/models'
 
@@ -52,8 +52,6 @@ export class Events_Services {
 
             // Caso 2: Batch_data specificato, crea eventi multipli
             const records = this.prepare_batch()
-
-            console.log('@@@@ -> records', records)
 
             return await sql.insert('events', records)
         } catch (error) {

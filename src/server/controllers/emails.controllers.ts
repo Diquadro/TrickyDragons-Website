@@ -4,7 +4,7 @@ import { Emails_Services } from '@server_services/emails.services'
 import { Events_Services } from '@server_services/events.services'
 import { handle_error } from '@server_utils/handle_error'
 import { Request, Response } from 'express'
-import EventOutcome from 'src/schemas/public/EventOutcome'
+import EventOutcome from '@schemas/public/EventOutcome'
 
 export class Emails_Controllers {
     static async send_welcome(req: Request, res: Response): Promise<Response> {
@@ -26,8 +26,13 @@ export class Emails_Controllers {
 
             return res.status(200).json(req.body)
         } catch (err) {
+            console.log('EMAIL error ->', err, JSON.stringify(err))
             events.base_event.outcome = EventOutcome.failure
-            events.base_event.details = JSON.stringify(err)
+            events.base_event.details = JSON.stringify({
+                name: err.name,
+                message: err.message,
+                stack: err.stack,
+            })
 
             return handle_error(res, err)
         } finally {

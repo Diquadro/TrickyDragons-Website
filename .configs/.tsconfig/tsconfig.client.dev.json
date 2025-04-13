@@ -1,6 +1,0 @@
-{
-    "extends": "./tsconfig.client.common.json",
-    "compilerOptions": {
-        "outDir": "../../dev/client"
-    }
-}

@@ -1,0 +1,6 @@
+// tsconfig.client
+{
+    "extends": "../../tsconfig.json",
+    "exclude": ["../../src/server", "../../src/schemas", "../../src/database", "/node_modules"],
+    "include": ["../../src/client/**/*", "../../src/shared/**/*"]
+}

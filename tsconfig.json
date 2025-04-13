@@ -1,6 +1,32 @@
+// tsconfig
 {
-    "extends": [
-        "./.configs/.tsconfig/tsconfig.server.common.json",
-        "./.configs/.tsconfig/tsconfig.client.common.json"
-    ]
+    "compilerOptions": {
+        "allowJs": true,
+        "rootDir": "src",
+        "baseUrl": ".",
+        "esModuleInterop": true,
+        "module": "CommonJS",
+        "moduleResolution": "node",
+        "paths": {
+            "@client_components/*": ["src/client/components/*"],
+            "@client_imgs/*": ["src/client/imgs/*"],
+            "@client_layouts/*": ["src/client/layouts/*"],
+            "@client_pages/*": ["src/client/pages/*"],
+            "@client_ts/*": ["src/client/ts/*"],
+            "@server_controllers/*": ["src/server/controllers/*"],
+            "@server_emails/*": ["src/server/emails/*"],
+            "@server_middlewares/*": ["src/server/middlewares/*"],
+            "@server_models/*": ["src/server/models/*"],
+            "@server_routes/*": ["src/server/routes/*"],
+            "@server_services/*": ["src/server/services/*"],
+            "@server_utils/*": ["src/server/utils/*"],
+            "@shared/*": ["src/shared/*"],
+            "@schemas*": ["src/schemas/*"]
+        },
+        "skipLibCheck": true,
+        "sourceMap": true,
+        "strict": true,
+        "target": "ESNext"
+    },
+    "include": ["./src"]
 }

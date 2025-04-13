@@ -1,4 +1,4 @@
-import Addresses from 'src/schemas/public/Addresses'
+import Addresses from '@schemas/public/Addresses'
 import { GeoInfos } from '@server_middlewares/geo_infos.middlewares'
 import { sql } from '@server_models/models'
 import { RowList } from 'postgres'
