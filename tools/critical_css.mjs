@@ -12,7 +12,7 @@ import path from 'path'
 const isProduction = process.env.NODE_ENV === 'prod'
 const CLIENT_DIR = isProduction ? 'prod/client' : 'dev/client'
 
-const NONCE = 'critical-css-001'
+const NONCE = 'beasties-critical-css-001'
 
 async function run() {
     const htmlFiles = await fg(`${CLIENT_DIR}/**/*.html`, { dot: true })
@@ -20,15 +20,28 @@ async function run() {
     const beasties = new Beasties({
         path: CLIENT_DIR,
         publicPath: '',
+        preload: 'swap',
         compress: true,
-        logLevel: 'info',
     })
 
     for (const file of htmlFiles) {
         const html = await fs.readFile(file, 'utf-8')
         let processed = await beasties.process(html)
 
-        processed = processed.replace(/<style>/g, `<style nonce="${NONCE}">`)
+        processed = processed.replace(/<style[^>]*>/g, (tag) => {
+            // Se contiene già un nonce, non modifichiamo nulla
+            if (tag.includes('nonce=')) return tag
+
+            // Aggiungiamo il nonce prima della chiusura del tag
+            return tag.replace(/>$/, ` nonce="${NONCE}">`)
+        })
+
+        processed = processed.replace(/<link[^>]+>/g, (match) => {
+            if (match.includes(`onload="this.rel='stylesheet'"`) && !match.includes('nonce=')) {
+                return match.replace(/>$/, ` nonce="beasties-critical-css-001">`)
+            }
+            return match
+        })
 
         // Ricrea il path relativo all'interno dell'output
         const relativePath = path.relative(CLIENT_DIR, file)
@@ -39,8 +52,6 @@ async function run() {
 
         // Scrive il file HTML trasformato
         await fs.writeFile(outputPath, processed, 'utf-8')
-
-        console.log(`✔ Critical CSS inlined: ${outputPath}`)
     }
 }
 
