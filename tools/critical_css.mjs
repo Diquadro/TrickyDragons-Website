@@ -19,8 +19,7 @@ async function run() {
 
     const beasties = new Beasties({
         path: CLIENT_DIR,
-        publicPath: '', // oppure '/assets/css' se servito da lì in produzione
-        pruneSource: true,
+        publicPath: '',
         preload: 'swap',
         compress: true,
         logLevel: 'info',
@@ -28,7 +27,7 @@ async function run() {
 
     for (const file of htmlFiles) {
         const html = await fs.readFile(file, 'utf-8')
-        const processed = await beasties.process(html)
+        let processed = await beasties.process(html)
 
         processed = processed.replace(/<style>/g, `<style nonce="${NONCE}">`)
 
