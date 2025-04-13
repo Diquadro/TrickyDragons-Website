@@ -24,15 +24,13 @@ async function run() {
         preload: 'swap',
         compress: true,
         logLevel: 'info',
-        transform(style) {
-            // Applichiamo il nonce manualmente al tag <style>
-            return style.replace('<style>', `<style nonce="${NONCE}">`)
-        },
     })
 
     for (const file of htmlFiles) {
         const html = await fs.readFile(file, 'utf-8')
         const processed = await beasties.process(html)
+
+        processed = processed.replace(/<style>/g, `<style nonce="${NONCE}">`)
 
         // Ricrea il path relativo all'interno dell'output
         const relativePath = path.relative(CLIENT_DIR, file)
