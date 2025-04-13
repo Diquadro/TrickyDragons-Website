@@ -25,7 +25,7 @@ export class Contacts_Controllers {
             return res.status(201).json(contacts_created.map(({ uuid, email }) => ({ uuid, email })))
         } catch (err) {
             events.base_event.outcome = EventOutcome.failure
-            events.base_event.details = JSON.stringify(err)
+            events.base_event.details = Events_Services.write_error_details(err)
 
             return handle_error(res, err)
         } finally {
@@ -52,7 +52,7 @@ export class Contacts_Controllers {
             return res.status(200).json(contacts_created.map(({ uuid, email }) => ({ uuid, email })))
         } catch (err) {
             events.base_event.outcome = EventOutcome.failure
-            events.base_event.details = JSON.stringify(err)
+            events.base_event.details = Events_Services.write_error_details(err)
 
             return handle_error(res, err)
         } finally {
@@ -79,7 +79,7 @@ export class Contacts_Controllers {
             return res.status(200).json(contacts_created.map(({ uuid, email }) => ({ uuid, email })))
         } catch (err) {
             events.base_event.outcome = EventOutcome.failure
-            events.base_event.details = JSON.stringify(err)
+            events.base_event.details = Events_Services.write_error_details(err)
 
             return handle_error(res, err)
         } finally {

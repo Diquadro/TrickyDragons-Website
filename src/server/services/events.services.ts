@@ -110,4 +110,14 @@ export class Events_Services {
         const service = new Events_Services(base_event, batch_data)
         return await service.create()
     }
+
+    static write_error_details(error: any) {
+        return JSON.stringify({
+            name: error.name,
+            message: error.message,
+            stack: error.stack,
+            data: error.data,
+            code: error.code,
+        })
+    }
 }

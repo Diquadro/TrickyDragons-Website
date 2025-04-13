@@ -28,11 +28,7 @@ export class Emails_Controllers {
         } catch (err) {
             console.log('EMAIL error ->', err, JSON.stringify(err))
             events.base_event.outcome = EventOutcome.failure
-            events.base_event.details = JSON.stringify({
-                name: err.name,
-                message: err.message,
-                stack: err.stack,
-            })
+            events.base_event.details = Events_Services.write_error_details(err)
 
             return handle_error(res, err)
         } finally {

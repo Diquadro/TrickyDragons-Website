@@ -25,7 +25,7 @@ export class Redirects_Controllers {
             return res
         } catch (err) {
             events.base_event.outcome = EventOutcome.failure
-            events.base_event.details = JSON.stringify(err)
+            events.base_event.details = Events_Services.write_error_details(err)
 
             return handle_error(res, err)
         } finally {
