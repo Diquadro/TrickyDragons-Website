@@ -20,7 +20,6 @@ async function run() {
     const beasties = new Beasties({
         path: CLIENT_DIR,
         publicPath: '',
-        preload: 'swap',
         compress: true,
         logLevel: 'info',
     })
