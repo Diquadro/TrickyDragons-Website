@@ -12,6 +12,8 @@ import path from 'path'
 const isProduction = process.env.NODE_ENV === 'prod'
 const CLIENT_DIR = isProduction ? 'prod/client' : 'dev/client'
 
+const NONCE = 'critical-css-001'
+
 async function run() {
     const htmlFiles = await fg(`${CLIENT_DIR}/**/*.html`, { dot: true })
 
@@ -22,6 +24,10 @@ async function run() {
         preload: 'swap',
         compress: true,
         logLevel: 'info',
+        transform(style) {
+            // Applichiamo il nonce manualmente al tag <style>
+            return style.replace('<style>', `<style nonce="${NONCE}">`)
+        },
     })
 
     for (const file of htmlFiles) {
