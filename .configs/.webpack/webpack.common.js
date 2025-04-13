@@ -3,8 +3,6 @@ import PugPlugin from 'pug-plugin'
 import CopyPlugin from 'copy-webpack-plugin'
 import path from 'path'
 import pagesConfig from './pages.config.js'
-const BeastiePluginModule = await import('beasties-webpack-plugin')
-const BeastiePlugin = BeastiePluginModule.default || BeastiePluginModule
 
 export default {
     module: {
@@ -67,12 +65,6 @@ export default {
                     attributes: { media: '(min-width: 1400px)' },
                 },
             ],
-        }),
-        new BeastiePlugin({
-            preloadFonts: true,
-            compress: true,
-            pruneSource: true,
-            logLevel: 'info',
         }),
     ],
     ignoreWarnings: [

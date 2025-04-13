@@ -44,7 +44,7 @@ build({
     bundle: true,
     platform: 'node',
     target: 'es2020',
-    outfile: join(outDirPath, 'server.js'),
+    outfile: join(outDirPath, 'server.cjs'),
     minify: isProduction,
     sourcemap: !isProduction,
     format: 'cjs',

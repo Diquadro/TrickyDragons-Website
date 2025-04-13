@@ -5,6 +5,9 @@ Build Filters "src/client/\*\*"
 Build Command run script "npm run dev:client:build"
 Publish Directory "./dev/client"
 
+Questo script è usato per estrarre il css sopra la "fold" così da velocizzare il first paint content FPC
+node tools/critical_css.mjs
+
 BUILD SERVER
 Run script "npm run dev:server:build"
 

@@ -1,3 +1,6 @@
 {
-    "extends": ["./.configs/.tsconfig/tsconfig.server.common.json"]
+    "extends": [
+        "./.configs/.tsconfig/tsconfig.server.common.json",
+        "./.configs/.tsconfig/tsconfig.client.common.json"
+    ]
 }
