@@ -22,16 +22,30 @@ meta(
     content='default-src \'self\'; script-src \'self\' \'nonce-beasties-critical-css-001\' https://connect.facebook.net https://cloud.umami.is https://api-gateway.umami.dev; style-src \'self\' \'nonce-beasties-critical-css-001\'  https://fonts.bunny.net; img-src \'self\' https://www.facebook.com; font-src \'self\' https://fonts.bunny.net; connect-src \'self\' https://graph.facebook.com https://api.trickydragons.com https://api-gateway.umami.dev; object-src \'none\'; upgrade-insecure-requests;'
 )
 
-//- Fonts
+//- Font START
 link(
     href='https://fonts.bunny.net/css?family=lexend:100,200,300,400,500,600,700,800,900',
     rel='preload',
-    as='style',
-    onload='this.rel=\'stylesheet\'',
-    nonce='beasties-critical-css-001'
+    as='style'
 )
 noscript
     link(
         href='https://fonts.bunny.net/css?family=lexend:100,200,300,400,500,600,700,800,900',
         rel='stylesheet'
     )
+script(
+    data-href='https://fonts.bunny.net/css?family=lexend:100,200,300,400,500,600,700,800,900',
+    data-media='all',
+    nonce='beasties-critical-css-001'
+).
+    function $loadcss(u, m, l) {
+        ;(l = document.createElement('link')).rel = 'stylesheet'
+        l.media = 'print'
+        l.onload = function () {
+            l.media = m
+        }
+        l.href = u
+        document.head.appendChild(l)
+    }
+    $loadcss(document.currentScript.dataset.href, document.currentScript.dataset.media)
+//- Font END

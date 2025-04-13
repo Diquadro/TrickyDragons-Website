@@ -20,8 +20,7 @@ async function run() {
     const beasties = new Beasties({
         path: CLIENT_DIR,
         publicPath: '',
-        preload: 'swap',
-        compress: true,
+        preload: 'js',
     })
 
     for (const file of htmlFiles) {
@@ -36,8 +35,12 @@ async function run() {
             return tag.replace(/>$/, ` nonce="${NONCE}">`)
         })
 
-        processed = processed.replace(/<link[^>]+>/g, (match) => {
-            if (match.includes(`onload="this.rel='stylesheet'"`) && !match.includes('nonce=')) {
+        processed = processed.replace(/<script[^>]+>/g, (match) => {
+            // Only apply nonce if:
+            // 1. It has a data-href attribute (Beastie script)
+            // 2. It does NOT already have a nonce
+            // 3. It does NOT have a src attribute (must be inline)
+            if (match.includes('data-href=') && !match.includes('nonce=') && !match.includes('src=')) {
                 return match.replace(/>$/, ` nonce="beasties-critical-css-001">`)
             }
             return match
