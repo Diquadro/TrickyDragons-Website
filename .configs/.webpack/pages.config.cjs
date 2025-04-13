@@ -1,7 +1,7 @@
 // pages.config.cjs
 const BASE_URL = 'https://www.trickydragons.com'
 
-export default [
+module.exports = [
     {
         filename: 'index.html',
         import: './src/client/pages/landingpage/landingpage.pug',

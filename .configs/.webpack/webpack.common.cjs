@@ -1,12 +1,10 @@
-// webpack.common.js
-import PugPlugin from 'pug-plugin'
-import CopyPlugin from 'copy-webpack-plugin'
-import path from 'path'
-import pagesConfig from './pages.config.js'
-const BeastiePluginModule = await import('beasties-webpack-plugin')
-const BeastiePlugin = BeastiePluginModule.default || BeastiePluginModule
+const PugPlugin = require('pug-plugin')
+const CopyPlugin = require('copy-webpack-plugin')
+const path = require('path')
+const pagesConfig = require('./pages.config.cjs')
+const BeastiePlugin = require('beasties-webpack-plugin')
 
-export default {
+module.exports = {
     module: {
         rules: [
             {
