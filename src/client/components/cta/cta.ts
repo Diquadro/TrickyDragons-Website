@@ -1,7 +1,6 @@
 import '@client_components/cta/cta.scss'
 import '@client_components/cta_modal/cta_modal'
 
-import send_email from '@client_components/send_email/send_email'
 import error_toast from '@client_components/error_toast/error_toast'
 import { show_spinner } from '@client_components/spinner/spinner'
 import { show_modal } from '@client_components/cta_modal/cta_modal'
