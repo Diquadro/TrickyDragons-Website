@@ -1,8 +1,6 @@
 import dotenv from 'dotenv'
 dotenv.config({ path: ['/etc/secrets/.env', '.env'] })
 
-console.log('KANEL + ', process.env.PG_URI)
-
 export const connection = {
     connectionString: process.env.PG_URI,
     ssl: true,
