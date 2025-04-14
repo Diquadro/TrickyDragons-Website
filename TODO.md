@@ -1,4 +1,5 @@
 LIST
+[] rimuovre storico per .kanelrc e poi rimuovere .env.dev
 [] Sistemare il layuot shift causato dal font
 [] FIX - Subscription error handling in frontend
 [] Umami Events

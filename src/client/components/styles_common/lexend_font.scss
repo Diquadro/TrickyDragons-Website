@@ -4,4 +4,9 @@
     src: url('@client_fonts/Lexend-VariableFont_wght.woff2') format('woff2-variations');
     font-family: 'Lexend';
     font-display: swap;
+
+    /* Override to align Lexend to Segoe UI */
+    ascent-override: 92%;
+    descent-override: 22%;
+    line-gap-override: 0%;
 }

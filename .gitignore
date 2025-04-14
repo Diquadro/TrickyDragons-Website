@@ -1,6 +1,7 @@
 **/.old
 **/node_modules
 **/.env
+**/.env.dev
 **/.vscode
 **/dist
 **/dev
