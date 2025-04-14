@@ -12,7 +12,7 @@ export function apply_middlewares(app: express.Application) {
     app.use(block_bots)
     app.use(rate_limiter_middleware)
     app.use(cors_middleware)
+    app.use(json_middleware)
     app.use(request_ip_middleware)
     app.use(geo_infos)
-    app.use(json_middleware)
 }

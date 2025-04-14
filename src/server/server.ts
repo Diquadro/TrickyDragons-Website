@@ -5,13 +5,15 @@ import express from 'express'
 import { apply_middlewares } from '@server_middlewares/middlewares'
 import { apply_routes } from '@server_routes/routes'
 import { sql } from '@server_models/models'
+import { IS_DEV } from '@shared/constants'
 
 const app = express()
 
+// ✅ Needed to make express-rate-limit work behind proxies (e.g., Render)
+app.set('trust proxy', !IS_DEV)
+
 apply_middlewares(app)
 apply_routes(app)
-
-const c = __dirname
 
 // Graceful Shutdown to close database connections
 process.on('SIGINT', async () => {

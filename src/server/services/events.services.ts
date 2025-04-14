@@ -9,7 +9,7 @@ export type event_base_input = {
     action?: string
     origin?: string
     outcome?: EventOutcome
-    details?: string
+    details?: Record<any, any>
     occurred_at?: Date
     contact_uuid?: any
     address_uuid?: any
@@ -112,12 +112,12 @@ export class Events_Services {
     }
 
     static write_error_details(error: any) {
-        return JSON.stringify({
+        return {
+            code: error.code,
             name: error.name,
             message: error.message,
             stack: error.stack,
             data: error.data,
-            code: error.code,
-        })
+        }
     }
 }

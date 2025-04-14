@@ -54,6 +54,7 @@
         "esbuild": "^0.25.2",
         "esbuild-node-externals": "^1.18.0",
         "esbuild-plugin-clean": "^1.0.1",
+        "esbuild-plugin-copy": "^2.1.1",
         "kanel": "^3.11.1",
         "prettier": "^3.4.2",
         "prettier-plugin-css-order": "^2.1.2",

@@ -2,6 +2,8 @@ import { Response } from 'express'
 import { IS_PROD } from '@shared/constants'
 
 export function handle_error(res: Response, error: any): Response {
+    console.error(error)
+
     return res
         .status(typeof error.code === 'number' && error.code >= 100 && error.code < 600 ? error.code : 500)
         .json({

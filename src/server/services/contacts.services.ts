@@ -10,7 +10,7 @@ import {
     VALIDATION_ERROR,
 } from '@server_utils/custom_errors'
 import { sql } from '@server_models/models'
-import { Contacts_Helpers } from '../helpers/contacts.helpers'
+import { Contacts_Helpers } from '@server_helpers/contacts.helpers'
 
 export class Contacts_Services {
     static async get_by_emails(contacts: Contacts[]) {

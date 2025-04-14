@@ -6,8 +6,16 @@ import { API_URL, CLIENT_URL, IS_DEV, IS_LOCAL } from '@shared/constants'
 import { custom_error, VALIDATION_ERROR } from '@server_utils/custom_errors'
 import Contacts from '@schemas/public/Contacts'
 import base64url from 'base64url'
-import { Emails_Helpers } from '../helpers/emails.helpers'
+import { Emails_Helpers } from '@server_helpers/emails.helpers'
 import path from 'path'
+
+const server_emails_path: Record<string, string> = {
+    prod: path.resolve(__dirname, 'emails'),
+    dev: path.resolve(__dirname, 'emails'),
+    local: path.resolve(__dirname, '../emails'),
+}
+
+export const SERVER_EMAILS_PATH = server_emails_path[process.env.NODE_ENV!]
 
 export class Emails_Services {
     static async send_welcome(contacts: Contacts[]) {
@@ -21,9 +29,9 @@ export class Emails_Services {
             const from = 'zoho_no_reply'
             const to = contact.email
             const subject = 'Welcome to the world of Tricky Dragons – Your Adventure Awaits'
-            const body_template_path = path.resolve(
-                __dirname,
-                '../emails/email_subscription/email_subscription.pug',
+            const body_template_path = path.join(
+                SERVER_EMAILS_PATH,
+                'email_subscription/email_subscription.pug',
             )
 
             const email_deactivation_url_data64 = base64url.encode(

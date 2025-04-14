@@ -1,14 +1,14 @@
 // build_server.js
+// Load environment variables from one of the possible .env locations
+import dotenv from 'dotenv'
+dotenv.config({ path: ['/etc/secrets/.env', '.env'] })
+
 import { build } from 'esbuild'
 import { fileURLToPath } from 'url'
 import { dirname, resolve, join } from 'path'
 import { nodeExternalsPlugin } from 'esbuild-node-externals'
 import { clean } from 'esbuild-plugin-clean'
-import fs from 'fs'
-
-// Load environment variables from one of the possible .env locations
-import dotenv from 'dotenv'
-dotenv.config({ path: ['/etc/secrets/.env', '.env'] })
+import copy from 'esbuild-plugin-copy'
 
 // Equivalent of __dirname for ES modules
 const __filename = fileURLToPath(import.meta.url)
@@ -63,6 +63,21 @@ build({
             verbose: true,
         }),
         nodeExternalsPlugin(), // Exclude node_modules from the bundle (keeps bundle small)
+        copy({
+            assets: [
+                {
+                    from: 'src/server/emails/**/*',
+                    to: 'emails',
+                    keepStructure: true,
+                },
+                {
+                    from: '.cache/geoip-data/**/*',
+                    to: resolve(__dirname, '..', 'node_modules/geoip-lite/data'),
+                    keepStructure: false,
+                },
+            ],
+            verbose: true,
+        }),
     ],
     tsconfig: resolve(__dirname, '..', '.configs/.tsconfig/tsconfig.server.json'),
 })
@@ -73,34 +88,3 @@ build({
         console.error('Build failed:', error)
         process.exit(1)
     })
-
-// Copy geoip-lite data files into the node_modules folder before runtime
-function copyGeoipFiles() {
-    const sourceDir = resolve(__dirname, '..', '.cache/geoip-data')
-    const targetDir = resolve(__dirname, '..', 'node_modules/geoip-lite/data')
-
-    if (!fs.existsSync(sourceDir)) {
-        console.log(`Source geoip directory not found: ${sourceDir}`)
-        return
-    }
-
-    if (!fs.existsSync(targetDir)) {
-        console.log(`Creating target directory: ${targetDir}`)
-        fs.mkdirSync(targetDir, { recursive: true })
-    }
-
-    const files = fs.readdirSync(sourceDir).filter((file) => fs.statSync(join(sourceDir, file)).isFile())
-
-    if (files.length === 0) {
-        console.log('No geoip data files found to copy')
-        return
-    }
-
-    console.log(`Copying ${files.length} geoip data files...`)
-    files.forEach((file) => {
-        fs.copyFileSync(join(sourceDir, file), join(targetDir, file))
-    })
-    console.log('GeoIP data files copied successfully')
-}
-
-copyGeoipFiles()

@@ -1,5 +1,5 @@
 import base64url from 'base64url'
-import { Redirects_Helpers } from '../helpers/redirects.helpers'
+import { Redirects_Helpers } from '@server_helpers/redirects.helpers'
 import { custom_error, VALIDATION_ERROR } from '@server_utils/custom_errors'
 
 export class Redirects_Services {
