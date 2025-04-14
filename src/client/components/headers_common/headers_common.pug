@@ -20,28 +20,9 @@ meta(http-equiv='Permissions-Policy', content='geolocation=(), microphone=(), ca
 
 //- Font START
 link(
-    href='https://fonts.bunny.net/css?family=lexend:100,200,300,400,500,600,700,800,900',
     rel='preload',
-    as='style'
+    href='@client_fonts/Lexend-VariableFont_wght.woff2',
+    as='font',
+    type='font/woff2',
+    crossorigin
 )
-noscript
-    link(
-        href='https://fonts.bunny.net/css?family=lexend:100,200,300,400,500,600,700,800,900',
-        rel='stylesheet'
-    )
-script(
-    data-href='https://fonts.bunny.net/css?family=lexend:100,200,300,400,500,600,700,800,900',
-    data-media='all',
-    nonce='beasties-critical-css-001'
-).
-    function $loadcss(u, m, l) {
-        ;(l = document.createElement('link')).rel = 'stylesheet'
-        l.media = 'print'
-        l.onload = function () {
-            l.media = m
-        }
-        l.href = u
-        document.head.appendChild(l)
-    }
-    $loadcss(document.currentScript.dataset.href, document.currentScript.dataset.media)
-//- Font END

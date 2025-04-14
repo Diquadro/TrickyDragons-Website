@@ -44,6 +44,7 @@ export default {
     },
     resolve: {
         alias: {
+            '@client_fonts': path.resolve('src/client/fonts'),
             '@client_imgs': path.resolve('src/client/imgs'),
             '@client_components': path.resolve('src/client/components'),
             '@client_pages': path.resolve('src/client/pages'),

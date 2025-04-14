@@ -9,13 +9,17 @@ import base64url from 'base64url'
 import { Emails_Helpers } from '@server_helpers/emails.helpers'
 import path from 'path'
 
-const server_emails_path: Record<string, string> = {
-    prod: path.resolve(__dirname, 'emails'),
-    dev: path.resolve(__dirname, 'emails'),
-    local: path.resolve(__dirname, '../emails'),
-}
+export const SERVER_EMAILS_PATH = IS_LOCAL
+    ? path.resolve(__dirname, '../emails')
+    : path.resolve(__dirname, 'emails')
 
-export const SERVER_EMAILS_PATH = server_emails_path[process.env.NODE_ENV!]
+console.log(
+    'SEND_EMAIL',
+    SERVER_EMAILS_PATH,
+    __dirname,
+    path.resolve(__dirname, '../emails'),
+    path.resolve(__dirname, 'emails'),
+)
 
 export class Emails_Services {
     static async send_welcome(contacts: Contacts[]) {

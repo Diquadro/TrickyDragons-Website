@@ -1,4 +1,6 @@
 LIST
+[] Sistemare il layuot shift causato dal font
+[] FIX - Subscription error handling in frontend
 [] Umami Events
 [] Meta API Conversion
 [] Budibase
