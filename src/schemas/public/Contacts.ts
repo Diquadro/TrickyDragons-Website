@@ -41,6 +41,9 @@ export default interface Contacts {
 
   /** Timestamp when the record was deleted. */
   deleted_date: Date | null;
+
+  /** Stores the list of email identifiers (e.g., "welcome", "20250401_newsletter") that have been sent to the contact by the system. */
+  sent_emails: string[] | null;
 }
 
 /**
@@ -80,6 +83,9 @@ export interface ContactsInitializer {
 
   /** Timestamp when the record was deleted. */
   deleted_date?: Date | null;
+
+  /** Stores the list of email identifiers (e.g., "welcome", "20250401_newsletter") that have been sent to the contact by the system. */
+  sent_emails?: string[] | null;
 }
 
 /**
@@ -116,4 +122,7 @@ export interface ContactsMutator {
 
   /** Timestamp when the record was deleted. */
   deleted_date?: Date | null;
+
+  /** Stores the list of email identifiers (e.g., "welcome", "20250401_newsletter") that have been sent to the contact by the system. */
+  sent_emails?: string[] | null;
 }

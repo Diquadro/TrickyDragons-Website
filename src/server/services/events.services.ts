@@ -1,40 +1,31 @@
 import EventOutcome from '@schemas/public/EventOutcome'
 import { custom_error, VALIDATION_ERROR } from '@server_utils/custom_errors'
 import { sql } from '@server_models/models'
-
-/**
- * Base structure of a single event input
- */
-export type event_base_input = {
-    action?: string
-    origin?: string
-    outcome?: EventOutcome
-    details?: Record<any, any>
-    occurred_at?: Date
-    contact_uuid?: any
-    address_uuid?: any
-}
+import { Request } from 'express'
+import Contacts from '@schemas/public/Contacts'
+import { Addresses_Services } from './addresses.services'
+import { EventsMutator } from '@schemas/public/Events'
 
 /**
  * Full structure of an event record for DB
  */
-export type event_record = Partial<event_base_input>
+export type event_record = Partial<EventsMutator>
 
 /**
  * Batch input structure for specific fields that can be arrays
  */
 export type event_batch_input = {
-    [K in keyof event_base_input]?: Array<event_base_input[K]>
+    [K in keyof EventsMutator]?: Array<EventsMutator[K]>
 }
 
 /**
  * Service class to handle event operations
  */
 export class Events_Services {
-    base_event: event_base_input = {}
+    base_event: EventsMutator = {}
     batch_data: event_batch_input = {}
 
-    constructor(base_event: event_base_input = {}, batch_data: event_batch_input = {}) {
+    constructor(base_event: EventsMutator = {}, batch_data: event_batch_input = {}) {
         this.base_event = base_event
         this.batch_data = batch_data
     }
@@ -89,7 +80,7 @@ export class Events_Services {
             const record = { ...this.base_event }
 
             for (const key in this.batch_data) {
-                const typed_key = key as keyof event_base_input
+                const typed_key = key as keyof EventsMutator
                 const batch_array = this.batch_data[typed_key] as any[]
 
                 if (batch_array?.[i] !== undefined) {
@@ -106,7 +97,7 @@ export class Events_Services {
     /**
      * API statica semplificata per creare eventi in un'unica operazione
      */
-    static async create_events(base_event: event_base_input, batch_data?: event_batch_input): Promise<any> {
+    static async create_events(base_event: EventsMutator, batch_data?: event_batch_input): Promise<any> {
         const service = new Events_Services(base_event, batch_data)
         return await service.create()
     }

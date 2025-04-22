@@ -3,7 +3,7 @@ import { Request, Response, NextFunction } from 'express'
 // @ts-ignore
 import countryRegionData from 'country-region-data/dist/data-umd.js'
 
-export type GeoInfos = {
+export type Geo_Infos = {
     country: string | null
     region: string | null
     city: string | null
@@ -12,7 +12,7 @@ export type GeoInfos = {
 declare global {
     namespace Express {
         interface Request {
-            geo_infos?: GeoInfos
+            geo_infos?: Geo_Infos
         }
     }
 }

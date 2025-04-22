@@ -5,7 +5,7 @@
     "private": true,
     "scripts": {
         "watch:local": "concurrently --kill-others \"npm:watch:dev:*\"",
-        "watch:local:serve": "webpack serve --config .configs/.webpack/webpack.dev.mjs",
+        "watch:local:client": "webpack serve --config .configs/.webpack/webpack.dev.mjs",
         "watch:local:server": "tsx watch --env-file=.env src/server/server.ts --tsconfig ./.configs/.tsconfig/tsconfig.server.json",
         "dev:client:build": "webpack --config .configs/.webpack/webpack.dev.mjs && node tools/critical_css.mjs",
         "dev:server:build": "node tools/build_server.mjs",
@@ -31,11 +31,11 @@
         "nodemailer": "^6.9.16",
         "postgres": "^3.4.5",
         "request-ip": "^3.3.0",
-        "tsx": "^4.19.3",
         "vanilla-cookieconsent": "^3.1.0",
         "zod": "^3.24.2"
     },
     "devDependencies": {
+        "tsx": "^4.19.3",
         "@prettier/plugin-pug": "^3.2.0",
         "@types/cors": "^2.8.17",
         "@types/geoip-lite": "^1.4.4",
@@ -44,11 +44,9 @@
         "@types/pug": "^2.0.10",
         "@types/request-ip": "^0.0.41",
         "beasties": "^0.3.2",
-        "beasties-webpack-plugin": "^0.3.2",
         "compression-webpack-plugin": "^11.1.0",
         "concurrently": "^9.1.2",
         "copy-webpack-plugin": "^12.0.2",
-        "critters-webpack-plugin": "^3.0.2",
         "css-loader": "^7.1.2",
         "css-minimizer-webpack-plugin": "^7.0.0",
         "esbuild": "^0.25.2",
@@ -67,7 +65,6 @@
         "webpack": "^5.97.1",
         "webpack-cli": "^6.0.1",
         "webpack-dev-server": "^5.2.0",
-        "webpack-merge": "^6.0.1",
-        "webpack-node-externals": "^3.0.0"
+        "webpack-merge": "^6.0.1"
     }
 }

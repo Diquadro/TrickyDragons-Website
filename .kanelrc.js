@@ -3,7 +3,7 @@ dotenv.config({ path: ['/etc/secrets/.env', '.env'] })
 
 export const connection = {
     connectionString: process.env.PG_URI,
-    ssl: true,
+    ssl: process.env.NODE_ENV !== 'local',
 }
 export const preDeleteOutputFolder = true
 export const outputPath = './src/schemas'

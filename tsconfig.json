@@ -22,7 +22,7 @@
             "@server_services/*": ["src/server/services/*"],
             "@server_utils/*": ["src/server/utils/*"],
             "@shared/*": ["src/shared/*"],
-            "@schemas*": ["src/schemas/*"]
+            "@schemas/*": ["src/schemas/*"]
         },
         "skipLibCheck": true,
         "sourceMap": true,

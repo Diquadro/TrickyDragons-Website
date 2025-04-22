@@ -9,17 +9,7 @@ import base64url from 'base64url'
 import { Emails_Helpers } from '@server_helpers/emails.helpers'
 import path from 'path'
 
-export const SERVER_EMAILS_PATH = IS_LOCAL
-    ? path.resolve(__dirname, '../emails')
-    : path.resolve(__dirname, 'emails')
-
-console.log(
-    'SEND_EMAIL',
-    SERVER_EMAILS_PATH,
-    __dirname,
-    path.resolve(__dirname, '../emails'),
-    path.resolve(__dirname, 'emails'),
-)
+const SERVER_EMAILS_PATH = IS_LOCAL ? path.resolve(__dirname, '../emails') : path.resolve(__dirname, 'emails')
 
 export class Emails_Services {
     static async send_welcome(contacts: Contacts[]) {
@@ -38,13 +28,6 @@ export class Emails_Services {
                 'email_subscription/email_subscription.pug',
             )
 
-            const email_deactivation_url_data64 = base64url.encode(
-                JSON.stringify({
-                    origin: 'email',
-                    redirect_url: `${CLIENT_URL}/email_deactivation?data64=${base64url.encode(contact.uuid)}`,
-                }),
-            )
-
             const kickstarter_url_data64 = base64url.encode(
                 JSON.stringify({
                     origin: 'email',
@@ -59,30 +42,38 @@ export class Emails_Services {
                 }),
             )
 
+            const email_deactivation_url_data64 = base64url.encode(
+                JSON.stringify({
+                    origin: 'email',
+                    redirect_url: `${CLIENT_URL}/email_deactivation?data64=${base64url.encode(contact.uuid)}`,
+                }),
+            )
+
             const redirect_url = `${API_URL}/v1/redirects/`
 
             const body_template_locals = {
-                email_deactivation: `${redirect_url}${email_deactivation_url_data64}`,
                 kickstarter_url: `${redirect_url}${kickstarter_url_data64}`,
                 instagram_url: `${redirect_url}${instagram_url_data64}`,
+                email_deactivation: `${redirect_url}${email_deactivation_url_data64}`,
             }
 
             await Emails_Services.send_email(from, to, subject, body_template_path, body_template_locals)
         }
     }
 
-    private static async send_email(
+    static async send_email(
         from: string,
         to: string,
         subject: string,
         body_template_path: string,
-        body_template_locals: any,
+        body_template_locals: any = {},
     ) {
         // Test Evinroment set from with the test email
         if (IS_LOCAL) {
             from = 'ethereal_test_local'
         }
 
+        // Dev Evinroment set from with the test email
         if (IS_DEV) {
             from = 'zoho_test_dev'
         }

@@ -4,6 +4,7 @@
 import type { ContactsUuid } from './Contacts';
 import type { AddressesUuid } from './Addresses';
 import type { default as EventOutcome } from './EventOutcome';
+import type { default as EventDirection } from './EventDirection';
 
 /** Identifier type for public.events */
 export type EventsUuid = string & { __brand: 'EventsUuid' };
@@ -23,7 +24,7 @@ export default interface Events {
   address_uuid: AddressesUuid | null;
 
   /** Generic origin of the event */
-  origin: string;
+  origin: string | null;
 
   /** Describes the type of event */
   action: string;
@@ -31,8 +32,8 @@ export default interface Events {
   /** Outcome of the event, success or failure. */
   outcome: EventOutcome;
 
-  /** Descriptive field capturing what happened, e.g., the URL clicked or the action taken. */
-  details: string | null;
+  /** Structured JSONB data capturing what happened, e.g., status codes, messages, or clicked URLs. */
+  details: unknown | null;
 
   /** Timestamp indicating when the event took place. */
   occurred_at: Date;
@@ -54,6 +55,12 @@ export default interface Events {
 
   /** Timestamp when the record was deleted. */
   deleted_date: Date | null;
+
+  /** Stores a summary of the HTTP method and endpoint (e.g., "POST - /api/subscribe"). */
+  endpoint: string | null;
+
+  /** Specifies the direction of the event: inbound (incoming) or outbound (outgoing). */
+  direction: EventDirection | null;
 }
 
 /**
@@ -74,7 +81,7 @@ export interface EventsInitializer {
   address_uuid?: AddressesUuid | null;
 
   /** Generic origin of the event */
-  origin: string;
+  origin?: string | null;
 
   /** Describes the type of event */
   action: string;
@@ -82,8 +89,8 @@ export interface EventsInitializer {
   /** Outcome of the event, success or failure. */
   outcome: EventOutcome;
 
-  /** Descriptive field capturing what happened, e.g., the URL clicked or the action taken. */
-  details?: string | null;
+  /** Structured JSONB data capturing what happened, e.g., status codes, messages, or clicked URLs. */
+  details?: unknown | null;
 
   /** Timestamp indicating when the event took place. */
   occurred_at: Date;
@@ -105,6 +112,12 @@ export interface EventsInitializer {
 
   /** Timestamp when the record was deleted. */
   deleted_date?: Date | null;
+
+  /** Stores a summary of the HTTP method and endpoint (e.g., "POST - /api/subscribe"). */
+  endpoint?: string | null;
+
+  /** Specifies the direction of the event: inbound (incoming) or outbound (outgoing). */
+  direction?: EventDirection | null;
 }
 
 /**
@@ -122,7 +135,7 @@ export interface EventsMutator {
   address_uuid?: AddressesUuid | null;
 
   /** Generic origin of the event */
-  origin?: string;
+  origin?: string | null;
 
   /** Describes the type of event */
   action?: string;
@@ -130,8 +143,8 @@ export interface EventsMutator {
   /** Outcome of the event, success or failure. */
   outcome?: EventOutcome;
 
-  /** Descriptive field capturing what happened, e.g., the URL clicked or the action taken. */
-  details?: string | null;
+  /** Structured JSONB data capturing what happened, e.g., status codes, messages, or clicked URLs. */
+  details?: unknown | null;
 
   /** Timestamp indicating when the event took place. */
   occurred_at?: Date;
@@ -153,4 +166,10 @@ export interface EventsMutator {
 
   /** Timestamp when the record was deleted. */
   deleted_date?: Date | null;
+
+  /** Stores a summary of the HTTP method and endpoint (e.g., "POST - /api/subscribe"). */
+  endpoint?: string | null;
+
+  /** Specifies the direction of the event: inbound (incoming) or outbound (outgoing). */
+  direction?: EventDirection | null;
 }

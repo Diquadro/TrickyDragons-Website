@@ -21,7 +21,7 @@ export default merge(common, {
         liveReload: true, // Ricarica la pagina quando un file cambia
         proxy: [
             {
-                context: ['/v1'],
+                context: [''],
                 target: 'http://localhost:5000',
                 changeOrigin: true,
                 secure: false,

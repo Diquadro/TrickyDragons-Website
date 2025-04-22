@@ -50,6 +50,7 @@ export default {
             '@client_pages': path.resolve('src/client/pages'),
             '@client_layouts': path.resolve('src/client/layouts'),
             '@client_ts': path.resolve('src/client/ts'),
+            '@schemas': path.resolve('src/schemas'),
             '@shared': path.resolve('src/shared'),
         },
         extensions: ['.tsx', '.ts', '.js', '.css', '.scss'],

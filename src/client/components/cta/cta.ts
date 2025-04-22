@@ -4,8 +4,12 @@ import '@client_components/cta_modal/cta_modal'
 import error_toast from '@client_components/error_toast/error_toast'
 import { show_spinner } from '@client_components/spinner/spinner'
 import { show_modal } from '@client_components/cta_modal/cta_modal'
-import { Contacts } from '@client_ts/contacts'
-import { Emails } from '@client_ts/emails'
+import {
+    CONTACT_RESPONSE_OUTCOME,
+    Subscribe_Contacts_Response,
+} from '@shared/validations/subscribe_contacts.validations'
+import { RPC } from '@client_ts/rpc'
+import ContactSubscriptions from '@schemas/public/ContactSubscriptions'
 
 const EMAIL_REGEX =
     /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
@@ -33,7 +37,7 @@ function handle_button_click() {
             error_toast('Invalid email!')
             return
         }
-        const email = email_input.value.trim()
+        const email = email_input.value.trim().toLowerCase()
 
         const consent_checkbox = cta_container.querySelector('input[type="checkbox"]') as HTMLInputElement
 
@@ -45,20 +49,30 @@ function handle_button_click() {
         show_spinner(true)
 
         try {
-            const contact_created = await Contacts.create(email)
-            const contacts_subscribed = await Contacts.subscribe_newsletter(email)
+            const contacts: Subscribe_Contacts_Response = await RPC.subscribe_contacts([
+                {
+                    email: email,
+                    subscriptions: [ContactSubscriptions.newsletter],
+                },
+            ])
+            const contact = contacts.find((c) => c.email.toLowerCase() === email)
 
-            if (!contact_created.ok && contacts_subscribed.ok) {
+            if (!contact) {
+                throw new Error('No contact found')
+            } else if (contact.outcome === CONTACT_RESPONSE_OUTCOME.RESUBSCRIBED) {
                 return show_modal('modal_email_reactivated')
-            } else if (!contact_created.ok && !contacts_subscribed.ok && contacts_subscribed.status === 409) {
+            } else if (contact.outcome === CONTACT_RESPONSE_OUTCOME.ALREADY_SUBSCRIBED) {
                 return show_modal('modal_email_duplicate')
-            } else if (!contact_created.ok && !contacts_subscribed.ok) {
-                error_toast('Something went wrong. Please try again later.')
+            } else if (contact.outcome === CONTACT_RESPONSE_OUTCOME.NEW_CONTACT) {
+                if (typeof window !== 'undefined' && typeof window.umami !== 'undefined') {
+                    window.umami.track('subscribed_to_newsletter')
+                }
+                return show_modal('modal_email_sent')
             }
-
-            await Emails.send_welcome(email)
-            return show_modal('modal_email_sent')
         } catch (err) {
+            if (err instanceof Error) {
+                console.error(err.stack)
+            }
             return error_toast('The dragons are sleeping now. Please try again later.')
         } finally {
             show_spinner(false)
