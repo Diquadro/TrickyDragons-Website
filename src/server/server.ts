@@ -26,7 +26,7 @@ async function start_server() {
     })
 
     // Get port from environment or use default
-    const port = API.SERVER_PORT
+    const port = API.PORT
 
     // Start the server
     app.listen(port, () => {
