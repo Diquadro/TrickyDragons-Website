@@ -10,4 +10,5 @@ export const rate_limiter = rateLimit({
         error: 'Too many requests, please try again later',
         statusCode: 429,
     },
+    validate: { xForwardedForHeader: false },
 })

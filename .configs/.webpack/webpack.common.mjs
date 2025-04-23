@@ -57,7 +57,7 @@ export default {
             'process.env.CLIENT_URL': JSON.stringify(process.env.CLIENT_URL),
             'process.env.API_URL': JSON.stringify(process.env.API_URL),
             'process.env.SERVER_HOST': JSON.stringify(process.env.SERVER_HOST),
-            'process.env.PORT': JSON.stringify(process.env.PORT),
+            'process.env.SERVER_PORT': JSON.stringify(process.env.SERVER_PORT),
         }),
         new CopyPlugin({
             patterns: [
