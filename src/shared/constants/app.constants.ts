@@ -13,7 +13,11 @@ export const CLIENT = {
 
 // API-related constants
 export const API = {
-    URL: process.env.API_URL || 'http://localhost:5000',
+    BASE_URL: process.env.API_URL || 'http://localhost',
+    URL:
+        process.env.API_URL && process.env.SERVER_PORT
+            ? `${process.env.API_URL}:${process.env.SERVER_PORT}`
+            : 'http://localhost:5000',
     PORT: process.env.SERVER_PORT ? parseInt(process.env.SERVER_PORT) : 3000,
 
     ENDPOINTS: {
