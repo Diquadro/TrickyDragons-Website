@@ -1,6 +1,7 @@
 import { Request, Response, NextFunction } from 'express'
 import geoip from 'geoip-lite'
-import { geo_infos } from '@shared/types/geo_infos'
+// @ts-ignore
+import countryRegionData from 'country-region-data/dist/data-umd.js'
 
 // Middleware that extracts geographic information from the client's IP
 // Adds a geo_infos object to the request
@@ -29,13 +30,15 @@ export const geo_info_middleware = (req: Request, res: Response, next: NextFunct
         // Lookup IP in the geoip database
         const geo = geoip.lookup(cleanIp)
 
-        if (geo) {
-            req.geo_infos = {
-                city: geo.city,
-                country: geo.country,
-                region: geo.region,
-                timezone: geo.timezone,
-            }
+        if (!geo) return
+
+        const country = countryRegionData?.find((c: any) => c.countryShortCode === geo.country)
+        const region = country?.regions.find((r: any) => r.shortCode === geo.region)
+        req.geo_infos = {
+            country: country?.countryName,
+            region: region?.name,
+            city: geo.city,
+            timezone: geo.timezone,
         }
     }
 
