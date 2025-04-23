@@ -9,7 +9,7 @@ import fg from 'fast-glob'
 import fs from 'fs/promises'
 import path from 'path'
 
-const isProduction = process.env.NODE_ENV === 'prod'
+const isProduction = process.env.NODE_ENV === 'production'
 const CLIENT_DIR = isProduction ? 'prod/client' : 'dev/client'
 
 const NONCE = 'beasties-critical-css-001'

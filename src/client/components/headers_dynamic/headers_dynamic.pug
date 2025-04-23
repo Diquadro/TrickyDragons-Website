@@ -37,7 +37,7 @@ link(rel='canonical', href=url)
 title= title
 
 //- Content-Security-Policy
-- const is_dev = env === 'dev'
+- const is_dev = env === 'development'
 - const script_src = ["'self'", "'nonce-beasties-critical-css-001'", 'https://connect.facebook.net', 'https://cloud.umami.is', 'https://api-gateway.umami.dev']
 - const style_src = ["'self'", "'nonce-beasties-critical-css-001'", 'https://fonts.bunny.net']
 - const img_src = ["'self'", 'https://www.facebook.com']
