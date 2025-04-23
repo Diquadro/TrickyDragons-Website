@@ -1,6 +1,6 @@
 import './email_deactivation.scss'
 
-import { API_URL } from '@shared/constants'
+import { API } from '@shared/constants/app.constants'
 
 // Extract the email from the URL's query parameters
 function getEmailFromQuery(): string | null {
@@ -11,7 +11,7 @@ function getEmailFromQuery(): string | null {
 // Send the unsubscribe request to the backend
 async function unsubscribe(email: string): Promise<void> {
     try {
-        const response = await fetch(`${API_URL}/email_deactivation/${email}`)
+        const response = await fetch(`${API.URL}/email_deactivation/${email}`)
         if (response.ok) {
             console.log('Unsubscribe request sent successfully.')
         } else {

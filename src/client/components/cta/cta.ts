@@ -1,15 +1,15 @@
-import '@client_components/cta/cta.scss'
-import '@client_components/cta_modal/cta_modal'
+import '@client/components/cta/cta.scss'
+import '@client/components/cta_modal/cta_modal'
 
-import error_toast from '@client_components/error_toast/error_toast'
-import { show_spinner } from '@client_components/spinner/spinner'
-import { show_modal } from '@client_components/cta_modal/cta_modal'
+import error_toast from '@client/components/error_toast/error_toast'
+import { show_spinner } from '@client/components/spinner/spinner'
+import { show_modal } from '@client/components/cta_modal/cta_modal'
 import {
     CONTACT_RESPONSE_OUTCOME,
     Subscribe_Contacts_Response,
-} from '@shared/validations/subscribe_contacts.validations'
-import { RPC } from '@client_ts/rpc'
-import ContactSubscriptions from '@schemas/public/ContactSubscriptions'
+} from '@shared/validations/subscribe_contact.validations'
+import { RPC } from '@client/ts/rpc'
+import ContactSubscriptions from '@shared/schemas/public/ContactSubscriptions'
 
 const EMAIL_REGEX =
     /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
@@ -49,21 +49,18 @@ function handle_button_click() {
         show_spinner(true)
 
         try {
-            const contacts: Subscribe_Contacts_Response = await RPC.subscribe_contacts([
-                {
-                    email: email,
-                    subscriptions: [ContactSubscriptions.newsletter],
-                },
-            ])
-            const contact = contacts.find((c) => c.email.toLowerCase() === email)
+            const result: Subscribe_Contacts_Response = await RPC.subscribe_contacts({
+                email: email,
+                subscription: ContactSubscriptions.newsletter,
+            })
 
-            if (!contact) {
+            if (!result) {
                 throw new Error('No contact found')
-            } else if (contact.outcome === CONTACT_RESPONSE_OUTCOME.RESUBSCRIBED) {
+            } else if (result.outcome === CONTACT_RESPONSE_OUTCOME.RESUBSCRIBED) {
                 return show_modal('modal_email_reactivated')
-            } else if (contact.outcome === CONTACT_RESPONSE_OUTCOME.ALREADY_SUBSCRIBED) {
+            } else if (result.outcome === CONTACT_RESPONSE_OUTCOME.ALREADY_SUBSCRIBED) {
                 return show_modal('modal_email_duplicate')
-            } else if (contact.outcome === CONTACT_RESPONSE_OUTCOME.NEW_CONTACT) {
+            } else if (result.outcome === CONTACT_RESPONSE_OUTCOME.NEW_CONTACT) {
                 if (typeof window !== 'undefined' && typeof window.umami !== 'undefined') {
                     window.umami.track('subscribed_to_newsletter')
                 }

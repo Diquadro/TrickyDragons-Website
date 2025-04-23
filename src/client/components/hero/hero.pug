@@ -1,17 +1,17 @@
 #hero
     picture#hero-image
         source(
-            srcset='@client_imgs/hero_images/hero_image_landscape_desktop_v2_preload.webp?landscape',
+            srcset='@client/imgs/hero_images/hero_image_landscape_desktop_v2_preload.webp?landscape',
             media='(min-width: 1400px)',
             fetchpriority='high'
         )
         source(
-            srcset='@client_imgs/hero_images/hero_image_portrait_preload.webp?portrait',
+            srcset='@client/imgs/hero_images/hero_image_portrait_preload.webp?portrait',
             media='(max-width: 1400px)',
             fetchpriority='high'
         )
         img(
-            src='@client_imgs/hero_images/hero_image_portrait_preload.webp?portrait',
+            src='@client/imgs/hero_images/hero_image_portrait_preload.webp?portrait',
             alt='hero image',
             width='auto',
             height='auto',
@@ -28,12 +28,12 @@
         #hero-infografic.hide-mobile
             picture
                 source(
-                    srcset='@client_imgs/infografic/rsz_time.webp',
+                    srcset='@client/imgs/infografic/rsz_time.webp',
                     type='image/webp',
                     fetchpriority='high'
                 )
                 img(
-                    src='@client_imgs/infografic/rsz_time.webp',
+                    src='@client/imgs/infografic/rsz_time.webp',
                     alt='Playtime: 15 to 60 minutes',
                     width='100',
                     height='100',
@@ -42,12 +42,12 @@
 
             picture
                 source(
-                    srcset='@client_imgs/infografic/rsz_age.webp',
+                    srcset='@client/imgs/infografic/rsz_age.webp',
                     type='image/webp',
                     fetchpriority='high'
                 )
                 img(
-                    src='@client_imgs/infografic/rsz_age.webp',
+                    src='@client/imgs/infografic/rsz_age.webp',
                     alt='Ages 10 and up',
                     width='100',
                     height='100',
@@ -56,16 +56,16 @@
 
             picture
                 source(
-                    srcset='@client_imgs/infografic/rsz_players.webp',
+                    srcset='@client/imgs/infografic/rsz_players.webp',
                     type='image/webp',
                     fetchpriority='high'
                 )
                 img(
-                    src='@client_imgs/infografic/rsz_players.webp',
+                    src='@client/imgs/infografic/rsz_players.webp',
                     alt='Players: 2 to 6',
                     width='100',
                     height='100',
                     loading='eager'
                 )
 
-        include @client_components/cta/cta_hero.pug
+        include @client/components/cta/cta_hero.pug

@@ -20,19 +20,10 @@ const outDirPath = resolve(__dirname, '..', outDir)
 
 // Define alias used across the project (matching tsconfig paths)
 const aliases = {
-    '@client_components': resolve(__dirname, '..', 'src/client/components'),
-    '@client_imgs': resolve(__dirname, '..', 'src/client/imgs'),
-    '@client_layouts': resolve(__dirname, '..', 'src/client/layouts'),
-    '@client_pages': resolve(__dirname, '..', 'src/client/pages'),
-    '@client_ts': resolve(__dirname, '..', 'src/client/ts'),
-    '@server_controllers': resolve(__dirname, '..', 'src/server/controllers'),
-    '@server_emails': resolve(__dirname, '..', 'src/server/emails'),
-    '@server_middlewares': resolve(__dirname, '..', 'src/server/middlewares'),
-    '@server_models': resolve(__dirname, '..', 'src/server/models'),
-    '@server_routes': resolve(__dirname, '..', 'src/server/routes'),
-    '@server_services': resolve(__dirname, '..', 'src/server/services'),
-    '@server_utils': resolve(__dirname, '..', 'src/server/utils'),
     '@shared': resolve(__dirname, '..', 'src/shared'),
+    '@client': resolve(__dirname, '..', 'src/client'),
+    '@server': resolve(__dirname, '..', 'src/server'),
+    '@database': resolve(__dirname, '..', 'src/database'),
 }
 
 // Start logging build mode
@@ -66,8 +57,8 @@ build({
         copy({
             assets: [
                 {
-                    from: 'src/server/emails/**/*',
-                    to: 'emails',
+                    from: 'src/shared/templates/emails/**/*',
+                    to: '../shared/templates/emails',
                     keepStructure: true,
                 },
                 {

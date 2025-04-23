@@ -1,4 +1,4 @@
-import '@client_components/spinner/spinner.scss'
+import '@client/components/spinner/spinner.scss'
 
 export function show_spinner(show: boolean): void {
     const spinner_overlay = document.getElementById('spinner-overlay')

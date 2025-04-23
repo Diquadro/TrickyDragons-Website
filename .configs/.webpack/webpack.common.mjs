@@ -44,13 +44,9 @@ export default {
     },
     resolve: {
         alias: {
-            '@client_fonts': path.resolve('src/client/fonts'),
-            '@client_imgs': path.resolve('src/client/imgs'),
-            '@client_components': path.resolve('src/client/components'),
-            '@client_pages': path.resolve('src/client/pages'),
-            '@client_layouts': path.resolve('src/client/layouts'),
-            '@client_ts': path.resolve('src/client/ts'),
-            '@schemas': path.resolve('src/schemas'),
+            '@client': path.resolve('src/client'),
+            '@server': path.resolve('src/server'),
+            '@database': path.resolve('src/database'),
             '@shared': path.resolve('src/shared'),
         },
         extensions: ['.tsx', '.ts', '.js', '.css', '.scss'],
@@ -58,6 +54,10 @@ export default {
     plugins: [
         new webpack.DefinePlugin({
             'process.env.NODE_ENV': JSON.stringify(process.env.NODE_ENV),
+            'process.env.CLIENT_URL': JSON.stringify(process.env.CLIENT_URL),
+            'process.env.API_URL': JSON.stringify(process.env.API_URL),
+            'process.env.SERVER_HOST': JSON.stringify(process.env.SERVER_HOST),
+            'process.env.PORT': JSON.stringify(process.env.PORT),
         }),
         new CopyPlugin({
             patterns: [

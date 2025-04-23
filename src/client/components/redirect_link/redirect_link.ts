@@ -1,4 +1,5 @@
-import { API_URL } from '@shared/constants'
+import { API } from '@shared/constants/app.constants'
+import { Base64_Url } from '@shared/utils/base64_url'
 
 document.addEventListener('DOMContentLoaded', () => {
     const redirectLinks = document.querySelectorAll('.redirect_link')
@@ -11,15 +12,13 @@ document.addEventListener('DOMContentLoaded', () => {
 
             // Creazione dei dati da inviare al server
             const data = JSON.stringify({
-                origin: 0, // Website
-                event: 0, // Click
+                origin: 'Website',
                 redirect_url: anchor.href,
             })
 
-            // Converti i dati in JSON e poi in URL-safe Base64
-            const base64Data = btoa(data) // Base64 URL-safe
+            const base64_data = Base64_Url.encode_json(data)
 
-            fetch(`${API_URL}/redirect/${base64Data}`)
+            fetch(`${API.URL}/redirect/${base64_data}`)
 
             window.location.href = anchor.href
         })

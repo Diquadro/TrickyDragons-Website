@@ -1,4 +1,4 @@
-import '@client_components/cta_modal/cta_modal.scss'
+import '@client/components/cta_modal/cta_modal.scss'
 
 export function show_modal(id: string): void {
     const modal = document.getElementById(id) as HTMLElement | null

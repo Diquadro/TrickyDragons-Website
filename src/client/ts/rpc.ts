@@ -2,14 +2,14 @@ import {
     Subscribe_Contacts_Request,
     Subscribe_Contacts_Response,
     subscribe_contacts_response_schema,
-} from '@shared/validations/subscribe_contacts.validations'
-import { API_URL } from '@shared/constants'
+} from '@shared/validations/subscribe_contact.validations'
+import { API } from '@shared/constants/app.constants'
 
 export class RPC {
     static async subscribe_contacts(
         contacts: Subscribe_Contacts_Request,
     ): Promise<Subscribe_Contacts_Response> {
-        const response = await fetch(`${API_URL}/rpc/v1/subscribe_contacts`, {
+        const response = await fetch(`${API.ENDPOINTS.CONTACTS.SUBSCRIBE}`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',

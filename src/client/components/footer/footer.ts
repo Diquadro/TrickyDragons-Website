@@ -1,1 +1,1 @@
-import '@client_components/footer/footer.scss'
+import '@client/components/footer/footer.scss'

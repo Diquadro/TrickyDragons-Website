@@ -2,24 +2,40 @@ import dotenv from 'dotenv'
 dotenv.config({ path: ['/etc/secrets/.env', '.env'] })
 
 import express from 'express'
-import { apply_middlewares } from '@server_middlewares/middlewares'
-import { apply_routes } from '@server_routes/routes'
-import { sql } from '@server_models/models'
+import { apply_middlewares } from '@server/middlewares/middlewares'
+import { apply_routes } from '@server/routes'
+import { sql } from '@server/models/postgres_client'
+import { API } from '@shared/constants/app.constants'
 
-const app = express()
+// Main server initialization function
+async function start_server() {
+    // Create Express application
+    const app = express()
 
-apply_middlewares(app)
-apply_routes(app)
+    // Apply middleware
+    apply_middlewares(app)
 
-// Graceful Shutdown to close database connections
-process.on('SIGINT', async () => {
-    await sql.end()
-    console.log('Database pool closed.')
+    // Apply routes
+    apply_routes(app)
 
-    process.exit()
+    // Graceful shutdown to close database connections
+    process.on('SIGINT', async () => {
+        await sql.end()
+        console.log('Database pool closed.')
+        process.exit()
+    })
+
+    // Get port from environment or use default
+    const port = API.PORT
+
+    // Start the server
+    app.listen(port, () => {
+        console.log(`Server running on port ${port}`)
+    })
+}
+
+// Start the server and handle any initialization errors
+start_server().catch((err) => {
+    console.error('Failed to start server:', err)
+    process.exit(1)
 })
-
-// Start the server
-if (!process.env.SERVER_PORT) throw new Error('Missing SERVER_PORT')
-const port = parseInt(process.env.SERVER_PORT)
-app.listen(port, () => console.log(`Server running on port ${port}`))

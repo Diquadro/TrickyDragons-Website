@@ -1,18 +1,33 @@
 import express from 'express'
-import { rate_limiter_middleware } from '@server_middlewares/rate_limiter.middlewares'
-import { cors_middleware } from '@server_middlewares/cors.middlewares'
-import { request_ip_middleware } from '@server_middlewares/request_ip.middlewares'
-import { geo_infos } from '@server_middlewares/geo_infos.middlewares'
-import { json_middleware } from '@server_middlewares/express_json.middlewares'
-import { block_bots } from '@server_middlewares/block_bots.middlewares'
-import { morgan_middleware } from '@server_middlewares/morgan.middlewares'
+import { rate_limiter } from './rate_limiter'
+import { cors_middleware } from './cors'
+import { request_ip } from './request_ip'
+import { geo_info_middleware } from './geo_infos'
+import { express_json } from './express_json'
+import { block_bots } from './block_bots'
+import { morgan_middleware } from './morgan'
+import { error_handler } from './error_handler'
 
-export function apply_middlewares(app: express.Application) {
+// Applies all middlewares to the Express application
+// Order is important!
+//
+// @param app Express application instance
+export function apply_middlewares(app: express.Application): void {
+    // Logging - must be first to log all requests
     app.use(morgan_middleware)
+
+    // Security - early in the middleware chain
     app.use(block_bots)
-    app.use(rate_limiter_middleware)
+    app.use(rate_limiter)
     app.use(cors_middleware)
-    app.use(json_middleware)
-    app.use(request_ip_middleware)
-    app.use(geo_infos)
+
+    // Request parsing
+    app.use(express_json)
+
+    // Request enrichment
+    app.use(request_ip)
+    app.use(geo_info_middleware)
+
+    // Error handling - must be last
+    app.use(error_handler)
 }

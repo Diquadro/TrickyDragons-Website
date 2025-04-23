@@ -1,2 +1,2 @@
-import '@client_components/hero/hero.scss'
-import '@client_components/cta/cta'
+import '@client/components/hero/hero.scss'
+import '@client/components/cta/cta'

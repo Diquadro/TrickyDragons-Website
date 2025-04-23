@@ -1,11 +1,11 @@
 doctype html
 html(lang='en')
     head
-        include @client_components/headers_common/headers_common.pug
-        include @client_components/headers_dynamic/headers_dynamic.pug
+        include @client/components/headers_common/headers_common.pug
+        include @client/components/headers_dynamic/headers_dynamic.pug
 
         block head
     body
-        script(defer, src='@client_layouts/layout_common/layout_common.ts')
+        script(defer, src='@client/layouts/layout_common/layout_common.ts')
 
         block body
