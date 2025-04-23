@@ -15,7 +15,6 @@ export const CLIENT = {
 export const API = {
     URL: process.env.API_URL || 'http://localhost:5000',
     PORT: process.env.SERVER_PORT ? parseInt(process.env.SERVER_PORT) : 3000,
-    HOST: process.env.SERVER_HOST || '0.0.0.0',
 
     ENDPOINTS: {
         CONTACTS: {
