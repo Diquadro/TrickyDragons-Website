@@ -12,7 +12,7 @@
         "dev:server:start": "node dev/server/server.cjs",
         "prod:client:build": "webpack --config .configs/.webpack/webpack.prod.mjs && node tools/critical_css.mjs",
         "prod:server:build": "node tools/build_server.mjs",
-        "prod:server:start": "node prod/server/server.mjs",
+        "prod:server:start": "node prod/server/server.cjs",
         "database:migrate": "node tools/migrations.mjs && npx kanel"
     },
     "author": "Daniele 'Diquadro' D'Ambrosio",
