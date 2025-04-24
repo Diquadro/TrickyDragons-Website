@@ -25,6 +25,7 @@ export const geo_info_middleware = (req: Request, res: Response, next: NextFunct
             country: 'US',
             region: 'CA',
             timezone: 'America/Los_Angeles',
+            ll: [41.9, 12.5],
         }
     } else {
         // Lookup IP in the geoip database
@@ -39,6 +40,9 @@ export const geo_info_middleware = (req: Request, res: Response, next: NextFunct
             region: region?.name || undefined,
             city: geo.city || undefined,
             timezone: geo.timezone || undefined,
+            ll: [geo.ll?.[0], geo.ll?.[1]],
+            metro: geo.metro || undefined,
+            area: geo.area || undefined,
         }
     }
 

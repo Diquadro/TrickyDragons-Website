@@ -1,19 +1,12 @@
 // Geographic information interface
-export interface geo_infos {
-    // IP address
-    ip?: string
-    // Country code
+export interface GeoIPResult {
     country?: string
-    // Region/state code
     region?: string
-    // City name
+    timezone?: string // IANA Time Zone format (e.g., Europe/Rome)
     city?: string
-    // Timezone
-    timezone?: string
-    // Latitude
-    lat?: number
-    // Longitude
-    lon?: number
+    ll?: [number, number] // [latitude, longitude]
+    metro?: number // Optional metro code
+    area?: number // Optional accuracy radius (km)
 }
 
 // Extends Express Request with geo information

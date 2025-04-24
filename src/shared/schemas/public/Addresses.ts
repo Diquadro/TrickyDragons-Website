@@ -34,6 +34,16 @@ export default interface Addresses {
 
   /** Timestamp when the record was last updated. */
   updated_date: Date | null;
+
+  timezone: string | null;
+
+  latitude: number | null;
+
+  longitude: number | null;
+
+  metro: number | null;
+
+  area: number | null;
 }
 
 /**
@@ -67,6 +77,16 @@ export interface AddressesInitializer {
 
   /** Timestamp when the record was last updated. */
   updated_date?: Date | null;
+
+  timezone?: string | null;
+
+  latitude?: number | null;
+
+  longitude?: number | null;
+
+  metro?: number | null;
+
+  area?: number | null;
 }
 
 /**
@@ -97,6 +117,16 @@ export interface AddressesMutator {
 
   /** Timestamp when the record was last updated. */
   updated_date?: Date | null;
+
+  timezone?: string | null;
+
+  latitude?: number | null;
+
+  longitude?: number | null;
+
+  metro?: number | null;
+
+  area?: number | null;
 }
 
 export const addressesUuid = z.string() as unknown as z.Schema<AddressesUuid>;
@@ -110,6 +140,11 @@ export const addresses = z.object({
   created_date: z.date().nullable(),
   updated_by: z.string().nullable(),
   updated_date: z.date().nullable(),
+  timezone: z.string().nullable(),
+  latitude: z.number().nullable(),
+  longitude: z.number().nullable(),
+  metro: z.number().nullable(),
+  area: z.number().nullable(),
 }) as unknown as z.Schema<Addresses>;
 
 export const addressesInitializer = z.object({
@@ -121,6 +156,11 @@ export const addressesInitializer = z.object({
   created_date: z.date().optional().nullable(),
   updated_by: z.string().optional().nullable(),
   updated_date: z.date().optional().nullable(),
+  timezone: z.string().optional().nullable(),
+  latitude: z.number().optional().nullable(),
+  longitude: z.number().optional().nullable(),
+  metro: z.number().optional().nullable(),
+  area: z.number().optional().nullable(),
 }) as unknown as z.Schema<AddressesInitializer>;
 
 export const addressesMutator = z.object({
@@ -132,4 +172,9 @@ export const addressesMutator = z.object({
   created_date: z.date().optional().nullable(),
   updated_by: z.string().optional().nullable(),
   updated_date: z.date().optional().nullable(),
+  timezone: z.string().optional().nullable(),
+  latitude: z.number().optional().nullable(),
+  longitude: z.number().optional().nullable(),
+  metro: z.number().optional().nullable(),
+  area: z.number().optional().nullable(),
 }) as unknown as z.Schema<AddressesMutator>;
