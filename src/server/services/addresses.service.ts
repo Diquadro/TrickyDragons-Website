@@ -31,8 +31,6 @@ export abstract class Addresses_Service {
             timezone: req.geo_infos.timezone,
             latitude: req.geo_infos.ll?.[0],
             longitude: req.geo_infos.ll?.[1],
-            metro: req.geo_infos.metro,
-            area: req.geo_infos.area,
         }
 
         return await sql.insert<Addresses[]>('addresses', [new_address])
