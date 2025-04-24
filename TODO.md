@@ -5,6 +5,7 @@ LIST
 [X] Rivedere le routes dell'api e valutare se usare una stategia RPC al posto di REST
 [X] FIX - Subscription error handling in frontend
 [X] Umami Events
+[X] Umamni Events link clicks
 [] Meta API Conversion
 [WORKING] Budibase
 [] Schemalint -> https://github.com/kristiandupont/schemalint
@@ -13,6 +14,9 @@ LIST
 [] BETTER Logging Services (EXTERNAL)
 [] Request Validation Middleware
 [] Better organization for the middlewares
+[] Mettere un autonumber sulle colonne è utile per il debuging
+[] Utilizzare una cartella public
+[X] Aggiunti gli indirizzi email al .env per migliore usabilità per più sviluppatori
 
 MAYBE
 

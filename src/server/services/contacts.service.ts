@@ -6,6 +6,10 @@ import {
     CONTACT_RESPONSE_OUTCOME,
     Subscribe_Contact_Response_Outcome,
 } from '@shared/validations/subscribe_contact.validations'
+import {
+    UNSUBSCRIBE_RESPONSE_OUTCOME,
+    Unsubscribe_Contact_Response_Outcome,
+} from '@shared/validations/unsubscribe_contact.validations'
 
 export abstract class Contacts_Service {
     static async subscribe(
@@ -48,6 +52,44 @@ export abstract class Contacts_Service {
             return {
                 contacts: updated_contacts,
                 outcome: CONTACT_RESPONSE_OUTCOME.RESUBSCRIBED,
+            }
+        }
+    }
+
+    static async unsubscribe(
+        email: string,
+        subscription: ContactSubscriptions,
+    ): Promise<{
+        contacts: Contacts[]
+        outcome: Unsubscribe_Contact_Response_Outcome
+    }> {
+        const contacts = await Contacts_Service.find_by_email(email)
+
+        const contact = contacts[0]
+
+        if (!contact) {
+            return {
+                contacts: [],
+                outcome: UNSUBSCRIBE_RESPONSE_OUTCOME.NOT_FOUND,
+            }
+        } else if (!contact.subscriptions?.includes(subscription)) {
+            return {
+                contacts: [contact],
+                outcome: UNSUBSCRIBE_RESPONSE_OUTCOME.ALREADY_UNSUBSCRIBED,
+            }
+        } else {
+            const updatedSubscriptions = contact.subscriptions.filter((sub) => sub !== subscription)
+
+            const updated_contacts = await sql.update<Contacts[]>('contacts', [
+                {
+                    uuid: contact.uuid,
+                    subscriptions: updatedSubscriptions,
+                },
+            ])
+
+            return {
+                contacts: updated_contacts,
+                outcome: UNSUBSCRIBE_RESPONSE_OUTCOME.UNSUBSCRIBED,
             }
         }
     }

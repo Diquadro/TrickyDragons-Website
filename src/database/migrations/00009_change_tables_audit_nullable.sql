@@ -1,4 +1,3 @@
--- Make created_* and updated_* columns nullable in all tables
 ALTER TABLE contacts
   ALTER COLUMN created_by DROP NOT NULL,
   ALTER COLUMN created_date DROP NOT NULL,

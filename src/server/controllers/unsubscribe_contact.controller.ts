@@ -1,10 +1,10 @@
 import { Request, Response } from 'express'
 import {
-    CONTACT_RESPONSE_OUTCOME,
-    Subscribe_Contact_Response_Outcome,
-    subscribe_contacts_request_schema,
-    subscribe_contacts_response_schema,
-} from '@shared/validations/subscribe_contact.validations'
+    UNSUBSCRIBE_RESPONSE_OUTCOME,
+    Unsubscribe_Contact_Response_Outcome,
+    unsubscribe_contacts_request_schema,
+    unsubscribe_contacts_response_schema,
+} from '@shared/validations/unsubscribe_contact.validations'
 import { Contacts_Service } from '@server/services/contacts.service'
 import { try_catch } from '@shared/utils/try_catch'
 import { Addresses_Service } from '@server/services/addresses.service'
@@ -13,13 +13,12 @@ import { Events_Service } from '@server/services/events.service'
 import EventDirection from '@shared/schemas/public/EventDirection'
 import EventOutcome from '@shared/schemas/public/EventOutcome'
 import { API, HTTP_STATUS } from '@shared/constants/app.constants'
-import { Welcome_Email } from '@shared/templates/emails/welcome/welcome'
 import { AddressesUuid } from '@shared/schemas/public/Addresses'
 import { ContactsUuid } from '@shared/schemas/public/Contacts'
 
-export abstract class Subscribe_Contact_Controller {
+export abstract class Unsubscribe_Contact_Controller {
     static async http(req: Request, res: Response) {
-        const validation = subscribe_contacts_request_schema.safeParse(req.body)
+        const validation = unsubscribe_contacts_request_schema.safeParse(req.body)
 
         if (!validation.success) {
             console.error(validation.error)
@@ -28,7 +27,7 @@ export abstract class Subscribe_Contact_Controller {
 
         const { email, subscription } = validation.data
         const [response_ok, response_error, response] = await try_catch(
-            Contacts_Service.subscribe(email, subscription),
+            Contacts_Service.unsubscribe(email, subscription),
         )
 
         if (!response_ok) {
@@ -37,8 +36,12 @@ export abstract class Subscribe_Contact_Controller {
         }
 
         res.status(HTTP_STATUS.OK)
-            .json(subscribe_contacts_response_schema.parse({ outcome: response.outcome }))
+            .json(unsubscribe_contacts_response_schema.parse({ outcome: response.outcome }))
             .send()
+
+        if (response.outcome === UNSUBSCRIBE_RESPONSE_OUTCOME.NOT_FOUND) {
+            return
+        }
 
         const [addresses_ok, addresses_error, addresses] = await try_catch(
             Addresses_Service.get_or_create(req),
@@ -48,32 +51,24 @@ export abstract class Subscribe_Contact_Controller {
             console.error(addresses_error)
         }
 
-        Subscribe_Contact_Controller.create_success_event(
-            req,
-            response.outcome,
-            response.contacts[0].uuid,
-            addresses?.[0]?.uuid,
-        ).catch(console.error)
-
-        if (response.outcome !== CONTACT_RESPONSE_OUTCOME.NEW_CONTACT) {
-            return
+        if (response.outcome === UNSUBSCRIBE_RESPONSE_OUTCOME.UNSUBSCRIBED) {
+            Unsubscribe_Contact_Controller.create_success_event(
+                req,
+                response.outcome,
+                response.contacts[0].uuid,
+                addresses?.[0]?.uuid,
+            ).catch(console.error)
         }
-
-        Welcome_Email.send_log_update(
-            API.EVENTS.ORIGINS.SUBSCRIBE_CONTACT,
-            response.contacts[0],
-            addresses?.[0],
-        ).catch(console.error)
     }
 
     static async create_success_event(
         req: Request,
-        outcome: Subscribe_Contact_Response_Outcome,
+        outcome: Unsubscribe_Contact_Response_Outcome,
         contact_uuid: ContactsUuid,
         address_uuid?: AddressesUuid,
     ) {
-        const success_subscribe_event: EventsInitializer = {
-            action: API.EVENTS.ACTIONS.SUBSCRIBE_CONTACT,
+        const success_unsubscribe_event: EventsInitializer = {
+            action: API.EVENTS.ACTIONS.UNSUBSCRIBE_CONTACT,
             direction: EventDirection.inbound,
             endpoint: `${req.method} - ${req.originalUrl}`,
             origin: req.get('Referrer'),
@@ -84,23 +79,6 @@ export abstract class Subscribe_Contact_Controller {
             contact_uuid: contact_uuid,
         }
 
-        return await Events_Service.create(success_subscribe_event)
+        return await Events_Service.create(success_unsubscribe_event)
     }
-
-    // static async create_failure_event(req: Request, error: Error) {
-    //     const failure_subscribe_event: EventsInitializer = {
-    //         action: API.EVENTS.ACTIONS.SUBSCRIBE_CONTACT,
-    //         direction: EventDirection.inbound,
-    //         endpoint: `${req.method} - ${req.originalUrl}`,
-    //         origin: req.get('Referrer'),
-    //         occurred_at: new Date(),
-    //         outcome: EventOutcome.failure,
-    //         details: {
-    //             message: error.message,
-    //             stack: error.stack,
-    //         },
-    //     }
-
-    //     return await Events_Service.create(failure_subscribe_event)
-    // }
 }

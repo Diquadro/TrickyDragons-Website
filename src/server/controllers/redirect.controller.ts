@@ -4,7 +4,7 @@ import { EventsInitializer } from '@shared/schemas/public/Events'
 import { Events_Service } from '@server/services/events.service'
 import EventDirection from '@shared/schemas/public/EventDirection'
 import EventOutcome from '@shared/schemas/public/EventOutcome'
-import { API, HTTP_STATUS, CLIENT } from '@shared/constants/app.constants'
+import { API, CLIENT } from '@shared/constants/app.constants'
 import { try_catch } from '@shared/utils/try_catch'
 import { Addresses_Service } from '@server/services/addresses.service'
 import Contacts, { ContactsUuid } from '@shared/schemas/public/Contacts'
@@ -36,14 +36,15 @@ export abstract class Redirect_Controller {
 
         // Retrieve the contact associated with the email if present
         const contacts = await Redirect_Controller.get_contact(payload.email)
+        if (contacts.length === 0) {
+            console.error('No contact found for email:', payload.email)
+            return
+        }
 
         // Track the redirect event
-        Redirect_Controller.create_success_event(
-            req,
-            payload,
-            contacts?.[0]?.uuid,
-            addresses?.[0]?.uuid,
-        ).catch(console.error)
+        Redirect_Controller.create_success_event(req, payload, contacts[0].uuid, addresses?.[0]?.uuid).catch(
+            console.error,
+        )
     }
 
     static async get_contact(email?: string): Promise<Contacts[]> {
@@ -55,15 +56,16 @@ export abstract class Redirect_Controller {
 
         if (!contacts_ok) {
             console.error('Failed to find contact by email:', contacts_error)
+            return []
         }
 
-        return contacts ?? []
+        return contacts
     }
 
     static async create_success_event(
         req: Request,
         payload: Redirect_Payload,
-        contact_uuid?: ContactsUuid,
+        contact_uuid: ContactsUuid,
         address_uuid?: AddressesUuid,
     ) {
         const success_event: EventsInitializer = {
@@ -81,20 +83,20 @@ export abstract class Redirect_Controller {
         return await Events_Service.create(success_event)
     }
 
-    static async create_failure_event(req: Request, error: Error) {
-        const failure_event: EventsInitializer = {
-            action: API.EVENTS.ACTIONS.REDIRECT,
-            direction: EventDirection.outbound,
-            endpoint: `${req.method} - ${req.originalUrl}`,
-            origin: req.get('Referrer'),
-            occurred_at: new Date(),
-            outcome: EventOutcome.failure,
-            details: {
-                message: error.message,
-                stack: error.stack,
-            },
-        }
+    // static async create_failure_event(req: Request, error: Error) {
+    //     const failure_event: EventsInitializer = {
+    //         action: API.EVENTS.ACTIONS.REDIRECT,
+    //         direction: EventDirection.outbound,
+    //         endpoint: `${req.method} - ${req.originalUrl}`,
+    //         origin: req.get('Referrer'),
+    //         occurred_at: new Date(),
+    //         outcome: EventOutcome.failure,
+    //         details: {
+    //             message: error.message,
+    //             stack: error.stack,
+    //         },
+    //     }
 
-        return await Events_Service.create(failure_event)
-    }
+    //     return await Events_Service.create(failure_event)
+    // }
 }

@@ -30,18 +30,18 @@ export const API = {
 
     EVENTS: {
         ACTIONS: {
-            SUBSCRIBE_CONTACTS: 'v1_subscribe_contacts',
-            UNSUBSCRIBE_CONTACTS: 'v1_unsubscribe_contacts',
+            SUBSCRIBE_CONTACT: 'v1_subscribe_contact',
+            UNSUBSCRIBE_CONTACT: 'v1_unsubscribe_contact',
             REDIRECT: 'v1_redirect',
             SEND_WELCOME_EMAIL: 'v1_send_welcome_email',
         },
 
         ORIGINS: {
-            get SUBSCRIBE_CONTACTS() {
-                return `${API.EVENTS.ORIGINS.INTERNAL} - ${API.EVENTS.ACTIONS.SUBSCRIBE_CONTACTS}`
+            get SUBSCRIBE_CONTACT() {
+                return `${API.EVENTS.ORIGINS.INTERNAL} - ${API.EVENTS.ACTIONS.SUBSCRIBE_CONTACT}`
             },
-            get UNSUBSCRIBE_CONTACTS() {
-                return `${API.EVENTS.ORIGINS.INTERNAL} - ${API.EVENTS.ACTIONS.UNSUBSCRIBE_CONTACTS}`
+            get UNSUBSCRIBE_CONTACT() {
+                return `${API.EVENTS.ORIGINS.INTERNAL} - ${API.EVENTS.ACTIONS.UNSUBSCRIBE_CONTACT}`
             },
             get REDIRECT() {
                 return `${API.EVENTS.ORIGINS.INTERNAL} - ${API.EVENTS.ACTIONS.REDIRECT}`

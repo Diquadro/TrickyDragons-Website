@@ -1,5 +1,6 @@
 import express from 'express'
 import { Subscribe_Contact_Controller } from '@server/controllers/subscribe_contact.controller'
+import { Unsubscribe_Contact_Controller } from '@server/controllers/unsubscribe_contact.controller'
 import { Redirect_Controller } from '@server/controllers/redirect.controller'
 import { API } from '@shared/constants/app.constants'
 
@@ -8,6 +9,7 @@ import { API } from '@shared/constants/app.constants'
 export function apply_routes(app: express.Application): void {
     // Contacts routes
     app.post(API.ENDPOINTS.CONTACTS.SUBSCRIBE, Subscribe_Contact_Controller.http)
+    app.post(API.ENDPOINTS.CONTACTS.UNSUBSCRIBE, Unsubscribe_Contact_Controller.http)
 
     // Redirects routes
     app.get(API.ENDPOINTS.REDIRECTS.REDIRECT, Redirect_Controller.http)

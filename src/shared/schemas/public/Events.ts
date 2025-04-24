@@ -19,7 +19,7 @@ export default interface Events {
   uuid: EventsUuid;
 
   /** Reference to the contact involved in the event. Nullable for anonymous visitors. */
-  contact_uuid: ContactsUuid | null;
+  contact_uuid: ContactsUuid;
 
   /** Reference to the geographic location (IP-based) of the event. */
   address_uuid: AddressesUuid | null;
@@ -70,7 +70,7 @@ export interface EventsInitializer {
   uuid?: EventsUuid;
 
   /** Reference to the contact involved in the event. Nullable for anonymous visitors. */
-  contact_uuid?: ContactsUuid | null;
+  contact_uuid: ContactsUuid;
 
   /** Reference to the geographic location (IP-based) of the event. */
   address_uuid?: AddressesUuid | null;
@@ -118,7 +118,7 @@ export interface EventsMutator {
   uuid?: EventsUuid;
 
   /** Reference to the contact involved in the event. Nullable for anonymous visitors. */
-  contact_uuid?: ContactsUuid | null;
+  contact_uuid?: ContactsUuid;
 
   /** Reference to the geographic location (IP-based) of the event. */
   address_uuid?: AddressesUuid | null;
@@ -161,7 +161,7 @@ export const eventsUuid = z.string() as unknown as z.Schema<EventsUuid>;
 
 export const events = z.object({
   uuid: eventsUuid,
-  contact_uuid: contactsUuid.nullable(),
+  contact_uuid: contactsUuid,
   address_uuid: addressesUuid.nullable(),
   origin: z.string().nullable(),
   action: z.string(),
@@ -178,7 +178,7 @@ export const events = z.object({
 
 export const eventsInitializer = z.object({
   uuid: eventsUuid.optional(),
-  contact_uuid: contactsUuid.optional().nullable(),
+  contact_uuid: contactsUuid,
   address_uuid: addressesUuid.optional().nullable(),
   origin: z.string().optional().nullable(),
   action: z.string(),
@@ -195,7 +195,7 @@ export const eventsInitializer = z.object({
 
 export const eventsMutator = z.object({
   uuid: eventsUuid.optional(),
-  contact_uuid: contactsUuid.optional().nullable(),
+  contact_uuid: contactsUuid.optional(),
   address_uuid: addressesUuid.optional().nullable(),
   origin: z.string().optional().nullable(),
   action: z.string().optional(),

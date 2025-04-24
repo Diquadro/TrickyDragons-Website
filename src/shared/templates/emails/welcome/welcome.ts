@@ -16,16 +16,17 @@ import { redirect_payload_schema } from '@shared/validations/redirect.validation
 
 export abstract class Welcome_Email {
     static async send_log_update(origin: string, contact: Contacts, address?: Addresses) {
-        const [response_ok, response_error, response] = await try_catch(Welcome_Email.send(contact))
+        const [email_ok, email_error, email] = await try_catch(Welcome_Email.send(contact))
 
-        if (!response_ok) {
-            Welcome_Email.create_failure_event(origin, response_error, contact.uuid, address?.uuid)
+        if (!email_ok) {
+            console.error(email_error)
+            Welcome_Email.create_failure_event(origin, email_error, contact.uuid, address?.uuid)
         } else {
             Welcome_Email.create_success_event(origin, contact.uuid, address?.uuid)
             Welcome_Email.update_contact(contact)
         }
 
-        return response
+        return email
     }
 
     static async send(contact: Contacts) {

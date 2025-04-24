@@ -35,10 +35,10 @@ export const geo_info_middleware = (req: Request, res: Response, next: NextFunct
         const country = countryRegionData?.find((c: any) => c.countryShortCode === geo.country)
         const region = country?.regions.find((r: any) => r.shortCode === geo.region)
         req.geo_infos = {
-            country: country?.countryName,
-            region: region?.name,
-            city: geo.city,
-            timezone: geo.timezone,
+            country: country?.countryName || undefined,
+            region: region?.name || undefined,
+            city: geo.city || undefined,
+            timezone: geo.timezone || undefined,
         }
     }
 
