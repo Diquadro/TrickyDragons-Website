@@ -17,6 +17,7 @@ LIST
 [] Mettere un autonumber sulle colonne è utile per il debuging
 [] Utilizzare una cartella public
 [X] Aggiunti gli indirizzi email al .env per migliore usabilità per più sviluppatori
+[] Vedere di mettere l'api sullo stesso dominio /api
 
 MAYBE
 
