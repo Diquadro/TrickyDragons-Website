@@ -7,7 +7,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
 function load_posthog_prod() {
     if (ENV.PRODUCTION) {
-        posthog.init('phc_PSxWVH6wEiaYVhtH6uTru9gKTbzbKXMXiHPRFJ6CGsC', {
+        posthog.init('phc_gv5ftx8FjCnhDNr3kEcXYPTZtqcSjR91357r6ePqod0', {
             api_host: 'https://eu.i.posthog.com',
             person_profiles: 'always',
         })
