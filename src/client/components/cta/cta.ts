@@ -63,14 +63,10 @@ function handle_button_click() {
                 return show_modal('modal_email_duplicate')
             } else if (result.outcome === CONTACT_RESPONSE_OUTCOME.NEW_CONTACT) {
                 if (typeof window !== 'undefined' && typeof window.umami !== 'undefined') {
-                    window.umami.track('subscribed_to_newsletter', {
-                        email: email,
-                    })
+                    window.umami.track('subscribed_to_newsletter')
                 }
 
-                posthog.capture('subscribed_to_newsletter', {
-                    email: email,
-                })
+                posthog.capture('subscribed_to_newsletter')
 
                 return show_modal('modal_email_sent')
             }
