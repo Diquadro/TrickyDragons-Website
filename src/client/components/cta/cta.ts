@@ -1,5 +1,6 @@
 import '@client/components/cta/cta.scss'
 import '@client/components/cta_modal/cta_modal'
+import posthog from 'posthog-js'
 
 import error_toast from '@client/components/error_toast/error_toast'
 import { show_spinner } from '@client/components/spinner/spinner'
@@ -66,6 +67,11 @@ function handle_button_click() {
                         email: email,
                     })
                 }
+
+                posthog.capture('subscribed_to_newsletter', {
+                    email: email,
+                })
+
                 return show_modal('modal_email_sent')
             }
         } catch (err) {
