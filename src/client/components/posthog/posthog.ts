@@ -10,6 +10,9 @@ function load_posthog_prod() {
         posthog.init('phc_gv5ftx8FjCnhDNr3kEcXYPTZtqcSjR91357r6ePqod0', {
             api_host: 'https://eu.i.posthog.com',
             person_profiles: 'always',
+            session_recording: {
+                maskAllInputs: false,
+            },
         })
 
         if (localStorage.getItem('umami.disabled') === 'true') {
