@@ -5,7 +5,7 @@ mixin cta(id, title)
             span.font-bold Don’t miss out!
             |
             | We’ll notify you when the game launches, so you can grab limited early bird discounts!
-        input(type='email', placeholder='Email Address', name='email', required)
+        input(type='email', placeholder='Email Address', name='email', autocomplete='email', required)
 
         label.checkbox-container
             input(type='checkbox', id=`consent-${id}`, name='consent', required)
