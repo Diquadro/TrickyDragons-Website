@@ -4,7 +4,7 @@ import {
     Subscribe_Contact_Response_Outcome,
     subscribe_contacts_request_schema,
     subscribe_contacts_response_schema,
-} from '@shared/validations/subscribe_contact.validations'
+} from '@shared/validations/subscribe_contact.validation'
 import { Contacts_Service } from '@server/services/contacts.service'
 import { try_catch } from '@shared/utils/try_catch'
 import { Addresses_Service } from '@server/services/addresses.service'

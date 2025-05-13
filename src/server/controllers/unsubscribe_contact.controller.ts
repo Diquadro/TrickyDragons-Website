@@ -4,7 +4,7 @@ import {
     Unsubscribe_Contact_Response_Outcome,
     unsubscribe_contacts_request_schema,
     unsubscribe_contacts_response_schema,
-} from '@shared/validations/unsubscribe_contact.validations'
+} from '@shared/validations/unsubscribe_contact.validation'
 import { Contacts_Service } from '@server/services/contacts.service'
 import { try_catch } from '@shared/utils/try_catch'
 import { Addresses_Service } from '@server/services/addresses.service'

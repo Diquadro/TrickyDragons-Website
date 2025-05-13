@@ -17,7 +17,6 @@
     },
     "author": "Daniele 'Diquadro' D'Ambrosio",
     "dependencies": {
-        "base64url": "^3.0.1",
         "cors": "^2.8.5",
         "country-region-data": "^3.1.0",
         "dotenv": "^16.4.7",

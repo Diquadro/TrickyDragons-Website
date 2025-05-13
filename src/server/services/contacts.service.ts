@@ -5,11 +5,11 @@ import ContactSubscriptions from '@shared/schemas/public/ContactSubscriptions'
 import {
     CONTACT_RESPONSE_OUTCOME,
     Subscribe_Contact_Response_Outcome,
-} from '@shared/validations/subscribe_contact.validations'
+} from '@shared/validations/subscribe_contact.validation'
 import {
     UNSUBSCRIBE_RESPONSE_OUTCOME,
     Unsubscribe_Contact_Response_Outcome,
-} from '@shared/validations/unsubscribe_contact.validations'
+} from '@shared/validations/unsubscribe_contact.validation'
 
 export abstract class Contacts_Service {
     static async subscribe(

@@ -9,7 +9,7 @@ import { try_catch } from '@shared/utils/try_catch'
 import { Addresses_Service } from '@server/services/addresses.service'
 import Contacts, { ContactsUuid } from '@shared/schemas/public/Contacts'
 import { AddressesUuid } from '@shared/schemas/public/Addresses'
-import { redirect_payload_schema, Redirect_Payload } from '@shared/validations/redirect.validations'
+import { redirect_payload_schema, Redirect_Payload } from '@shared/validations/redirect.validation'
 import { Contacts_Service } from '@server/services/contacts.service'
 
 export abstract class Redirect_Controller {

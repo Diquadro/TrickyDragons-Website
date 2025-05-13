@@ -8,9 +8,11 @@ import { show_modal } from '@client/components/cta_modal/cta_modal'
 import {
     CONTACT_RESPONSE_OUTCOME,
     Subscribe_Contacts_Response,
-} from '@shared/validations/subscribe_contact.validations'
+} from '@shared/validations/subscribe_contact.validation'
 import { RPC } from '@client/ts/rpc'
 import ContactSubscriptions from '@shared/schemas/public/ContactSubscriptions'
+import { get_utm_params } from '@client/ts/get_utm_params'
+import { umami_track } from '@client/ts/umami_track'
 
 const EMAIL_REGEX =
     /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
@@ -62,9 +64,9 @@ function handle_button_click() {
             } else if (result.outcome === CONTACT_RESPONSE_OUTCOME.ALREADY_SUBSCRIBED) {
                 return show_modal('modal_email_duplicate')
             } else if (result.outcome === CONTACT_RESPONSE_OUTCOME.NEW_CONTACT) {
-                if (typeof window !== 'undefined' && typeof window.umami !== 'undefined') {
-                    window.umami.track('subscribed_to_newsletter')
-                }
+                umami_track('subscribed_to_newsletter', {
+                    ...get_utm_params(),
+                })
 
                 posthog.capture('subscribed_to_newsletter')
 

@@ -7,7 +7,7 @@ LIST
 [X] Umami Events
 [X] Umamni Events link clicks
 [] Meta API Conversion
-[WORKING] Budibase
+[X] Appsmith
 [] Schemalint -> https://github.com/kristiandupont/schemalint
 [] Better error handling
 [] Configuration menagment with zod
@@ -15,9 +15,10 @@ LIST
 [] Request Validation Middleware
 [] Better organization for the middlewares
 [] Mettere un autonumber sulle colonne è utile per il debuging
-[] Utilizzare una cartella public
+[] Utilizzare una cartella public per gli assets così da non copiarli (Emails, Imgs)
 [X] Aggiunti gli indirizzi email al .env per migliore usabilità per più sviluppatori
 [] Vedere di mettere l'api sullo stesso dominio /api
+[X] Tracking UTM su umami
 
 MAYBE
 

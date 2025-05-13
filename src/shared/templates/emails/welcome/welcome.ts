@@ -12,7 +12,7 @@ import EventOutcome from '@shared/schemas/public/EventOutcome'
 import { EventsInitializer } from '@shared/schemas/public/Events'
 import { try_catch } from '@shared/utils/try_catch'
 import { Contacts_Service } from '@server/services/contacts.service'
-import { redirect_payload_schema } from '@shared/validations/redirect.validations'
+import { redirect_payload_schema } from '@shared/validations/redirect.validation'
 
 export abstract class Welcome_Email {
     static async send_log_update(origin: string, contact: Contacts, address?: Addresses) {

@@ -2,7 +2,7 @@ import {
     Subscribe_Contacts_Request,
     Subscribe_Contacts_Response,
     subscribe_contacts_response_schema,
-} from '@shared/validations/subscribe_contact.validations'
+} from '@shared/validations/subscribe_contact.validation'
 import { API, ENV } from '@shared/constants/app.constants'
 
 export class RPC {

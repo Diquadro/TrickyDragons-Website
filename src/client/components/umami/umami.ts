@@ -18,7 +18,7 @@ function load_umami_prod() {
 }
 
 function load_umami_dev() {
-    if (ENV.DEVELOPMENT) {
+    if (ENV.DEVELOPMENT || ENV.LOCAL) {
         const script = document.createElement('script')
         script.defer = true
         script.setAttribute('data-website-id', '5819d2e5-b1ca-423b-baf6-101627f0ff4d')
