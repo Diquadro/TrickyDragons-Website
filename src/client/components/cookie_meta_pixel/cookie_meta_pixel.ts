@@ -2,7 +2,7 @@
 import * as CookieConsent from 'vanilla-cookieconsent'
 
 export default function () {
-    if (CookieConsent.acceptedCategory('marketing')) {
+    if (/*CookieConsent.acceptedCategory('marketing')*/ true) {
         !(function (f, b, e, v, n, t, s) {
             if (f.fbq) return
             n = f.fbq = function () {

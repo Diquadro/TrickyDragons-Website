@@ -5,13 +5,13 @@ import cookie_meta_pixel from '@client/components/cookie_meta_pixel/cookie_meta_
 document.addEventListener('DOMContentLoaded', () => {
     CookieConsent.run({
         onFirstConsent: () => {
-            cookie_meta_pixel()
+            // cookie_meta_pixel()
         },
         onConsent: () => {
-            cookie_meta_pixel()
+            // cookie_meta_pixel()
         },
         onChange: () => {
-            cookie_meta_pixel()
+            // cookie_meta_pixel()
         },
 
         guiOptions: {
@@ -35,9 +35,9 @@ document.addEventListener('DOMContentLoaded', () => {
             functionality: {},
             analytics: {},
             marketing: {
-                autoClear: {
-                    cookies: [{ name: '_fbp' }, { name: '_fbc' }, { name: 'fr' }],
-                },
+                // autoClear: {
+                //     cookies: [{ name: '_fbp' }, { name: '_fbc' }, { name: 'fr' }],
+                // },
             },
         },
         language: {
