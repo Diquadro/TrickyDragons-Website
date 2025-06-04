@@ -1,8 +1,12 @@
 // @ts-nocheck
 import * as CookieConsent from 'vanilla-cookieconsent'
 
-export default function () {
-    if (/*CookieConsent.acceptedCategory('marketing')*/ true) {
+export function initialize_meta_pixel() {
+    // Avoid multiple initializations
+    if (window.fbq) return
+
+    if (/*CookieConsent.acceptedCategory('marketing') &&*/ true) {
+        // Standard Meta Pixel initialization code
         !(function (f, b, e, v, n, t, s) {
             if (f.fbq) return
             n = f.fbq = function () {
@@ -19,7 +23,16 @@ export default function () {
             s = b.getElementsByTagName(e)[0]
             s.parentNode.insertBefore(t, s)
         })(window, document, 'script', 'https://connect.facebook.net/en_US/fbevents.js')
-        fbq('init', '4023464907915676')
+
+        // Disable automatic form tracking and other automatic events
+        fbq('set', 'autoConfig', false, process.env.META_PIXEL_ID)
+        fbq('set', 'automaticMatching', false)
+
+        // Initialize pixel
+        fbq('init', process.env.META_PIXEL_ID)
+
+        // Send a single PageView to generate the _fbp cookie
+        // This is necessary for proper server-side event tracking
         fbq('track', 'PageView')
     }
 }

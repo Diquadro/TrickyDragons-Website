@@ -1,6 +1,5 @@
 import postgres from 'postgres'
 import { sql } from '../postgres_client'
-import { create_error, ERROR_TYPES } from '@shared/utils/errors'
 
 // Inserts multiple records into a database table
 // Performs a bulk insert operation with all records in a single SQL statement
@@ -21,7 +20,7 @@ export async function insert_records<T extends readonly (object | undefined)[] =
 ): Promise<postgres.RowList<T>> {
     // Guard: invalid table name
     if (typeof table_name !== 'string' || table_name.trim() === '') {
-        throw create_error(ERROR_TYPES.INVALID_TABLE_NAME)
+        throw new Error('Invalid table name')
     }
 
     // Guard: invalid or empty records array
@@ -31,10 +30,7 @@ export async function insert_records<T extends readonly (object | undefined)[] =
 
     // Guard: record limit exceeded
     if (records.length > sql.MAX_RECORDS_LIMIT) {
-        throw create_error(ERROR_TYPES.RECORD_LIMIT_EXCEEDED, {
-            limit: sql.MAX_RECORDS_LIMIT,
-            received: records.length,
-        })
+        throw new Error('Record limit exceeded')
     }
 
     // Collect all unique column names from records
@@ -42,7 +38,7 @@ export async function insert_records<T extends readonly (object | undefined)[] =
 
     // Check if columns were found
     if (columns.length === 0) {
-        throw create_error(ERROR_TYPES.NO_COLUMNS, records)
+        throw new Error('No columns found')
     }
 
     // Prepare values array for each record, using null for missing columns

@@ -1,0 +1,171 @@
+
+// PostgreSQL to DBML Schema Dump
+// Generated on: 2025-05-29T18:00:42.797Z
+// Database: test_db_001
+// Host: localhost:5432
+// Version: 0002
+// 
+// Generated using db2dbml tool
+// This DBML file includes all tables, relationships, and constraints
+// Compatible with dbdiagram.io and other DBML tools
+//
+Enum "action_direction" {
+  "inbound"
+  "outbound"
+}
+
+Enum "action_outcome" {
+  "success"
+  "failure"
+}
+
+Enum "analytics_event_name" {
+  "page_view"
+  "page_leave"
+  "page_scroll"
+  "link_click"
+  "subscribe_to_newsletter"
+  "unsubscribe_to_newsletter"
+}
+
+Enum "contact_status" {
+  "lead"
+  "prospect"
+  "customer"
+}
+
+Enum "contact_subscriptions" {
+  "newsletter"
+}
+
+Table "migrations" {
+  "migration_id" int4 [pk, not null, increment]
+  "created_at" timestamptz [not null, default: `now()`]
+  "name" text
+}
+
+Table "contacts" {
+  "uuid" uuid [pk, not null, default: `uuid_generate_v4()`, note: 'Universally unique identifier for the contact.']
+  "email" text [unique, not null, note: 'Primary email used for contact identification and communication.']
+  "status" contact_status [not null, note: 'Stage of the contact in the sales funnel: lead, prospect, or customer.']
+  "subscriptions" "contact_subscriptions[]" [note: 'List of subscriptions assigned to the contact.']
+  "created_by" text [note: 'User who created the record.']
+  "created_date" timestamptz [note: 'Timestamp when the record was created.']
+  "updated_by" text [note: 'User who last updated the record.']
+  "updated_date" timestamptz [note: 'Timestamp when the record was last updated.']
+  "sent_emails" "text[]" [note: 'Stores the list of email identifiers (e.g., "welcome", "20250401_newsletter") that have been sent to the contact by the system.']
+  Note: 'Stores contact details including leads, prospects, and customers.'
+}
+
+Table "addresses" {
+  "uuid" uuid [pk, not null, default: `uuid_generate_v4()`, note: 'Universally unique identifier for the address.']
+  "city" text [note: 'City of the address.']
+  "region" text [note: 'Region/State of the address.']
+  "country" text [note: 'Country of the address.']
+  "created_by" text [note: 'User who created the record.']
+  "created_date" timestamptz [note: 'Timestamp when the record was created.']
+  "updated_by" text [note: 'User who last updated the record.']
+  "updated_date" timestamptz [note: 'Timestamp when the record was last updated.']
+  "timezone" text
+  "latitude" float8
+  "longitude" float8
+  Note: 'Stores geographic locations associated with events.'
+}
+
+Table "actions" {
+  "uuid" uuid [pk, not null, default: `uuid_generate_v4()`, note: 'Universally unique identifier for the event.']
+  "contact_uuid" uuid [not null, note: 'Reference to the contact involved in the event. Nullable for anonymous visitors.']
+  "address_uuid" uuid [note: 'Reference to the geographic location (IP-based) of the event.']
+  "origin" text [note: 'Generic origin of the event']
+  "action" text [not null, note: 'Describes the type of event']
+  "outcome" action_outcome [not null, note: 'Outcome of the event, success or failure.']
+  "details" jsonb [note: 'Structured JSONB data capturing what happened, e.g., status codes, messages, or clicked URLs.']
+  "occurred_at" timestamptz [not null, note: 'Timestamp indicating when the event took place.']
+  "created_by" text [note: 'User who created the record.']
+  "created_date" timestamptz [note: 'Timestamp when the record was created.']
+  "updated_by" text [note: 'User who last updated the record.']
+  "updated_date" timestamptz [note: 'Timestamp when the record was last updated.']
+  "endpoint" text [note: 'Stores a summary of the HTTP method and endpoint (e.g., "POST - /api/subscribe").']
+  "direction" action_direction [note: 'Specifies the direction of the event: inbound (incoming) or outbound (outgoing).']
+  "attribution_uuid" uuid [note: 'Reference to the attribution data associated with this action.']
+
+  Indexes {
+    attribution_uuid [type: btree, name: "idx_actions_attribution_uuid"]
+    address_uuid [type: btree, name: "idx_events_address_uuid"]
+    contact_uuid [type: btree, name: "idx_events_contact_uuid"]
+  }
+  Note: 'Tracks all events, including system-generated communications and user actions, even for anonymous visitors.'
+}
+
+Table "attributions" {
+  "uuid" uuid [pk, not null, default: `uuid_generate_v4()`, note: 'Universally unique identifier for the attribution record.']
+  "utm_source" text [note: 'UTM source parameter identifying the traffic source (e.g., google, facebook, newsletter).']
+  "utm_medium" text [note: 'UTM medium parameter identifying the marketing medium (e.g., cpc, email, social).']
+  "utm_campaign" text [note: 'UTM campaign parameter identifying the specific campaign name.']
+  "utm_term" text [note: 'UTM term parameter for paid search keywords.']
+  "utm_content" text [note: 'UTM content parameter for A/B testing and content-targeted ads.']
+  "created_by" text [note: 'User who created the record.']
+  "created_date" timestamptz [note: 'Timestamp when the record was created.']
+  "updated_by" text [note: 'User who last updated the record.']
+  "updated_date" timestamptz [note: 'Timestamp when the record was last updated.']
+
+  Indexes {
+    utm_campaign [type: btree, name: "idx_attributions_utm_campaign"]
+    utm_medium [type: btree, name: "idx_attributions_utm_medium"]
+    utm_source [type: btree, name: "idx_attributions_utm_source"]
+  }
+  Note: 'Stores marketing attribution data including UTM parameters and referrer information for tracking campaign effectiveness.'
+}
+
+Table "analytics_events" {
+  "uuid" uuid [pk, not null, default: `uuid_generate_v4()`, note: 'Universally unique identifier for the analytics event.']
+  "session_id" text [not null, note: 'Anonymous session identifier (e.g., generated client-side hash) - unique per browser session.']
+  "visitor_id" text [note: 'Anonymous visitor fingerprint for cross-session tracking - persists across sessions for same device/browser.']
+  "event_name" analytics_event_name [not null, note: 'Type of analytics event being tracked.']
+  "page_url" text [not null, note: 'Full URL of the page where the event occurred.']
+  "page_title" text
+  "page_referrer" text [note: 'Referrer URL that brought the user to this page.']
+  "utm_source" text
+  "utm_medium" text
+  "utm_campaign" text
+  "utm_term" text
+  "utm_content" text
+  "user_agent" text
+  "browser_name" text
+  "browser_version" text
+  "os_name" text
+  "os_version" text
+  "device_type" text
+  "country" text
+  "region" text
+  "city" text
+  "timezone" text
+  "latitude" float8
+  "longitude" float8
+  "screen_resolution" text
+  "viewport_size" text
+  "language" text
+  "occurred_at" timestamptz [not null, default: `now()`, note: 'Timestamp when the event actually occurred (can be different from created_date for batch processing).']
+  "created_date" timestamptz [not null, default: `now()`]
+
+  Indexes {
+    country [type: btree, name: "idx_analytics_events_country"]
+    device_type [type: btree, name: "idx_analytics_events_device"]
+    event_name [type: btree, name: "idx_analytics_events_event_name"]
+    (event_name, occurred_at) [type: btree, name: "idx_analytics_events_name_time"]
+    occurred_at [type: btree, name: "idx_analytics_events_occurred_at"]
+    page_url [type: btree, name: "idx_analytics_events_page_url"]
+    session_id [type: btree, name: "idx_analytics_events_session_id"]
+    (session_id, occurred_at) [type: btree, name: "idx_analytics_events_session_time"]
+    (page_url, occurred_at) [type: btree, name: "idx_analytics_events_url_time"]
+    utm_campaign [type: btree, name: "idx_analytics_events_utm_campaign"]
+    utm_source [type: btree, name: "idx_analytics_events_utm_source"]
+  }
+  Note: 'Stores anonymous analytics events with denormalized data for high-volume tracking and fast aggregations.'
+}
+
+Ref "actions_attribution_uuid_fkey":"attributions"."uuid" < "actions"."attribution_uuid" [delete: set null]
+
+Ref "events_address_uuid_fkey":"addresses"."uuid" < "actions"."address_uuid" [delete: set null]
+
+Ref "evnts_conctacts_uuid_fkey":"contacts"."uuid" < "actions"."contact_uuid" [delete: cascade]

@@ -1,5 +1,5 @@
 import postgres from 'postgres'
-import Addresses from '@shared/schemas/public/Addresses'
+import Addresses from '@shared/schemas/database/public/Addresses'
 
 declare module 'postgres' {
     interface Sql {

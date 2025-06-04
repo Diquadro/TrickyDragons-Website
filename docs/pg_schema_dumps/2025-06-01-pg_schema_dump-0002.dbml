@@ -1,0 +1,194 @@
+
+            // PostgreSQL to DBML Schema Dump
+            // Generated on: 2025-06-01T10:55:51.032Z
+            // Database: test_db_001
+            // Host: localhost:5432
+            // Version: 0002
+            // 
+            // Generated using db2dbml tool
+            // This DBML file includes all tables, relationships, and constraints
+            // Compatible with dbdiagram.io and other DBML tools
+            //
+        Enum "action_direction" {
+  "inbound"
+  "outbound"
+}
+
+Enum "action_outcome" {
+  "success"
+  "failure"
+}
+
+Enum "analytics_event_name" {
+  "page_view"
+  "page_leave"
+  "page_scroll"
+  "link_click"
+  "subscribe_to_newsletter"
+  "unsubscribe_to_newsletter"
+}
+
+Enum "contact_status" {
+  "lead"
+  "prospect"
+  "customer"
+}
+
+Enum "contact_subscriptions" {
+  "newsletter"
+}
+
+Table "migrations" {
+  "migration_id" int4 [pk, not null, increment]
+  "created_at" timestamptz [not null, default: `now()`]
+  "name" text [note: 'Name or description of the migration.']
+  Note: 'Tracks database schema migrations and their execution history.'
+}
+
+Table "contacts" {
+  "uuid" uuid [pk, not null, default: `uuid_generate_v4()`, note: 'Universally unique identifier for the contact.']
+  "email" text [unique, not null, note: 'Primary email used for contact identification and communication.']
+  "status" contact_status [not null, note: 'Stage of the contact in the sales funnel: lead, prospect, or customer.']
+  "subscriptions" "contact_subscriptions[]" [note: 'List of subscriptions assigned to the contact.']
+  "created_by" text [note: 'User who created the record.']
+  "created_date" timestamptz [note: 'Timestamp when the record was created.']
+  "updated_by" text [note: 'User who last updated the record.']
+  "updated_date" timestamptz [note: 'Timestamp when the record was last updated.']
+  "sent_emails" "text[]" [note: 'Stores the list of email identifiers (e.g., "welcome", "20250401_newsletter") that have been sent to the contact by the system.']
+  Note: 'Stores contact details including leads, prospects, and customers.'
+}
+
+Table "actions" {
+  "uuid" uuid [pk, not null, default: `uuid_generate_v4()`, note: 'Universally unique identifier for the event.']
+  "contact_uuid" uuid [not null, note: 'Reference to the contact involved in the event. Always required as actions table tracks identified users only.']
+  "origin" text [note: 'Generic origin of the event']
+  "action" text [not null, note: 'Describes the type of event']
+  "outcome" action_outcome [not null, note: 'Outcome of the event, success or failure.']
+  "details" jsonb [note: 'Structured JSONB data capturing what happened, e.g., status codes, messages, or clicked URLs.']
+  "occurred_at" timestamptz [not null, note: 'Timestamp indicating when the event took place.']
+  "created_by" text [note: 'User who created the record.']
+  "created_date" timestamptz [note: 'Timestamp when the record was created.']
+  "updated_by" text [note: 'User who last updated the record.']
+  "updated_date" timestamptz [note: 'Timestamp when the record was last updated.']
+  "endpoint" text [note: 'Stores a summary of the HTTP method and endpoint (e.g., "POST - /api/subscribe").']
+  "direction" action_direction [note: 'Specifies the direction of the event: inbound (incoming) or outbound (outgoing).']
+  "utm_source" text [note: 'UTM source parameter identifying the traffic source (e.g., google, facebook, newsletter).']
+  "utm_medium" text [note: 'UTM medium parameter identifying the marketing medium (e.g., cpc, email, social).']
+  "utm_campaign" text [note: 'UTM campaign parameter identifying the specific campaign name.']
+  "utm_term" text [note: 'UTM term parameter for paid search keywords.']
+  "utm_content" text [note: 'UTM content parameter for A/B testing and content-targeted ads.']
+  "country" text [note: 'Country where the action occurred.']
+  "region" text [note: 'Region/State where the action occurred.']
+  "city" text [note: 'City where the action occurred.']
+  "timezone" text [note: 'Timezone of the action location.']
+  "latitude" float8 [note: 'Latitude coordinate of the action location.']
+  "longitude" float8 [note: 'Longitude coordinate of the action location.']
+
+  Indexes {
+    (action, occurred_at) [type: btree, name: "idx_actions_action_time"]
+    city [type: btree, name: "idx_actions_city"]
+    (contact_uuid, occurred_at) [type: btree, name: "idx_actions_contact_time"]
+    country [type: btree, name: "idx_actions_country"]
+    (country, occurred_at) [type: btree, name: "idx_actions_country_time"]
+    utm_campaign [type: btree, name: "idx_actions_utm_campaign"]
+    (utm_campaign, occurred_at) [type: btree, name: "idx_actions_utm_campaign_time"]
+    utm_source [type: btree, name: "idx_actions_utm_source"]
+    (utm_source, occurred_at) [type: btree, name: "idx_actions_utm_source_time"]
+    contact_uuid [type: btree, name: "idx_events_contact_uuid"]
+  }
+  Note: 'Tracks all events, including system-generated communications and user actions, even for anonymous visitors.'
+}
+
+Table "analytics_events" {
+  "uuid" uuid [pk, not null, default: `uuid_generate_v4()`, note: 'Universally unique identifier for the analytics event.']
+  "session_id" text [not null, note: 'Anonymous session identifier (e.g., generated client-side hash) - unique per browser session.']
+  "visitor_id" text [note: 'Anonymous visitor fingerprint for cross-session tracking - persists across sessions for same device/browser.']
+  "event_name" analytics_event_name [not null, note: 'Type of analytics event being tracked.']
+  "page_url" text [not null, note: 'Full URL of the page where the event occurred.']
+  "page_title" text [note: 'Title of the page where the event occurred.']
+  "page_referrer" text [note: 'Referrer URL that brought the user to this page.']
+  "utm_source" text [note: 'UTM source parameter identifying the traffic source (e.g., google, facebook, newsletter).']
+  "utm_medium" text [note: 'UTM medium parameter identifying the marketing medium (e.g., cpc, email, social).']
+  "utm_campaign" text [note: 'UTM campaign parameter identifying the specific campaign name.']
+  "utm_term" text [note: 'UTM term parameter for paid search keywords.']
+  "utm_content" text [note: 'UTM content parameter for A/B testing and content-targeted ads.']
+  "user_agent" text [note: 'Browser user agent string for device and browser identification.']
+  "browser_name" text [note: 'Name of the browser (e.g., Chrome, Firefox, Safari).']
+  "browser_version" text [note: 'Version of the browser.']
+  "os_name" text [note: 'Operating system name (e.g., Windows, macOS, Linux, Android, iOS).']
+  "os_version" text [note: 'Version of the operating system.']
+  "device_type" text [note: 'Type of device used (e.g., desktop, mobile, tablet).']
+  "country" text [note: 'Country where the event occurred.']
+  "region" text [note: 'Region/State where the event occurred.']
+  "city" text [note: 'City where the event occurred.']
+  "timezone" text [note: 'Timezone of the user when the event occurred.']
+  "latitude" float8 [note: 'Latitude coordinate of the event location.']
+  "longitude" float8 [note: 'Longitude coordinate of the event location.']
+  "screen_resolution" text [note: 'Screen resolution of the user device (e.g., 1920x1080).']
+  "viewport_size" text [note: 'Browser viewport size (e.g., 1440x900).']
+  "language" text [note: 'Browser language setting (e.g., it-IT, en-US).']
+  "occurred_at" timestamptz [not null, default: `now()`, note: 'Timestamp when the event actually occurred (can be different from created_date for batch processing).']
+  "created_date" timestamptz [not null, default: `now()`, note: 'Timestamp when the record was created in the database.']
+
+  Indexes {
+    country [type: btree, name: "idx_analytics_events_country"]
+    device_type [type: btree, name: "idx_analytics_events_device"]
+    event_name [type: btree, name: "idx_analytics_events_event_name"]
+    (event_name, occurred_at) [type: btree, name: "idx_analytics_events_name_time"]
+    occurred_at [type: btree, name: "idx_analytics_events_occurred_at"]
+    page_url [type: btree, name: "idx_analytics_events_page_url"]
+    session_id [type: btree, name: "idx_analytics_events_session_id"]
+    (session_id, occurred_at) [type: btree, name: "idx_analytics_events_session_time"]
+    (page_url, occurred_at) [type: btree, name: "idx_analytics_events_url_time"]
+    utm_campaign [type: btree, name: "idx_analytics_events_utm_campaign"]
+    utm_source [type: btree, name: "idx_analytics_events_utm_source"]
+  }
+  Note: 'Stores anonymous analytics events with denormalized data for high-volume tracking and fast aggregations.'
+}
+
+Table "actions_backup" {
+  "uuid" uuid
+  "contact_uuid" uuid
+  "address_uuid" uuid
+  "origin" text
+  "action" text
+  "outcome" action_outcome
+  "details" jsonb
+  "occurred_at" timestamptz
+  "created_by" text
+  "created_date" timestamptz
+  "updated_by" text
+  "updated_date" timestamptz
+  "endpoint" text
+  "direction" action_direction
+  "attribution_uuid" uuid
+}
+
+Table "addresses_backup" {
+  "uuid" uuid
+  "city" text
+  "region" text
+  "country" text
+  "created_by" text
+  "created_date" timestamptz
+  "updated_by" text
+  "updated_date" timestamptz
+  "timezone" text
+  "latitude" float8
+  "longitude" float8
+}
+
+Table "attributions_backup" {
+  "uuid" uuid
+  "utm_source" text
+  "utm_medium" text
+  "utm_campaign" text
+  "utm_term" text
+  "utm_content" text
+  "created_by" text
+  "created_date" timestamptz
+  "updated_by" text
+  "updated_date" timestamptz
+}
+
+Ref "evnts_conctacts_uuid_fkey":"contacts"."uuid" < "actions"."contact_uuid" [delete: cascade]

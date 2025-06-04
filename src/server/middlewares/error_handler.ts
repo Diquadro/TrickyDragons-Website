@@ -1,36 +1,32 @@
 import { Request, Response, NextFunction } from 'express'
-import { app_error } from '@shared/utils/errors'
 import { HTTP_STATUS } from '@shared/constants/app.constants'
 
-// Middleware for centralized error handling. Catches all errors and formats them into consistent responses
-export const error_handler = (err: Error | app_error, _req: Request, res: Response, _next: NextFunction) => {
-    // Log the error
-    console.error('Error:', err)
+// Middleware for centralized error handling with detailed server logging
+export const error_handler = (err: Error, req: Request, res: Response, _next: NextFunction) => {
+    // ✅ Detailed server logging for debugging
+    console.error('='.repeat(80))
+    console.error('🚨 ERROR CAUGHT:', new Date().toISOString())
+    console.error('📍 Endpoint:', `${req.method} ${req.originalUrl}`)
+    console.error('👤 IP:', req.clientIp)
+    console.error('📋 Headers:', JSON.stringify(req.headers, null, 2))
 
-    // Default status code and message
-    let status_code = HTTP_STATUS.INTERNAL_SERVER_ERROR
-    let message = 'Internal Server Error'
-    let details = undefined
-
-    // Handle app_error types
-    if (err instanceof app_error) {
-        status_code = err.status_code
-        message = err.message
-        details = err.details
-    } else {
-        // For standard errors, just use the message
-        message = err.message
+    if (req.body && Object.keys(req.body).length > 0) {
+        console.error('📦 Body:', JSON.stringify(req.body, null, 2))
     }
 
-    // In development, include stack trace for non-app_error types
-    if (process.env.NODE_ENV !== 'production' && !(err instanceof app_error)) {
-        details = err.stack
+    console.error('❌ Error Name:', err.name)
+    console.error('💬 Error Message:', err.message)
+
+    if (err.stack) {
+        console.error('📚 Stack Trace:')
+        console.error(err.stack)
     }
 
-    // Send the formatted error response
-    return res.status(status_code).json({
-        error: message,
-        ...(details && { details }),
+    console.error('='.repeat(80))
+
+    return res.status(HTTP_STATUS.INTERNAL_SERVER_ERROR).json({
+        error: 'Internal Server Error',
+        message: err.message,
         timestamp: new Date().toISOString(),
     })
 }

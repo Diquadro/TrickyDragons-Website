@@ -1,6 +1,5 @@
 import postgres from 'postgres'
 import { sql } from '../postgres_client'
-import { create_error, ERROR_TYPES } from '@shared/utils/errors'
 
 // Deletes multiple records from a database table based on a specified key field.
 //
@@ -23,7 +22,7 @@ export async function delete_records<T extends readonly (object | undefined)[] =
 ): Promise<postgres.RowList<T>> {
     // Guard: invalid table name
     if (typeof table_name !== 'string' || table_name.trim() === '') {
-        throw create_error(ERROR_TYPES.INVALID_TABLE_NAME)
+        throw new Error('Invalid table name')
     }
 
     // Guard: invalid or empty records array
@@ -33,19 +32,13 @@ export async function delete_records<T extends readonly (object | undefined)[] =
 
     // Guard: record limit exceeded
     if (records.length > sql.MAX_RECORDS_LIMIT) {
-        throw create_error(ERROR_TYPES.RECORD_LIMIT_EXCEEDED, {
-            limit: sql.MAX_RECORDS_LIMIT,
-            received: records.length,
-        })
+        throw new Error('Record limit exceeded')
     }
 
     // Guard: missing key field in some records
     const records_missing_key = records.filter((record) => !(key in record))
     if (records_missing_key.length > 0) {
-        throw create_error(ERROR_TYPES.MISSING_KEY_FIELD, {
-            key: key,
-            records_missing_key: records_missing_key,
-        })
+        throw new Error('Missing key field')
     }
 
     // Extract key values for the WHERE ... IN clause

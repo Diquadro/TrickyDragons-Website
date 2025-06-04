@@ -1,17 +1,17 @@
 import 'vanilla-cookieconsent/dist/cookieconsent.css'
 import * as CookieConsent from 'vanilla-cookieconsent'
-import cookie_meta_pixel from '@client/components/cookie_meta_pixel/cookie_meta_pixel'
+import { initialize_meta_pixel } from '@client/components/cookie_meta_pixel/cookie_meta_pixel'
 
 document.addEventListener('DOMContentLoaded', () => {
     CookieConsent.run({
         onFirstConsent: () => {
-            // cookie_meta_pixel()
+            // initialize_meta_pixel()
         },
         onConsent: () => {
-            // cookie_meta_pixel()
+            // initialize_meta_pixel()
         },
         onChange: () => {
-            // cookie_meta_pixel()
+            // initialize_meta_pixel()
         },
 
         guiOptions: {

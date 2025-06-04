@@ -1,6 +1,5 @@
 import postgres from 'postgres'
 import { sql } from '../postgres_client'
-import { create_error, ERROR_TYPES } from '@shared/utils/errors'
 
 // Updates multiple records in a database table
 // Uses CASE expressions for efficient bulk updates
@@ -23,7 +22,7 @@ export async function update_records<T extends readonly (object | undefined)[] =
 ): Promise<postgres.RowList<T>> {
     // Guard: invalid table name
     if (typeof table_name !== 'string' || table_name.trim() === '') {
-        throw create_error(ERROR_TYPES.INVALID_TABLE_NAME)
+        throw new Error('Invalid table name')
     }
 
     // Guard: invalid or empty records array
@@ -33,19 +32,13 @@ export async function update_records<T extends readonly (object | undefined)[] =
 
     // Guard: record limit exceeded
     if (records.length > sql.MAX_RECORDS_LIMIT) {
-        throw create_error(ERROR_TYPES.RECORD_LIMIT_EXCEEDED, {
-            limit: sql.MAX_RECORDS_LIMIT,
-            received: records.length,
-        })
+        throw new Error('Record limit exceeded')
     }
 
     // Validate key field presence
     const records_missing_key = records.filter((record) => !(key in record))
     if (records_missing_key.length > 0) {
-        throw create_error(ERROR_TYPES.MISSING_KEY_FIELD, {
-            key: key,
-            records_missing_key: records_missing_key,
-        })
+        throw new Error('Missing key field')
     }
 
     // Find duplicate key values
@@ -64,7 +57,7 @@ export async function update_records<T extends readonly (object | undefined)[] =
 
     if (duplicate_keys.length > 0) {
         const duplicate_records = records.filter((r) => duplicate_keys.includes(r[key]))
-        throw create_error(ERROR_TYPES.DUPLICATE_RECORDS, duplicate_records)
+        throw new Error('Duplicate records')
     }
 
     // Collect all unique columns that need updating (excluding the key)
@@ -76,7 +69,7 @@ export async function update_records<T extends readonly (object | undefined)[] =
     })
 
     if (all_columns.size === 0) {
-        throw create_error(ERROR_TYPES.NO_FIELDS_TO_UPDATE)
+        throw new Error('No fields to update')
     }
 
     // Extract key values for the WHERE ... IN clause

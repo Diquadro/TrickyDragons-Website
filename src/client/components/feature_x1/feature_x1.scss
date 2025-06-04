@@ -39,8 +39,9 @@
         overflow-y: hidden;
 
         > .title {
-            // @include mixins.margin-mobile;
             margin: 0 2svw;
+            // @include mixins.margin-mobile;
+            font-size: 8.5vw;
         }
 
         > .description {

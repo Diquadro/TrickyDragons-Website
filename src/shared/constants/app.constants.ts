@@ -1,3 +1,7 @@
+import { utm_param } from '@shared/types/utm_params'
+
+const VERSION = 'v2'
+
 // Environment-related constants
 export const ENV = {
     PRODUCTION: process.env.NODE_ENV === 'production',
@@ -13,27 +17,28 @@ export const CLIENT = {
 
 // API-related constants
 export const API = {
-    BASE_URL: process.env.API_URL || 'http://localhost',
     URL: process.env.API_URL ? `${process.env.API_URL}` : 'http://localhost:5000',
     PORT: process.env.SERVER_PORT ? parseInt(process.env.SERVER_PORT) : 3000,
 
     ENDPOINTS: {
         CONTACTS: {
-            SUBSCRIBE: '/v1/contacts/subscribe',
-            UNSUBSCRIBE: '/v1/contacts/unsubscribe',
+            SUBSCRIBE: `/${VERSION}/contacts/subscribe`,
+            UNSUBSCRIBE: `/${VERSION}/contacts/unsubscribe`,
+        },
+        ANALYTICS_EVENTS: {
+            CREATE: `/${VERSION}/analytics-events/create`,
         },
         REDIRECTS: {
-            REDIRECT: '/v1/redirects/:data64',
+            REDIRECT: `/${VERSION}/redirects`,
         },
-        HEALTH: '/v1/health',
     },
 
     EVENTS: {
         ACTIONS: {
-            SUBSCRIBE_CONTACT: 'v1_subscribe_contact',
-            UNSUBSCRIBE_CONTACT: 'v1_unsubscribe_contact',
-            REDIRECT: 'v1_redirect',
-            SEND_WELCOME_EMAIL: 'v1_send_welcome_email',
+            SUBSCRIBE_CONTACT: `${VERSION}_subscribe_contact`,
+            UNSUBSCRIBE_CONTACT: `${VERSION}_unsubscribe_contact`,
+            REDIRECT: `${VERSION}_redirect`,
+            SEND_WELCOME_EMAIL: `${VERSION}_send_welcome_email`,
         },
 
         ORIGINS: {
@@ -67,6 +72,7 @@ export const DATABASE = {
 export const HTTP_STATUS = {
     OK: 200,
     CREATED: 201,
+    REDIRECT: 302,
     BAD_REQUEST: 400,
     UNAUTHORIZED: 401,
     FORBIDDEN: 403,
@@ -74,3 +80,37 @@ export const HTTP_STATUS = {
     CONFLICT: 409,
     INTERNAL_SERVER_ERROR: 500,
 }
+
+export const META_EVENTS = {
+    PAGE_VIEW: 'PageView',
+    COMPLETE_REGISTRATION: 'CompleteRegistration',
+}
+
+export const META = {
+    TEST_EVENT_CODE: ENV.PRODUCTION ? 'TEST13799' : 'TEST85018',
+}
+
+// Standard UTM parameters (official Google UTM parameters)
+export const STANDARD_UTM_PARAMETERS: utm_param[] = [
+    'utm_source',
+    'utm_medium',
+    'utm_campaign',
+    'utm_term',
+    'utm_content',
+    'utm_id',
+]
+
+// Custom UTM parameters (for specific tracking needs like Meta ads)
+export const CUSTOM_UTM_PARAMETERS: utm_param[] = [
+    'utm_custom_campaign_id',
+    'utm_custom_adset_id',
+    'utm_custom_ad_id',
+    'utm_custom_campaign_name',
+    'utm_custom_adset_name',
+    'utm_custom_ad_name',
+    'utm_custom_placement',
+    'utm_custom_site_source_name',
+]
+
+// All UTM parameters combined (standard + custom)
+export const ALL_UTM_PARAMETERS: utm_param[] = [...STANDARD_UTM_PARAMETERS, ...CUSTOM_UTM_PARAMETERS]

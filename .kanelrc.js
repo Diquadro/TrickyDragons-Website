@@ -12,7 +12,7 @@ module.exports = {
 
     preTransformCase: false,
     preDeleteOutputFolder: true,
-    outputPath: './src/shared/schemas',
+    outputPath: './src/shared/schemas/database',
 
     preRenderHooks: [generateZodSchemas],
 }

@@ -1,0 +1,1 @@
+CREATE OR REPLACE TRIGGER audit_analytics_events_trg BEFORE INSERT OR UPDATE ON public.analytics_events FOR EACH ROW EXECUTE FUNCTION create_audit_trigger_handler();

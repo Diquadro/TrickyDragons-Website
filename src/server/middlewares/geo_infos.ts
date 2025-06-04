@@ -15,23 +15,27 @@ export const geo_info_middleware = (req: Request, res: Response, next: NextFunct
     }
 
     // Clean the IP (remove IPv6 prefix if present)
-    const cleanIp = ip.replace(/^::ffff:/, '')
+    const clean_ip = ip.replace(/^::ffff:/, '')
 
     // Only process valid IPs (skip localhost for development)
-    if (cleanIp === '127.0.0.1' || cleanIp === '::1') {
+    if (clean_ip === '127.0.0.1' || clean_ip === '::1') {
         // For local development, use mock geo data
         req.geo_infos = {
             city: 'San Francisco',
             country: 'US',
             region: 'CA',
             timezone: 'America/Los_Angeles',
-            ll: [37.7749, -122.4194],
+            latitude: 37.7749,
+            longitude: -122.4194,
         }
     } else {
         // Lookup IP in the geoip database
-        const geo = geoip.lookup(cleanIp)
+        const geo = geoip.lookup(clean_ip)
 
-        if (!geo) return
+        if (!geo) {
+            next()
+            return
+        }
 
         const country = countryRegionData?.find((c: any) => c.countryShortCode === geo.country)
         const region = country?.regions.find((r: any) => r.shortCode === geo.region)
@@ -40,7 +44,8 @@ export const geo_info_middleware = (req: Request, res: Response, next: NextFunct
             region: region?.name || undefined,
             city: geo.city || undefined,
             timezone: geo.timezone || undefined,
-            ll: [geo.ll?.[0], geo.ll?.[1]],
+            latitude: geo.ll?.[0] || undefined,
+            longitude: geo.ll?.[1] || undefined,
         }
     }
 

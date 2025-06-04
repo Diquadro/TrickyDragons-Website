@@ -25,6 +25,17 @@ export default merge(common, {
                 target: 'http://localhost:5000',
                 changeOrigin: true,
                 secure: false,
+                cookieDomainRewrite: 'localhost', // Riscrive il dominio dei cookie
+                onProxyRes: function (proxyRes, req, res) {
+                    // Gestisce i cookie nella risposta del proxy
+                    const cookies = proxyRes.headers['set-cookie']
+                    if (cookies) {
+                        const newCookies = cookies.map((cookie) =>
+                            cookie.replace(/Domain=[^;]+;/, 'Domain=localhost;'),
+                        )
+                        proxyRes.headers['set-cookie'] = newCookies
+                    }
+                },
             },
         ],
     },

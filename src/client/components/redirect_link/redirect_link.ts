@@ -1,5 +1,6 @@
-import { get_utm_params } from '@client/ts/get_utm_params'
-import { umami_track } from '@client/ts/umami_track'
+import { track_custom_event } from '@client/ts/analytics_events'
+import { get_utm_params } from '@client/ts/utm_params'
+import AnalyticsEventName from '@shared/schemas/database/public/AnalyticsEventName'
 import posthog from 'posthog-js'
 
 document.addEventListener('DOMContentLoaded', () => {
@@ -11,11 +12,9 @@ document.addEventListener('DOMContentLoaded', () => {
 
             const anchor = link as HTMLAnchorElement
 
-            umami_track('subscribed_to_newsletter', {
-                ...get_utm_params(),
-            })
-
-            posthog.capture('link_clicked', { link: anchor.href })
+            track_custom_event(AnalyticsEventName.link_click, { link: anchor.href, ...get_utm_params() })
+            window.umami?.track(AnalyticsEventName.link_click, { link: anchor.href })
+            posthog.capture(AnalyticsEventName.link_click, { link: anchor.href })
 
             window.location.href = anchor.href
         })

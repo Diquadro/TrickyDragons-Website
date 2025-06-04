@@ -1,13 +1,12 @@
 import postgres from 'postgres'
 import { DATABASE } from '@shared/constants/app.constants'
-import { create_error, ERROR_TYPES } from '@shared/utils/errors'
 import { insert_records } from '@server/models/operations/insert_operations'
 import { update_records } from '@server/models/operations/update_operations'
 import { delete_records } from '@server/models/operations/delete_operations'
 
 // Check if database connection URI is available
 if (!process.env.PG_URI) {
-    throw create_error(ERROR_TYPES.VALIDATION_ERROR, 'Missing PG_URI environment variable')
+    throw new Error('Missing PG_URI environment variable')
 }
 
 // Postgres client configuration

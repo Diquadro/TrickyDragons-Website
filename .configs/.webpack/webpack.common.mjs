@@ -3,10 +3,10 @@ import dotenv from 'dotenv'
 dotenv.config({ path: ['/etc/secrets/.env', '.env'] })
 
 import webpack from 'webpack'
-import PugPlugin from 'pug-plugin'
 import CopyPlugin from 'copy-webpack-plugin'
 import path from 'path'
 import pagesConfig from './pages.config.mjs'
+import HtmlBundlerPlugin from 'html-bundler-webpack-plugin'
 
 export default {
     module: {
@@ -57,6 +57,7 @@ export default {
             'process.env.CLIENT_URL': JSON.stringify(process.env.CLIENT_URL),
             'process.env.API_URL': JSON.stringify(process.env.API_URL),
             'process.env.SERVER_PORT': JSON.stringify(process.env.SERVER_PORT),
+            'process.env.META_PIXEL_ID': JSON.stringify(process.env.META_PIXEL_ID),
         }),
         new CopyPlugin({
             patterns: [
@@ -65,9 +66,9 @@ export default {
                 { from: 'src/client/site.webmanifest', to: '' },
             ],
         }),
-        new PugPlugin({
+        new HtmlBundlerPlugin({
             entry: pagesConfig,
-            pretty: true,
+            preprocessor: 'pug',
             js: {
                 filename: 'assets/js/[name].[contenthash:8].js',
             },

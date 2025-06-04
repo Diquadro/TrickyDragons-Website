@@ -1,0 +1,91 @@
+// PostgreSQL to DBML Schema Dump
+// Generated on: 2025-05-29T13:50:11.760Z
+// Database: test_db_001
+// Host: localhost:5432
+// Version: 0001
+// 
+// Generated using db2dbml tool
+// This DBML file includes all tables, relationships, and constraints
+// Compatible with dbdiagram.io and other DBML tools
+//
+
+Enum "action_direction" {
+  "inbound"
+  "outbound"
+}
+
+Enum "action_outcome" {
+  "success"
+  "failure"
+}
+
+Enum "contact_status" {
+  "lead"
+  "prospect"
+  "customer"
+}
+
+Enum "contact_subscriptions" {
+  "newsletter"
+}
+
+Table "migrations" {
+  "migration_id" int4 [pk, not null, increment]
+  "created_at" timestamptz [not null, default: `now()`]
+  "name" text
+}
+
+Table "contacts" {
+  "uuid" uuid [pk, not null, default: `uuid_generate_v4()`, note: 'Universally unique identifier for the contact.']
+  "email" text [unique, not null, note: 'Primary email used for contact identification and communication.']
+  "status" contact_status [not null, note: 'Stage of the contact in the sales funnel: lead, prospect, or customer.']
+  "subscriptions" "contact_subscriptions[]" [note: 'List of subscriptions assigned to the contact.']
+  "created_by" text [note: 'User who created the record.']
+  "created_date" timestamptz [note: 'Timestamp when the record was created.']
+  "updated_by" text [note: 'User who last updated the record.']
+  "updated_date" timestamptz [note: 'Timestamp when the record was last updated.']
+  "sent_emails" "text[]" [note: 'Stores the list of email identifiers (e.g., "welcome", "20250401_newsletter") that have been sent to the contact by the system.']
+  Note: 'Stores contact details including leads, prospects, and customers.'
+}
+
+Table "addresses" {
+  "uuid" uuid [pk, not null, default: `uuid_generate_v4()`, note: 'Universally unique identifier for the address.']
+  "city" text [note: 'City of the address.']
+  "region" text [note: 'Region/State of the address.']
+  "country" text [note: 'Country of the address.']
+  "created_by" text [note: 'User who created the record.']
+  "created_date" timestamptz [note: 'Timestamp when the record was created.']
+  "updated_by" text [note: 'User who last updated the record.']
+  "updated_date" timestamptz [note: 'Timestamp when the record was last updated.']
+  "timezone" text
+  "latitude" float8
+  "longitude" float8
+  Note: 'Stores geographic locations associated with events.'
+}
+
+Table "actions" {
+  "uuid" uuid [pk, not null, default: `uuid_generate_v4()`, note: 'Universally unique identifier for the event.']
+  "contact_uuid" uuid [not null, note: 'Reference to the contact involved in the event. Nullable for anonymous visitors.']
+  "address_uuid" uuid [note: 'Reference to the geographic location (IP-based) of the event.']
+  "origin" text [note: 'Generic origin of the event']
+  "action" text [not null, note: 'Describes the type of event']
+  "outcome" action_outcome [not null, note: 'Outcome of the event, success or failure.']
+  "details" jsonb [note: 'Structured JSONB data capturing what happened, e.g., status codes, messages, or clicked URLs.']
+  "occurred_at" timestamptz [not null, note: 'Timestamp indicating when the event took place.']
+  "created_by" text [note: 'User who created the record.']
+  "created_date" timestamptz [note: 'Timestamp when the record was created.']
+  "updated_by" text [note: 'User who last updated the record.']
+  "updated_date" timestamptz [note: 'Timestamp when the record was last updated.']
+  "endpoint" text [note: 'Stores a summary of the HTTP method and endpoint (e.g., "POST - /api/subscribe").']
+  "direction" action_direction [note: 'Specifies the direction of the event: inbound (incoming) or outbound (outgoing).']
+
+  Indexes {
+    address_uuid [type: btree, name: "idx_events_address_uuid"]
+    contact_uuid [type: btree, name: "idx_events_contact_uuid"]
+  }
+  Note: 'Tracks all events, including system-generated communications and user actions, even for anonymous visitors.'
+}
+
+Ref "events_address_uuid_fkey":"addresses"."uuid" < "actions"."address_uuid" [delete: set null]
+
+Ref "evnts_conctacts_uuid_fkey":"contacts"."uuid" < "actions"."contact_uuid" [delete: cascade]

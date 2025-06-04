@@ -63,6 +63,10 @@
     .feature-x2 {
         @include margin-mobile;
 
+        > .title {
+            font-size: 8.5vw;
+        }
+
         > .container {
             display: flex;
             flex-direction: column;

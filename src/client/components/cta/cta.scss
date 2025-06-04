@@ -85,11 +85,12 @@
 
         > .title {
             font-weight: 900;
-            @include text-5xl;
+            font-size: 8.5vw;
+            line-height: 1;
         }
 
         > .subtitle {
-            @include text-2xl;
+            @include text-4xl;
         }
 
         > input {

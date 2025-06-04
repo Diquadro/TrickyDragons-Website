@@ -1,24 +1,29 @@
 LIST
 [x] rimuovre file sensibili dallo storico
 [x] Sistemare il layuot shift causato dal font
-[X] Cambiare SERVER_PORT to PORT
+[X] Cambiare SERVER*PORT to PORT
 [X] Rivedere le routes dell'api e valutare se usare una stategia RPC al posto di REST
 [X] FIX - Subscription error handling in frontend
 [X] Umami Events
 [X] Umamni Events link clicks
-[] Meta API Conversion
+[X] Meta API Conversion
 [X] Appsmith
 [] Schemalint -> https://github.com/kristiandupont/schemalint
 [] Better error handling
 [] Configuration menagment with zod
 [] BETTER Logging Services (EXTERNAL)
-[] Request Validation Middleware
+[X] Request Validation Middleware
 [] Better organization for the middlewares
 [] Mettere un autonumber sulle colonne è utile per il debuging
 [] Utilizzare una cartella public per gli assets così da non copiarli (Emails, Imgs)
 [X] Aggiunti gli indirizzi email al .env per migliore usabilità per più sviluppatori
 [] Vedere di mettere l'api sullo stesso dominio /api
 [X] Tracking UTM su umami
+[-] Query caching - NOPE
+[] // Remove null values to avoid database issues
+const clean_event = Object.fromEntries(
+Object.entries(analytics_event).filter(([*, value]) => value !== null && value !== undefined),
+)
 
 MAYBE
 

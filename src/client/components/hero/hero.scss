@@ -8,26 +8,36 @@
         flex-direction: column;
         gap: 3svh;
 
-        > .slogan {
-            @include font-black;
-            text-align: center;
-        }
+        > .container {
+            display: flex;
+            flex-direction: column;
+            gap: 3svh;
 
-        > .title {
-            @include text-4xl;
-            @include font-bold;
-            text-align: justify;
-        }
+            > .slogan {
+                @include font-black;
+                text-align: center;
+            }
 
-        > .subtitle {
-            @include text-2xl;
-            @include font-light;
-            text-align: justify;
+            > .title {
+                @include text-4xl;
+                @include font-bold;
+                text-align: justify;
+            }
+
+            > .subtitle {
+                @include text-2xl;
+                @include font-light;
+                text-align: justify;
+            }
         }
     }
 }
 
 @include desktop {
+    .hide-desktop {
+        display: none;
+    }
+
     #hero {
         display: flex;
         position: relative;
@@ -62,14 +72,17 @@
 
             width: 680px;
             text-align: justify;
-            > .slogan {
-                @include text-6xl;
-            }
 
-            > #hero-infografic {
-                display: flex;
-                justify-content: space-evenly;
-                width: 100%;
+            > .container {
+                > .slogan {
+                    @include text-6xl;
+                }
+
+                > #hero-infografic {
+                    display: flex;
+                    justify-content: space-evenly;
+                    width: 100%;
+                }
             }
         }
     }
@@ -86,20 +99,49 @@
         }
 
         .content {
+            display: grid;
+            grid-template-rows: auto auto auto;
+            grid-template-columns: 1fr;
+            grid-template-areas:
+                'game-by'
+                'cta'
+                'container';
             margin-top: 25px;
 
-            > .slogan {
-                @include text-5xl;
+            > .container {
+                grid-area: container;
                 @include margin-mobile;
+
+                > .slogan {
+                    font-size: 8.5vw;
+                    line-height: 1;
+                }
+
+                > .subtitle {
+                    @include text-3xl;
+                }
+
+                > #hero-infografic {
+                    display: flex;
+                    justify-content: space-evenly;
+                    width: 100%;
+                }
             }
 
-            > .title {
-                @include margin-mobile;
+            > .cta {
+                grid-area: cta;
             }
 
-            > .subtitle {
-                @include text-3xl;
-                @include margin-mobile;
+            > .game-by {
+                grid-area: game-by;
+                // height: 15px;
+                font-size: 5.5vw;
+                line-height: 1;
+                text-align: center;
+
+                .author-name {
+                    font-family: 'Leckerli One';
+                }
             }
         }
     }
