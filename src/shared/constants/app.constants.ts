@@ -24,6 +24,7 @@ export const API = {
         CONTACTS: {
             SUBSCRIBE: `/${VERSION}/contacts/subscribe`,
             UNSUBSCRIBE: `/${VERSION}/contacts/unsubscribe`,
+            SUBSCRIBER_COUNT: `/${VERSION}/contacts/subscriber_count`,
         },
         ANALYTICS_EVENTS: {
             CREATE: `/${VERSION}/analytics-events/create`,

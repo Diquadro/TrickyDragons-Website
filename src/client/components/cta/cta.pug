@@ -1,15 +1,16 @@
 mixin cta(id, title)
     .cta(id=id)
         h3.title !{ title }
-        p.subtitle
-            span.font-bold Don’t miss out!
-            |
-            | We’ll notify you when the game launches, so you can grab limited early bird discounts!
-        input(type='email', placeholder='Email Address', name='email', autocomplete='email', required)
+        p.subtitle Don't miss out on limited early bird discounts & launching date!
 
-        label.checkbox-container
-            input(type='checkbox', id=`consent-${id}`, name='consent', required)
-            span.checkbox-text I agree to receive the newsletter.
+        form.cta-form
+            input(type='email', placeholder='Email Address', name='email', autocomplete='email', required)
 
-        button.button(type='submit')
-            span.font-black START YOUR ADVENTURE!
+            label.checkbox-container
+                input(type='checkbox', id=`consent-${id}`, name='consent', required)
+                span.checkbox-text I agree to receive the newsletter.
+
+            button.button(type='submit')
+                span.font-black START YOUR ADVENTURE!
+
+        p.members-count !{ 'Community members: <span class="subscriber-count" data-target="0">0</span> <span class="success-message hidden">and YOU ❤️</span>' }

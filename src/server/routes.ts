@@ -4,6 +4,7 @@ import express from 'express'
 import { API } from '@shared/constants/app.constants'
 import { subscribe_contact } from '@server/controllers/subscribe_contact'
 import { unsubscribe_contact } from '@server/controllers/unsubscribe_contact'
+import { get_subscriber_count } from '@server/controllers/get_subscriber_count'
 import { create_analytics_event_http } from '@server/controllers/create_analytics_event_http'
 import { redirect } from '@server/controllers/redirect'
 import { error_handler } from '@server/middlewares/error_handler'
@@ -14,6 +15,7 @@ export function apply_routes(app: express.Application): void {
     // Contacts routes
     app.post(API.ENDPOINTS.CONTACTS.SUBSCRIBE, subscribe_contact)
     app.post(API.ENDPOINTS.CONTACTS.UNSUBSCRIBE, unsubscribe_contact)
+    app.get(API.ENDPOINTS.CONTACTS.SUBSCRIBER_COUNT, get_subscriber_count)
 
     // Redirects routes
     app.get(API.ENDPOINTS.REDIRECTS.REDIRECT, redirect)

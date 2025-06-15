@@ -19,9 +19,10 @@ export default merge(common, {
         historyApiFallback: true, // Per supportare SPA con routing lato client
         watchFiles: ['src/www/**/*'], // Per ricaricare i file automaticamente
         liveReload: true, // Ricarica la pagina quando un file cambia
+        allowedHosts: ['localhost', '.loca.lt'],
         proxy: [
             {
-                context: [''],
+                context: ['/v1', '/v2'],
                 target: 'http://localhost:5000',
                 changeOrigin: true,
                 secure: false,

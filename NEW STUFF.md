@@ -1,7 +1,4 @@
 NEW STUFF
-
-[] Rename Events Table to Actions
-[] Implement Events Table
 [] Implement Errors Table
 
 [] Migrate from Pug to Eta
