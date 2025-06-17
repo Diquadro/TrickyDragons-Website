@@ -30,5 +30,5 @@ async function get_newsletter_subscribers_count(): Promise<number> {
         return 300
     }
 
-    return 300 // parseInt(result[0].count, 10)
+    return parseInt(result[0].count, 10)
 }
