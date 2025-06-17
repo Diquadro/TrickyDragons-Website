@@ -6,11 +6,6 @@
     padding: 0;
 }
 
-:root {
-    font-weight: 300;
-    font-family: 'Lexend', 'Segoe UI', 'Roboto', 'Helvetica Neue', 'Arial', sans-serif;
-}
-
 .hr {
     margin: 0 2svw;
 }
@@ -86,10 +81,6 @@ hr {
 }
 
 @include mobile {
-    :root {
-        font-size: 10px;
-    }
-
     .hide-mobile {
         display: none;
     }

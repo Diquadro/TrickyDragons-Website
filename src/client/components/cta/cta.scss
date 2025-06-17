@@ -9,12 +9,18 @@
     align-items: center;
     gap: 10px;
     box-sizing: border-box;
-    background-color: #da2d2a;
+    background-color: var(--color-primary);
 
     color: white;
     text-align: center;
 
+    > .title {
+        @include font-black;
+        @include header-secondary;
+    }
+
     > .subtitle {
+        @include text-large;
         font-style: italic;
     }
 
@@ -27,6 +33,7 @@
 
         > input[type='email'] {
             box-sizing: border-box;
+            @include ui-large;
 
             box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.5);
             border-radius: 10px;
@@ -42,7 +49,7 @@
             gap: 5px;
             width: 100%;
             color: white;
-            font-size: 14px;
+            @include ui-small; // Centralizzato: checkbox text
 
             > input[type='checkbox'] {
                 cursor: pointer;
@@ -58,6 +65,7 @@
 
         > button {
             cursor: pointer;
+            @include ui-large;
             border-radius: 10px;
             background-color: black;
             width: 100%;
@@ -68,88 +76,41 @@
     }
 
     > .members-count {
+        @include ui-base;
+        @include font-light;
         width: 100%;
-        font-style: normal;
-        text-align: left;
+        text-align: center;
 
         > .success-message {
             display: inline;
+            @include font-bold;
+
             opacity: 1;
             transition: opacity 0.3s ease-in-out;
+
             margin-left: 4px;
             border-radius: 4px;
             background-color: white;
             padding: 2px 6px;
-            color: #da2d2a;
-            font-weight: bold;
+            color: var(--color-primary);
 
             &.hidden {
+                position: absolute;
                 opacity: 0;
                 pointer-events: none;
             }
         }
-    }
-
-    > .subscriber-count {
-        display: inline-block;
-        font-weight: bold;
     }
 }
 
 @include desktop {
     .cta {
         padding: 20px 40px;
-
-        > .title {
-            font-weight: 900;
-            @include text-5xl;
-        }
-
-        > .subtitle {
-            @include text-xl;
-        }
-
-        > .members-count {
-            @include text-xl;
-        }
-
-        > .cta-form {
-            > input[type='email'] {
-                @include text-xl;
-            }
-
-            > button {
-                @include text-2xl;
-            }
-        }
     }
 }
 
 @include mobile {
     .cta {
         padding: 20px;
-
-        > .title {
-            font-weight: 900;
-            @include text-6xl;
-        }
-
-        > .subtitle {
-            @include text-4xl;
-        }
-
-        > .members-count {
-            @include text-4xl;
-        }
-
-        > .cta-form {
-            > input[type='email'] {
-                @include text-2xl;
-            }
-
-            > button {
-                @include text-3xl;
-            }
-        }
     }
 }

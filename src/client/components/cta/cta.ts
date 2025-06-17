@@ -26,6 +26,9 @@ import {
 const EMAIL_REGEX =
     /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
 
+// Global variable to track subscription status (resets on page refresh)
+let user_has_subscribed = false
+
 /**
  * Subscribe contact to newsletter
  */
@@ -154,20 +157,36 @@ function init_subscriber_count_animation() {
                     if (entry.isIntersecting && !element.hasAttribute('data-animated')) {
                         element.setAttribute('data-animated', 'true')
 
+                        // Check if success message is already visible
+                        const success_message = element.parentElement?.querySelector('.success-message')
+                        const should_animate =
+                            !success_message || success_message.classList.contains('hidden')
+
                         // Fetch and animate subscriber count
                         get_subscriber_count()
                             .then((response) => {
                                 const target = response.data.count
-                                console.log('target', target)
                                 element.setAttribute('data-target', target.toString())
-                                animate_number(element as HTMLElement, target)
+
+                                if (should_animate) {
+                                    animate_number(element as HTMLElement, target)
+                                } else {
+                                    // Just set the number without animation to avoid flickering
+                                    element.textContent = target.toString()
+                                }
                             })
                             .catch((error) => {
                                 console.error('Failed to fetch subscriber count:', error)
                                 // Fallback to a default number if API fails
                                 const fallback = 300
                                 element.setAttribute('data-target', fallback.toString())
-                                animate_number(element as HTMLElement, fallback)
+
+                                if (should_animate) {
+                                    animate_number(element as HTMLElement, fallback)
+                                } else {
+                                    // Just set the number without animation to avoid flickering
+                                    element.textContent = fallback.toString()
+                                }
                             })
                     }
                 })
@@ -179,7 +198,36 @@ function init_subscriber_count_animation() {
     })
 }
 
+/**
+ * Check if user has already subscribed and show success message
+ */
+function check_and_show_subscription_status() {
+    if (user_has_subscribed) {
+        // Show success message in all CTAs
+        const success_messages = document.querySelectorAll('.success-message')
+        success_messages.forEach((message) => {
+            message.classList.remove('hidden')
+        })
+    }
+}
+
+/**
+ * Mark user as subscribed
+ */
+function mark_user_as_subscribed() {
+    user_has_subscribed = true
+
+    // Show success message in all CTAs on the page
+    const success_messages = document.querySelectorAll('.success-message')
+    success_messages.forEach((message) => {
+        message.classList.remove('hidden')
+    })
+}
+
 document.addEventListener('DOMContentLoaded', () => {
+    // Check subscription status on page load
+    check_and_show_subscription_status()
+
     // Initialize subscriber count animation
     init_subscriber_count_animation()
 
@@ -230,14 +278,18 @@ async function handle_form_submit(event: Event): Promise<void> {
             throw new Error('No contact found')
         } else if (result.data.outcome === CONTACT_RESPONSE_OUTCOME.RESUBSCRIBED) {
             show_modal('modal_email_reactivated')
+            mark_user_as_subscribed()
         } else if (result.data.outcome === CONTACT_RESPONSE_OUTCOME.ALREADY_SUBSCRIBED) {
             show_modal('modal_email_duplicate')
+            // User is already subscribed, so show the message
+            mark_user_as_subscribed()
         } else if (result.data.outcome === CONTACT_RESPONSE_OUTCOME.NEW_CONTACT) {
             window.umami?.track('subscribed_to_newsletter', { ...utm_params })
             posthog.capture('subscribed_to_newsletter')
             success_message?.classList.remove('hidden')
 
             show_modal('modal_email_sent')
+            mark_user_as_subscribed()
         }
 
         track_custom_event(AnalyticsEventName.subscribe_to_newsletter, {

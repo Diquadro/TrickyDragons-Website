@@ -9,6 +9,7 @@
         display: flex;
 
         > .title {
+            @include header-tertiary; // Solo cambio font: da text-4xl a header-secondary
             @include font-bold;
         }
 
@@ -42,14 +43,14 @@
             display: flex;
             justify-content: left;
             gap: 1.5svw;
-            @include text-sm;
+            @include text-small; // Solo cambio font: da text-sm a text-small
 
             > a {
                 color: white;
                 text-decoration: underline;
 
                 &:hover {
-                    color: #e63946;
+                    color: var(--color-accent);
                 }
             }
 
@@ -58,11 +59,11 @@
                 border: none;
                 background: none;
                 color: white;
-                @include text-sm;
+                @include text-small; // Solo cambio font: da text-sm a text-small
                 text-decoration: underline;
 
                 &:hover {
-                    color: #e63946;
+                    color: var(--color-accent);
                 }
             }
         }
@@ -74,7 +75,7 @@
                 text-decoration: none;
 
                 &:hover {
-                    color: #e63946;
+                    color: var(--color-accent);
                     text-decoration: underline;
                 }
             }
@@ -88,10 +89,6 @@
 
         > .container-socials {
             align-items: bottom;
-
-            > .title {
-                @include text-5xl;
-            }
 
             > .links {
                 gap: 1svw;
@@ -111,10 +108,6 @@
             flex-direction: column;
             align-items: center;
             gap: 1svh;
-
-            > .title {
-                @include text-4xl;
-            }
 
             > .links {
                 gap: 2svw;

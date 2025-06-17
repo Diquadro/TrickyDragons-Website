@@ -19,7 +19,21 @@ export default merge(common, {
         historyApiFallback: true, // Per supportare SPA con routing lato client
         watchFiles: ['src/www/**/*'], // Per ricaricare i file automaticamente
         liveReload: true, // Ricarica la pagina quando un file cambia
-        allowedHosts: ['localhost', '.loca.lt'],
+        allowedHosts: 'all',
+        client: {
+            webSocketURL: {
+                protocol: 'wss',
+                hostname: 'trickydragons.loca.lt',
+                port: 443,
+                pathname: '/ws',
+            },
+        },
+        // Headers per HTTPS
+        headers: {
+            'Access-Control-Allow-Origin': '*',
+            'Access-Control-Allow-Methods': '*',
+            'Access-Control-Allow-Headers': '*',
+        },
         proxy: [
             {
                 context: ['/v1', '/v2'],

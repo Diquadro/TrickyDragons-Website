@@ -17,9 +17,21 @@ export type Get_Subscriber_Count_Request = z.infer<typeof get_subscriber_count_r
 export type Get_Subscriber_Count_Response = z.infer<typeof get_subscriber_count_response_schema>
 
 export function validate_request(data: unknown): Get_Subscriber_Count_Request {
-    return get_subscriber_count_request_schema.parse(data)
+    const validation = get_subscriber_count_request_schema.safeParse(data)
+
+    if (!validation.success) {
+        throw new Error(validation.error.message)
+    }
+
+    return validation.data
 }
 
 export function validate_response(data: unknown): Get_Subscriber_Count_Response {
-    return get_subscriber_count_response_schema.parse(data)
+    const validation = get_subscriber_count_response_schema.safeParse(data)
+
+    if (!validation.success) {
+        throw new Error(validation.error.message)
+    }
+
+    return validation.data
 }

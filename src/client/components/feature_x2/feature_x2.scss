@@ -6,7 +6,7 @@
     gap: 25px;
 
     > .title {
-        @include text-5xl;
+        @include header-secondary;
         @include font-black;
 
         text-align: center;
@@ -25,8 +25,7 @@
             }
 
             > .description {
-                @include text-2xl;
-
+                @include text-large;
                 text-align: center;
             }
         }
@@ -63,10 +62,6 @@
     .feature-x2 {
         @include margin-mobile;
 
-        > .title {
-            font-size: 8.5vw;
-        }
-
         > .container {
             display: flex;
             flex-direction: column;
@@ -77,10 +72,6 @@
 
                 > img {
                     height: 150px;
-                }
-
-                > .description {
-                    @include text-3xl;
                 }
             }
         }

@@ -28,6 +28,7 @@ export const API = {
         },
         ANALYTICS_EVENTS: {
             CREATE: `/${VERSION}/analytics-events/create`,
+            UPDATE: `/${VERSION}/analytics-events/update`,
         },
         REDIRECTS: {
             REDIRECT: `/${VERSION}/redirects`,

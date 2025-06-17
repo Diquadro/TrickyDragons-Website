@@ -6,7 +6,7 @@
     gap: 25px;
 
     > .title {
-        @include text-5xl;
+        @include header-secondary;
         @include font-black;
 
         text-align: center;
@@ -18,7 +18,7 @@
     }
 
     > .description {
-        @include text-2xl;
+        @include text-large;
 
         text-align: justify;
     }
@@ -27,7 +27,7 @@
 @include desktop {
     .feature-x1 {
         justify-content: center;
-        width: 550px;
+        width: 80%;
     }
 }
 
@@ -39,11 +39,9 @@
 
         > .title {
             margin: 0 2svw;
-            font-size: 8.5vw;
         }
 
         > .description {
-            @include text-3xl;
             @include margin-mobile;
         }
     }

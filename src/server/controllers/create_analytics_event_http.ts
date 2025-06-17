@@ -1,5 +1,5 @@
 import { HTTP_STATUS } from '@shared/constants/app.constants'
-import { validate_request, validate_response } from '@shared/validations/analytics_event.validation'
+import { validate_request, validate_response } from '@shared/validations/create_analytics_event.validation'
 import { Request, Response } from 'express'
 import { create_analytics_event } from '@server/services/create_analytics_event'
 

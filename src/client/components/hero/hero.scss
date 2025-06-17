@@ -3,7 +3,7 @@
 #hero {
     width: 100%;
 
-    .content {
+    > .content {
         display: flex;
         flex-direction: column;
         gap: 3svh;
@@ -15,17 +15,18 @@
 
             > .slogan {
                 @include font-black;
+                @include header-secondary;
                 text-align: center;
             }
 
             > .title {
-                @include text-4xl;
+                @include header-tertiary;
                 @include font-bold;
                 text-align: justify;
             }
 
             > .subtitle {
-                @include text-2xl;
+                @include text-large;
                 @include font-light;
                 text-align: justify;
             }
@@ -70,14 +71,10 @@
             margin: 3svh 0;
             margin-left: 5svw;
 
-            width: 680px;
+            width: 35%;
             text-align: justify;
 
             > .container {
-                > .slogan {
-                    @include text-6xl;
-                }
-
                 > #hero-infografic {
                     display: flex;
                     justify-content: space-evenly;
@@ -111,21 +108,6 @@
             > .container {
                 grid-area: container;
                 @include margin-mobile;
-
-                > .slogan {
-                    font-size: 8.5vw;
-                    line-height: 1;
-                }
-
-                > .subtitle {
-                    @include text-3xl;
-                }
-
-                > #hero-infografic {
-                    display: flex;
-                    justify-content: space-evenly;
-                    width: 100%;
-                }
             }
 
             > .cta {
@@ -134,8 +116,7 @@
 
             > .game-by {
                 grid-area: game-by;
-                // height: 15px;
-                font-size: 5.5vw;
+                @include text-large;
                 line-height: 1;
                 text-align: center;
 

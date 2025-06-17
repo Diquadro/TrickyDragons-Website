@@ -1,139 +1,81 @@
-.text-xs {
-    font-size: 0.75rem; /* 12px */
-    line-height: 1rem; /* 16px */
+@use './media' as *;
+
+// =====================================
+// PROFESSIONAL FLUID TYPOGRAPHY SYSTEM
+// Using SCSS @include for BETTER PERFORMANCE
+// =====================================
+
+// Global responsive root font-size con scaling più intelligente
+:root {
+    // Desktop: 16px fisso
+    font-size: 16px;
+    font-family: 'Lexend', 'Segoe UI', 'Roboto', 'Helvetica Neue', 'Arial', sans-serif;
 }
 
-.text-sm {
-    font-size: 0.875rem; /* 14px */
-    line-height: 1.25rem; /* 20px */
+@include mobile {
+    :root {
+        // Scaling da 12px (iPhone SE) a 14px (grandi mobile/tablet)
+        font-size: clamp(10px, 3vw, 14px);
+    }
 }
 
-.text-base {
-    font-size: 1rem; /* 16px */
-    line-height: 1.5rem; /* 24px */
+// Helper function per calcoli fluidi desktop/mobile
+@function fluid($min-size, $max-size) {
+    $min-vw: 23.4375rem; // 375px
+    $max-vw: 64rem; // 1024px
+    $slope: calc(($max-size - $min-size) / ($max-vw - $min-vw));
+    $y-axis-intersection: -$min-vw * $slope + $min-size;
+    @return clamp(#{$min-size}, #{$y-axis-intersection} + #{$slope * 100}vw, #{$max-size});
 }
 
-.text-lg {
-    font-size: 1.125rem; /* 18px */
-    line-height: 1.75rem; /* 28px */
+// =====================================
+// SEMANTIC FLUID TYPOGRAPHY MIXINS
+// =====================================
+
+// HEADERS HIERARCHY - Titoli principali
+@mixin header-primary {
+    font-size: #{fluid(3.5rem, 3.75rem)}; // Mobile: 3.5rem = 42-56px (scaling)
+    line-height: 1.1;
 }
 
-.text-xl {
-    font-size: 1.25rem; /* 20px */
-    line-height: 1.75rem; /* 28px */
+@mixin header-secondary {
+    font-size: #{fluid(2.8rem, 2.8rem)}; // Mobile: 2.8rem = 33.6-44.8px (scaling)
+    line-height: 1.2;
 }
 
-.text-2xl {
-    font-size: 1.5rem; /* 24px */
-    line-height: 2rem; /* 32px */
+@mixin header-tertiary {
+    font-size: #{fluid(2.2rem, 2.25rem)}; // Mobile: 2.2rem = 26.4-35.2px (scaling)
+    line-height: 1.3;
 }
 
-.text-3xl {
-    font-size: 1.875rem; /* 30px */
-    line-height: 2.25rem; /* 36px */
-}
-
-.text-4xl {
-    font-size: 2.25rem; /* 36px */
-    line-height: 2.5rem; /* 40px */
-}
-
-.text-5xl {
-    font-size: 3rem; /* 48px */
-    line-height: 1;
-}
-
-.text-6xl {
-    font-size: 3.75rem; /* 60px */
-    line-height: 1;
-}
-
-.text-7xl {
-    font-size: 4rem; /* 64px */
-    line-height: 1;
-}
-
-.text-8xl {
-    font-size: 4.5rem; /* 72px */
-    line-height: 1;
-}
-
-.text-9xl {
-    font-size: 6rem; /* 96px */
-    line-height: 1;
-}
-
-.text-10xl {
-    font-size: 8rem; /* 128px */
-    line-height: 1;
-}
-
-@mixin text-xs {
-    font-size: 0.75rem; /* 12px */
-    line-height: 1rem; /* 16px */
-}
-
-@mixin text-sm {
-    font-size: 0.875rem; /* 14px */
-    line-height: 1.25rem; /* 20px */
+// BODY TEXT HIERARCHY - Testi di contenuto
+@mixin text-large {
+    font-size: #{fluid(1.6rem, 1.5rem)}; // Mobile: 1.6rem = 19.2-25.6px (scaling)
+    line-height: 1.4;
 }
 
 @mixin text-base {
-    font-size: 1rem; /* 16px */
-    line-height: 1.5rem; /* 24px */
+    font-size: #{fluid(1.3rem, 1.25rem)}; // Mobile: 1.3rem = 15.6-20.8px (scaling)
+    line-height: 1.5;
 }
 
-@mixin text-lg {
-    font-size: 1.125rem; /* 18px */
-    line-height: 1.75rem; /* 28px */
+@mixin text-small {
+    font-size: #{fluid(1rem, 1rem)}; // Mobile: 1rem = 12-16px (scaling)
+    line-height: 1.4;
 }
 
-@mixin text-xl {
-    font-size: 1.25rem; /* 20px */
-    line-height: 1.75rem; /* 28px */
+// UI TEXT - Elementi di interfaccia
+@mixin ui-large {
+    font-size: #{fluid(1.4rem, 1.375rem)}; // Mobile: 1.4rem = 16.8-22.4px (scaling)
+    line-height: 1.3;
 }
 
-@mixin text-2xl {
-    font-size: 1.5rem; /* 24px */
-    line-height: 2rem; /* 32px */
+@mixin ui-base {
+    font-size: #{fluid(1.1rem, 1.125rem)}; // Mobile: 1.1rem = 13.2-17.6px (scaling)
+    line-height: 1.4;
 }
 
-@mixin text-3xl {
-    font-size: 1.875rem; /* 30px */
-    line-height: 2.25rem; /* 36px */
-}
-
-@mixin text-4xl {
-    font-size: 2.25rem; /* 36px */
-    line-height: 2.5rem; /* 40px */
-}
-
-@mixin text-5xl {
-    font-size: 3rem; /* 48px */
-    line-height: 1;
-}
-
-@mixin text-6xl {
-    font-size: 3.75rem; /* 60px */
-    line-height: 1;
-}
-
-@mixin text-7xl {
-    font-size: 4rem; /* 64px */
-    line-height: 1;
-}
-
-@mixin text-8xl {
-    font-size: 4.5rem; /* 72px */
-    line-height: 1;
-}
-
-@mixin text-9xl {
-    font-size: 6rem; /* 96px */
-    line-height: 1;
-}
-
-@mixin text-10xl {
-    font-size: 8rem; /* 128px */
-    line-height: 1;
+@mixin ui-small {
+    font-size: #{fluid(0.9rem, 0.9rem)}; // Mobile: 0.9rem = 10.8-14.4px (scaling)
+    line-height: 1.4;
 }

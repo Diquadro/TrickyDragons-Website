@@ -2,11 +2,11 @@ import { sql } from '@server/models/postgres_client'
 import AnalyticsEvents from '@shared/schemas/database/public/AnalyticsEvents'
 import { screen_infos } from '@shared/types/screen_infos'
 import { utm_params } from '@shared/types/utm_params'
-import { Analytics_Event_Request } from '@shared/validations/analytics_event.validation'
+import { Create_Analytics_Event_Request } from '@shared/validations/create_analytics_event.validation'
 import { Request } from 'express'
 
 interface Analytics_Event {
-    event_name: Analytics_Event_Request['event_name']
+    event_name: Create_Analytics_Event_Request['event_name']
     session_id?: string | null | undefined
     visitor_id?: string | null | undefined
     details?: {} | null | undefined

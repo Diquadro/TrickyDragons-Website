@@ -12,8 +12,8 @@ interface Session_Data {
 // Session configuration
 const SESSION_CONFIG = {
     STORAGE_KEY: 'app_session',
-    // Session duration: 30 minutes (like Google Analytics)
-    DURATION_MS: 30 * 60 * 1000,
+    // Session duration: 10 minutes (optimized for landing pages)
+    DURATION_MS: 10 * 60 * 1000,
     // Extend session on activity (like most big platforms)
     EXTEND_ON_ACTIVITY: true,
 }
@@ -34,9 +34,17 @@ function generate_session_id(): string {
 }
 
 /**
- * Check if session is expired
+ * Check if current session is expired (exported for analytics and other modules)
  */
-function is_session_expired(session_data: Session_Data): boolean {
+export function is_current_session_expired(): boolean {
+    if (!current_session_data) return true
+    return Date.now() >= current_session_data.expires_at
+}
+
+/**
+ * Check if a specific session data is expired (internal use)
+ */
+function is_session_data_expired(session_data: Session_Data): boolean {
     return Date.now() >= session_data.expires_at
 }
 
@@ -103,7 +111,7 @@ function extend_session(session_data: Session_Data): Session_Data {
  */
 export function get_session_id(): string {
     // Return cached session if valid
-    if (current_session_data && !is_session_expired(current_session_data)) {
+    if (current_session_data && !is_session_data_expired(current_session_data)) {
         // Extend session on activity if configured
         if (SESSION_CONFIG.EXTEND_ON_ACTIVITY) {
             current_session_data = extend_session(current_session_data)
@@ -114,7 +122,7 @@ export function get_session_id(): string {
     // Try to load existing session from storage
     const stored_session = load_session_from_storage()
 
-    if (stored_session && !is_session_expired(stored_session)) {
+    if (stored_session && !is_session_data_expired(stored_session)) {
         current_session_data = stored_session
 
         // Extend session on activity if configured
