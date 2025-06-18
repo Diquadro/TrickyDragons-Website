@@ -61,8 +61,11 @@ export async function create_analytics_event(event_data: Analytics_Event, req: R
 
         details: event_data.details,
 
-        // Server-side timestamp
-        occurred_at: new Date(),
+        // Server-side timestamp (UTC) - use middleware calculated UTC timestamp for consistency
+        occurred_at: req.time_infos?.utc_occurred_at || new Date(),
+
+        // Local timestamp calculated by middleware (automatic DST-aware fallback strategy)
+        local_occurred_at: req.time_infos?.local_occurred_at || null,
     }
 
     // Remove null/undefined values

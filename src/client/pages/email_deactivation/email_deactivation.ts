@@ -38,7 +38,7 @@ async function unsubscribe(): Promise<void> {
             : `${API.URL}${API.ENDPOINTS.CONTACTS.UNSUBSCRIBE}`
 
         const response = await fetch(endpoint, {
-            method: 'POST   ',
+            method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
             },

@@ -24,6 +24,8 @@ export const geo_info_middleware = (req: Request, res: Response, next: NextFunct
             city: 'San Francisco',
             country: 'US',
             region: 'CA',
+            short_country: 'US', // Meta format: ISO 3166-1 alpha-2
+            short_region: 'CA', // Meta format: state/region code
             timezone: 'America/Los_Angeles',
             latitude: 37.7749,
             longitude: -122.4194,
@@ -42,6 +44,8 @@ export const geo_info_middleware = (req: Request, res: Response, next: NextFunct
         req.geo_infos = {
             country: country?.countryName || undefined,
             region: region?.name || undefined,
+            short_country: geo.country || undefined, // ISO 3166-1 alpha-2 from geoip
+            short_region: geo.region || undefined, // State/region short code from geoip
             city: geo.city || undefined,
             timezone: geo.timezone || undefined,
             latitude: geo.ll?.[0] || undefined,

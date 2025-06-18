@@ -39,6 +39,9 @@ export default interface Contacts {
 
   /** Stores the list of email identifiers (e.g., "welcome", "20250401_newsletter") that have been sent to the contact by the system. */
   sent_emails: string[] | null;
+
+  /** Auto-incrementing serial number for easier data analysis and sequential referencing. */
+  auto_serial: number;
 }
 
 /**
@@ -75,6 +78,12 @@ export interface ContactsInitializer {
 
   /** Stores the list of email identifiers (e.g., "welcome", "20250401_newsletter") that have been sent to the contact by the system. */
   sent_emails?: string[] | null;
+
+  /**
+   * Auto-incrementing serial number for easier data analysis and sequential referencing.
+   * Default value: nextval('contacts_auto_serial_seq'::regclass)
+   */
+  auto_serial?: number;
 }
 
 /**
@@ -108,6 +117,9 @@ export interface ContactsMutator {
 
   /** Stores the list of email identifiers (e.g., "welcome", "20250401_newsletter") that have been sent to the contact by the system. */
   sent_emails?: string[] | null;
+
+  /** Auto-incrementing serial number for easier data analysis and sequential referencing. */
+  auto_serial?: number;
 }
 
 export const contactsUuid = z.string() as unknown as z.Schema<ContactsUuid>;
@@ -122,6 +134,7 @@ export const contacts = z.object({
   updated_by: z.string().nullable(),
   updated_date: z.date().nullable(),
   sent_emails: z.string().array().nullable(),
+  auto_serial: z.number(),
 }) as unknown as z.Schema<Contacts>;
 
 export const contactsInitializer = z.object({
@@ -134,6 +147,7 @@ export const contactsInitializer = z.object({
   updated_by: z.string().optional().nullable(),
   updated_date: z.date().optional().nullable(),
   sent_emails: z.string().array().optional().nullable(),
+  auto_serial: z.number().optional(),
 }) as unknown as z.Schema<ContactsInitializer>;
 
 export const contactsMutator = z.object({
@@ -146,4 +160,5 @@ export const contactsMutator = z.object({
   updated_by: z.string().optional().nullable(),
   updated_date: z.date().optional().nullable(),
   sent_emails: z.string().array().optional().nullable(),
+  auto_serial: z.number().optional(),
 }) as unknown as z.Schema<ContactsMutator>;

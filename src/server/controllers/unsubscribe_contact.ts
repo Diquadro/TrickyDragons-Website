@@ -17,8 +17,6 @@ export async function unsubscribe_contact(req: Request, res: Response) {
     const request_data = validate_request(req.body)
     const { email, subscription } = request_data
 
-    console.log('request_data', email)
-
     const contact = await get_contact(email)
     let outcome: Unsubscribe_Contact_Response_Outcome
     let message: string

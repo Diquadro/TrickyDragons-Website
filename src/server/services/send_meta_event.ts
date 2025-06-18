@@ -75,11 +75,12 @@ function create_event(
     const city = req.geo_infos?.city?.trim()
     if (city) user_data.setCity(hash(city))
 
-    const region = req.geo_infos?.region?.trim()
-    if (region) user_data.setState(hash(region))
+    // Use short codes for Meta - more appropriate format
+    const short_region = req.geo_infos?.short_region?.trim()
+    if (short_region) user_data.setState(hash(short_region))
 
-    const country = req.geo_infos?.country?.trim()
-    if (country) user_data.setCountry(hash(country))
+    const short_country = req.geo_infos?.short_country?.trim()
+    if (short_country) user_data.setCountry(hash(short_country))
 
     // Create server event with basic data
     const server_event = new Meta_Api.ServerEvent()

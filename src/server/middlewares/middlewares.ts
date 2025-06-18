@@ -4,6 +4,7 @@ import { cors_middleware } from './cors'
 import { request_ip } from './request_ip'
 import { geo_info_middleware } from './geo_infos'
 import { browser_info_middleware } from './browser_info'
+import { time_infos_middleware } from './time_infos'
 import { express_json } from './express_json'
 import { block_bots } from './block_bots'
 import { morgan_middleware } from './morgan'
@@ -31,6 +32,7 @@ export function apply_middlewares(app: express.Application): void {
     app.use(request_ip)
     app.use(geo_info_middleware)
     app.use(browser_info_middleware)
+    app.use(time_infos_middleware) // Must be after geo_info for IP timezone fallback
 
     // Error handling - must be last
     app.use(error_handler)

@@ -85,6 +85,12 @@ export default interface Actions {
 
   /** Longitude coordinate of the action location. */
   longitude: number | null;
+
+  /** Timestamp when the action occurred in the users local timezone - calculated server-side using client or IP-based timezone */
+  local_occurred_at: Date | null;
+
+  /** Auto-incrementing serial number for easier data analysis and sequential referencing. */
+  auto_serial: number;
 }
 
 /**
@@ -166,6 +172,15 @@ export interface ActionsInitializer {
 
   /** Longitude coordinate of the action location. */
   longitude?: number | null;
+
+  /** Timestamp when the action occurred in the users local timezone - calculated server-side using client or IP-based timezone */
+  local_occurred_at?: Date | null;
+
+  /**
+   * Auto-incrementing serial number for easier data analysis and sequential referencing.
+   * Default value: nextval('actions_auto_serial_seq'::regclass)
+   */
+  auto_serial?: number;
 }
 
 /**
@@ -244,6 +259,12 @@ export interface ActionsMutator {
 
   /** Longitude coordinate of the action location. */
   longitude?: number | null;
+
+  /** Timestamp when the action occurred in the users local timezone - calculated server-side using client or IP-based timezone */
+  local_occurred_at?: Date | null;
+
+  /** Auto-incrementing serial number for easier data analysis and sequential referencing. */
+  auto_serial?: number;
 }
 
 export const actionsUuid = z.string() as unknown as z.Schema<ActionsUuid>;
@@ -273,6 +294,8 @@ export const actions = z.object({
   timezone: z.string().nullable(),
   latitude: z.number().nullable(),
   longitude: z.number().nullable(),
+  local_occurred_at: z.date().nullable(),
+  auto_serial: z.number(),
 }) as unknown as z.Schema<Actions>;
 
 export const actionsInitializer = z.object({
@@ -300,6 +323,8 @@ export const actionsInitializer = z.object({
   timezone: z.string().optional().nullable(),
   latitude: z.number().optional().nullable(),
   longitude: z.number().optional().nullable(),
+  local_occurred_at: z.date().optional().nullable(),
+  auto_serial: z.number().optional(),
 }) as unknown as z.Schema<ActionsInitializer>;
 
 export const actionsMutator = z.object({
@@ -327,4 +352,6 @@ export const actionsMutator = z.object({
   timezone: z.string().optional().nullable(),
   latitude: z.number().optional().nullable(),
   longitude: z.number().optional().nullable(),
+  local_occurred_at: z.date().optional().nullable(),
+  auto_serial: z.number().optional(),
 }) as unknown as z.Schema<ActionsMutator>;

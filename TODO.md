@@ -9,21 +9,27 @@ LIST
 [X] Meta API Conversion
 [X] Appsmith
 [] Schemalint -> https://github.com/kristiandupont/schemalint
-[] Better error handling
+[X] Better error handling
 [] Configuration menagment with zod
 [] BETTER Logging Services (EXTERNAL)
 [X] Request Validation Middleware
-[] Better organization for the middlewares
-[] Mettere un autonumber sulle colonne è utile per il debuging
+[X] Better organization for the middlewares
+[X] Mettere un autonumber sulle colonne è utile per il debuging
 [] Utilizzare una cartella public per gli assets così da non copiarli (Emails, Imgs)
 [X] Aggiunti gli indirizzi email al .env per migliore usabilità per più sviluppatori
-[] Vedere di mettere l'api sullo stesso dominio /api
+[-] Vedere di mettere l'api sullo stesso dominio /api -> NO, perchè render non me lo fa fare
 [X] Tracking UTM su umami
 [-] Query caching - NOPE
 [] // Remove null values to avoid database issues
 const clean_event = Object.fromEntries(
 Object.entries(analytics_event).filter(([*, value]) => value !== null && value !== undefined),
 )
+[X] Aggiungere il local time alla tabelle Action e Anylitcs Events
+[] Togliere la gestione dell'url in BASE 64 e mettere i dati in chiaro ma hasharli
+[X] Inviare gli short code per country e region a meta
+[X] Miglioramento degli eventi di analytics
+
+UTM TEST PARAMS -> ?utm_source=WEB_TEST&utm_medium=M_TEST&utm_campaign=C_TEST&utm_term=T_TEST&utm_content=CON_TEST&utm_id=ID_TEST
 
 MAYBE
 

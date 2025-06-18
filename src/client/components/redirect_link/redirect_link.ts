@@ -13,7 +13,7 @@ document.addEventListener('DOMContentLoaded', () => {
             const anchor = link as HTMLAnchorElement
 
             track_custom_event(AnalyticsEventName.link_click, { link: anchor.href, ...get_utm_params() })
-            window.umami?.track(AnalyticsEventName.link_click, { link: anchor.href })
+            window.umami?.track(AnalyticsEventName.link_click, { link: anchor.href, ...get_utm_params() })
             posthog.capture(AnalyticsEventName.link_click, { link: anchor.href })
 
             window.location.href = anchor.href

@@ -4,6 +4,13 @@ import { get_utm_params } from './utm_params'
 import { get_timezone } from './timezone'
 import { get_screen_infos } from './screen_infos'
 import {
+    should_create_new_events,
+    get_existing_page_events,
+    register_page_events,
+    update_page_activity,
+    cleanup_expired_sessions,
+} from './session_page_tracker'
+import {
     Create_Analytics_Event_Request,
     create_analytics_event_request_schema,
 } from '@shared/validations/create_analytics_event.validation'
@@ -181,6 +188,66 @@ async function track_page_leave(): Promise<void> {
 }
 
 /**
+ * Create both page_view and page_leave events atomically and register them
+ * This approach is more robust and efficient than sequential creation
+ */
+async function track_and_register_page_events(): Promise<void> {
+    const utm_params = get_utm_params()
+
+    // Create both events simultaneously for better performance and atomicity
+    const [page_view_event_data, page_leave_event_data] = await Promise.all([
+        create_event_data(AnalyticsEventName.page_view, utm_params),
+        create_event_data(AnalyticsEventName.page_leave, utm_params),
+    ])
+
+    // Send both events in parallel
+    const [page_view_id, page_leave_id] = await Promise.all([
+        send_analytics_event(page_view_event_data),
+        send_analytics_event(page_leave_event_data),
+    ])
+
+    // Register events only if both succeeded (atomic operation)
+    if (page_view_id && page_leave_id) {
+        register_page_events(page_view_id, page_leave_id)
+
+        // Store page_leave_id for session updates
+        store_session_event_id_if_needed(
+            AnalyticsEventName.page_leave,
+            page_leave_id,
+            page_leave_event_data.session_id,
+        )
+    } else {
+        console.warn('Failed to create one or both page events:', {
+            page_view_success: !!page_view_id,
+            page_leave_success: !!page_leave_id,
+        })
+    }
+}
+
+/**
+ * Update existing page_leave event on page refresh
+ */
+async function update_existing_page_leave_on_refresh(): Promise<void> {
+    const existing_events = get_existing_page_events()
+
+    if (existing_events.page_leave_id) {
+        // Update the existing page_leave event with current timestamp
+        await update_analytics_event(existing_events.page_leave_id)
+
+        // Update local activity tracking
+        update_page_activity()
+
+        // Store for session updates
+        current_session_page_leave_id = existing_events.page_leave_id
+        current_tracked_session_id = get_session_id()
+    } else {
+        // Fallback: if no existing page_leave found, create new events
+        console.warn('No existing page_leave event found during refresh, creating new events')
+        track_and_register_page_events()
+    }
+}
+
+/**
  * Track page scroll event (one-shot)
  */
 async function track_page_scroll(): Promise<void> {
@@ -203,7 +270,6 @@ export async function track_custom_event(
 async function handle_page_return(): Promise<void> {
     // Check if session expired while away
     if (should_reset_analytics_session()) {
-        console.log('Analytics session reset on return - creating new events')
         reset_analytics_session()
 
         // New session = new page_view + new page_leave
@@ -264,7 +330,6 @@ function send_final_update(): void {
     if (navigator.sendBeacon) {
         const success = navigator.sendBeacon(endpoint, data)
         if (success) {
-            console.log('Final update sent via sendBeacon')
             return
         }
     }
@@ -279,24 +344,31 @@ function send_final_update(): void {
         }).catch(() => {
             // Silent fail - page is unloading anyway
         })
-        console.log('Final update sent via fetch keepalive')
     } catch (error) {
         // Silent fail - nothing more we can do
     }
 }
 
 /**
- * Initialize analytics tracking with unified session approach
- * Creates 2 events per session: page_view + page_leave (page_leave updated only when leaving)
+ * Initialize analytics tracking with session-based page tracking
+ * Prevents duplicate events on page refresh while correctly tracking navigation
  */
 export function initialize_analytics(): void {
-    // Initialize session tracking
+    // Initialize session tracking FIRST
     current_tracked_session_id = get_session_id()
     final_update_sent = false
 
-    // Track initial page view and page leave (start of session)
-    track_page_view()
-    track_page_leave()
+    // THEN cleanup expired sessions (after session is initialized)
+    cleanup_expired_sessions()
+
+    // Decide whether to create new events or update existing ones
+    if (should_create_new_events()) {
+        // Create new page_view and page_leave events atomically
+        track_and_register_page_events()
+    } else {
+        // This is a page refresh - just update the existing page_leave timestamp
+        update_existing_page_leave_on_refresh()
+    }
 
     // Track scroll event (one-shot)
     const scroll_handler = () => {
@@ -308,8 +380,8 @@ export function initialize_analytics(): void {
     // Handle visibility changes - update page_leave only when leaving
     document.addEventListener('visibilitychange', handle_visibility_change)
 
-    // Multiple unload event handlers for maximum coverage
-    window.addEventListener('beforeunload', send_final_update)
+    // Use pagehide as primary event (modern, reliable)
+    // and beforeunload as fallback for older browsers
     window.addEventListener('pagehide', send_final_update)
-    window.addEventListener('unload', send_final_update)
+    window.addEventListener('beforeunload', send_final_update)
 }
