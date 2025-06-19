@@ -12,8 +12,8 @@ interface Session_Data {
 // Session configuration
 const SESSION_CONFIG = {
     STORAGE_KEY: 'app_session',
-    // Session duration: 10 minutes (optimized for landing pages)
-    DURATION_MS: 10 * 60 * 1000,
+    // Session duration: 5 minutes (optimized for landing pages)
+    DURATION_MS: 5 * 60 * 1000,
     // Extend session on activity (like most big platforms)
     EXTEND_ON_ACTIVITY: true,
 }
