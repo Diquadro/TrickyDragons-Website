@@ -29,6 +29,9 @@ Object.entries(analytics_event).filter(([*, value]) => value !== null && value !
 [X] Inviare gli short code per country e region a meta
 [X] Miglioramento degli eventi di analytics
 
+[X] SES_LINK branded link seslink.trickydragons.com
+[] SENDGRID
+
 UTM TEST PARAMS -> ?utm_source=WEB_TEST&utm_medium=M_TEST&utm_campaign=C_TEST&utm_term=T_TEST&utm_content=CON_TEST&utm_id=ID_TEST
 
 MAYBE

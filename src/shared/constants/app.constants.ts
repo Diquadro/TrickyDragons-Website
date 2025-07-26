@@ -33,6 +33,9 @@ export const API = {
         REDIRECTS: {
             REDIRECT: `/${VERSION}/redirects`,
         },
+        WEBHOOKS: {
+            SENDGRID: `/${VERSION}/webhooks/sendgrid`,
+        },
     },
 
     EVENTS: {

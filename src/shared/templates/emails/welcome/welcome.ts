@@ -59,5 +59,20 @@ export const send_welcome_email = async (contact_email: string) => {
         email_deactivation: `${API.URL}${redirect_endpoint}?data64=${email_deactivation_url_data64}`,
     }
 
-    await send_email(from, to, subject, body_template_path, body_template_locals)
+    // Email sending options with tracking
+    const sendgrid = {
+        headers: {
+            'X-SMTPAPI': JSON.stringify({
+                category: EMAIL_TEMPLATES.WELCOME,
+                unique_args: {
+                    environment: process.env.NODE_ENV || 'development',
+                    template: EMAIL_TEMPLATES.WELCOME,
+                },
+            }),
+        },
+    }
+
+    const email_options = { sendgrid }
+
+    return await send_email(from, to, subject, body_template_path, body_template_locals, email_options)
 }

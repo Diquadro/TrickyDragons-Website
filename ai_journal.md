@@ -390,3 +390,145 @@ The 30-minute threshold is more realistic for user behavior and eliminates edge 
 - No indexes created as requested - kept simple for analysis-only use case
 - Comments focused on "data analysis and sequential referencing"
 - Active cleanup section removes old backup tables (actions_backup, addresses_backup, attributions_backup)
+
+## AWS SNS Webhook Implementation for SES Email Events
+
+**Date**: 2025-01-28
+**Type**: New Feature Implementation
+
+**Changes Made**:
+
+- **Validation Schema** (`src/shared/validations/sns_webhook.validation.ts`):
+
+    - Created comprehensive Zod schemas for SNS webhook validation
+    - Implemented `sns_webhook_request_schema` for basic SNS message structure
+    - Built detailed SES event schemas: `ses_bounce_schema`, `ses_complaint_schema`, `ses_delivery_schema`, `ses_send_schema`, `ses_open_schema`, `ses_click_schema`
+    - Used discriminated union (`ses_event_schema`) for type-safe SES event handling
+    - Created enums: `sns_message_type_enum`, `ses_event_type_enum`, `ses_bounce_type_enum`
+    - Added validation functions: `validate_request()`, `validate_ses_event()`, and `validate_response()`
+
+- **Controller** (`src/server/controllers/sns_webhook.ts`):
+
+    - Implemented webhook controller following project's fail-fast pattern
+    - Added `handle_subscription_confirmation()` function for AWS setup process
+    - Used guard clauses for different SNS message types
+    - Implemented comprehensive SES event logging with switch statement
+    - Used `res.sendStatus(HTTP_STATUS.OK)` for webhook-specific responses (no JSON needed)
+    - Added "REQUEST ENDS HERE" pattern for background processing
+
+- **AWS Configuration** (`src/shared/constants/app.constants.ts`):
+
+    - Added `WEBHOOKS.SNS` endpoint following project naming conventions
+    - Created `AWS` configuration object with `SES` and `SNS` properties
+    - Added environment variable placeholders with TODO comments
+
+- **Routes Integration** (`src/server/routes.ts`):
+    - Added SNS webhook route using constants: `app.post(API.ENDPOINTS.WEBHOOKS.SNS, sns_webhook)`
+
+**Reasoning**:
+
+- **Email System Migration**: Replace current Zoho-based email system with AWS SES for better scalability and reliability
+- **Event Tracking**: Enable real-time tracking of email bounces, complaints, deliveries, opens, and clicks
+- **Business Logic Foundation**: Prepare infrastructure for automated contact management based on email events
+- **AWS Integration**: Follow AWS best practices for SES/SNS webhook implementation
+
+**Context**:
+
+- User requested basic SNS webhook setup as starting point before implementing business logic
+- Project uses Zod for all validation, maintaining consistency over external libraries
+- Express.json middleware already handles `text/plain` content type (needed for SNS webhooks)
+- Project follows fail-fast error handling pattern with centralized error handler
+
+**Alternatives Considered**:
+
+- **sns-payload-validator NPM package**: Rejected in favor of Zod for consistency with project standards
+- **Separate service layer**: Rejected following project's controller-centric approach for this feature
+- **express.raw() middleware**: Rejected after confirming express.json() handles text/plain for JSON payloads
+- **Complex response schemas**: Simplified to HTTP status codes only (webhook peculiarity)
+
+**Architecture Decisions**:
+
+1. **Zod-Only Validation**: Chose Zod discriminated unions over external validation libraries for consistency
+2. **Fail-Fast Pattern**: Followed existing controller patterns (subscribe_contact.ts) with immediate error throwing
+3. **Webhook Response Pattern**: Used `res.sendStatus()` instead of JSON responses (AWS SNS only needs HTTP 200)
+4. **Text/Plain Handling**: Leveraged existing express.json configuration for sendBeacon compatibility
+5. **Function Extraction**: Separated subscription confirmation logic for better maintainability
+
+**Problems Solved**:
+
+1. **Initial Over-Engineering**:
+
+    - Started with complex service layer and try/catch patterns
+    - Performed complete rollback to follow project standards
+    - Learned importance of analyzing existing patterns first
+
+2. **Import Errors**:
+
+    - Fixed missing imports (HTTP_STATUS from wrong constants file)
+    - Resolved undefined utilities (try_catch, app_error don't exist in project)
+
+3. **TypeScript Discriminated Union Issues**:
+
+    - `z.literal(ses_event_type_enum.enum.bounce)` required for discriminated union
+    - Cannot simplify to `ses_event_type_enum.enum.bounce` (breaks type inference)
+    - Added explicit type annotations to resolve "Property 'eventType' does not exist on type 'never'" error
+
+4. **Content-Type Confusion**:
+    - SNS sends JSON payload with `text/plain` content-type
+    - Confirmed express.json() handles this correctly (same as sendBeacon)
+    - No additional middleware needed
+
+**Future Implications**:
+
+- **Business Logic Implementation**: Ready to add contact status management based on email events
+- **High Volume Support**: Webhook designed for bulk email scenarios (1000 emails = 4000+ webhook calls)
+- **AWS Configuration**: Environment variables prepared for production setup
+- **Monitoring Ready**: Comprehensive logging in place for debugging and analytics
+
+**Business Logic Planning**:
+
+Based on SES events, future implementation will handle:
+
+- **Bounce Events**: Mark contacts as invalid, update status, prevent future emails
+- **Complaint Events**: Unsubscribe contacts, add to suppression list
+- **Delivery Events**: Track successful deliveries, update contact engagement scores
+- **Open/Click Events**: Track engagement metrics, improve targeting
+
+**Production Considerations**:
+
+- **Volume**: 1 email sent = potentially 4+ webhook calls (send, delivery, open, click)
+- **Timing**: Events arrive distributed over time (sends immediate, deliveries within minutes, opens/clicks over hours/days)
+- **Rate Limiting**: Webhook must respond quickly (< 15 seconds) to avoid SNS retries
+- **Error Handling**: Failed webhooks trigger SNS retry mechanism
+
+**Testing/Verification**:
+
+- Webhook structure validates correctly with Zod schemas
+- TypeScript compilation successful with discriminated union
+- Subscription confirmation flow ready for AWS setup
+- Background processing pattern established for business logic
+
+**Implementation Notes**:
+
+- Used `z.literal()` for discriminated union discriminator fields (required by Zod)
+- Webhook PECULIARITY comment added to explain simplified response pattern
+- Function extraction improves testability and separation of concerns
+- Compatible with existing middleware chain (no changes needed)
+- Environment variables follow project naming conventions with TODO markers
+
+**Next Steps**:
+
+1. Configure AWS SES and SNS topic
+2. Set environment variables (AWS_SNS_TOPIC_ARN, etc.)
+3. Subscribe webhook endpoint to SNS topic
+4. Test with AWS SES simulator emails
+5. Implement business logic for contact management based on event types
+
+**Key Learning**:
+
+Initial over-engineering was valuable for understanding project patterns. The rollback and simplification process revealed the importance of:
+
+- Analyzing existing code patterns before implementing
+- Following established architectural decisions
+- Keeping initial implementations simple and focused
+- Building incrementally rather than over-architecting upfront

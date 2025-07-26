@@ -40,4 +40,16 @@ export const EMAILS_AVAILABLE: Record<string, { from_formatted: string; transpor
             },
         }),
     },
+    sendgrid_smtp: {
+        from_formatted: `"Tricky Dragons Team" <${process.env.SENDGRID_FROM_EMAIL}>`,
+        transporter: nodemailer.createTransport({
+            host: 'smtp.sendgrid.net',
+            port: 587,
+            secure: false, // TLS on port 587
+            auth: {
+                user: 'apikey',
+                pass: process.env.SENDGRID_API_KEY,
+            },
+        }),
+    },
 }

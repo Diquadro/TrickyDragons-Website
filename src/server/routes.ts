@@ -8,6 +8,7 @@ import { get_subscriber_count } from '@server/controllers/get_subscriber_count'
 import { create_analytics_event_http } from '@server/controllers/create_analytics_event_http'
 import { update_analytics_event_http } from '@server/controllers/update_analytics_event_http'
 import { redirect } from '@server/controllers/redirect'
+import { sendgrid_webhook } from '@server/controllers/sendgrid_webhook'
 import { error_handler } from '@server/middlewares/error_handler'
 
 // Configures routes for the Express application
@@ -24,6 +25,9 @@ export function apply_routes(app: express.Application): void {
     // Analytics events routes
     app.post(API.ENDPOINTS.ANALYTICS_EVENTS.CREATE, create_analytics_event_http)
     app.post(API.ENDPOINTS.ANALYTICS_EVENTS.UPDATE, update_analytics_event_http)
+
+    // Webhooks routes
+    app.post(API.ENDPOINTS.WEBHOOKS.SENDGRID, sendgrid_webhook)
 
     // Error handling middleware (must be after all routes)
     app.use(error_handler)
