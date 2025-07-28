@@ -1,10 +1,6 @@
-import '@client/components/cta/cta.scss'
-import '@client/components/cta_modal/cta_modal'
 import posthog from 'posthog-js'
-
 import error_toast from '@client/ts/error_toast'
 import { show_spinner } from '@client/components/spinner/spinner'
-import { show_modal } from '@client/components/cta_modal/cta_modal'
 import {
     CONTACT_RESPONSE_OUTCOME,
     Subscribe_Contact_Request,
@@ -28,6 +24,25 @@ const EMAIL_REGEX =
 
 // Global variable to track subscription status (resets on page refresh)
 let user_has_subscribed = false
+
+/**
+ * Redirect to thank-you page with event parameter
+ */
+function redirect_to_thank_you(event: string) {
+    const current_url = new URL(window.location.href)
+    const thank_you_url = new URL('/thank-you', current_url.origin)
+    thank_you_url.searchParams.set('event', event)
+
+    // Preserve UTM parameters if they exist
+    const utm_params = get_utm_params()
+    Object.entries(utm_params).forEach(([key, value]) => {
+        if (value) {
+            thank_you_url.searchParams.set(key, value)
+        }
+    })
+
+    window.location.href = thank_you_url.toString()
+}
 
 /**
  * Subscribe contact to newsletter
@@ -277,26 +292,23 @@ async function handle_form_submit(event: Event): Promise<void> {
         if (!result || !result.data) {
             throw new Error('No contact found')
         } else if (result.data.outcome === CONTACT_RESPONSE_OUTCOME.RESUBSCRIBED) {
-            show_modal('modal_email_reactivated')
-            mark_user_as_subscribed()
+            window.umami?.track('resubscribed', { ...utm_params })
+            posthog.capture('resubscribed')
+            redirect_to_thank_you('resubscribed')
         } else if (result.data.outcome === CONTACT_RESPONSE_OUTCOME.ALREADY_SUBSCRIBED) {
-            show_modal('modal_email_duplicate')
-            // User is already subscribed, so show the message
-            mark_user_as_subscribed()
+            window.umami?.track('already-subscribed', { ...utm_params })
+            posthog.capture('already-subscribed')
+            redirect_to_thank_you('already-subscribed')
         } else if (result.data.outcome === CONTACT_RESPONSE_OUTCOME.NEW_CONTACT) {
             window.umami?.track('subscribed_to_newsletter', { ...utm_params })
             posthog.capture('subscribed_to_newsletter')
-            success_message?.classList.remove('hidden')
-
-            show_modal('modal_email_sent')
-            mark_user_as_subscribed()
+            track_custom_event(AnalyticsEventName.subscribe_to_newsletter, {
+                email: email,
+                outcome: result.data.outcome,
+                ...utm_params,
+            })
+            redirect_to_thank_you('new-contact')
         }
-
-        track_custom_event(AnalyticsEventName.subscribe_to_newsletter, {
-            email: email,
-            outcome: result.data.outcome,
-            ...utm_params,
-        })
 
         return
     } catch (err) {

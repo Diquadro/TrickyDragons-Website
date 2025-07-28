@@ -1,0 +1,30 @@
+extends @client/layouts/layout_common/layout_common.pug
+
+include @client/components/redirect_link/redirect_link.pug
+
+block head
+    link(
+        rel='preload',
+        href='@public/imgs/thank-you-card.webp',
+        as='image',
+        type='image/webp',
+        crossorigin='anonymous'
+    )
+
+block body
+    #page-container
+        .thank-you-hero
+            .hero-image
+                img(
+                    src='@public/imgs/thank-you-card.webp',
+                    alt='thank you',
+                    loading='eager',
+                    crossorigin='anonymous'
+                )
+            .text-container
+                h1 THANKS FOR SIGNING UP!
+                p Thank You for Joining the Adventure! We've sent you a welcome email, peek into your spam folder if you don't see it in a few minutes.
+                +redirect_link('https://www.kickstarter.com/projects/2076650099/tricky-dragons')
+                    button.cta-button FOLLOW OUR KICKSTARTER
+
+    script(src='./thank-you.ts', type='module', defer) 

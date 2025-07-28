@@ -19,7 +19,7 @@ export default function error_toast(message: string): void {
     toast.style.borderRadius = '5px'
     toast.style.boxShadow = '0px 4px 6px rgba(0, 0, 0, 0.1)'
     toast.style.fontSize = '1rem'
-    toast.style.fontWeight = 'bold'
+    toast.style.fontWeight = '400'
     toast.style.zIndex = '9999'
     toast.style.transition = 'top 0.5s ease' // Animation for sliding down
     toast.style.boxShadow = '0px 0px 15px rgba(0, 0, 0, 0.5)' // Add slightly larger shadow

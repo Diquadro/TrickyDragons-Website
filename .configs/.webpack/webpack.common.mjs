@@ -48,6 +48,7 @@ export default {
             '@server': path.resolve('src/server'),
             '@database': path.resolve('src/database'),
             '@shared': path.resolve('src/shared'),
+            '@public': path.resolve('public'),
         },
         extensions: ['.tsx', '.ts', '.js', '.css', '.scss'],
     },

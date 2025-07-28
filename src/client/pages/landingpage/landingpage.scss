@@ -1,98 +1,581 @@
-@use '@client/components/styles_common/styles_common' as *;
+@use '@client/components/styles_common/media' as *;
+@use '@client/components/styles_common/bebas_neue_pro_font' as *;
+
+$font-size-xxl: 40px;
+$font-size-xl: 32px;
+$font-size-lg: 24px;
+$font-size-md: 20px;
+$font-size-sm: 16px;
+$font-size-xs: 14px;
+
+$font-weight-light: 200;
+$font-weight-middle: 400;
+
+$font-weight-bold: 700;
+$font-weight-extra-bold: 800;
+
+$color-black: hsl(0, 0%, 10%);
+$color-white: hsl(0, 0%, 95%);
+$color-red: hsl(5, 70%, 50%);
+$color-red-dark: hsl(5, 70%, 45%);
+$color-red-darker: hsl(5, 70%, 40%);
+
+$border-radius: 5px;
+
+$mobile-body-margin: 4svw;
+$section-gap: 25px;
+
+$desktop-body-margin: 10svw;
+
+$font-family-bebas-neue-pro: 'Bebas Neue Pro', 'Arial Black', 'Helvetica Bold', 'Impact', sans-serif;
+$font-family-bebas-neue-pro-semi-expanded:
+    'Bebas Neue Pro SemiExpanded', 'Arial Black', 'Helvetica Bold', 'Impact', sans-serif;
 
 * {
     margin: 0;
     border: 0;
     padding: 0;
+    font-weight: $font-weight-light;
+
+    font-family: $font-family-bebas-neue-pro-semi-expanded;
 }
 
-.hr {
-    margin: 0 2svw;
-}
-
-hr {
-    border: 1px solid black;
-}
-
-@include desktop {
-    .hide-desktop {
-        display: none;
-    }
-
-    body {
-        display: grid;
-        grid-template-columns: 50% 50%;
-        grid-template-areas:
-            'hero hero'
-            'feature-dragons feature-elements'
-            'hr-02 hr-02'
-            'feature-challenge feature-challenge'
-            'hr-03 hr-03'
-            'feature-adventure last-cta'
-            'footer footer';
-        row-gap: 50px;
-        // padding-bottom: 50px;
-    }
-
-    #hero {
-        grid-area: hero;
-        align-items: center;
-    }
-
-    #feature-dragons {
-        grid-area: feature-dragons;
-        @include grid-center;
-    }
-
-    #feature-elements {
-        grid-area: feature-elements;
-        @include grid-center;
-    }
-
-    #hr-02 {
-        grid-area: hr-02;
-    }
-
-    #feature-challenge {
-        grid-area: feature-challenge;
-        @include grid-center;
-    }
-
-    #hr-03 {
-        grid-area: hr-03;
-    }
-
-    #feature-adventure {
-        grid-area: feature-adventure;
-        @include grid-center;
-    }
-
-    #last-cta {
-        grid-area: last-cta;
-        @include grid-center;
-
-        width: 800px;
-        max-width: 45svw;
-    }
-
-    #footer {
-        grid-area: footer;
-    }
+*:not(input):not(textarea):not(select) {
+    text-box: trim-both cap alphabetic;
 }
 
 @include mobile {
-    .hide-mobile {
+    body {
+        display: flex;
+        justify-content: center;
+    }
+
+    #page-container {
+        display: flex;
+        flex-direction: column;
+        margin: 0 $mobile-body-margin;
+        max-width: 600px;
+    }
+
+    #hero {
+        display: flex;
+        flex-direction: column;
+        margin-bottom: $mobile-body-margin;
+        line-height: 0.75;
+
+        > img {
+            align-self: center;
+            margin-right: -$mobile-body-margin;
+            margin-bottom: -50px;
+            // margin-bottom: -50px;
+            margin-left: -$mobile-body-margin;
+            width: calc(100% + #{$mobile-body-margin * 2});
+            max-width: 600px;
+            height: auto;
+            object-fit: cover;
+        }
+
+        .text-container {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+
+            > h2 {
+                display: flex;
+                align-items: center;
+                gap: 5px;
+
+                color: $color-black;
+                font-weight: $font-weight-light;
+                font-size: $font-size-lg;
+
+                > span {
+                    display: inline-block;
+                    border-radius: 5px;
+                    background-color: $color-red;
+                    width: 20px;
+                    height: 5px;
+                }
+            }
+
+            > h1 {
+                display: flex;
+                align-items: center;
+                gap: 5px;
+                height: fit-content;
+                font-weight: $font-weight-bold;
+                font-size: $font-size-xxl;
+                font-family: $font-family-bebas-neue-pro;
+
+                > span {
+                    border-radius: 5px;
+                    background-color: $color-black;
+                    padding: 5px;
+                    color: $color-white;
+                    font-weight: $font-weight-bold;
+                    font-family: $font-family-bebas-neue-pro;
+                }
+            }
+
+            > p {
+                display: flex;
+                align-items: center;
+
+                gap: 5px;
+                height: fit-content;
+                font-weight: $font-weight-middle;
+                font-size: $font-size-xxl;
+
+                > span {
+                    border-radius: 5px;
+                    background-color: $color-red;
+                    padding: 5px;
+                    color: $color-white;
+                    font-weight: $font-weight-bold;
+                }
+            }
+        }
+    }
+
+    .cta {
+        display: flex;
+        flex-direction: column;
+        gap: 12px;
+        margin-right: -$mobile-body-margin;
+        margin-left: -$mobile-body-margin;
+        background-color: $color-black;
+        padding: $mobile-body-margin;
+
+        color: $color-white;
+
+        > h1 {
+            font-size: $font-size-xxl;
+            font-family: $font-family-bebas-neue-pro;
+        }
+
+        > p {
+            font-weight: $font-weight-middle;
+            font-size: $font-size-lg;
+        }
+
+        > form {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+
+            > input[type='email'] {
+                border-radius: $border-radius;
+                background-color: $color-white;
+                padding: 0 10px;
+                height: 35px;
+                color: $color-black;
+                font-weight: $font-weight-middle;
+                font-size: $font-size-sm;
+            }
+
+            > .checkbox-container {
+                display: flex;
+                align-items: center;
+                gap: 5px;
+                font-weight: $font-weight-light;
+                font-size: $font-size-xs;
+
+                > input[type='checkbox'] {
+                    cursor: pointer;
+                    width: 15px;
+                    height: 15px;
+                }
+
+                > label {
+                    cursor: pointer;
+                }
+            }
+
+            > button[type='submit'] {
+                transition: background-color 0.2s ease;
+                cursor: pointer;
+                border: none;
+                border-radius: $border-radius;
+                background-color: $color-red;
+                height: 35px;
+                color: $color-white;
+                font-weight: $font-weight-bold;
+                font-size: $font-size-lg;
+                font-family: $font-family-bebas-neue-pro;
+
+                &:hover {
+                    background-color: $color-red-dark;
+                }
+
+                &:active {
+                    background-color: $color-red-darker;
+                }
+            }
+        }
+
+        > .members-counter {
+            align-self: center;
+            font-weight: $font-weight-light;
+            font-size: $font-size-sm;
+        }
+    }
+
+    .content-container {
+        display: flex;
+        flex-direction: column;
+        gap: $section-gap;
+        margin: $mobile-body-margin 0;
+    }
+
+    #dragons-image {
+        display: block;
+        border-radius: $border-radius;
+        width: 100%;
+    }
+
+    .section {
+        display: flex;
+        flex-direction: column;
+        gap: $section-gap;
+        text-align: justify;
+
+        > .title-container {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+
+            > h2 {
+                font-weight: $font-weight-light;
+                font-size: $font-size-lg;
+            }
+
+            > h1 {
+                font-weight: $font-weight-bold;
+                font-size: $font-size-xxl;
+                font-family: $font-family-bebas-neue-pro;
+            }
+        }
+
+        > p {
+            font-weight: $font-weight-middle;
+            font-size: $font-size-md;
+        }
+
+        span.extra-bold {
+            font-weight: $font-weight-extra-bold;
+        }
+
+        > img {
+            border-radius: $border-radius;
+            width: 100%;
+        }
+
+        .bullet-point-container {
+            display: flex;
+            flex-direction: column;
+            gap: 5px;
+            padding-left: 10px;
+            font-weight: $font-weight-middle;
+            font-size: $font-size-md;
+
+            .bullet-point-item {
+                display: flex;
+                align-items: center;
+                gap: 5px;
+            }
+        }
+
+        .bulltet-point-img {
+            width: 20px;
+            object-fit: contain;
+        }
+    }
+}
+
+@include desktop {
+    body {
+        display: flex;
+        justify-content: center;
+    }
+
+    #page-container {
+        display: flex;
+        flex-direction: column;
+        margin: 0 $desktop-body-margin;
+        width: 100%;
+    }
+
+    #hero {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        grid-template-areas: 'image text';
+        align-self: center;
+        margin-bottom: -50px;
+        max-width: 1300px;
+
+        line-height: 0.75;
+
+        > img {
+            grid-area: image;
+            width: 100%;
+            max-width: 600px;
+        }
+
+        .text-container {
+            display: flex;
+            grid-area: text;
+            flex-direction: column;
+            place-self: center;
+            gap: 10px;
+
+            > h2 {
+                display: flex;
+                align-items: center;
+                gap: 5px;
+
+                color: $color-black;
+                font-weight: $font-weight-light;
+                font-size: $font-size-lg;
+
+                > span {
+                    display: inline-block;
+                    border-radius: 5px;
+                    background-color: $color-red;
+                    width: 20px;
+                    height: 5px;
+                }
+            }
+
+            > h1 {
+                display: flex;
+                align-items: center;
+                gap: 5px;
+                height: fit-content;
+                font-weight: $font-weight-bold;
+                font-size: $font-size-xxl;
+                font-family: $font-family-bebas-neue-pro;
+
+                > span {
+                    border-radius: 5px;
+                    background-color: $color-black;
+                    padding: 5px;
+                    color: $color-white;
+                    font-weight: $font-weight-bold;
+                    font-family: $font-family-bebas-neue-pro;
+                }
+            }
+
+            > p {
+                display: flex;
+                align-items: center;
+
+                gap: 5px;
+                height: fit-content;
+                font-weight: $font-weight-middle;
+                font-size: $font-size-xxl;
+
+                > span {
+                    border-radius: 5px;
+                    background-color: $color-red;
+                    padding: 5px;
+                    color: $color-white;
+                    font-weight: $font-weight-bold;
+                }
+            }
+        }
+    }
+
+    .cta {
+        display: grid;
+        grid-template-columns: 5vw 1fr 5vw 5vw 1fr 5vw;
+        grid-template-areas:
+            '. title . . form .'
+            '. subtitle . . form .'
+            '. members . . form .';
+        gap: 10px 0;
+
+        margin-right: -$desktop-body-margin;
+        margin-left: -$desktop-body-margin;
+        background-color: $color-black;
+        padding: 20px $desktop-body-margin;
+        color: $color-white;
+        // box-sizing: border-box;
+
+        h1 {
+            grid-area: title;
+            place-self: end center;
+            font-size: $font-size-xxl;
+            font-family: $font-family-bebas-neue-pro;
+        }
+
+        p {
+            grid-area: subtitle;
+            place-self: center;
+            font-weight: $font-weight-middle;
+            font-size: $font-size-md;
+        }
+
+        form {
+            display: flex;
+            grid-area: form;
+            flex-direction: column;
+            gap: 10px;
+
+            input[type='email'] {
+                border-radius: $border-radius;
+                background-color: $color-white;
+                padding: 0 10px;
+                height: 35px;
+                color: $color-black;
+                font-weight: $font-weight-middle;
+                font-size: $font-size-xs;
+            }
+        }
+
+        .checkbox-container {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            font-weight: $font-weight-light;
+            font-size: $font-size-xs;
+
+            > input[type='checkbox'] {
+                cursor: pointer;
+                width: 15px;
+                height: 15px;
+            }
+
+            > label {
+                cursor: pointer;
+            }
+        }
+
+        button[type='submit'] {
+            transition: background-color 0.2s ease;
+            cursor: pointer;
+            border: none;
+            border-radius: $border-radius;
+            background-color: $color-red;
+            height: 35px;
+            color: $color-white;
+            font-weight: $font-weight-bold;
+            font-size: $font-size-lg;
+            font-family: $font-family-bebas-neue-pro;
+
+            &:hover {
+                background-color: $color-red-dark;
+            }
+
+            &:active {
+                background-color: $color-red-darker;
+            }
+        }
+
+        .members-counter {
+            grid-area: members;
+            place-self: start center;
+            font-weight: $font-weight-light;
+            font-size: $font-size-sm;
+        }
+    }
+
+    #dragons-image {
         display: none;
     }
 
-    body {
+    .content-container {
         display: flex;
         flex-direction: column;
-        gap: 50px;
+        align-self: center;
+        gap: 20px;
+        margin: 20px 0;
+
+        max-width: 1300px;
     }
 
-    #feature-elements > img {
-        height: 300px;
-        object-fit: contain;
+    .section {
+        display: grid;
+        grid-template-rows: auto;
+        grid-template-columns: 1fr 1fr;
+        gap: 15px 0;
+
+        > .title-container {
+            display: flex;
+            grid-area: text-container;
+            flex-direction: column;
+            place-self: end start;
+            gap: 10px;
+
+            > h2 {
+                font-weight: $font-weight-light;
+                font-size: $font-size-lg;
+            }
+
+            > h1 {
+                font-weight: $font-weight-bold;
+                font-size: $font-size-xxl;
+                line-height: 1;
+                font-family: $font-family-bebas-neue-pro;
+            }
+        }
+
+        > p {
+            grid-area: text-p;
+            font-weight: $font-weight-middle;
+            font-size: $font-size-md;
+        }
+
+        span.extra-bold {
+            font-weight: $font-weight-extra-bold;
+        }
+
+        > img {
+            grid-area: image;
+            place-self: center;
+            border-radius: $border-radius;
+            width: 90%;
+            max-width: 500px;
+        }
+
+        .bullet-point-container {
+            display: flex;
+            grid-area: bullet-point-container;
+            flex-direction: column;
+            gap: 5px;
+            padding-left: 10px;
+            font-weight: $font-weight-middle;
+            font-size: $font-size-md;
+
+            .bullet-point-item {
+                display: flex;
+                align-items: center;
+                gap: 5px;
+            }
+        }
+
+        .bulltet-point-img {
+            width: 20px;
+            object-fit: contain;
+        }
+    }
+
+    .section-1 {
+        grid-template-areas:
+            'image text-container'
+            'image text-p';
+    }
+
+    .section-2 {
+        grid-template-areas:
+            'text-container image'
+            'text-p image';
+    }
+
+    .section-3 {
+        grid-template-rows: 1fr max-content 1fr;
+        grid-template-areas:
+            'image text-container'
+            'image text-p'
+            'image bullet-point-container';
     }
 }

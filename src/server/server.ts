@@ -26,6 +26,25 @@ async function start_server() {
         process.exit()
     })
 
+    // Global error handlers for uncaught exceptions and unhandled rejections
+    process.on('uncaughtException', (error) => {
+        console.error('🚨 UNCAUGHT EXCEPTION:', {
+            message: error.message,
+            stack: error.stack,
+            timestamp: new Date().toISOString(),
+            processId: process.pid,
+        })
+    })
+
+    process.on('unhandledRejection', (reason, promise) => {
+        console.error('🚨 UNHANDLED REJECTION:', {
+            reason: reason,
+            promise: promise,
+            timestamp: new Date().toISOString(),
+            processId: process.pid,
+        })
+    })
+
     // Get port from environment or use default
     const port = API.PORT
 

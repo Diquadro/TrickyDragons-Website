@@ -1,0 +1,193 @@
+@use '@client/components/styles_common/media' as *;
+@use '@client/components/styles_common/bebas_neue_pro_font' as *;
+
+$font-size-xxl: 40px;
+$font-size-xl: 32px;
+$font-size-lg: 24px;
+$font-size-md: 20px;
+$font-size-sm: 16px;
+$font-size-xs: 14px;
+
+$font-weight-light: 200;
+$font-weight-middle: 400;
+$font-weight-bold: 700;
+$font-weight-extra-bold: 800;
+
+$color-black: hsl(0, 0%, 10%);
+$color-white: hsl(0, 0%, 95%);
+$color-red: hsl(5, 70%, 50%);
+$color-red-dark: hsl(5, 70%, 45%);
+$color-red-darker: hsl(5, 70%, 40%);
+
+$border-radius: 5px;
+$mobile-body-margin: 4svw;
+$section-gap: 25px;
+$desktop-body-margin: 10svw;
+
+$font-family-bebas-neue-pro: 'Bebas Neue Pro', 'Arial Black', 'Helvetica Bold', 'Impact', sans-serif;
+$font-family-bebas-neue-pro-semi-expanded:
+    'Bebas Neue Pro SemiExpanded', 'Arial Black', 'Helvetica Bold', 'Impact', sans-serif;
+
+* {
+    margin: 0;
+    border: 0;
+    padding: 0;
+    font-weight: $font-weight-light;
+    font-family: $font-family-bebas-neue-pro-semi-expanded;
+}
+
+*:not(input):not(textarea):not(select) {
+    text-box: trim-both cap alphabetic;
+}
+
+@include mobile {
+    body {
+        display: flex;
+        justify-content: center;
+        margin: 0 $mobile-body-margin;
+        background-color: $color-white;
+    }
+}
+
+@include desktop {
+    body {
+        display: flex;
+        justify-content: center;
+        margin: 0 $desktop-body-margin;
+        background-color: $color-white;
+    }
+}
+
+#page-container {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    max-width: 1200px;
+}
+
+.thank-you-hero {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 2rem;
+    box-sizing: border-box;
+    padding: 2rem 0;
+    height: 100svh;
+    text-align: center;
+
+    @include desktop {
+        flex-direction: row;
+        justify-content: space-between;
+        align-items: center;
+        gap: 4rem;
+        padding: 0 2rem;
+        text-align: left;
+    }
+
+    .hero-image {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+
+        img {
+            width: 80%;
+            min-width: 350px;
+            max-width: 500px;
+            height: auto;
+        }
+
+        @include mobile {
+            width: 70%;
+            min-width: 200px;
+            max-width: 500px;
+        }
+    }
+
+    .text-container {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 20px;
+        max-width: 700px;
+
+        @include desktop {
+            align-items: flex-start;
+            padding: 0;
+            max-width: 450px;
+            text-align: justify;
+        }
+
+        h1 {
+            color: $color-black;
+            font-weight: $font-weight-extra-bold;
+            font-family: $font-family-bebas-neue-pro;
+
+            @include mobile {
+                font-size: $font-size-xl;
+            }
+
+            @include desktop {
+                font-size: 48px;
+            }
+        }
+
+        p {
+            color: $color-black;
+            font-weight: $font-weight-middle;
+            font-family: $font-family-bebas-neue-pro-semi-expanded;
+
+            @include mobile {
+                font-size: $font-size-sm;
+            }
+
+            @include desktop {
+                font-size: $font-size-lg;
+            }
+        }
+
+        .redirect_link {
+            display: flex;
+            width: 100%;
+            height: auto;
+            text-decoration: none;
+
+            @include mobile {
+                justify-content: center;
+            }
+        }
+
+        .cta-button {
+            display: inline-block;
+            cursor: pointer;
+            box-sizing: border-box;
+            border: none;
+            border-radius: $border-radius;
+            background-color: $color-red;
+            height: auto;
+            color: $color-white;
+            font-family: $font-family-bebas-neue-pro;
+            text-align: center;
+            text-decoration: none;
+
+            @include mobile {
+                padding: 12px 24px;
+                font-size: $font-size-md;
+            }
+
+            @include desktop {
+                padding: 18px 36px;
+                font-size: $font-size-lg;
+            }
+
+            &:hover {
+                background-color: $color-red-dark;
+            }
+
+            &:active {
+                box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+                background-color: $color-red-darker;
+            }
+        }
+    }
+}

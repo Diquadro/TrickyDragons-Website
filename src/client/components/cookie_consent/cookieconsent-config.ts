@@ -1,6 +1,6 @@
 import 'vanilla-cookieconsent/dist/cookieconsent.css'
 import * as CookieConsent from 'vanilla-cookieconsent'
-import { initialize_meta_pixel } from '@client/components/cookie_meta_pixel/cookie_meta_pixel'
+import { initialize_meta_pixel } from '@client/ts/cookie_meta_pixel'
 
 document.addEventListener('DOMContentLoaded', () => {
     CookieConsent.run({

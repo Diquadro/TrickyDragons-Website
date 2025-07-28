@@ -1,22 +1,126 @@
 extends @client/layouts/layout_common/layout_common.pug
 
+block head
+    link(
+        rel='preload',
+        href='@public/imgs/kickstarter_box_4.1.webp',
+        as='image',
+        type='image/webp',
+        crossorigin='anonymous'
+    )
+
 block body
-    include @client/components/hero/hero.pug
-    hr#hr-04.hr.hide-desktop
-    include @client/components/feature_x1/feature_x1_dragons.pug
-    hr#hr-01.hr.hide-desktop
-    include @client/components/feature_x1/feature_x1_elements.pug
-    hr#hr-02.hr
-    include @client/components/feature_x2/feature_x2_challenge.pug
-    hr#hr-03.hr
-    include @client/components/feature_x1/feature_x1_adventure.pug
-    include @client/components/cta/cta_landingpage_last.pug
-    include @client/components/footer/footer.pug
+    #page-container
+        #hero
+            img(
+                src='@public/imgs/kickstarter_box_4.1.webp',
+                alt='kickstarter box',
+                loading='eager',
+                crossorigin='anonymous'
+            )
+            .text-container
+                h2
+                    span 
+                    |
+                    | WARNING! IMPOSSIBLE TO PUT DOWN!
+                h1 WHEN STRATEGY
+                    |
+                    |
+                    span MEETS CHAOS
+                p
+                    span ADDICTIVE
+                    |
+                    | CARD GAME
+                p
+                    span BEATIFUL
+                    |
+                    | ARTWORK
+                p
+                    span FAST-PACED
+                    |
+                    | GAMEPLAY
 
-    include @client/components/cta_modal/cta_modal_email_duplicate.pug
-    include @client/components/cta_modal/cta_modal_email_sent.pug
-    include @client/components/cta_modal/cta_modal_email_reactivated.pug
+        .cta.cta-first
+            h1 SOON ON KICKSTARTER
+            p Don't miss limited launch day discounts!
+            form.cta-form
+                input(type='email', placeholder='Enter your email', required)
+                .checkbox-container
+                    input#newsletter-consent-top(type='checkbox', name='checkbox', required)
+                    label(for='newsletter-consent-top') I agree to receive the newsletter
+                button(type='submit') SUBSCRIBE
+            .members-counter Join 500+ members
 
-    include @client/components/spinner/spinner.pug
+        .content-container
+            img#dragons-image(src='@public/imgs/3_dragons.webp', alt='3 dragons', loading='lazy')
 
+            .section.section-1
+                .title-container
+                    h2 DRAW ◦ PLAY ◦ WIN
+                    h1 THE PERFECT COMBO: EASY AND FAST GAME + OUTSTANDING ART
+                p We wanted a game that was dynamic, fun to play and had a spark of strategy, that's why we created
+                    |
+                    |
+                    span.extra-bold Tricky Dragons.
+                    |
+                    | But we didn't stop there. We added professional artwork that makes every card a collectible.
+                    br
+                    br
+                    | In the end, we had something special:
+                    |
+                    span.extra-bold A game that's easy to learn, impossible to master, and beautiful to own.
+                img(src='@public/imgs/game_preview_2.webp', alt='game preview', loading='lazy')
+
+            .section.section-2
+                .title-container
+                    h2 MEET THE DRAGONS
+                    h1 EVERY CARD IS A WORK OF ART THAT BRINGS DRAGONS TO LIFE
+                p
+                    span.extra-bold Tricky Dragons features 100+ original illustrations
+                    |
+                    | created by professional artists who understand that great games deserve great art. Every dragon has been meticulously crafted to capture both elemental power and individual personality.
+                img(src='@public/imgs/wall_of_cards.webp', alt='wall of cards', loading='lazy')
+
+            .section.section-3
+                .title-container
+                    h2 THE POWER OF ELEMENTS
+                    h1 FINALLY, A STRATEGY GAME THAT DOESN'T LEAVE ANYONE BEHIND
+                p At the heart of
+                    |
+                    |
+                    span.extra-bold Tricky Dragons
+                    |
+                    | lies a simple elemental system new players learn in seconds, yet it transforms every card play into meaningful strategic choice. Understanding it isn't just helpful,
+                    |
+                    |
+                    span.extra-bold IT'S SURVIVAL.
+
+                .bullet-point-container
+                    .bullet-point-item
+                        img.bulltet-point-img(src='@public/imgs/FUOCO.webp', alt='fire', loading='lazy')
+                        span Fire burns Grass
+                    .bullet-point-item
+                        img.bulltet-point-img(src='@public/imgs/ACQUA.webp', alt='water', loading='lazy')
+                        span Water extinguishes Fire
+                    .bullet-point-item
+                        img.bulltet-point-img(src='@public/imgs/ERBA.webp', alt='grass', loading='lazy')
+                        span Grass absorbs Water
+                img(
+                    src='@public/imgs/element_card_circle_spread_4.webp',
+                    alt='element card circle spread',
+                    loading='lazy'
+                )
+
+        .cta
+            h1 SOON ON KICKSTARTER
+            p Don't miss limited launch day discounts!
+            form.cta-form
+                input(type='email', placeholder='Enter your email', required)
+                .checkbox-container
+                    input#newsletter-consent-bottom(type='checkbox', name='checkbox', required)
+                    label(for='newsletter-consent-bottom') I agree to receive the newsletter
+                button(type='submit') SUBSCRIBE
+            .members-counter Join 500+ members
+
+    include @client/components/spinner/spinner
     script(src='./landingpage.ts', type='module', defer)

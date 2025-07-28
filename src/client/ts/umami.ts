@@ -1,9 +1,11 @@
 import { ENV } from '@shared/constants/app.constants'
 
-document.addEventListener('DOMContentLoaded', () => {
-    load_umami_dev()
-    load_umami_prod()
-})
+export function initialize_umami() {
+    document.addEventListener('DOMContentLoaded', () => {
+        load_umami_dev()
+        load_umami_prod()
+    })
+}
 
 function load_umami_prod() {
     if (ENV.PRODUCTION) {

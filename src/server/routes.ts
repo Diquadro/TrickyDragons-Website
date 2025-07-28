@@ -1,6 +1,4 @@
 import express from 'express'
-// import { Unsubscribe_Contact_Controller } from '@server/old_controllers/unsubscribe_contact.controller'
-// import { Redirect_Controller } from '@server/old_controllers/redirect.controller'
 import { API } from '@shared/constants/app.constants'
 import { subscribe_contact } from '@server/controllers/subscribe_contact'
 import { unsubscribe_contact } from '@server/controllers/unsubscribe_contact'

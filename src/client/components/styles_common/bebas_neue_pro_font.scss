@@ -1,0 +1,54 @@
+/* Bebas Neue Pro Bold */
+@font-face {
+    font-style: normal;
+    font-weight: 700;
+    src:
+        url('@client/fonts/bebas_neue_pro/Bebas-Neue-Pro-Bold.woff2') format('woff2'),
+        url('@client/fonts/bebas_neue_pro/Bebas-Neue-Pro-Bold.ttf') format('truetype');
+    font-family: 'Bebas Neue Pro';
+    font-display: swap;
+}
+
+/* Bebas Neue Pro SemiExpanded Book */
+@font-face {
+    font-style: normal;
+    font-weight: 300;
+    src:
+        url('@client/fonts/bebas_neue_pro/Bebas-Neue-Pro-SemiExpanded-Book.woff2') format('woff2'),
+        url('@client/fonts/bebas_neue_pro/Bebas-Neue-Pro-SemiExpanded-Book.ttf') format('truetype');
+    font-family: 'Bebas Neue Pro SemiExpanded';
+    font-display: swap;
+}
+
+/* Bebas Neue Pro SemiExpanded Middle */
+@font-face {
+    font-style: normal;
+    font-weight: 400;
+    src:
+        url('@client/fonts/bebas_neue_pro/Bebas-Neue-Pro-SemiExpanded-Middle.woff2') format('woff2'),
+        url('@client/fonts/bebas_neue_pro/Bebas-Neue-Pro-SemiExpanded-Middle.ttf') format('truetype');
+    font-family: 'Bebas Neue Pro SemiExpanded';
+    font-display: swap;
+}
+
+/* Bebas Neue Pro SemiExpanded Bold */
+@font-face {
+    font-style: normal;
+    font-weight: 700;
+    src:
+        url('@client/fonts/bebas_neue_pro/Bebas-Neue-Pro-SemiExpanded-Bold.woff2') format('woff2'),
+        url('@client/fonts/bebas_neue_pro/Bebas-Neue-Pro-SemiExpanded-Bold.ttf') format('truetype');
+    font-family: 'Bebas Neue Pro SemiExpanded';
+    font-display: swap;
+}
+
+/* Bebas Neue Pro SemiExpanded ExtraBold */
+@font-face {
+    font-style: normal;
+    font-weight: 800;
+    src:
+        url('@client/fonts/bebas_neue_pro/Bebas-Neue-Pro-SemiExpanded-ExtraBold.woff2') format('woff2'),
+        url('@client/fonts/bebas_neue_pro/Bebas-Neue-Pro-SemiExpanded-ExtraBold.ttf') format('truetype');
+    font-family: 'Bebas Neue Pro SemiExpanded';
+    font-display: swap;
+}

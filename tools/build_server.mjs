@@ -24,6 +24,7 @@ const aliases = {
     '@client': resolve(__dirname, '..', 'src/client'),
     '@server': resolve(__dirname, '..', 'src/server'),
     '@database': resolve(__dirname, '..', 'src/database'),
+    '@public': resolve(__dirname, '..', 'public'),
 }
 
 // Start logging build mode
