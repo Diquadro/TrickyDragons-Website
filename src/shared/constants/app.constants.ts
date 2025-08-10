@@ -36,6 +36,10 @@ export const API = {
         WEBHOOKS: {
             SENDGRID: `/${VERSION}/webhooks/sendgrid`,
         },
+        STRIPE: {
+            CREATE_CHECKOUT_SESSION: `/${VERSION}/stripe/create-checkout-session`,
+            SESSION_STATUS: `/${VERSION}/stripe/session-status`,
+        },
     },
 
     EVENTS: {
@@ -65,6 +69,12 @@ export const API = {
                 return `${API.EVENTS.ORIGINS.EXTERNAL} - ${API.EVENTS.ACTIONS.SEND_WELCOME_EMAIL}`
             },
         },
+    },
+}
+
+export const STRIPE = {
+    PRODUCT_MAP: {
+        TD_RESERVATION: 'price_1RqonfA5ocAGWp3UYefbC6LT',
     },
 }
 

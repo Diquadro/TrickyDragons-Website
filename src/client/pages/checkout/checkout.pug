@@ -1,0 +1,51 @@
+extends @client/layouts/layout_common/layout_common.pug
+
+block head
+    meta(name='description', content='A demo of a payment on Stripe')
+    meta(name='viewport', content='width=device-width, initial-scale=1')
+    script(src='https://js.stripe.com/basil/stripe.js')
+    script(src='./checkout.ts', defer)
+
+block body
+    #page-container
+        #main
+            #page_title TRICKY DRAGONS
+            #page_description Thank you for getting this far! We really appreciate your support, it means a lot to us. After checkout you will receive a thank you email with more information about the launch.
+        #items
+            .item
+                //- .item_name Tricky Dragons KSE Reservation
+                //- .item_description Exclusive expansion pack for Tricky Dragons KSE
+                //- .item_price 1$
+
+        #disclaimer
+            #disclaimer_title Disclaimer
+            #disclaimer_text Tricky Dragons is still in development and the final designs may change. The images for current editions are the latest prototypes that we have, and we will update you with any changes to appearance, cost, or function. Final Superfan bundle prices are subject to change; we will notify you of any update before the campaign launches.
+
+        //- Display a payment form
+        form#payment-form
+            .section_text
+                h4 1. Email Address
+                h5 All transactions are secure and encrypted
+            input#email_address_input(type='email', disabled)
+
+            .section_text
+                h4 2. Information
+                h5 All transactions are secure and encrypted
+            #billing-address-element
+                //- Stripe.js injects the Address Element
+            .section_text
+                h4 3. Payment
+                h5 All transactions are secure and encrypted
+            #payment-element
+                //- Stripe.js injects the Payment Element
+            button#submit
+                span#button-text Pay now
+            #payment-message.hidden
+
+    .footer-layout
+        span A game by Daniele D'Ambrosio
+        .links-layout
+            span.link Privacy Policy
+            span.link Terms of Service
+
+    include @client/components/spinner/spinner.pug

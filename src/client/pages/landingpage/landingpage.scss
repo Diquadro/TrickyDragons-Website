@@ -387,11 +387,11 @@ $font-family-bebas-neue-pro-semi-expanded:
 
     .cta {
         display: grid;
-        grid-template-columns: 5vw 1fr 5vw 5vw 1fr 5vw;
+        grid-template-columns: auto minmax(300px, 600px) 4vw minmax(300px, 600px) auto;
         grid-template-areas:
-            '. title . . form .'
-            '. subtitle . . form .'
-            '. members . . form .';
+            '. title . form .'
+            '. subtitle . form .'
+            '. members . form .';
         gap: 10px 0;
 
         margin-right: -$desktop-body-margin;
@@ -577,5 +577,45 @@ $font-family-bebas-neue-pro-semi-expanded:
             'image text-container'
             'image text-p'
             'image bullet-point-container';
+    }
+}
+
+.footer-layout {
+    display: flex;
+
+    justify-content: center;
+    align-items: center;
+    gap: 20px;
+    background-color: $color-black;
+    padding: 20px 0;
+
+    color: $color-white;
+
+    @include mobile {
+        flex-direction: column;
+        margin-right: -$mobile-body-margin;
+        margin-left: -$mobile-body-margin;
+        width: calc(100% + #{$mobile-body-margin * 2});
+    }
+
+    @include desktop {
+        flex-direction: row;
+        margin-right: -$desktop-body-margin;
+        margin-left: -$desktop-body-margin;
+        width: calc(100% + #{$desktop-body-margin * 2});
+    }
+
+    .links-layout {
+        display: flex;
+        gap: 20px;
+
+        > .link {
+            cursor: pointer;
+            text-decoration: underline;
+        }
+    }
+
+    span {
+        color: $color-white;
     }
 }

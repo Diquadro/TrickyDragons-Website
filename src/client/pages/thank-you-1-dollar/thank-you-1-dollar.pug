@@ -1,5 +1,7 @@
 extends @client/layouts/layout_common/layout_common.pug
 
+include @client/components/redirect_link/redirect_link.pug
+
 block head
     link(
         rel='preload',
@@ -22,10 +24,14 @@ block body
                     )
                 .text-layout
                     .title-layout
-                        h2.subtitle THANK YOU FOR SIGNING UP!
-                        h1.title YOUR SUPPORT MEANS THE WORLD TO US
+                        h2.subtitle THANK YOU FOR YOUR SUPPORT!
+                        h1.title YOUR CONTRIBUTION MEANS THE WORLD TO US
                     p.description-layout
-                        | A welcome email is on its way to you with more information about the game and the launch.
+                        | You're now part of our exclusive inner circle!
+                        br
+                        |
+                        |
+                        | A confirmation email is on its way to you with more information about the game and the launch.
                         br
                         br
                         |
@@ -35,6 +41,7 @@ block body
                         | , you'll be among the first to see them come to life!
                     .cta-layout
                         button.cta-main-button FOLLOW OUR KICKSTARTER
+                        //- button.cta-secondary-button No thanks, I'll just follow along.
 
             .footer-layout
                 span A game by Daniele D'Ambrosio
@@ -42,4 +49,4 @@ block body
                     span.link Privacy Policy
                     span.link Terms of Service
 
-    script(src='./thank-you.ts', type='module', defer) 
+    script(src='./thank-you-1-dollar.ts', type='module', defer) 

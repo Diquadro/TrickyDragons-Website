@@ -18,6 +18,7 @@ import {
     Get_Subscriber_Count_Response,
     get_subscriber_count_response_schema,
 } from '@shared/validations/get_subscriber_count.validation'
+import { Base64_Url } from '@shared/utils/base64_url'
 
 const EMAIL_REGEX =
     /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
@@ -26,22 +27,28 @@ const EMAIL_REGEX =
 let user_has_subscribed = false
 
 /**
- * Redirect to thank-you page with event parameter
+ * Redirect to reservation page with event parameter and email
  */
-function redirect_to_thank_you(event: string) {
+function redirect_to_page(event: string, email?: string) {
     const current_url = new URL(window.location.href)
-    const thank_you_url = new URL('/thank-you', current_url.origin)
-    thank_you_url.searchParams.set('event', event)
+    const reservation_url = new URL('/reservation', current_url.origin)
+    reservation_url.searchParams.set('event', event)
+
+    // Add email in base64 if provided
+    if (email) {
+        const encoded_email = Base64_Url.encode(email)
+        reservation_url.searchParams.set('email', encoded_email)
+    }
 
     // Preserve UTM parameters if they exist
     const utm_params = get_utm_params()
     Object.entries(utm_params).forEach(([key, value]) => {
         if (value) {
-            thank_you_url.searchParams.set(key, value)
+            reservation_url.searchParams.set(key, value)
         }
     })
 
-    window.location.href = thank_you_url.toString()
+    window.location.href = reservation_url.toString()
 }
 
 /**
@@ -294,11 +301,11 @@ async function handle_form_submit(event: Event): Promise<void> {
         } else if (result.data.outcome === CONTACT_RESPONSE_OUTCOME.RESUBSCRIBED) {
             window.umami?.track('resubscribed', { ...utm_params })
             posthog.capture('resubscribed')
-            redirect_to_thank_you('resubscribed')
+            redirect_to_page('resubscribed', email)
         } else if (result.data.outcome === CONTACT_RESPONSE_OUTCOME.ALREADY_SUBSCRIBED) {
             window.umami?.track('already-subscribed', { ...utm_params })
             posthog.capture('already-subscribed')
-            redirect_to_thank_you('already-subscribed')
+            redirect_to_page('already-subscribed', email)
         } else if (result.data.outcome === CONTACT_RESPONSE_OUTCOME.NEW_CONTACT) {
             window.umami?.track('subscribed_to_newsletter', { ...utm_params })
             posthog.capture('subscribed_to_newsletter')
@@ -307,7 +314,7 @@ async function handle_form_submit(event: Event): Promise<void> {
                 outcome: result.data.outcome,
                 ...utm_params,
             })
-            redirect_to_thank_you('new-contact')
+            redirect_to_page('new-contact', email)
         }
 
         return

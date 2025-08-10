@@ -1,0 +1,75 @@
+extends @client/layouts/layout_common/layout_common.pug
+
+block head
+    link(
+        rel='preload',
+        href='@public/imgs/dragons_and_muffin.png',
+        as='image',
+        type='image/webp',
+        crossorigin='anonymous'
+    )
+
+block body
+    .page-outer-layout
+        .page-inner-layout
+            .section-layout
+                .image-layout
+                    img(
+                        src='@public/imgs/dragons_and_muffin.png',
+                        alt='reservation confirmed',
+                        loading='eager',
+                        crossorigin='anonymous'
+                    )
+                .text-layout
+                    .title-layout
+                        h2.subtitle RESERVATION UPGRADE
+                        h1.title SECURE YOUR EXCLUSIVE MINI EXPANSION PACK
+                    p.description-layout
+                        span.bold You can place a $1 refundable deposit
+                        |
+                        | and you'll receive the exclusive mini-expansion pack for free when you get your copy of
+                        |
+                        span.bold Tricky Dragons KSE.
+                        br
+                        br
+                        |
+                        | We are committed to take Tricky Dragons to its full potential, but we need your support! Help us bring Tricky Dragons to life.
+                    .cta-layout
+                        button.cta-main-button CLAIM YOUR EXCLUSIVE MINI EXPANSION
+                        button.cta-secondary-button No thanks, I'll just follow along.
+
+            .divider
+
+            .faqs-layout
+                .faq-title-container
+                    .faq-title FAQS
+                    .faq-description These are the most commonly asked questions about our product, the reservation, and crowdfunding.
+                .faq-items-layout
+                    details.faq-item
+                        summary.faq-question What does the $1 reservation do?
+                        .faq-answer The crowdfunding scene is more crowded than ever. The $1 reservation helps us figure out when we're ready to launch by more accurately measuring demand for our game beyond our email list. This drastically reduces our risk and makes sure we can deliver a quality game to you on time. We're super grateful for your help, so we're upgrading yours Tricky Dragons KSE to include the exclusive mini-expansion pack as a token of our thanks.
+                    details.faq-item
+                        summary.faq-question What if I change my mind later?
+                        .faq-answer If you placed the $1 deposit but decide you don't want the mini-expansion anymore, just let us know and we'll refund your $1 deposit. You'll still be notified when we launch and can still back our campaign (and get our game).
+                    details.faq-item
+                        summary.faq-question If I reserve, do I still have to pledge on Kickstarter? When will I receive it?
+                        .faq-answer Yes, your exclusive mini-expansion pack will be automatically added to your pledge manager cart AFTER the campaign is complete. However, you will still need to back one of the Tricky Dragons KSE (Red Edition) reward tiers when we launch in order to receive the upgraded copy.
+
+            .infos-layout
+                .info-item
+                    .info-title 100% Refund Guarantee
+                    .info-description If you cancel your reservation, we guarantee you a full refund at any time before the project moves into production.
+                .info-item
+                    .info-title Transparency Guarantee
+                    .info-description We will be transparent about the progress of our project throughout the entire campaign.
+                .info-item
+                    .info-title Secure Payment
+                    .info-description All orders are processed through our secure network. Your credit card information is never stored in any way. We respect your privacy.
+
+            .footer-layout
+                span A game by Daniele D'Ambrosio
+                .links-layout
+                    span.link Privacy Policy
+                    span.link Terms of Service
+
+    script(src='./reservation.ts', type='module', defer) 

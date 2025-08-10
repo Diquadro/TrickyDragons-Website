@@ -104,6 +104,12 @@ body {
             > span {
                 color: $color-black;
             }
+
+            > .instagram-link {
+                cursor: pointer;
+                color: #c13584;
+                text-decoration: underline;
+            }
         }
 
         > .cta-layout {

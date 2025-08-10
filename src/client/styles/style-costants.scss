@@ -1,0 +1,40 @@
+@forward '@client/styles/media';
+@forward '@client/styles/bebas_neue_pro_font';
+
+@use '@client/styles/media' as *;
+@use '@client/styles/bebas_neue_pro_font' as *;
+
+:root {
+    --delta-font-size: 0px;
+    --font-size-xxl: calc(40px + var(--delta-font-size));
+    --font-size-xl: calc(32px + var(--delta-font-size));
+    --font-size-lg: calc(24px + var(--delta-font-size));
+    --font-size-md: calc(20px + var(--delta-font-size));
+    --font-size-sm: calc(16px + var(--delta-font-size));
+    --font-size-xs: calc(14px + var(--delta-font-size));
+
+    @include desktop {
+        --delta-font-size: 4px;
+    }
+}
+
+$font-weight-light: 200;
+$font-weight-middle: 400;
+$font-weight-bold: 700;
+$font-weight-extra-bold: 800;
+
+$color-black: hsl(0, 0%, 10%);
+$color-white: hsl(0, 0%, 95%);
+$color-red: hsl(5, 70%, 50%);
+$color-red-dark: hsl(5, 70%, 45%);
+$color-red-darker: hsl(5, 70%, 40%);
+
+$border-radius: 5px;
+$section-gap: 25px;
+$page-margin-mobile: 4svw;
+$page-margin-desktop: 10svw;
+$cta-button-height: 35px;
+
+$font-family-bebas-neue-pro: 'Bebas Neue Pro', 'Arial Black', 'Helvetica Bold', 'Impact', sans-serif;
+$font-family-bebas-neue-pro-semi-expanded:
+    'Bebas Neue Pro SemiExpanded', 'Arial Black', 'Helvetica Bold', 'Impact', sans-serif;
