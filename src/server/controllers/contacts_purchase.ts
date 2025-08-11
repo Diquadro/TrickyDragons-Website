@@ -26,79 +26,71 @@ export async function contacts_purchase(req: Request, res: Response) {
 
     // REQUEST ENDS HERE
 
-    try {
-        // 1. Retrieve Stripe session with expanded details
-        const session = await stripe.checkout.sessions.retrieve(session_id, {
-            expand: ['line_items', 'customer_details'],
-        })
+    // 1. Retrieve Stripe session with expanded details
+    const session = await stripe.checkout.sessions.retrieve(session_id, {
+        expand: ['line_items', 'customer_details'],
+    })
 
-        if (!session) {
-            return
-        }
-
-        // 2. Find or create contact
-        let contact = await get_contact_by_email(email)
-        if (!contact) {
-            contact = await create_contact_from_session(email, session)
-        } else {
-            // Update contact with name from Stripe if missing
-            contact = await update_contact_with_stripe_data(contact, session)
-        }
-
-        // 3. Check for duplicate order (dedup on session_id)
-        const existing_order = await get_order_by_session_id(session_id)
-        if (existing_order) {
-            return
-        }
-
-        // 4. Create billing address if customer details available
-        let billing_address_uuid = null
-        if (session.customer_details?.address) {
-            billing_address_uuid = await create_or_get_address(
-                contact.uuid,
-                'billing',
-                session.customer_details.address,
-            )
-        }
-
-        // 5. Create order record
-        const order = await create_order({
-            contact_uuid: contact.uuid,
-            email: email,
-            session,
-            billing_address_uuid,
-            utm_params,
-            timezone,
-            req,
-        })
-
-        // 6. Send Meta Purchase event
-        await send_meta_event(META_EVENTS.PURCHASE, null, req, contact.uuid, utm_params)
-
-        // 7. Record action in actions table
-        await create_action({
-            action: API.EVENTS.ACTIONS.PURCHASE,
-            req,
-            contact_uuid: contact.uuid,
-            details: {
-                context: 'checkout_page',
-                session_id: session_id,
-                order_id: order.uuid,
-                amount_total: session.amount_total,
-                currency: session.currency,
-                payment_status: session.payment_status,
-                order_status: 'pending',
-            },
-            utm_params,
-            timezone,
-        })
-    } catch (error) {
-        console.error('Error processing purchase:', {
-            session_id,
-            email,
-            error: error instanceof Error ? error.message : 'Unknown error',
-        })
+    if (!session) {
+        return
     }
+
+    // 2. Find or create contact
+    let contact = await get_contact_by_email(email)
+    if (!contact) {
+        contact = await create_contact_from_session(email, session)
+    } else {
+        // Update contact with name from Stripe if missing
+        contact = await update_contact_with_stripe_data(contact, session)
+    }
+
+    // 3. Check for duplicate order (dedup on session_id)
+    const existing_order = await get_order_by_session_id(session_id)
+    if (existing_order) {
+        return
+    }
+
+    // 4. Create billing address if customer details available
+    let billing_address_uuid = null
+    if (session.customer_details?.address) {
+        billing_address_uuid = await create_or_get_address(
+            contact.uuid,
+            'billing',
+            session.customer_details.address,
+        )
+    }
+
+    // 5. Create order record
+    const order = await create_order({
+        contact_uuid: contact.uuid,
+        email: email,
+        session,
+        billing_address_uuid,
+        utm_params,
+        timezone,
+        req,
+    })
+
+    // 6. Send Meta Purchase event
+    await send_meta_event(META_EVENTS.PURCHASE, null, req, contact.uuid, utm_params)
+
+    // 7. Record action in actions table
+    await create_action({
+        action: API.EVENTS.ACTIONS.PURCHASE,
+        req,
+        contact_uuid: contact.uuid,
+        details: {
+            context: 'checkout_page',
+            session_id: session_id,
+            order_id: order.uuid,
+            amount_total: session.amount_total,
+            currency: session.currency,
+            payment_status: session.payment_status,
+            order_status: 'pending',
+        },
+        utm_params,
+        timezone,
+    })
 }
 
 async function get_contact_by_email(email: string): Promise<Contacts | null> {
