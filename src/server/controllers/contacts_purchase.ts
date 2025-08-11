@@ -71,8 +71,11 @@ export async function contacts_purchase(req: Request, res: Response) {
         req,
     })
 
-    // 6. Send Meta Purchase event
-    await send_meta_event(META_EVENTS.PURCHASE, null, req, contact.uuid, utm_params)
+    // 6. Send Meta Purchase event with value and currency
+    await send_meta_event(META_EVENTS.PURCHASE, null, req, contact.uuid, utm_params, {
+        value: session.amount_total ? session.amount_total / 100 : 0, // Convert from cents to dollars
+        currency: session.currency?.toUpperCase() || 'USD',
+    })
 
     // 7. Record action in actions table
     await create_action({

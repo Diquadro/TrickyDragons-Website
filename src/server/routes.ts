@@ -9,7 +9,7 @@ import { redirect } from '@server/controllers/redirect'
 import { sendgrid_webhook } from '@server/controllers/sendgrid_webhook'
 import { create_checkout_session } from '@server/controllers/create_checkout_session'
 import { get_session_status } from '@server/controllers/get_session_status'
-import { error_handler } from '@server/middlewares/error_handler'
+
 import { contacts_add_to_cart } from '@server/controllers/contacts_add_to_cart'
 import { contacts_purchase } from '@server/controllers/contacts_purchase'
 import { stripe_webhook } from '@server/controllers/stripe_webhook'
@@ -40,9 +40,6 @@ export function apply_routes(app: express.Application): void {
     // Stripe routes
     app.post(API.ENDPOINTS.STRIPE.CREATE_CHECKOUT_SESSION, create_checkout_session)
     app.get(API.ENDPOINTS.STRIPE.SESSION_STATUS, get_session_status)
-
-    // Error handling middleware (must be after all routes)
-    app.use(error_handler)
 
     // 404 handler for undefined routes (must be last)
     app.use((req, res) => {

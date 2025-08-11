@@ -16,9 +16,10 @@ export async function send_meta_event(
     req: Request,
     contact_uuid: string,
     utm_params?: utm_params,
+    custom_data?: { value?: number; currency?: string; [key: string]: any },
 ) {
     const contact_email = await get_contact_email(contact_uuid)
-    const event = create_event(event_name, event_id, req, contact_email, utm_params)
+    const event = create_event(event_name, event_id, req, contact_email, utm_params, custom_data)
     const request = new Meta_Api.EventRequest(ACCESS_TOKEN, PIXEL_ID)
 
     // Add test event code if not in production
@@ -52,6 +53,7 @@ function create_event(
     req: Request,
     contact_email: string | null,
     utm_params?: utm_params,
+    custom_data?: { value?: number; currency?: string; [key: string]: any },
 ): Meta_Api.ServerEvent {
     // Create user data object with all available information
     const user_data = new Meta_Api.UserData()
@@ -92,6 +94,21 @@ function create_event(
     const event_source_url = req.get('Referrer')
     if (event_source_url) server_event.setEventSourceUrl(event_source_url)
     if (event_id) server_event.setEventId(event_id)
+
+    // Add custom data for Purchase events (required by Meta)
+    if (custom_data && Object.keys(custom_data).length > 0) {
+        const meta_custom_data = new Meta_Api.CustomData()
+
+        // Set value and currency for Purchase events
+        if (custom_data.value !== undefined) {
+            meta_custom_data.setValue(custom_data.value)
+        }
+        if (custom_data.currency) {
+            meta_custom_data.setCurrency(custom_data.currency)
+        }
+
+        server_event.setCustomData(meta_custom_data)
+    }
 
     // Set attribution data if UTM params contain Meta ad IDs
     if (
