@@ -1,6 +1,20 @@
 import 'express-async-errors'
 import dotenv from 'dotenv'
+
+// Debug: Check NODE_ENV before dotenv
+console.log('🚀 SERVER STARTUP DEBUG - BEFORE DOTENV:', {
+    'process.env.NODE_ENV': process.env.NODE_ENV,
+    'process.argv': process.argv,
+    'process.cwd()': process.cwd(),
+})
+
 dotenv.config({ path: ['/etc/secrets/.env', '.env'] })
+
+// Debug: Check NODE_ENV after dotenv
+console.log('📁 SERVER STARTUP DEBUG - AFTER DOTENV:', {
+    'process.env.NODE_ENV': process.env.NODE_ENV,
+    'dotenv loaded from paths': ['/etc/secrets/.env', '.env'],
+})
 
 import express from 'express'
 import { apply_middlewares } from '@server/middlewares/middlewares'

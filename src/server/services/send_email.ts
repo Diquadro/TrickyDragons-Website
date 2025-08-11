@@ -12,14 +12,30 @@ export async function send_email(
     body_template_locals: any = {},
     email_options: Email_Options = {},
 ) {
+    // Debug: Log environment detection at the moment of email sending
+    console.log('📧 SEND_EMAIL DEBUG:', {
+        'process.env.NODE_ENV': process.env.NODE_ENV,
+        'ENV.LOCAL': ENV.LOCAL,
+        'ENV.DEVELOPMENT': ENV.DEVELOPMENT,
+        'ENV.PRODUCTION': ENV.PRODUCTION,
+        original_from: from,
+        to: to,
+        timestamp: new Date().toISOString(),
+    })
+
     // Force SendGrid if explicitly requested (for testing)
     if (process.env.SENDGRID_FORCE === 'true') {
         from = 'sendgrid_smtp'
+        console.log('🔧 Using SENDGRID_FORCE override')
     } else if (ENV.LOCAL) {
         // Test Environment set from with the test email
         from = 'ethereal_test_local'
+        console.log('🏠 Environment detected as LOCAL')
     } else if (ENV.DEVELOPMENT) {
         from = 'zoho_test_dev'
+        console.log('🔧 Environment detected as DEVELOPMENT')
+    } else {
+        console.log('⚠️ No environment match - using original from:', from)
     }
 
     // Render Pug template and apply styles using Juice
