@@ -31,6 +31,7 @@ Object.entries(analytics_event).filter(([*, value]) => value !== null && value !
 
 [X] SES_LINK branded link seslink.trickydragons.com
 [] SENDGRID
+[] API on same origin
 
 UTM TEST PARAMS -> ?utm_source=WEB_TEST&utm_medium=M_TEST&utm_campaign=C_TEST&utm_term=T_TEST&utm_content=CON_TEST&utm_id=ID_TEST
 
