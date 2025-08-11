@@ -65,7 +65,7 @@ export const send_welcome_email = async (contact_email: string) => {
             'X-SMTPAPI': JSON.stringify({
                 category: EMAIL_TEMPLATES.WELCOME,
                 unique_args: {
-                    environment: process.env.NODE_ENV || 'development',
+                    environment: process.env.APP_ENV || process.env.NODE_ENV || 'development',
                     template: EMAIL_TEMPLATES.WELCOME,
                 },
             }),

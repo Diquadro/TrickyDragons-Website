@@ -3,20 +3,14 @@ import { utm_param } from '@shared/types/utm_params'
 const VERSION = 'v2'
 
 // Environment-related constants
-console.log('🔍 ENV CONSTANTS DEBUG:', {
-    'process.env.NODE_ENV': process.env.NODE_ENV,
-    'typeof NODE_ENV': typeof process.env.NODE_ENV,
-    'NODE_ENV === "production"': process.env.NODE_ENV === 'production',
-    'NODE_ENV === "development"': process.env.NODE_ENV === 'development',
-    'NODE_ENV === undefined': process.env.NODE_ENV === undefined,
-    'all process.env keys with NODE': Object.keys(process.env).filter((key) => key.includes('NODE')),
-})
+// Use APP_ENV as primary environment variable, fallback to NODE_ENV
+const effective_env = process.env.APP_ENV || process.env.NODE_ENV
 
 export const ENV = {
-    PRODUCTION: process.env.NODE_ENV === 'production',
-    DEVELOPMENT: process.env.NODE_ENV === 'development',
-    TEST: process.env.NODE_ENV === 'test',
-    LOCAL: process.env.NODE_ENV === 'local' || !process.env.NODE_ENV,
+    PRODUCTION: effective_env === 'production',
+    DEVELOPMENT: effective_env === 'development',
+    TEST: effective_env === 'test',
+    LOCAL: effective_env === 'local' || !effective_env,
 }
 
 // Client-related constants

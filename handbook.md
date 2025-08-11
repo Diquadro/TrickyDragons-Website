@@ -317,8 +317,9 @@ Follow these steps to set up the project locally:
    Create a `.env` file in the root directory with the following environment variables:
 
     ```
-    # Environment
-    NODE_ENV=local
+    # Environment (APP_ENV takes priority over NODE_ENV) render sets NODE_ENV=production as a default
+    APP_ENV=development
+    # NODE_ENV=local  # Optional fallback
 
     # Database
     PG_URI=postgres://postgres:your_password@localhost:5432/your_database_name
@@ -409,7 +410,8 @@ Follow these steps to set up the project locally:
 
 The application uses the following environment variables:
 
-- `NODE_ENV`: The environment mode ('local', 'development', 'production')
+- `APP_ENV`: Primary environment mode ('local', 'development', 'production') - takes priority over NODE_ENV
+- `NODE_ENV`: Fallback environment mode (often forced to 'production' by hosting providers)
 - `PG_URI`: PostgreSQL connection string
 - `SERVER_PORT`: Port for the Express server (default: 5000)
 - `CLIENT_URL`: URL for the client application (default: http://localhost:5500)
@@ -1157,7 +1159,7 @@ Manual testing is essential before each deployment. Here's a comprehensive testi
 7. **Development vs Production**:
 
     - Some features behave differently between environments
-    - Email sending uses different providers based on NODE_ENV
+    - Email sending uses different providers based on APP_ENV (or NODE_ENV as fallback)
     - API endpoints may have different URLs based on environment variables
     - Analytics tracking uses different configurations for dev/prod
 

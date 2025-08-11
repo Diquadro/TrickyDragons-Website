@@ -16,7 +16,7 @@ const sql_config = {
     transform: {
         undefined: null,
     },
-    debug: process.env.NODE_ENV !== 'production',
+    debug: (process.env.APP_ENV || process.env.NODE_ENV) !== 'production',
 }
 
 // Base postgres client instance
