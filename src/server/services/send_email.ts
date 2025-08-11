@@ -46,6 +46,32 @@ export async function send_email(
         mail_options.headers = email_options.sendgrid.headers
     }
 
-    // send email
-    return await transporter.sendMail(mail_options)
+    // send email with enhanced SMTP error handling
+    try {
+        return await transporter.sendMail(mail_options)
+    } catch (error) {
+        // Enhance specific SMTP authentication errors with context
+        if (error instanceof Error && error.message.includes('535 Authentication Failed')) {
+            const auth_user = (transporter as any).options?.auth?.user || 'NOT_SET'
+            const smtp_host = (transporter as any).options?.host || 'unknown'
+            const smtp_port = (transporter as any).options?.port || 'unknown'
+
+            throw new Error(
+                `SMTP Authentication Failed (535) - Provider: ${from}\n` +
+                    `SMTP Server: ${smtp_host}:${smtp_port}\n` +
+                    `Auth User: ${auth_user}\n` +
+                    `Recipient: ${to}\n` +
+                    `Environment: NODE_ENV=${process.env.NODE_ENV}\n` +
+                    `Original Error: ${error.message}\n\n` +
+                    `💡 Possible solutions:\n` +
+                    `- Check if ${auth_user} credentials are correct\n` +
+                    `- Verify if 2FA is enabled (may need app-specific password)\n` +
+                    `- Check if SMTP access is enabled in email provider settings\n` +
+                    `- Verify no IP restrictions on the email account`,
+            )
+        }
+
+        // For other errors, just re-throw with minimal context
+        throw error
+    }
 }
