@@ -54,7 +54,7 @@ export default {
     },
     plugins: [
         new webpack.DefinePlugin({
-            'process.env.NODE_ENV': JSON.stringify(process.env.NODE_ENV),
+            'process.env.APP_ENV': JSON.stringify(process.env.APP_ENV),
             'process.env.CLIENT_URL': JSON.stringify(process.env.CLIENT_URL),
             'process.env.API_URL': JSON.stringify(process.env.API_URL),
             'process.env.SERVER_PORT': JSON.stringify(process.env.SERVER_PORT),
@@ -87,10 +87,5 @@ export default {
                 },
             ],
         }),
-    ],
-    ignoreWarnings: [
-        {
-            message: /Conflicting values for 'process.env.NODE_ENV'/,
-        },
     ],
 }

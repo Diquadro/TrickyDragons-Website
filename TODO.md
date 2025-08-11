@@ -55,7 +55,7 @@ pgUri: z.string(),
 });
 
 const config = {
-appEnv: process.env.APP_ENV || process.env.NODE_ENV,
+appEnv: process.env.APP_ENV ,
 port: process.env.PORT,
 pgUri: process.env.PG_URI,
 // Add other config values

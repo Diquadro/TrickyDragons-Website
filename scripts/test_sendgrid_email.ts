@@ -30,7 +30,6 @@ async function test_sendgrid_email_sending(): Promise<void> {
     )
     console.log('- SENDGRID_FROM_EMAIL:', process.env.SENDGRID_FROM_EMAIL || '❌ NOT SET')
     console.log('- APP_ENV:', process.env.APP_ENV || 'undefined')
-    console.log('- NODE_ENV:', process.env.NODE_ENV || 'undefined')
 
     process.env.SENDGRID_FORCE = 'true' // Force SendGrid for testing
     console.log('- SENDGRID_FORCE:', process.env.SENDGRID_FORCE)
@@ -106,7 +105,7 @@ async function test_sendgrid_email_sending(): Promise<void> {
     if (successful > 0) {
         console.log('\n📧 WHAT WE SENT (X-SMTPAPI Header):')
         console.log('- category: v1_welcome')
-        console.log('- unique_args.environment: [APP_ENV or NODE_ENV]')
+        console.log('- unique_args.environment: [APP_ENV ]')
         console.log('- unique_args.template: v1_welcome')
     }
 }

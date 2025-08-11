@@ -13,7 +13,7 @@ import reservation_config from '../../src/client/pages/reservation/reservation.c
 import unsubscribed_config from '../../src/client/pages/unsubscribed/unsubscribed.config.mjs'
 
 const BASE_URL = 'https://www.trickydragons.com'
-const env = process.env.NODE_ENV
+const env = process.env.APP_ENV
 
 export default [
     // Landing page

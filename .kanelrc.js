@@ -7,7 +7,7 @@ const { generateZodSchemas } = require('kanel-zod')
 module.exports = {
     connection: {
         connectionString: process.env.PG_URI,
-        ssl: process.env.NODE_ENV !== 'local',
+        ssl: process.env.APP_ENV !== 'local',
     },
 
     preTransformCase: false,

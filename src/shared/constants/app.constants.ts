@@ -3,8 +3,8 @@ import { utm_param } from '@shared/types/utm_params'
 const VERSION = 'v2'
 
 // Environment-related constants
-// Use APP_ENV as primary environment variable, fallback to NODE_ENV
-const effective_env = process.env.APP_ENV || process.env.NODE_ENV
+// Use APP_ENV as primary environment variable
+const effective_env = process.env.APP_ENV
 
 export const ENV = {
     PRODUCTION: effective_env === 'production',
