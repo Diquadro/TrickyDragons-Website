@@ -3,13 +3,34 @@ import morgan from 'morgan'
 
 // Custom token to extract referrer page without query params
 morgan.token('referrer-page', (req: Request) => {
-    const referrer = req.get('Referrer') || req.get('Referer')
-    if (!referrer) return '-'
+    const referrer = req.get('Referer') || req.get('Referrer')
+
+    // DEBUG: Log what we receive
+    console.log('🔍 DEBUG Referrer:', {
+        'Referer header': req.get('Referer'),
+        'Referrer header': req.get('Referrer'),
+        'Final referrer': referrer,
+        'User-Agent': req.get('User-Agent')?.substring(0, 50) + '...',
+    })
+
+    if (!referrer) {
+        console.log('❌ No referrer found')
+        return '-'
+    }
 
     try {
         const url = new URL(referrer)
+        console.log('✅ URL parsed successfully:', {
+            'Full URL': referrer,
+            Pathname: url.pathname,
+            Search: url.search,
+        })
         return url.pathname // Only the path, no query params
-    } catch {
+    } catch (error) {
+        console.log('❌ URL parsing failed:', {
+            Referrer: referrer,
+            Error: error instanceof Error ? error.message : String(error),
+        })
         return referrer // Fallback if URL parsing fails
     }
 })
