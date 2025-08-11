@@ -45,7 +45,9 @@ block body
     .footer-layout
         span A game by Daniele D'Ambrosio
         .links-layout
-            span.link Privacy Policy
-            span.link Terms of Service
+            span.link
+                a(href='/privacy-policy') Privacy Policy
+            span.link
+                a(href='/terms-of-service') Terms of Service
 
     include @client/components/spinner/spinner.pug

@@ -71,6 +71,7 @@ async function send_analytics_event(event_data: Create_Analytics_Event_Request):
             },
             credentials: 'include',
             body: JSON.stringify(validation_result.data),
+            keepalive: true,
         })
 
         if (!response.ok) {

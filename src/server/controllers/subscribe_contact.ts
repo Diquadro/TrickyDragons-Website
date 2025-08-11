@@ -63,7 +63,7 @@ export async function subscribe_contact(req: Request, res: Response) {
     create_action(subscribe_contact_action_data)
 
     if (outcome !== CONTACT_RESPONSE_OUTCOME.NEW_CONTACT) return
-    send_meta_event(META_EVENTS.COMPLETE_REGISTRATION, null, req, contact.uuid, utm_params)
+    send_meta_event(META_EVENTS.LEAD, null, req, contact.uuid, utm_params)
 
     await send_welcome_email(contact.email)
     update_contact_sent_emails(contact, EMAIL_TEMPLATES.WELCOME)

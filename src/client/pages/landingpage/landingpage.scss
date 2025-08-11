@@ -523,6 +523,7 @@ $font-family-bebas-neue-pro-semi-expanded:
             grid-area: text-p;
             font-weight: $font-weight-middle;
             font-size: $font-size-md;
+            text-align: justify;
         }
 
         span.extra-bold {
@@ -609,8 +610,9 @@ $font-family-bebas-neue-pro-semi-expanded:
         display: flex;
         gap: 20px;
 
-        > .link {
+        > span.link > a {
             cursor: pointer;
+            color: $color-white;
             text-decoration: underline;
         }
     }

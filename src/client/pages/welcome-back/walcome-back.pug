@@ -30,12 +30,15 @@ block body
                         br
                         | If you need to contact us you can send an email to: info@trickydragons.com.
                     .cta-layout
-                        button.cta-main-button FOLLOW OUR KICKSTARTER
+                        button.cta-main-button
+                            a(href='https://www.kickstarter.com/projects/2076650099/tricky-dragons') FOLLOW OUR KICKSTARTER
 
             .footer-layout
                 span A game by Daniele D'Ambrosio
                 .links-layout
-                    span.link Privacy Policy
-                    span.link Terms of Service
+                    span.link
+                        a(href='/privacy-policy') Privacy Policy
+                    span.link
+                        a(href='/terms-of-service') Terms of Service
 
     script(src='./welcome-back.ts', type='module', defer) 

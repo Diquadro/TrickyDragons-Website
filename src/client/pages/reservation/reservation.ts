@@ -1,35 +1,57 @@
 import './reservation.scss'
-import '@client/components/redirect_link/redirect_link'
+import { get_utm_params } from '@client/ts/utm_params'
+import { get_timezone } from '@client/ts/timezone'
+import { Base64_Url } from '@shared/utils/base64_url'
+import { API, ENV } from '@shared/constants/app.constants'
+;(function main() {
+    main_button_handler()
+})()
 
-/**
- * Redirect to specified page preserving all URL parameters
- */
-function redirect_with_params(page: string) {
-    const current_url = new URL(window.location.href)
-    const target_url = new URL(`/${page}`, current_url.origin)
+function main_button_handler() {
+    const main_button = document.querySelector('.cta-main-button')
+    if (!main_button) return
 
-    // Preserve all current URL parameters
-    current_url.searchParams.forEach((value, key) => {
-        target_url.searchParams.set(key, value)
-    })
+    main_button.addEventListener(
+        'click',
+        (e) => {
+            const target = e.target as Element | null
+            const anchor = target?.closest('.cta-main-button a') as HTMLAnchorElement | null
+            if (!anchor) return
 
-    window.location.href = target_url.toString()
+            const endpoint = ENV.LOCAL
+                ? `${API.ENDPOINTS.CONTACTS.ADD_TO_CART}`
+                : `${API.URL}${API.ENDPOINTS.CONTACTS.ADD_TO_CART}`
+
+            try {
+                const email = get_email_from_url()
+                if (!email) return
+                const payload = { email, timezone: get_timezone(), utm_params: get_utm_params() }
+
+                if (navigator.sendBeacon) {
+                    const blob = new Blob([JSON.stringify(payload)], { type: 'application/json' })
+                    navigator.sendBeacon(endpoint, blob)
+                } else {
+                    fetch(endpoint, {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify(payload),
+                        keepalive: true,
+                        credentials: 'omit',
+                    }).catch(() => {})
+                }
+            } catch {}
+        },
+        { capture: true },
+    )
 }
 
-document.addEventListener('DOMContentLoaded', () => {
-    // Handle CTA main button click (redirect to checkout)
-    const cta_main_button = document.querySelector('.cta-main-button')
-    if (cta_main_button) {
-        cta_main_button.addEventListener('click', () => {
-            redirect_with_params('checkout')
-        })
+function get_email_from_url(): string | null {
+    const urlParams = new URLSearchParams(window.location.search)
+    const emailFromUrl = urlParams.get('email')
+    if (!emailFromUrl) return null
+    try {
+        return Base64_Url.decode(emailFromUrl)
+    } catch {
+        return null
     }
-
-    // Handle CTA secondary button click (redirect to thank-you)
-    const cta_secondary_button = document.querySelector('.cta-secondary-button')
-    if (cta_secondary_button) {
-        cta_secondary_button.addEventListener('click', () => {
-            redirect_with_params('thank-you')
-        })
-    }
-})
+}

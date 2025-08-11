@@ -25,6 +25,9 @@ export const API = {
             SUBSCRIBE: `/${VERSION}/contacts/subscribe`,
             UNSUBSCRIBE: `/${VERSION}/contacts/unsubscribe`,
             SUBSCRIBER_COUNT: `/${VERSION}/contacts/subscriber_count`,
+            ADD_TO_CART: `/${VERSION}/contacts/add-to-cart`,
+            REMOVE_FROM_CART: `/${VERSION}/contacts/remove-from-cart`,
+            PURCHASE: `/${VERSION}/contacts/purchase`,
         },
         ANALYTICS_EVENTS: {
             CREATE: `/${VERSION}/analytics-events/create`,
@@ -35,6 +38,7 @@ export const API = {
         },
         WEBHOOKS: {
             SENDGRID: `/${VERSION}/webhooks/sendgrid`,
+            STRIPE: `/${VERSION}/webhooks/stripe`,
         },
         STRIPE: {
             CREATE_CHECKOUT_SESSION: `/${VERSION}/stripe/create-checkout-session`,
@@ -48,6 +52,8 @@ export const API = {
             UNSUBSCRIBE_CONTACT: `${VERSION}_unsubscribe_contact`,
             REDIRECT: `${VERSION}_redirect`,
             SEND_WELCOME_EMAIL: `${VERSION}_send_welcome_email`,
+            ADD_TO_CART: `${VERSION}_add_to_cart`,
+            PURCHASE: `${VERSION}_purchase`,
         },
 
         ORIGINS: {
@@ -99,6 +105,9 @@ export const HTTP_STATUS = {
 export const META_EVENTS = {
     PAGE_VIEW: 'PageView',
     COMPLETE_REGISTRATION: 'CompleteRegistration',
+    LEAD: 'Lead',
+    ADD_TO_CART: 'AddToCart',
+    PURCHASE: 'Purchase',
 }
 
 export const META = {

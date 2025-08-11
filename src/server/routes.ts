@@ -10,6 +10,9 @@ import { sendgrid_webhook } from '@server/controllers/sendgrid_webhook'
 import { create_checkout_session } from '@server/controllers/create_checkout_session'
 import { get_session_status } from '@server/controllers/get_session_status'
 import { error_handler } from '@server/middlewares/error_handler'
+import { contacts_add_to_cart } from '@server/controllers/contacts_add_to_cart'
+import { contacts_purchase } from '@server/controllers/contacts_purchase'
+import { stripe_webhook } from '@server/controllers/stripe_webhook'
 
 // Configures routes for the Express application
 // @param app Express application instance
@@ -26,8 +29,13 @@ export function apply_routes(app: express.Application): void {
     app.post(API.ENDPOINTS.ANALYTICS_EVENTS.CREATE, create_analytics_event_http)
     app.post(API.ENDPOINTS.ANALYTICS_EVENTS.UPDATE, update_analytics_event_http)
 
+    // Contacts cart routes
+    app.post(API.ENDPOINTS.CONTACTS.ADD_TO_CART, contacts_add_to_cart)
+    app.post(API.ENDPOINTS.CONTACTS.PURCHASE, contacts_purchase)
+
     // Webhooks routes
     app.post(API.ENDPOINTS.WEBHOOKS.SENDGRID, sendgrid_webhook)
+    app.post(API.ENDPOINTS.WEBHOOKS.STRIPE, stripe_webhook)
 
     // Stripe routes
     app.post(API.ENDPOINTS.STRIPE.CREATE_CHECKOUT_SESSION, create_checkout_session)

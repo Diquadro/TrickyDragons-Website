@@ -42,6 +42,12 @@ export default interface Contacts {
 
   /** Auto-incrementing serial number for easier data analysis and sequential referencing. */
   auto_serial: number;
+
+  /** First name of the contact, typically collected during checkout or registration */
+  first_name: string | null;
+
+  /** Last name of the contact, typically collected during checkout or registration */
+  last_name: string | null;
 }
 
 /**
@@ -84,6 +90,12 @@ export interface ContactsInitializer {
    * Default value: nextval('contacts_auto_serial_seq'::regclass)
    */
   auto_serial?: number;
+
+  /** First name of the contact, typically collected during checkout or registration */
+  first_name?: string | null;
+
+  /** Last name of the contact, typically collected during checkout or registration */
+  last_name?: string | null;
 }
 
 /**
@@ -120,6 +132,12 @@ export interface ContactsMutator {
 
   /** Auto-incrementing serial number for easier data analysis and sequential referencing. */
   auto_serial?: number;
+
+  /** First name of the contact, typically collected during checkout or registration */
+  first_name?: string | null;
+
+  /** Last name of the contact, typically collected during checkout or registration */
+  last_name?: string | null;
 }
 
 export const contactsUuid = z.string() as unknown as z.Schema<ContactsUuid>;
@@ -135,6 +153,8 @@ export const contacts = z.object({
   updated_date: z.date().nullable(),
   sent_emails: z.string().array().nullable(),
   auto_serial: z.number(),
+  first_name: z.string().nullable(),
+  last_name: z.string().nullable(),
 }) as unknown as z.Schema<Contacts>;
 
 export const contactsInitializer = z.object({
@@ -148,6 +168,8 @@ export const contactsInitializer = z.object({
   updated_date: z.date().optional().nullable(),
   sent_emails: z.string().array().optional().nullable(),
   auto_serial: z.number().optional(),
+  first_name: z.string().optional().nullable(),
+  last_name: z.string().optional().nullable(),
 }) as unknown as z.Schema<ContactsInitializer>;
 
 export const contactsMutator = z.object({
@@ -161,4 +183,6 @@ export const contactsMutator = z.object({
   updated_date: z.date().optional().nullable(),
   sent_emails: z.string().array().optional().nullable(),
   auto_serial: z.number().optional(),
+  first_name: z.string().optional().nullable(),
+  last_name: z.string().optional().nullable(),
 }) as unknown as z.Schema<ContactsMutator>;

@@ -40,12 +40,15 @@ block body
                         |
                         | for the big announcements only.
                     .cta-layout
-                        button.cta-main-button RESUBSCRIBE
+                        button.cta-main-button
+                            a(href='/reservation') RESUBSCRIBE
 
             .footer-layout
                 span A game by Daniele D'Ambrosio
                 .links-layout
-                    span.link Privacy Policy
-                    span.link Terms of Service
+                    span.link
+                        a(href='/privacy-policy') Privacy Policy
+                    span.link
+                        a(href='/terms-of-service') Terms of Service
 
     script(src='./unsubscribed.ts', type='module', defer) 

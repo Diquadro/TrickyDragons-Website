@@ -35,8 +35,10 @@ block body
                         |
                         | We are committed to take Tricky Dragons to its full potential, but we need your support! Help us bring Tricky Dragons to life.
                     .cta-layout
-                        button.cta-main-button CLAIM YOUR EXCLUSIVE MINI EXPANSION
-                        button.cta-secondary-button No thanks, I'll just follow along.
+                        button.cta-main-button
+                            a(href='/checkout') CLAIM YOUR EXCLUSIVE MINI EXPANSION
+                        button.cta-secondary-button
+                            a(href='/thank-you') No thanks, I'll just follow along.
 
             .divider
 
@@ -69,7 +71,9 @@ block body
             .footer-layout
                 span A game by Daniele D'Ambrosio
                 .links-layout
-                    span.link Privacy Policy
-                    span.link Terms of Service
+                    span.link
+                        a(href='/privacy-policy') Privacy Policy
+                    span.link
+                        a(href='/terms-of-service') Terms of Service
 
     script(src='./reservation.ts', type='module', defer) 

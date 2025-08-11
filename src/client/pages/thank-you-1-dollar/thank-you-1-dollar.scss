@@ -113,18 +113,23 @@ body {
             gap: 5px;
 
             > .cta-main-button {
+                display: flex;
+                justify-content: center;
+                align-items: center;
                 cursor: pointer;
                 border: none;
                 border-radius: $border-radius;
                 background-color: $color-red;
                 width: 100%;
                 height: $cta-button-height;
-                color: $color-white;
-                font-weight: $font-weight-bold;
-                font-size: var(--font-size-lg);
-                font-family: $font-family-bebas-neue-pro;
-                text-align: center;
-                text-decoration: none;
+
+                > a {
+                    color: $color-white;
+                    font-weight: $font-weight-bold;
+                    font-size: var(--font-size-lg);
+                    font-family: $font-family-bebas-neue-pro;
+                    text-decoration: none;
+                }
 
                 &:hover {
                     background-color: $color-red-dark;
@@ -174,8 +179,9 @@ body {
         display: flex;
         gap: 20px;
 
-        > .link {
+        > span.link > a {
             cursor: pointer;
+            color: $color-white;
             text-decoration: underline;
         }
     }
