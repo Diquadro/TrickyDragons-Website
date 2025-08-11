@@ -1,5 +1,5 @@
 import './checkout.scss'
-import { API, CLIENT, STRIPE } from '@shared/constants/app.constants'
+import { API, CLIENT, ENV, STRIPE } from '@shared/constants/app.constants'
 import { show_spinner } from '@client/components/spinner/spinner'
 import { Base64_Url } from '@shared/utils/base64_url'
 
@@ -31,7 +31,11 @@ async function initialize() {
 
     const return_url = `${CLIENT.URL}/thank-you-1-dollar?${returnParams.toString()}`
 
-    const promise = fetch(API.ENDPOINTS.STRIPE.CREATE_CHECKOUT_SESSION, {
+    const endpoint = ENV.LOCAL
+        ? `${API.ENDPOINTS.STRIPE.CREATE_CHECKOUT_SESSION}`
+        : `${API.URL}${API.ENDPOINTS.STRIPE.CREATE_CHECKOUT_SESSION}`
+
+    const promise = fetch(endpoint, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
