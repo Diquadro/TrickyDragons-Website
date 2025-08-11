@@ -317,6 +317,8 @@ async function handle_form_submit(event: Event): Promise<void> {
             redirect_to_page('new-contact', email)
         }
 
+        email_input.value = ''
+        consent_checkbox.checked = false
         return
     } catch (err) {
         if (err instanceof Error) {
@@ -325,7 +327,5 @@ async function handle_form_submit(event: Event): Promise<void> {
         return error_toast('The dragons are sleeping now. Please try again later.')
     } finally {
         show_spinner(false)
-        email_input.value = ''
-        consent_checkbox.checked = false
     }
 }

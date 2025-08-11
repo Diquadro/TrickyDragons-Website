@@ -55,11 +55,11 @@ body {
     .page-inner-layout {
         display: flex;
         flex-direction: column;
-        justify-content: center;
+        justify-content: space-between;
         gap: 20px;
         margin: 0 auto;
         max-width: 1200px;
-        min-height: calc(100svh - 1px);
+        min-height: 100svh;
     }
 
     .section-layout {

@@ -43,7 +43,7 @@ export const error_handler = (err: Error, req: Request, res: Response, _next: Ne
     // Truncate stack trace if too long
     if (err.stack) {
         console.error('📚 Stack Trace:')
-        console.error(truncate_content(err.stack, 2000))
+        console.error(err.stack)
     }
 
     // For ZodError, add clean validation summary
