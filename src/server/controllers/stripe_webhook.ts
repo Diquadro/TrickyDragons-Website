@@ -361,7 +361,7 @@ async function upsert_order_from_event(params: UpsertOrderFromEventParams): Prom
         if (!current.stripe_session_id && base_data.stripe_session_id)
             update_record.stripe_session_id = base_data.stripe_session_id
         if (!current.amount_total && base_data.amount_total)
-            update_record.amount_total = String(base_data.amount_total)
+            update_record.amount_total = String(base_data.amount_total / 100)
         if (!current.currency && base_data.currency) update_record.currency = base_data.currency
         if (!current.billing_address_uuid && base_data.billing_address_uuid)
             update_record.billing_address_uuid = base_data.billing_address_uuid
