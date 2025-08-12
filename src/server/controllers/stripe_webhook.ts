@@ -110,7 +110,7 @@ async function handle_payment_intent_succeeded(event: Stripe_Webhook_Event, req:
     await log_webhook_action(event, action_name, order.uuid, order.contact_uuid!, req, {
         payment_intent_id: payment_intent.id,
         session_id: session?.id ?? null,
-        amount_total: session?.amount_total ?? payment_intent.amount,
+        amount_total: (session?.amount_total ?? payment_intent.amount) / 100,
         currency: (session?.currency ?? payment_intent.currency ?? 'usd').toLowerCase(),
         order_status: OrderStatus.paid,
     })
@@ -142,7 +142,7 @@ async function handle_payment_intent_failed(event: Stripe_Webhook_Event, req: Re
     await log_webhook_action(event, action_name, order.uuid, order.contact_uuid!, req, {
         payment_intent_id: payment_intent.id,
         session_id: session?.id ?? null,
-        amount_total: session?.amount_total ?? payment_intent.amount,
+        amount_total: (session?.amount_total ?? payment_intent.amount) / 100,
         currency: (session?.currency ?? payment_intent.currency ?? 'usd').toLowerCase(),
         order_status: OrderStatus.failed,
         failure_reason: 'payment_failed',
@@ -175,7 +175,7 @@ async function handle_payment_intent_canceled(event: Stripe_Webhook_Event, req: 
     await log_webhook_action(event, action_name, order.uuid, order.contact_uuid!, req, {
         payment_intent_id: payment_intent.id,
         session_id: session?.id ?? null,
-        amount_total: session?.amount_total ?? payment_intent.amount,
+        amount_total: (session?.amount_total ?? payment_intent.amount) / 100,
         currency: (session?.currency ?? payment_intent.currency ?? 'usd').toLowerCase(),
         order_status: OrderStatus.canceled,
         cancellation_reason: 'user_canceled',
@@ -334,7 +334,7 @@ async function upsert_order_from_event(params: UpsertOrderFromEventParams): Prom
         stripe_session_id: session?.id ?? null,
         stripe_payment_intent_id: payment_intent.id,
         status,
-        amount_total: session?.amount_total ?? payment_intent.amount ?? 0,
+        amount_total: (session?.amount_total ?? payment_intent.amount ?? 0) / 100,
         currency: (session?.currency ?? payment_intent.currency ?? 'usd').toLowerCase(),
         billing_address_uuid,
         line_items: session?.line_items?.data ?? null,
@@ -361,7 +361,7 @@ async function upsert_order_from_event(params: UpsertOrderFromEventParams): Prom
         if (!current.stripe_session_id && base_data.stripe_session_id)
             update_record.stripe_session_id = base_data.stripe_session_id
         if (!current.amount_total && base_data.amount_total)
-            update_record.amount_total = String(base_data.amount_total / 100)
+            update_record.amount_total = String(base_data.amount_total)
         if (!current.currency && base_data.currency) update_record.currency = base_data.currency
         if (!current.billing_address_uuid && base_data.billing_address_uuid)
             update_record.billing_address_uuid = base_data.billing_address_uuid
