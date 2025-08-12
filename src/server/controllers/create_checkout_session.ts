@@ -14,9 +14,11 @@ export async function create_checkout_session(req: Request, res: Response): Prom
     const separator = return_url.includes('?') ? '&' : '?'
     const final_return_url = `${return_url}${separator}session_id={CHECKOUT_SESSION_ID}`
 
+    const customer_email = req.body.email
+
     const session = await stripe.checkout.sessions.create({
         ui_mode: 'custom',
-        customer_email: req.body.email,
+        customer_email: customer_email,
         billing_address_collection: 'required',
         line_items: [
             {
@@ -27,6 +29,12 @@ export async function create_checkout_session(req: Request, res: Response): Prom
         mode: 'payment',
         payment_method_types: ['card'],
         return_url: final_return_url,
+        payment_intent_data: {
+            receipt_email: customer_email,
+            metadata: {
+                customer_email: customer_email,
+            },
+        },
     })
 
     res.send({ clientSecret: session.client_secret })

@@ -281,6 +281,8 @@ async function create_or_update_order_from_payment_intent(
     let email: string | null = null
     if (payment_intent.receipt_email) {
         email = payment_intent.receipt_email
+    } else if (payment_intent.metadata?.customer_email) {
+        email = payment_intent.metadata.customer_email
     } else if (payment_intent.customer && typeof payment_intent.customer === 'string') {
         // TODO: Fetch customer email from Stripe customer object
         console.warn('Payment intent has customer ID but no direct email access')
