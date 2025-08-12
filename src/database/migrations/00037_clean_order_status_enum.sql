@@ -8,8 +8,13 @@ CREATE TYPE order_status_new AS ENUM ('paid', 'failed', 'canceled', 'refunded');
 -- Step 2: Add temporary column with new type
 ALTER TABLE orders ADD COLUMN status_new order_status_new;
 
--- Step 3: Migrate existing data (if any) - since this is new implementation, should be empty
-UPDATE orders SET status_new = status::text::order_status_new WHERE status IS NOT NULL;
+-- Step 3: Migrate existing data (if any) - convert pending to failed as fallback
+UPDATE orders SET status_new = 
+    CASE 
+        WHEN status = 'pending' THEN 'failed'::order_status_new
+        ELSE status::text::order_status_new 
+    END 
+WHERE status IS NOT NULL;
 
 -- Step 4: Drop old column and rename new one
 ALTER TABLE orders DROP COLUMN status;
