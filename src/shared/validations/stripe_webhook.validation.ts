@@ -48,11 +48,27 @@ export const payment_intent_schema = z.object({
         'succeeded',
     ]),
     metadata: z.record(z.string()).optional(),
+    receipt_email: z.string().nullable().optional(),
+    customer: z.union([z.string(), z.any()]).nullable().optional(),
+})
+
+// Refund object (when type = 'refund.*')
+export const refund_schema = z.object({
+    id: z.string(),
+    object: z.literal('refund'),
+    amount: z.number(),
+    currency: z.string(),
+    payment_intent: z.string().nullable(),
+    charge: z.string().nullable(),
+    reason: z.enum(['duplicate', 'fraudulent', 'requested_by_customer']).nullable(),
+    status: z.enum(['pending', 'succeeded', 'failed', 'canceled']),
+    metadata: z.record(z.string()).optional(),
 })
 
 export type Stripe_Webhook_Event = z.infer<typeof stripe_webhook_event_schema>
 export type Checkout_Session = z.infer<typeof checkout_session_schema>
 export type Payment_Intent = z.infer<typeof payment_intent_schema>
+export type Refund = z.infer<typeof refund_schema>
 
 export function validate_webhook_event(body: any): Stripe_Webhook_Event {
     const validation = stripe_webhook_event_schema.safeParse(body)
@@ -74,6 +90,14 @@ export function validate_payment_intent(obj: any): Payment_Intent {
     const validation = payment_intent_schema.safeParse(obj)
     if (!validation.success) {
         throw new Error(`Invalid payment intent: ${validation.error.message}`)
+    }
+    return validation.data
+}
+
+export function validate_refund(obj: any): Refund {
+    const validation = refund_schema.safeParse(obj)
+    if (!validation.success) {
+        throw new Error(`Invalid refund: ${validation.error.message}`)
     }
     return validation.data
 }

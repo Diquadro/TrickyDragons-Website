@@ -4,6 +4,7 @@
 import { contactsUuid, type ContactsUuid } from './Contacts';
 import { actionOutcome, type default as ActionOutcome } from './ActionOutcome';
 import { actionDirection, type default as ActionDirection } from './ActionDirection';
+import { ordersUuid, type OrdersUuid } from './Orders';
 import { z } from 'zod';
 
 /** Identifier type for public.actions */
@@ -91,6 +92,9 @@ export default interface Actions {
 
   /** Auto-incrementing serial number for easier data analysis and sequential referencing. */
   auto_serial: number;
+
+  /** Reference to the order associated with this action, particularly useful for tracking webhook events and order-related activities */
+  order_uuid: OrdersUuid | null;
 }
 
 /**
@@ -181,6 +185,9 @@ export interface ActionsInitializer {
    * Default value: nextval('actions_auto_serial_seq'::regclass)
    */
   auto_serial?: number;
+
+  /** Reference to the order associated with this action, particularly useful for tracking webhook events and order-related activities */
+  order_uuid?: OrdersUuid | null;
 }
 
 /**
@@ -265,6 +272,9 @@ export interface ActionsMutator {
 
   /** Auto-incrementing serial number for easier data analysis and sequential referencing. */
   auto_serial?: number;
+
+  /** Reference to the order associated with this action, particularly useful for tracking webhook events and order-related activities */
+  order_uuid?: OrdersUuid | null;
 }
 
 export const actionsUuid = z.string() as unknown as z.Schema<ActionsUuid>;
@@ -296,6 +306,7 @@ export const actions = z.object({
   longitude: z.number().nullable(),
   local_occurred_at: z.date().nullable(),
   auto_serial: z.number(),
+  order_uuid: ordersUuid.nullable(),
 }) as unknown as z.Schema<Actions>;
 
 export const actionsInitializer = z.object({
@@ -325,6 +336,7 @@ export const actionsInitializer = z.object({
   longitude: z.number().optional().nullable(),
   local_occurred_at: z.date().optional().nullable(),
   auto_serial: z.number().optional(),
+  order_uuid: ordersUuid.optional().nullable(),
 }) as unknown as z.Schema<ActionsInitializer>;
 
 export const actionsMutator = z.object({
@@ -354,4 +366,5 @@ export const actionsMutator = z.object({
   longitude: z.number().optional().nullable(),
   local_occurred_at: z.date().optional().nullable(),
   auto_serial: z.number().optional(),
+  order_uuid: ordersUuid.optional().nullable(),
 }) as unknown as z.Schema<ActionsMutator>;

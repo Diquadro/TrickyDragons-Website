@@ -1,5 +1,6 @@
 import { sql } from '@server/models/postgres_client'
 import { ContactsUuid } from '@shared/schemas/database/public/Contacts'
+import { OrdersUuid } from '@shared/schemas/database/public/Orders'
 import ActionDirection from '@shared/schemas/database/public/ActionDirection'
 import ActionOutcome from '@shared/schemas/database/public/ActionOutcome'
 import Actions, { ActionsInitializer } from '@shared/schemas/database/public/Actions'
@@ -13,21 +14,24 @@ interface action_data {
     details?: Record<string, any>
     utm_params?: Utm_Params_Schema
     timezone?: string
+    order_uuid?: OrdersUuid
+    outcome?: ActionOutcome
 }
 
 export async function create_action(action_data: action_data) {
-    const { action, req, contact_uuid, details, utm_params, timezone } = action_data
+    const { action, req, contact_uuid, details, utm_params, timezone, order_uuid, outcome } = action_data
 
-    const success_subscribe_event: ActionsInitializer = {
+    const action_event: ActionsInitializer = {
         action: action,
         direction: ActionDirection.inbound,
         endpoint: `${req.method} - ${req.originalUrl}`,
         origin: req.get('Referrer'),
         occurred_at: req.time_infos?.utc_occurred_at || new Date(),
         local_occurred_at: req.time_infos?.local_occurred_at || null,
-        outcome: ActionOutcome.success,
+        outcome: outcome ?? ActionOutcome.success,
         details: details,
         contact_uuid: contact_uuid,
+        order_uuid: order_uuid,
         city: req.geo_infos?.city,
         region: req.geo_infos?.region,
         country: req.geo_infos?.country,
@@ -41,5 +45,5 @@ export async function create_action(action_data: action_data) {
         utm_content: utm_params?.utm_content,
     }
 
-    return sql.insert<Actions[]>('actions', [success_subscribe_event])
+    return sql.insert<Actions[]>('actions', [action_event])
 }
