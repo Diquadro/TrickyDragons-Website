@@ -97,14 +97,21 @@ async function handle_payment_intent_succeeded(event: Stripe_Webhook_Event, req:
         return
     }
 
-    // 2. Create or update order
-    const order = await create_or_update_order_from_payment_intent(payment_intent, OrderStatus.paid, req)
+    // 2. Retrieve session (optional enrichment) and upsert order
+    const session = await get_session_for_payment_intent(payment_intent.id)
+    const order = await upsert_order_from_event({
+        req,
+        status: OrderStatus.paid,
+        payment_intent,
+        session,
+    })
 
     // 3. Log webhook action
     await log_webhook_action(event, action_name, order.uuid, order.contact_uuid!, req, {
         payment_intent_id: payment_intent.id,
-        amount: payment_intent.amount,
-        currency: payment_intent.currency,
+        session_id: session?.id ?? null,
+        amount_total: session?.amount_total ?? payment_intent.amount,
+        currency: (session?.currency ?? payment_intent.currency ?? 'usd').toLowerCase(),
         order_status: OrderStatus.paid,
     })
 }
@@ -122,14 +129,21 @@ async function handle_payment_intent_failed(event: Stripe_Webhook_Event, req: Re
         return
     }
 
-    // 2. Create or update order
-    const order = await create_or_update_order_from_payment_intent(payment_intent, OrderStatus.failed, req)
+    // 2. Retrieve session (optional) and upsert order with failed status
+    const session = await get_session_for_payment_intent(payment_intent.id)
+    const order = await upsert_order_from_event({
+        req,
+        status: OrderStatus.failed,
+        payment_intent,
+        session,
+    })
 
     // 3. Log webhook action
     await log_webhook_action(event, action_name, order.uuid, order.contact_uuid!, req, {
         payment_intent_id: payment_intent.id,
-        amount: payment_intent.amount,
-        currency: payment_intent.currency,
+        session_id: session?.id ?? null,
+        amount_total: session?.amount_total ?? payment_intent.amount,
+        currency: (session?.currency ?? payment_intent.currency ?? 'usd').toLowerCase(),
         order_status: OrderStatus.failed,
         failure_reason: 'payment_failed',
     })
@@ -148,14 +162,21 @@ async function handle_payment_intent_canceled(event: Stripe_Webhook_Event, req: 
         return
     }
 
-    // 2. Create or update order
-    const order = await create_or_update_order_from_payment_intent(payment_intent, OrderStatus.canceled, req)
+    // 2. Retrieve session (optional) and upsert order with canceled status
+    const session = await get_session_for_payment_intent(payment_intent.id)
+    const order = await upsert_order_from_event({
+        req,
+        status: OrderStatus.canceled,
+        payment_intent,
+        session,
+    })
 
     // 3. Log webhook action
     await log_webhook_action(event, action_name, order.uuid, order.contact_uuid!, req, {
         payment_intent_id: payment_intent.id,
-        amount: payment_intent.amount,
-        currency: payment_intent.currency,
+        session_id: session?.id ?? null,
+        amount_total: session?.amount_total ?? payment_intent.amount,
+        currency: (session?.currency ?? payment_intent.currency ?? 'usd').toLowerCase(),
         order_status: OrderStatus.canceled,
         cancellation_reason: 'user_canceled',
     })
@@ -245,83 +266,133 @@ async function check_event_already_processed(stripe_event_id: string, action_nam
 }
 
 /**
- * Create or update order from Stripe payment intent
- * Primary method for order creation from webhook events
+ * Retrieve Checkout Session for a PaymentIntent (expanded with line_items and customer_details)
  */
-async function create_or_update_order_from_payment_intent(
-    payment_intent: Payment_Intent,
-    new_status: OrderStatus,
-    req: Request,
-): Promise<Orders> {
-    // 1. Check if order already exists by payment_intent_id
-    const existing_order_result = await sql<Orders[]>`
-        SELECT * FROM orders 
-        WHERE stripe_payment_intent_id = ${payment_intent.id}
-    `
-
-    if (existing_order_result.length > 0) {
-        const existing_order = existing_order_result[0]
-
-        // Update order status if the new status is "higher" in hierarchy
-        if (should_update_order_status(existing_order.status, new_status)) {
-            await sql.update<Orders[]>('orders', [
-                {
-                    uuid: existing_order.uuid,
-                    status: new_status,
-                },
-            ])
-        }
-
-        return { ...existing_order, status: new_status }
+async function get_session_for_payment_intent(
+    payment_intent_id: string,
+): Promise<Stripe.Checkout.Session | null> {
+    try {
+        const list = await stripe.checkout.sessions.list({ payment_intent: payment_intent_id, limit: 1 })
+        if (list.data.length === 0) return null
+        return await stripe.checkout.sessions.retrieve(list.data[0].id, {
+            expand: ['line_items', 'customer_details'],
+        })
+    } catch (error) {
+        console.error('get_session_for_payment_intent failed', {
+            payment_intent_id,
+            error: (error as Error).message,
+        })
+        return null
     }
+}
 
-    // 2. Order doesn't exist, create from payment intent data
+interface UpsertOrderFromEventParams {
+    req: Request
+    status: OrderStatus
+    payment_intent: Payment_Intent
+    session: Stripe.Checkout.Session | null
+}
 
-    // Extract email from payment intent metadata or customer
-    let email: string | null = null
-    if (payment_intent.receipt_email) {
-        email = payment_intent.receipt_email
-    } else if (payment_intent.metadata?.customer_email) {
-        email = payment_intent.metadata.customer_email
-    } else if (payment_intent.customer && typeof payment_intent.customer === 'string') {
-        // TODO: Fetch customer email from Stripe customer object
-        console.warn('Payment intent has customer ID but no direct email access')
-    }
+/**
+ * Upsert order from PI + optional Session. Single linear flow.
+ */
+async function upsert_order_from_event(params: UpsertOrderFromEventParams): Promise<Orders> {
+    const { req, status, payment_intent, session } = params
+
+    const email =
+        session?.customer_email ||
+        session?.customer_details?.email ||
+        payment_intent.receipt_email ||
+        payment_intent.metadata?.customer_email ||
+        null
 
     if (!email) {
-        throw new Error('Cannot create order: no email available in payment intent')
+        throw new Error('Cannot create order: missing email in PI/Session')
     }
 
     const contact = await get_or_create_contact_by_email(email)
 
-    const order_data = {
+    // Maybe create billing address
+    const billing_address_uuid = session?.customer_details?.address
+        ? ((await create_or_get_address(
+              contact.uuid,
+              AddressType.billing,
+              session.customer_details.address,
+          )) as any)
+        : null
+
+    // Check existing order (by session or PI)
+    const existing = await sql<Orders[]>`
+        SELECT * FROM orders 
+        WHERE stripe_session_id = ${session?.id ?? null} OR stripe_payment_intent_id = ${payment_intent.id}
+        LIMIT 1
+    `
+
+    const base_data = {
         contact_uuid: contact.uuid,
-        email: contact.email,
-        stripe_session_id: null,
+        email,
+        stripe_session_id: session?.id ?? null,
         stripe_payment_intent_id: payment_intent.id,
-        status: new_status,
-        amount_total: payment_intent.amount || 0,
-        currency: payment_intent.currency || 'usd',
-        billing_address_uuid: null,
-        line_items: null,
-        country: req.geo_infos?.country || null,
-        region: req.geo_infos?.region || null,
-        city: req.geo_infos?.city || null,
-        timezone: req.geo_infos?.timezone || null,
-        latitude: req.geo_infos?.latitude || null,
-        longitude: req.geo_infos?.longitude || null,
-        occurred_at: req.time_infos?.utc_occurred_at || new Date(),
-        local_occurred_at: req.time_infos?.local_occurred_at || null,
+        status,
+        amount_total: session?.amount_total ?? payment_intent.amount ?? 0,
+        currency: (session?.currency ?? payment_intent.currency ?? 'usd').toLowerCase(),
+        billing_address_uuid,
+        line_items: session?.line_items?.data ?? null,
+        // authoritative billing snapshot from checkout
+        billing_name: session?.customer_details?.name ?? null,
+        billing_email: session?.customer_details?.email ?? email ?? null,
+        billing_phone: session?.customer_details?.phone ?? null,
+        billing_country: session?.customer_details?.address?.country ?? null,
+        billing_region: session?.customer_details?.address?.state ?? null,
+        billing_city: session?.customer_details?.address?.city ?? null,
+        billing_postal_code: session?.customer_details?.address?.postal_code ?? null,
+        billing_line1: session?.customer_details?.address?.line1 ?? null,
+        billing_line2: session?.customer_details?.address?.line2 ?? null,
+        occurred_at: req.time_infos?.utc_occurred_at ?? new Date(),
+        local_occurred_at: req.time_infos?.local_occurred_at ?? null,
     }
 
-    const created_orders = await sql.insert<Orders[]>('orders', [order_data])
-    if (created_orders.length === 0) {
-        throw new Error('Failed to create order from payment intent')
+    if (existing.length > 0) {
+        const current = existing[0]
+        const should_upgrade = should_update_order_status(current.status, status)
+        const update_record: Partial<Orders> & { uuid: OrdersUuid } = { uuid: current.uuid }
+
+        if (should_upgrade) update_record.status = status
+        if (!current.stripe_session_id && base_data.stripe_session_id)
+            update_record.stripe_session_id = base_data.stripe_session_id
+        if (!current.amount_total && base_data.amount_total)
+            update_record.amount_total = String(base_data.amount_total)
+        if (!current.currency && base_data.currency) update_record.currency = base_data.currency
+        if (!current.billing_address_uuid && base_data.billing_address_uuid)
+            update_record.billing_address_uuid = base_data.billing_address_uuid
+        if (!current.line_items && base_data.line_items) update_record.line_items = base_data.line_items
+
+        // Always refresh billing snapshot if missing
+        if (!current.billing_name && base_data.billing_name)
+            update_record.billing_name = base_data.billing_name
+        if (!current.billing_email && base_data.billing_email)
+            update_record.billing_email = base_data.billing_email
+        if (!current.billing_phone && base_data.billing_phone)
+            update_record.billing_phone = base_data.billing_phone
+        if (!current.billing_country && base_data.billing_country)
+            update_record.billing_country = base_data.billing_country
+        if (!current.billing_region && base_data.billing_region)
+            update_record.billing_region = base_data.billing_region
+        if (!current.billing_city && base_data.billing_city)
+            update_record.billing_city = base_data.billing_city
+        if (!current.billing_postal_code && base_data.billing_postal_code)
+            update_record.billing_postal_code = base_data.billing_postal_code
+        if (!current.billing_line1 && base_data.billing_line1)
+            update_record.billing_line1 = base_data.billing_line1
+        if (!current.billing_line2 && base_data.billing_line2)
+            update_record.billing_line2 = base_data.billing_line2
+
+        const updated = await sql.update<Orders[]>('orders', [update_record])
+        return updated[0]
     }
 
-    const new_order = created_orders[0]
-
-    return new_order
+    const created = await sql.insert<Orders[]>('orders', [base_data])
+    return created[0]
 }
 
 /**

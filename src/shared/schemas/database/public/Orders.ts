@@ -29,8 +29,8 @@ export default interface Orders {
   /** Stripe Payment Intent ID for tracking payment status */
   stripe_payment_intent_id: string | null;
 
-  /** Total amount charged in smallest currency unit (cents for USD) */
-  amount_total: number;
+  /** Order total in major currency units (e.g., 1.00 USD). Previously stored as integer cents. */
+  amount_total: string;
 
   /** Three-letter ISO currency code */
   currency: string;
@@ -58,24 +58,6 @@ export default interface Orders {
 
   /** UTM content parameter for A/B testing and content-targeted ads */
   utm_content: string | null;
-
-  /** Country where the order was placed */
-  country: string | null;
-
-  /** Region/State where the order was placed */
-  region: string | null;
-
-  /** City where the order was placed */
-  city: string | null;
-
-  /** Timezone where the order was placed */
-  timezone: string | null;
-
-  /** Latitude coordinate where the order was placed */
-  latitude: number | null;
-
-  /** Longitude coordinate where the order was placed */
-  longitude: number | null;
 
   /** Timestamp when the order was placed */
   occurred_at: Date;
@@ -106,6 +88,33 @@ export default interface Orders {
 
   /** Current final status of the order - Set default to "failed" as a safety measure (though orders should always be created with explicit status) */
   status: OrderStatus;
+
+  /** Full billing name captured at checkout (Stripe customer_details.name) */
+  billing_name: string | null;
+
+  /** Billing email captured at checkout (Stripe customer_details.email) */
+  billing_email: string | null;
+
+  /** Billing phone captured at checkout (Stripe customer_details.phone) */
+  billing_phone: string | null;
+
+  /** Billing country code (ISO-2) captured at checkout */
+  billing_country: string | null;
+
+  /** Billing state/region captured at checkout */
+  billing_region: string | null;
+
+  /** Billing city captured at checkout */
+  billing_city: string | null;
+
+  /** Billing postal/ZIP code captured at checkout */
+  billing_postal_code: string | null;
+
+  /** Billing address line 1 captured at checkout */
+  billing_line1: string | null;
+
+  /** Billing address line 2 captured at checkout */
+  billing_line2: string | null;
 }
 
 /**
@@ -131,8 +140,8 @@ export interface OrdersInitializer {
   /** Stripe Payment Intent ID for tracking payment status */
   stripe_payment_intent_id?: string | null;
 
-  /** Total amount charged in smallest currency unit (cents for USD) */
-  amount_total: number;
+  /** Order total in major currency units (e.g., 1.00 USD). Previously stored as integer cents. */
+  amount_total: string;
 
   /**
    * Three-letter ISO currency code
@@ -163,24 +172,6 @@ export interface OrdersInitializer {
 
   /** UTM content parameter for A/B testing and content-targeted ads */
   utm_content?: string | null;
-
-  /** Country where the order was placed */
-  country?: string | null;
-
-  /** Region/State where the order was placed */
-  region?: string | null;
-
-  /** City where the order was placed */
-  city?: string | null;
-
-  /** Timezone where the order was placed */
-  timezone?: string | null;
-
-  /** Latitude coordinate where the order was placed */
-  latitude?: number | null;
-
-  /** Longitude coordinate where the order was placed */
-  longitude?: number | null;
 
   /**
    * Timestamp when the order was placed
@@ -223,6 +214,33 @@ export interface OrdersInitializer {
    * Default value: 'failed'::order_status
    */
   status?: OrderStatus;
+
+  /** Full billing name captured at checkout (Stripe customer_details.name) */
+  billing_name?: string | null;
+
+  /** Billing email captured at checkout (Stripe customer_details.email) */
+  billing_email?: string | null;
+
+  /** Billing phone captured at checkout (Stripe customer_details.phone) */
+  billing_phone?: string | null;
+
+  /** Billing country code (ISO-2) captured at checkout */
+  billing_country?: string | null;
+
+  /** Billing state/region captured at checkout */
+  billing_region?: string | null;
+
+  /** Billing city captured at checkout */
+  billing_city?: string | null;
+
+  /** Billing postal/ZIP code captured at checkout */
+  billing_postal_code?: string | null;
+
+  /** Billing address line 1 captured at checkout */
+  billing_line1?: string | null;
+
+  /** Billing address line 2 captured at checkout */
+  billing_line2?: string | null;
 }
 
 /**
@@ -245,8 +263,8 @@ export interface OrdersMutator {
   /** Stripe Payment Intent ID for tracking payment status */
   stripe_payment_intent_id?: string | null;
 
-  /** Total amount charged in smallest currency unit (cents for USD) */
-  amount_total?: number;
+  /** Order total in major currency units (e.g., 1.00 USD). Previously stored as integer cents. */
+  amount_total?: string;
 
   /** Three-letter ISO currency code */
   currency?: string;
@@ -274,24 +292,6 @@ export interface OrdersMutator {
 
   /** UTM content parameter for A/B testing and content-targeted ads */
   utm_content?: string | null;
-
-  /** Country where the order was placed */
-  country?: string | null;
-
-  /** Region/State where the order was placed */
-  region?: string | null;
-
-  /** City where the order was placed */
-  city?: string | null;
-
-  /** Timezone where the order was placed */
-  timezone?: string | null;
-
-  /** Latitude coordinate where the order was placed */
-  latitude?: number | null;
-
-  /** Longitude coordinate where the order was placed */
-  longitude?: number | null;
 
   /** Timestamp when the order was placed */
   occurred_at?: Date;
@@ -322,6 +322,33 @@ export interface OrdersMutator {
 
   /** Current final status of the order - Set default to "failed" as a safety measure (though orders should always be created with explicit status) */
   status?: OrderStatus;
+
+  /** Full billing name captured at checkout (Stripe customer_details.name) */
+  billing_name?: string | null;
+
+  /** Billing email captured at checkout (Stripe customer_details.email) */
+  billing_email?: string | null;
+
+  /** Billing phone captured at checkout (Stripe customer_details.phone) */
+  billing_phone?: string | null;
+
+  /** Billing country code (ISO-2) captured at checkout */
+  billing_country?: string | null;
+
+  /** Billing state/region captured at checkout */
+  billing_region?: string | null;
+
+  /** Billing city captured at checkout */
+  billing_city?: string | null;
+
+  /** Billing postal/ZIP code captured at checkout */
+  billing_postal_code?: string | null;
+
+  /** Billing address line 1 captured at checkout */
+  billing_line1?: string | null;
+
+  /** Billing address line 2 captured at checkout */
+  billing_line2?: string | null;
 }
 
 export const ordersUuid = z.string() as unknown as z.Schema<OrdersUuid>;
@@ -332,7 +359,7 @@ export const orders = z.object({
   email: z.string(),
   stripe_session_id: z.string().nullable(),
   stripe_payment_intent_id: z.string().nullable(),
-  amount_total: z.number(),
+  amount_total: z.string(),
   currency: z.string(),
   billing_address_uuid: addressesUuid.nullable(),
   shipping_address_uuid: addressesUuid.nullable(),
@@ -342,12 +369,6 @@ export const orders = z.object({
   utm_campaign: z.string().nullable(),
   utm_term: z.string().nullable(),
   utm_content: z.string().nullable(),
-  country: z.string().nullable(),
-  region: z.string().nullable(),
-  city: z.string().nullable(),
-  timezone: z.string().nullable(),
-  latitude: z.number().nullable(),
-  longitude: z.number().nullable(),
   occurred_at: z.date(),
   local_occurred_at: z.date().nullable(),
   created_date: z.date(),
@@ -358,6 +379,15 @@ export const orders = z.object({
   deleted_date: z.date().nullable(),
   auto_serial: z.number(),
   status: orderStatus,
+  billing_name: z.string().nullable(),
+  billing_email: z.string().nullable(),
+  billing_phone: z.string().nullable(),
+  billing_country: z.string().nullable(),
+  billing_region: z.string().nullable(),
+  billing_city: z.string().nullable(),
+  billing_postal_code: z.string().nullable(),
+  billing_line1: z.string().nullable(),
+  billing_line2: z.string().nullable(),
 }) as unknown as z.Schema<Orders>;
 
 export const ordersInitializer = z.object({
@@ -366,7 +396,7 @@ export const ordersInitializer = z.object({
   email: z.string(),
   stripe_session_id: z.string().optional().nullable(),
   stripe_payment_intent_id: z.string().optional().nullable(),
-  amount_total: z.number(),
+  amount_total: z.string(),
   currency: z.string().optional(),
   billing_address_uuid: addressesUuid.optional().nullable(),
   shipping_address_uuid: addressesUuid.optional().nullable(),
@@ -376,12 +406,6 @@ export const ordersInitializer = z.object({
   utm_campaign: z.string().optional().nullable(),
   utm_term: z.string().optional().nullable(),
   utm_content: z.string().optional().nullable(),
-  country: z.string().optional().nullable(),
-  region: z.string().optional().nullable(),
-  city: z.string().optional().nullable(),
-  timezone: z.string().optional().nullable(),
-  latitude: z.number().optional().nullable(),
-  longitude: z.number().optional().nullable(),
   occurred_at: z.date().optional(),
   local_occurred_at: z.date().optional().nullable(),
   created_date: z.date().optional(),
@@ -392,6 +416,15 @@ export const ordersInitializer = z.object({
   deleted_date: z.date().optional().nullable(),
   auto_serial: z.number().optional(),
   status: orderStatus.optional(),
+  billing_name: z.string().optional().nullable(),
+  billing_email: z.string().optional().nullable(),
+  billing_phone: z.string().optional().nullable(),
+  billing_country: z.string().optional().nullable(),
+  billing_region: z.string().optional().nullable(),
+  billing_city: z.string().optional().nullable(),
+  billing_postal_code: z.string().optional().nullable(),
+  billing_line1: z.string().optional().nullable(),
+  billing_line2: z.string().optional().nullable(),
 }) as unknown as z.Schema<OrdersInitializer>;
 
 export const ordersMutator = z.object({
@@ -400,7 +433,7 @@ export const ordersMutator = z.object({
   email: z.string().optional(),
   stripe_session_id: z.string().optional().nullable(),
   stripe_payment_intent_id: z.string().optional().nullable(),
-  amount_total: z.number().optional(),
+  amount_total: z.string().optional(),
   currency: z.string().optional(),
   billing_address_uuid: addressesUuid.optional().nullable(),
   shipping_address_uuid: addressesUuid.optional().nullable(),
@@ -410,12 +443,6 @@ export const ordersMutator = z.object({
   utm_campaign: z.string().optional().nullable(),
   utm_term: z.string().optional().nullable(),
   utm_content: z.string().optional().nullable(),
-  country: z.string().optional().nullable(),
-  region: z.string().optional().nullable(),
-  city: z.string().optional().nullable(),
-  timezone: z.string().optional().nullable(),
-  latitude: z.number().optional().nullable(),
-  longitude: z.number().optional().nullable(),
   occurred_at: z.date().optional(),
   local_occurred_at: z.date().optional().nullable(),
   created_date: z.date().optional(),
@@ -426,4 +453,13 @@ export const ordersMutator = z.object({
   deleted_date: z.date().optional().nullable(),
   auto_serial: z.number().optional(),
   status: orderStatus.optional(),
+  billing_name: z.string().optional().nullable(),
+  billing_email: z.string().optional().nullable(),
+  billing_phone: z.string().optional().nullable(),
+  billing_country: z.string().optional().nullable(),
+  billing_region: z.string().optional().nullable(),
+  billing_city: z.string().optional().nullable(),
+  billing_postal_code: z.string().optional().nullable(),
+  billing_line1: z.string().optional().nullable(),
+  billing_line2: z.string().optional().nullable(),
 }) as unknown as z.Schema<OrdersMutator>;
