@@ -55,12 +55,6 @@ export default interface Addresses {
   /** User who last updated the record */
   updated_by: string | null;
 
-  /** User who deleted the record */
-  deleted_by: string | null;
-
-  /** Timestamp when the record was deleted */
-  deleted_date: Date | null;
-
   /** Auto-incrementing serial number for easier data analysis and sequential referencing */
   auto_serial: number;
 }
@@ -121,12 +115,6 @@ export interface AddressesInitializer {
   /** User who last updated the record */
   updated_by?: string | null;
 
-  /** User who deleted the record */
-  deleted_by?: string | null;
-
-  /** Timestamp when the record was deleted */
-  deleted_date?: Date | null;
-
   /**
    * Auto-incrementing serial number for easier data analysis and sequential referencing
    * Default value: nextval('addresses_auto_serial_seq'::regclass)
@@ -181,12 +169,6 @@ export interface AddressesMutator {
   /** User who last updated the record */
   updated_by?: string | null;
 
-  /** User who deleted the record */
-  deleted_by?: string | null;
-
-  /** Timestamp when the record was deleted */
-  deleted_date?: Date | null;
-
   /** Auto-incrementing serial number for easier data analysis and sequential referencing */
   auto_serial?: number;
 }
@@ -208,8 +190,6 @@ export const addresses = z.object({
   updated_date: z.date().nullable(),
   created_by: z.string().nullable(),
   updated_by: z.string().nullable(),
-  deleted_by: z.string().nullable(),
-  deleted_date: z.date().nullable(),
   auto_serial: z.number(),
 }) as unknown as z.Schema<Addresses>;
 
@@ -228,8 +208,6 @@ export const addressesInitializer = z.object({
   updated_date: z.date().optional().nullable(),
   created_by: z.string().optional().nullable(),
   updated_by: z.string().optional().nullable(),
-  deleted_by: z.string().optional().nullable(),
-  deleted_date: z.date().optional().nullable(),
   auto_serial: z.number().optional(),
 }) as unknown as z.Schema<AddressesInitializer>;
 
@@ -248,7 +226,5 @@ export const addressesMutator = z.object({
   updated_date: z.date().optional().nullable(),
   created_by: z.string().optional().nullable(),
   updated_by: z.string().optional().nullable(),
-  deleted_by: z.string().optional().nullable(),
-  deleted_date: z.date().optional().nullable(),
   auto_serial: z.number().optional(),
 }) as unknown as z.Schema<AddressesMutator>;

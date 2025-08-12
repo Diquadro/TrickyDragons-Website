@@ -44,21 +44,6 @@ export default interface Orders {
   /** JSON array of purchased items from Stripe session */
   line_items: unknown | null;
 
-  /** UTM source parameter identifying the traffic source */
-  utm_source: string | null;
-
-  /** UTM medium parameter identifying the marketing medium */
-  utm_medium: string | null;
-
-  /** UTM campaign parameter identifying the specific campaign */
-  utm_campaign: string | null;
-
-  /** UTM term parameter for paid search keywords */
-  utm_term: string | null;
-
-  /** UTM content parameter for A/B testing and content-targeted ads */
-  utm_content: string | null;
-
   /** Timestamp when the order was placed */
   occurred_at: Date;
 
@@ -76,12 +61,6 @@ export default interface Orders {
 
   /** User who last updated the record */
   updated_by: string | null;
-
-  /** User who deleted the record */
-  deleted_by: string | null;
-
-  /** Timestamp when the record was deleted */
-  deleted_date: Date | null;
 
   /** Auto-incrementing serial number for easier data analysis and sequential referencing */
   auto_serial: number;
@@ -158,21 +137,6 @@ export interface OrdersInitializer {
   /** JSON array of purchased items from Stripe session */
   line_items?: unknown | null;
 
-  /** UTM source parameter identifying the traffic source */
-  utm_source?: string | null;
-
-  /** UTM medium parameter identifying the marketing medium */
-  utm_medium?: string | null;
-
-  /** UTM campaign parameter identifying the specific campaign */
-  utm_campaign?: string | null;
-
-  /** UTM term parameter for paid search keywords */
-  utm_term?: string | null;
-
-  /** UTM content parameter for A/B testing and content-targeted ads */
-  utm_content?: string | null;
-
   /**
    * Timestamp when the order was placed
    * Default value: now()
@@ -196,12 +160,6 @@ export interface OrdersInitializer {
 
   /** User who last updated the record */
   updated_by?: string | null;
-
-  /** User who deleted the record */
-  deleted_by?: string | null;
-
-  /** Timestamp when the record was deleted */
-  deleted_date?: Date | null;
 
   /**
    * Auto-incrementing serial number for easier data analysis and sequential referencing
@@ -278,21 +236,6 @@ export interface OrdersMutator {
   /** JSON array of purchased items from Stripe session */
   line_items?: unknown | null;
 
-  /** UTM source parameter identifying the traffic source */
-  utm_source?: string | null;
-
-  /** UTM medium parameter identifying the marketing medium */
-  utm_medium?: string | null;
-
-  /** UTM campaign parameter identifying the specific campaign */
-  utm_campaign?: string | null;
-
-  /** UTM term parameter for paid search keywords */
-  utm_term?: string | null;
-
-  /** UTM content parameter for A/B testing and content-targeted ads */
-  utm_content?: string | null;
-
   /** Timestamp when the order was placed */
   occurred_at?: Date;
 
@@ -310,12 +253,6 @@ export interface OrdersMutator {
 
   /** User who last updated the record */
   updated_by?: string | null;
-
-  /** User who deleted the record */
-  deleted_by?: string | null;
-
-  /** Timestamp when the record was deleted */
-  deleted_date?: Date | null;
 
   /** Auto-incrementing serial number for easier data analysis and sequential referencing */
   auto_serial?: number;
@@ -364,19 +301,12 @@ export const orders = z.object({
   billing_address_uuid: addressesUuid.nullable(),
   shipping_address_uuid: addressesUuid.nullable(),
   line_items: z.unknown().nullable(),
-  utm_source: z.string().nullable(),
-  utm_medium: z.string().nullable(),
-  utm_campaign: z.string().nullable(),
-  utm_term: z.string().nullable(),
-  utm_content: z.string().nullable(),
   occurred_at: z.date(),
   local_occurred_at: z.date().nullable(),
   created_date: z.date(),
   updated_date: z.date().nullable(),
   created_by: z.string().nullable(),
   updated_by: z.string().nullable(),
-  deleted_by: z.string().nullable(),
-  deleted_date: z.date().nullable(),
   auto_serial: z.number(),
   status: orderStatus,
   billing_name: z.string().nullable(),
@@ -401,19 +331,12 @@ export const ordersInitializer = z.object({
   billing_address_uuid: addressesUuid.optional().nullable(),
   shipping_address_uuid: addressesUuid.optional().nullable(),
   line_items: z.unknown().optional().nullable(),
-  utm_source: z.string().optional().nullable(),
-  utm_medium: z.string().optional().nullable(),
-  utm_campaign: z.string().optional().nullable(),
-  utm_term: z.string().optional().nullable(),
-  utm_content: z.string().optional().nullable(),
   occurred_at: z.date().optional(),
   local_occurred_at: z.date().optional().nullable(),
   created_date: z.date().optional(),
   updated_date: z.date().optional().nullable(),
   created_by: z.string().optional().nullable(),
   updated_by: z.string().optional().nullable(),
-  deleted_by: z.string().optional().nullable(),
-  deleted_date: z.date().optional().nullable(),
   auto_serial: z.number().optional(),
   status: orderStatus.optional(),
   billing_name: z.string().optional().nullable(),
@@ -438,19 +361,12 @@ export const ordersMutator = z.object({
   billing_address_uuid: addressesUuid.optional().nullable(),
   shipping_address_uuid: addressesUuid.optional().nullable(),
   line_items: z.unknown().optional().nullable(),
-  utm_source: z.string().optional().nullable(),
-  utm_medium: z.string().optional().nullable(),
-  utm_campaign: z.string().optional().nullable(),
-  utm_term: z.string().optional().nullable(),
-  utm_content: z.string().optional().nullable(),
   occurred_at: z.date().optional(),
   local_occurred_at: z.date().optional().nullable(),
   created_date: z.date().optional(),
   updated_date: z.date().optional().nullable(),
   created_by: z.string().optional().nullable(),
   updated_by: z.string().optional().nullable(),
-  deleted_by: z.string().optional().nullable(),
-  deleted_date: z.date().optional().nullable(),
   auto_serial: z.number().optional(),
   status: orderStatus.optional(),
   billing_name: z.string().optional().nullable(),
