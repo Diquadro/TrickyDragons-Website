@@ -6,7 +6,6 @@ import {
     validate_refund,
     type Stripe_Webhook_Event,
     type Payment_Intent,
-    type Refund,
 } from '@shared/validations/stripe_webhook.validation'
 import { sql } from '@server/models/postgres_client'
 import { create_action } from '@server/services/create_action'
@@ -315,10 +314,10 @@ async function upsert_order_from_event(params: UpsertOrderFromEventParams): Prom
     // Maybe create billing address
     const billing_address_uuid = session?.customer_details?.address
         ? ((await create_or_get_address(
-              contact.uuid,
-              AddressType.billing,
-              session.customer_details.address,
-          )) as any)
+            contact.uuid,
+            AddressType.billing,
+            session.customer_details.address,
+        )) as any)
         : null
 
     // Check existing order (by session or PI)

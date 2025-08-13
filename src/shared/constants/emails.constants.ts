@@ -2,6 +2,7 @@ import nodemailer, { Transporter } from 'nodemailer'
 
 export const EMAIL_TEMPLATES = {
     WELCOME: 'v1_welcome',
+    WELCOME_RESERVATION: 'v1_welcome_reservation',
 }
 
 export const EMAILS_AVAILABLE: Record<string, { from_formatted: string; transporter: Transporter }> = {
@@ -49,6 +50,30 @@ export const EMAILS_AVAILABLE: Record<string, { from_formatted: string; transpor
             auth: {
                 user: 'apikey',
                 pass: process.env.SENDGRID_API_KEY,
+            },
+        }),
+    },
+    smtp2go_no_reply_prod: {
+        from_formatted: `"Tricky Dragons Team" <noreply@trickydragons.com>`,
+        transporter: nodemailer.createTransport({
+            host: 'mail.smtp2go.com',
+            port: 2525,
+            secure: false, // TLS on port 2525
+            auth: {
+                user: process.env.SMTP2GO_USERNAME_PROD,
+                pass: process.env.SMTP2GO_PASSWORD_PROD,
+            },
+        }),
+    },
+    smtp2go_no_reply_prod_sandbox: {
+        from_formatted: `"Tricky Dragons Team" <noreply@trickydragons.com>`,
+        transporter: nodemailer.createTransport({
+            host: 'mail.smtp2go.com',
+            port: 2525,
+            secure: false, // TLS on port 2525
+            auth: {
+                user: process.env.SMTP2GO_USERNAME_PROD_SANDBOX,
+                pass: process.env.SMTP2GO_PASSWORD_PROD_SANDBOX,
             },
         }),
     },

@@ -7,7 +7,7 @@ export const LINKS = {
     },
     INTERNAL: {
         NEWSLETTER: {
-            UNSUBSCRIBE: `${CLIENT.URL}/email_deactivation`,
+            UNSUBSCRIBE: `${CLIENT.URL}/unsubscribed`,
         },
     },
     API: {

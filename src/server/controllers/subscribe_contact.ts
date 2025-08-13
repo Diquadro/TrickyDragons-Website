@@ -64,18 +64,6 @@ export async function subscribe_contact(req: Request, res: Response) {
 
     if (outcome !== CONTACT_RESPONSE_OUTCOME.NEW_CONTACT) return
     send_meta_event(META_EVENTS.LEAD, null, req, contact.uuid, utm_params)
-
-    await send_welcome_email(contact.email)
-    update_contact_sent_emails(contact, EMAIL_TEMPLATES.WELCOME)
-
-    const send_welcome_email_action_data = create_action_data(
-        req,
-        API.EVENTS.ACTIONS.SEND_WELCOME_EMAIL,
-        contact,
-        { email_template: EMAIL_TEMPLATES.WELCOME },
-        request_data,
-    )
-    create_action(send_welcome_email_action_data)
 }
 
 async function get_contact(email: string) {
@@ -123,13 +111,7 @@ async function update_contact_subscriptions(contact: Contacts, subscription: Con
     return contacts[0]
 }
 
-async function update_contact_sent_emails(contact: Contacts, sent_email: string) {
-    const update_contact = {
-        uuid: contact.uuid,
-        sent_emails: [sent_email, ...(contact.sent_emails ?? [])],
-    }
-    return await sql.update<Contacts[]>('contacts', [update_contact])
-}
+
 
 function create_action_data(
     req: Request,

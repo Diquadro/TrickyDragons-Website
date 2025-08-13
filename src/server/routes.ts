@@ -7,6 +7,7 @@ import { create_analytics_event_http } from '@server/controllers/create_analytic
 import { update_analytics_event_http } from '@server/controllers/update_analytics_event_http'
 import { redirect } from '@server/controllers/redirect'
 import { sendgrid_webhook } from '@server/controllers/sendgrid_webhook'
+import { smtp2go_webhook } from '@server/controllers/smtp2go_webhook'
 import { create_checkout_session } from '@server/controllers/create_checkout_session'
 import { get_session_status } from '@server/controllers/get_session_status'
 
@@ -35,6 +36,7 @@ export function apply_routes(app: express.Application): void {
 
     // Webhooks routes
     app.post(API.ENDPOINTS.WEBHOOKS.SENDGRID, sendgrid_webhook)
+    app.post(API.ENDPOINTS.WEBHOOKS.SMTP2GO, smtp2go_webhook)
     app.post(API.ENDPOINTS.WEBHOOKS.STRIPE, stripe_webhook)
 
     // Stripe routes

@@ -7,7 +7,7 @@ import { redirect_payload_schema } from '@shared/validations/redirect.validation
 import { EMAIL_TEMPLATES } from '@shared/constants/emails.constants'
 
 export const send_welcome_email = async (contact_email: string) => {
-    const from = 'zoho_no_reply'
+    const from = 'smtp2go_no_reply_prod'
     const to = contact_email
     const subject = 'Welcome to the world of Tricky Dragons – Your Adventure Awaits'
     const body_template_path = ENV.LOCAL
@@ -72,7 +72,14 @@ export const send_welcome_email = async (contact_email: string) => {
         },
     }
 
-    const email_options = { sendgrid }
+    // SMTP2GO tracking options with X-Category
+    const smtp2go = {
+        headers: {
+            'X-Category': EMAIL_TEMPLATES.WELCOME,
+        },
+    }
+
+    const email_options = { sendgrid, smtp2go }
 
     return await send_email(from, to, subject, body_template_path, body_template_locals, email_options)
 }

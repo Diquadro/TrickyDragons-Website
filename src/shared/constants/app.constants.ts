@@ -41,6 +41,7 @@ export const API = {
         },
         WEBHOOKS: {
             SENDGRID: `/${VERSION}/webhooks/sendgrid`,
+            SMTP2GO: `/${VERSION}/webhooks/smtp2go`,
             STRIPE: `/${VERSION}/webhooks/stripe`,
         },
         STRIPE: {
@@ -57,6 +58,16 @@ export const API = {
             SEND_WELCOME_EMAIL: `${VERSION}_send_welcome_email`,
             ADD_TO_CART: `${VERSION}_add_to_cart`,
             PURCHASE: `${VERSION}_purchase`,
+
+            // SMTP2GO Email Events
+            SMTP2GO_EMAIL_PROCESSED: `${VERSION}_smtp2go_email_processed`,
+            SMTP2GO_EMAIL_DELIVERED: `${VERSION}_smtp2go_email_delivered`,
+            SMTP2GO_EMAIL_OPENED: `${VERSION}_smtp2go_email_opened`,
+            SMTP2GO_EMAIL_CLICKED: `${VERSION}_smtp2go_email_clicked`,
+            SMTP2GO_EMAIL_BOUNCED: `${VERSION}_smtp2go_email_bounced`,
+            SMTP2GO_EMAIL_SPAM: `${VERSION}_smtp2go_email_spam`,
+            SMTP2GO_EMAIL_UNSUBSCRIBED: `${VERSION}_smtp2go_email_unsubscribed`,
+            SMTP2GO_EMAIL_REJECTED: `${VERSION}_smtp2go_email_rejected`,
         },
 
         ORIGINS: {

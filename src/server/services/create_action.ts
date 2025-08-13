@@ -9,35 +9,69 @@ import { Utm_Params_Schema } from '@shared/schemas/utm_params.schema'
 
 interface action_data {
     action: string
-    req: Request
     contact_uuid: ContactsUuid
     details?: Record<string, any>
-    utm_params?: Utm_Params_Schema
-    timezone?: string
-    order_uuid?: OrdersUuid
     outcome?: ActionOutcome
+    order_uuid?: OrdersUuid
+
+    // HTTP Request context (for regular endpoints)
+    req?: Request
+    utm_params?: Utm_Params_Schema
+
+    // Manual override fields (for webhooks or custom actions)
+    endpoint?: string
+    origin?: string
+    occurred_at?: Date
+    local_occurred_at?: Date
+    timezone?: string
+    city?: string
+    region?: string
+    country?: string
+    latitude?: number
+    longitude?: number
+    payload?: Record<string, any>
 }
 
 export async function create_action(action_data: action_data) {
-    const { action, req, contact_uuid, details, utm_params, timezone, order_uuid, outcome } = action_data
+    const {
+        action,
+        req,
+        contact_uuid,
+        details,
+        utm_params,
+        timezone,
+        order_uuid,
+        outcome,
+        endpoint,
+        origin,
+        occurred_at,
+        local_occurred_at,
+        city,
+        region,
+        country,
+        latitude,
+        longitude,
+        payload
+    } = action_data
 
     const action_event: ActionsInitializer = {
         action: action,
         direction: ActionDirection.inbound,
-        endpoint: `${req.method} - ${req.originalUrl}`,
-        origin: req.get('Referrer'),
-        occurred_at: req.time_infos?.utc_occurred_at || new Date(),
-        local_occurred_at: req.time_infos?.local_occurred_at || null,
+        endpoint: endpoint || (req ? `${req.method} - ${req.originalUrl}` : 'UNKNOWN'),
+        origin: origin || (req ? req.get('Referrer') : null),
+        occurred_at: occurred_at || (req ? req.time_infos?.utc_occurred_at : null) || new Date(),
+        local_occurred_at: local_occurred_at || (req ? req.time_infos?.local_occurred_at : null) || null,
         outcome: outcome ?? ActionOutcome.success,
         details: details,
+        payload: payload || null,
         contact_uuid: contact_uuid,
         order_uuid: order_uuid,
-        city: req.geo_infos?.city,
-        region: req.geo_infos?.region,
-        country: req.geo_infos?.country,
-        timezone: timezone ?? req.geo_infos?.timezone,
-        latitude: req.geo_infos?.latitude,
-        longitude: req.geo_infos?.longitude,
+        city: city || (req ? req.geo_infos?.city : null),
+        region: region || (req ? req.geo_infos?.region : null),
+        country: country || (req ? req.geo_infos?.country : null),
+        timezone: timezone || (req ? req.geo_infos?.timezone : null),
+        latitude: latitude || (req ? req.geo_infos?.latitude : null),
+        longitude: longitude || (req ? req.geo_infos?.longitude : null),
         utm_source: utm_params?.utm_source,
         utm_medium: utm_params?.utm_medium,
         utm_campaign: utm_params?.utm_campaign,
@@ -47,3 +81,5 @@ export async function create_action(action_data: action_data) {
 
     return sql.insert<Actions[]>('actions', [action_event])
 }
+
+

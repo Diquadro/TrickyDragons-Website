@@ -7,6 +7,7 @@ import { apply_middlewares } from '@server/middlewares/middlewares'
 import { apply_routes } from '@server/routes'
 import { sql } from '@server/models/postgres_client'
 import { API } from '@shared/constants/app.constants'
+import { start_all_cron_jobs, stop_all_cron_jobs } from '@server/crons'
 
 // Main server initialization function
 async function start_server() {
@@ -19,8 +20,21 @@ async function start_server() {
     // Apply routes
     apply_routes(app)
 
+    // Start cron jobs
+    start_all_cron_jobs()
+
     // Graceful shutdown to close database connections
     process.on('SIGINT', async () => {
+        console.log('🛑 Graceful shutdown initiated...')
+        stop_all_cron_jobs()
+        await sql.end()
+        console.log('Database pool closed.')
+        process.exit()
+    })
+
+    process.on('SIGTERM', async () => {
+        console.log('🛑 SIGTERM received - graceful shutdown initiated...')
+        stop_all_cron_jobs()
         await sql.end()
         console.log('Database pool closed.')
         process.exit()

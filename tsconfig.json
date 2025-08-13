@@ -8,15 +8,28 @@
         "module": "CommonJS",
         "moduleResolution": "node",
         "paths": {
-            "@client/*": ["src/client/*"],
-            "@database/*": ["src/database/*"],
-            "@server/*": ["src/server/*"],
-            "@shared/*": ["src/shared/*"]
+            "@client/*": [
+                "src/client/*"
+            ],
+            "@database/*": [
+                "src/database/*"
+            ],
+            "@server/*": [
+                "src/server/*"
+            ],
+            "@shared/*": [
+                "src/shared/*"
+            ]
         },
         "skipLibCheck": true,
         "sourceMap": true,
         "strict": true,
         "target": "ESNext"
     },
-    "include": ["./src"]
+    "include": [
+        "./src"
+    ],
+    "exclude": [
+        "./src/**/*.config.mjs"
+    ]
 }

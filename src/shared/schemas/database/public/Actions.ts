@@ -95,6 +95,9 @@ export default interface Actions {
 
   /** Reference to the order associated with this action, particularly useful for tracking webhook events and order-related activities */
   order_uuid: OrdersUuid | null;
+
+  /** Complete webhook payload or request data - stores full original data for reference and debugging */
+  payload: unknown | null;
 }
 
 /**
@@ -188,6 +191,9 @@ export interface ActionsInitializer {
 
   /** Reference to the order associated with this action, particularly useful for tracking webhook events and order-related activities */
   order_uuid?: OrdersUuid | null;
+
+  /** Complete webhook payload or request data - stores full original data for reference and debugging */
+  payload?: unknown | null;
 }
 
 /**
@@ -275,6 +281,9 @@ export interface ActionsMutator {
 
   /** Reference to the order associated with this action, particularly useful for tracking webhook events and order-related activities */
   order_uuid?: OrdersUuid | null;
+
+  /** Complete webhook payload or request data - stores full original data for reference and debugging */
+  payload?: unknown | null;
 }
 
 export const actionsUuid = z.string() as unknown as z.Schema<ActionsUuid>;
@@ -307,6 +316,7 @@ export const actions = z.object({
   local_occurred_at: z.date().nullable(),
   auto_serial: z.number(),
   order_uuid: ordersUuid.nullable(),
+  payload: z.unknown().nullable(),
 }) as unknown as z.Schema<Actions>;
 
 export const actionsInitializer = z.object({
@@ -337,6 +347,7 @@ export const actionsInitializer = z.object({
   local_occurred_at: z.date().optional().nullable(),
   auto_serial: z.number().optional(),
   order_uuid: ordersUuid.optional().nullable(),
+  payload: z.unknown().optional().nullable(),
 }) as unknown as z.Schema<ActionsInitializer>;
 
 export const actionsMutator = z.object({
@@ -367,4 +378,5 @@ export const actionsMutator = z.object({
   local_occurred_at: z.date().optional().nullable(),
   auto_serial: z.number().optional(),
   order_uuid: ordersUuid.optional().nullable(),
+  payload: z.unknown().optional().nullable(),
 }) as unknown as z.Schema<ActionsMutator>;

@@ -12,14 +12,11 @@ export async function send_email(
     body_template_locals: any = {},
     email_options: Email_Options = {},
 ) {
-    // Force SendGrid if explicitly requested (for testing)
-    if (process.env.SENDGRID_FORCE === 'true') {
-        from = 'sendgrid_smtp'
-    } else if (ENV.LOCAL) {
+    if (ENV.LOCAL) {
         // Test Environment set from with the test email
         from = 'ethereal_test_local'
     } else if (ENV.DEVELOPMENT) {
-        from = 'zoho_test_dev'
+        from = 'smtp2go_no_reply_prod_sandbox'
     }
 
     // Render Pug template and apply styles using Juice
@@ -44,6 +41,11 @@ export async function send_email(
     // SendGrid-specific options via direct headers
     if (from === 'sendgrid_smtp' && email_options.sendgrid?.headers) {
         mail_options.headers = email_options.sendgrid.headers
+    }
+
+    // SMTP2GO-specific options via direct headers
+    if ((from === 'smtp2go_no_reply_prod_sandbox' || from === 'smtp2go_no_reply_prod') && email_options.smtp2go?.headers) {
+        mail_options.headers = email_options.smtp2go.headers
     }
 
     return await transporter.sendMail(mail_options)
