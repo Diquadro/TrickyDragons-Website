@@ -16,7 +16,7 @@ export const send_welcome_non_vip_1_email = async (contact_email: string) => {
 
     // Create redirect payloads with simplified structure
     const reservation_payload = redirect_payload_schema.parse({
-        redirect_url: `${LINKS.INTERNAL.RESERVATION.WELCOME}?email=${Base64_Url.encode_json(contact_email)}`,
+        redirect_url: `${LINKS.INTERNAL.RESERVATION.WELCOME}?email=${Base64_Url.encode(contact_email)}`,
         email: contact_email,
         utm_params: {
             utm_source: 'email',
