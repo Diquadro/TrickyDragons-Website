@@ -3,7 +3,6 @@ import { sql } from '@server/models/postgres_client'
 import { send_welcome_email } from '@shared/templates/emails/welcome/welcome'
 import { EMAIL_TEMPLATES } from '@shared/constants/emails.constants'
 import Contacts from '@shared/schemas/database/public/Contacts'
-import Orders from '@shared/schemas/database/public/Orders'
 import { ENV } from '@shared/constants/app.constants'
 import { check_has_kse_reservation } from '@server/services/check_kse_reservation'
 import ContactSubscriptions from '@shared/schemas/database/public/ContactSubscriptions'
@@ -23,7 +22,6 @@ import ContactSubscriptions from '@shared/schemas/database/public/ContactSubscri
  */
 
 const time_interval = ENV.PRODUCTION ? 9 * 60 * 1000 : 2 * 60 * 1000 // Use different intervals for production/local
-const query_interval = new Date(Date.now() - time_interval)
 const cron_interval = ENV.PRODUCTION ? '*/10 * * * *' : '*/2 * * * *' // Use different intervals for production/local
 
 export const welcome_email_cron = new CronJob(
@@ -104,8 +102,8 @@ async function get_eligible_contacts(): Promise<Contacts[]> {
                     OR sent_emails @> ARRAY[${EMAIL_TEMPLATES.WELCOME_RESERVATION}]::text[]
                 )
             )
-            -- Must have been created at least 15 minutes ago
-            AND created_date <= ${query_interval}
+            -- Must have been created at least the specified time ago
+            AND created_date <= NOW() - INTERVAL '${Math.floor(time_interval / 1000)} seconds'
         ORDER BY created_date ASC
         LIMIT 50 -- Process max 50 contacts per run to avoid overwhelming
     `
