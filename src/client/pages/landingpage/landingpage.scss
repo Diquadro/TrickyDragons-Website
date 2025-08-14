@@ -69,6 +69,7 @@ $font-family-bebas-neue-pro-semi-expanded:
             margin-bottom: -50px;
             // margin-bottom: -50px;
             margin-left: -$mobile-body-margin;
+            aspect-ratio: 1/1;
             width: calc(100% + #{$mobile-body-margin * 2});
             max-width: 600px;
             height: auto;
@@ -267,6 +268,7 @@ $font-family-bebas-neue-pro-semi-expanded:
 
         > img {
             border-radius: $border-radius;
+            aspect-ratio: 1/1;
             width: 100%;
         }
 
@@ -317,6 +319,7 @@ $font-family-bebas-neue-pro-semi-expanded:
 
         > img {
             grid-area: image;
+            aspect-ratio: 1/1;
             width: 100%;
             max-width: 600px;
         }
@@ -534,6 +537,7 @@ $font-family-bebas-neue-pro-semi-expanded:
             grid-area: image;
             place-self: center;
             border-radius: $border-radius;
+            aspect-ratio: 1/1;
             width: 90%;
             max-width: 500px;
         }
