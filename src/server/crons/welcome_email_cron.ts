@@ -6,6 +6,7 @@ import Contacts from '@shared/schemas/database/public/Contacts'
 import Orders from '@shared/schemas/database/public/Orders'
 import { ENV } from '@shared/constants/app.constants'
 import { check_has_kse_reservation } from '@server/services/check_kse_reservation'
+import ContactSubscriptions from '@shared/schemas/database/public/ContactSubscriptions'
 
 /**
  * Welcome Email Cron Job
@@ -21,10 +22,12 @@ import { check_has_kse_reservation } from '@server/services/check_kse_reservatio
  * Runs every 10 minutes to process pending welcome emails.
  */
 
-const interval = ENV.PRODUCTION ? '*/10 * * * *' : '*/2 * * * *' // Use different intervals for production/local
+const time_interval = ENV.PRODUCTION ? 9 * 60 * 1000 : 2 * 60 * 1000 // Use different intervals for production/local
+const query_interval = new Date(Date.now() - time_interval)
+const cron_interval = ENV.PRODUCTION ? '*/10 * * * *' : '*/2 * * * *' // Use different intervals for production/local
 
 export const welcome_email_cron = new CronJob(
-    interval,
+    cron_interval,
     async () => {
         console.log('🕒 Running welcome email cron job...')
 
@@ -88,13 +91,11 @@ export async function process_welcome_emails() {
  * - Created at least 15 minutes ago (to allow funnel completion)
  */
 async function get_eligible_contacts(): Promise<Contacts[]> {
-    const fifteen_minutes_ago = new Date(Date.now() - 15 * 60 * 1000) // 15 minutes ago
-
     const contacts = await sql<Contacts[]>`
         SELECT * FROM contacts 
         WHERE 
             -- Must be subscribed to newsletter
-            subscriptions @> '["newsletter"]'::jsonb
+            subscriptions @> ARRAY[${ContactSubscriptions.newsletter}]::contact_subscriptions[]
             -- Must not have received welcome email yet
             AND (
                 sent_emails IS NULL 
@@ -104,7 +105,7 @@ async function get_eligible_contacts(): Promise<Contacts[]> {
                 )
             )
             -- Must have been created at least 15 minutes ago
-            AND created_date <= ${fifteen_minutes_ago}
+            AND created_date <= ${query_interval}
         ORDER BY created_date ASC
         LIMIT 50 -- Process max 50 contacts per run to avoid overwhelming
     `

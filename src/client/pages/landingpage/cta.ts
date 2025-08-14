@@ -12,12 +12,9 @@ import ContactSubscriptions from '@shared/schemas/database/public/ContactSubscri
 import { get_utm_params } from '@client/ts/utm_params'
 import { get_timezone } from '@client/ts/timezone'
 import { API, ENV } from '@shared/constants/app.constants'
+import { SUBSCRIPTION_EVENT, SubscriptionEvent } from '@shared/constants/subscription-events.constants'
 import AnalyticsEventName from '@shared/schemas/database/public/AnalyticsEventName'
 import { track_custom_event } from '@client/ts/analytics_events'
-import {
-    Get_Subscriber_Count_Response,
-    get_subscriber_count_response_schema,
-} from '@shared/validations/get_subscriber_count.validation'
 import { Base64_Url } from '@shared/utils/base64_url'
 
 const EMAIL_REGEX =
@@ -26,7 +23,7 @@ const EMAIL_REGEX =
 /**
  * Redirect to appropriate page based on event and reservation status
  */
-function redirect_to_page(event: string, email?: string, has_reserved?: boolean) {
+function redirect_to_page(event: SubscriptionEvent, email?: string, has_reserved?: boolean) {
     const current_url = new URL(window.location.href)
     let target_url: URL
 
@@ -164,7 +161,7 @@ async function handle_form_submit(event: Event): Promise<void> {
                 has_reserved: result.data.has_reserved,
                 ...utm_params,
             })
-            redirect_to_page('resubscribed', email, result.data.has_reserved)
+            redirect_to_page(SUBSCRIPTION_EVENT.RESUBSCRIBED, email, result.data.has_reserved)
         } else if (result.data.outcome === CONTACT_RESPONSE_OUTCOME.ALREADY_SUBSCRIBED) {
             window.umami?.track('already-subscribed', {
                 ...utm_params,
@@ -177,7 +174,7 @@ async function handle_form_submit(event: Event): Promise<void> {
                 has_reserved: result.data.has_reserved,
                 ...utm_params,
             })
-            redirect_to_page('already-subscribed', email, result.data.has_reserved)
+            redirect_to_page(SUBSCRIPTION_EVENT.ALREADY_SUBSCRIBED, email, result.data.has_reserved)
         } else if (result.data.outcome === CONTACT_RESPONSE_OUTCOME.NEW_CONTACT) {
             window.umami?.track('subscribed_to_newsletter', {
                 ...utm_params,
@@ -190,7 +187,7 @@ async function handle_form_submit(event: Event): Promise<void> {
                 has_reserved: result.data.has_reserved,
                 ...utm_params,
             })
-            redirect_to_page('new-contact', email, result.data.has_reserved)
+            redirect_to_page(SUBSCRIPTION_EVENT.NEW_CONTACT, email, result.data.has_reserved)
         }
 
         email_input.value = ''

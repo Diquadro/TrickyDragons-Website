@@ -18,6 +18,12 @@ document.querySelector('#payment-form')!.addEventListener('submit', handleSubmit
 
 // Fetches a Checkout Session and captures the client secret
 async function initialize() {
+    show_spinner(true)
+    const emailFromUrl = getEmailFromUrl()
+    if (!emailFromUrl) {
+        window.location.href = `\\`
+    }
+
     // Preserve existing query params in return URL (backend will add session_id)
     const currentParams = new URLSearchParams(window.location.search)
     const returnParams = new URLSearchParams()
@@ -40,7 +46,7 @@ async function initialize() {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
             product_id: STRIPE.PRODUCT_MAP.TD_RESERVATION,
-            email: getEmailFromUrl(),
+            email: emailFromUrl,
             return_url: return_url,
         }),
     })
@@ -74,6 +80,7 @@ async function initialize() {
     paymentElement.mount('#payment-element')
 
     document.querySelector('#button-text')!.textContent = `Pay ${checkout.session().total.total.amount} now`
+    show_spinner(false)
 }
 
 function create_items(session: any) {

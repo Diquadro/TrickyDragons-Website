@@ -1,5 +1,58 @@
 # AI Journal - TrickyDragons Website
 
+## Newsletter Unsubscription Automation
+
+**Date**: 2025-08-14
+**Type**: Feature Implementation
+
+**Changes Made**:
+
+- Implemented automatic newsletter unsubscription in `src/client/pages/unsubscribed/unsubscribed.ts`:
+    - Added URL parameter decoding for `data64` containing email and UTM parameters
+    - Integrated with existing `unsubscribe_contact` API endpoint
+    - Added proper request validation using `unsubscribe_contact_request_schema`
+    - Implemented comprehensive analytics tracking:
+        - Custom analytics using `AnalyticsEventName.unsubscribe_to_newsletter`
+        - Umami tracking with `unsubscribed_from_newsletter` event
+        - PostHog tracking with `unsubscribed_from_newsletter` event
+    - Added dynamic API endpoint URL handling (local vs production environment)
+    - Used `Unsubscribe_Contact_Response` type directly instead of custom interface
+    - Added error handling and user feedback through page message updates
+
+**Reasoning**:
+
+- Automates the unsubscription process when users click unsubscribe links from emails
+- Follows established patterns in the codebase for request validation and API calls
+- Maintains analytics tracking for user behavior insights
+- Provides clear user feedback about the unsubscription status
+
+**Context**:
+
+- Links from welcome emails include encoded `data64` payload with email and UTM parameters
+- Uses existing backend controller `unsubscribe_contact.ts` with proper validation
+- Leverages the existing analytics system for tracking unsubscription events
+- No email hashing implemented as per user requirements for simplicity
+
+**Alternatives Considered**:
+
+- Manual unsubscription form: Rejected in favor of automatic processing for better UX
+- Including session tracking: Removed to match validation schema requirements
+- Email hashing for privacy: Removed per user preference for simpler implementation
+
+**Future Implications**:
+
+- Users clicking email unsubscribe links will be automatically unsubscribed
+- Analytics will track unsubscription events for newsletter performance monitoring
+- Page provides clear feedback to users about their unsubscription status
+- Foundation in place for potential re-subscription functionality
+
+**Testing/Verification**:
+
+- Code compiles without TypeScript errors
+- Request body validation matches backend schema expectations
+- Analytics tracking follows established patterns
+- Error handling covers network failures and invalid payloads
+
 ## Reservation Status Feature Integration
 
 **Date**: 2025-01-14
