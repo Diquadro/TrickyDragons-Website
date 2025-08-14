@@ -1,3 +1,4 @@
+import '@client/layouts/layout_common/layout_common'
 import './checkout.scss'
 import { API, CLIENT, ENV, STRIPE } from '@shared/constants/app.constants'
 import { show_spinner } from '@client/components/spinner/spinner'

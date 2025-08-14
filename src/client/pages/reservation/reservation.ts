@@ -1,3 +1,4 @@
+import '@client/layouts/layout_common/layout_common'
 import './reservation.scss'
 import { get_utm_params } from '@client/ts/utm_params'
 import { get_timezone } from '@client/ts/timezone'

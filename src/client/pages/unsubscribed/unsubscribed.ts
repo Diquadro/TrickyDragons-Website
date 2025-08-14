@@ -1,3 +1,4 @@
+import '@client/layouts/layout_common/layout_common'
 import './unsubscribed.scss'
 import posthog from 'posthog-js'
 import { Base64_Url } from '@shared/utils/base64_url'

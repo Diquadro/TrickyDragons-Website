@@ -1,3 +1,4 @@
+import '@client/layouts/layout_common/layout_common'
 import './thank-you-1-dollar.scss'
 import { API, ENV } from '@shared/constants/app.constants'
 import { Base64_Url } from '@shared/utils/base64_url'

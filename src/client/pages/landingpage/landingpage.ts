@@ -1,3 +1,4 @@
+import '@client/layouts/layout_common/layout_common'
 import './landingpage.scss'
 import '@client/components/spinner/spinner'
 import './cta'
