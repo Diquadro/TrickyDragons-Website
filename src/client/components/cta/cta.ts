@@ -284,8 +284,11 @@ async function handle_form_submit(event: Event): Promise<void> {
             // User is already subscribed, so show the message
             mark_user_as_subscribed()
         } else if (result.data.outcome === CONTACT_RESPONSE_OUTCOME.NEW_CONTACT) {
-            window.umami?.track('subscribed_to_newsletter', { ...utm_params })
-            posthog.capture('subscribed_to_newsletter')
+            window.umami?.track('subscribed_to_newsletter', {
+                ...utm_params,
+                has_reserved: result.data.has_reserved,
+            })
+            posthog.capture('subscribed_to_newsletter', { has_reserved: result.data.has_reserved })
             success_message?.classList.remove('hidden')
 
             show_modal('modal_email_sent')
@@ -295,6 +298,7 @@ async function handle_form_submit(event: Event): Promise<void> {
         track_custom_event(AnalyticsEventName.subscribe_to_newsletter, {
             email: email,
             outcome: result.data.outcome,
+            has_reserved: result.data.has_reserved,
             ...utm_params,
         })
 

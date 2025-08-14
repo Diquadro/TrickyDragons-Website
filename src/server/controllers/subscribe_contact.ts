@@ -15,6 +15,7 @@ import { send_meta_event } from '../services/send_meta_event'
 import { create_action } from '../services/create_action'
 import { send_welcome_email } from '@shared/templates/emails/welcome/welcome'
 import { EMAIL_TEMPLATES } from '@shared/constants/emails.constants'
+import { check_has_kse_reservation_by_email } from '@server/services/check_kse_reservation'
 
 export async function subscribe_contact(req: Request, res: Response) {
     const request_data = validate_request(req.body)
@@ -39,6 +40,9 @@ export async function subscribe_contact(req: Request, res: Response) {
         message = 'New contact created and subscribed successfully'
     }
 
+    // Check if user has KSE reservation
+    const has_reserved = await check_has_kse_reservation_by_email(email)
+
     const response = validate_response({
         success: true,
         message,
@@ -46,6 +50,7 @@ export async function subscribe_contact(req: Request, res: Response) {
             contact_id: contact.uuid,
             outcome,
             processed_at: new Date().toISOString(),
+            has_reserved,
         },
     })
 
@@ -57,7 +62,7 @@ export async function subscribe_contact(req: Request, res: Response) {
         req,
         API.EVENTS.ACTIONS.SUBSCRIBE_CONTACT,
         contact,
-        { outcome },
+        { outcome, has_reserved },
         request_data,
     )
     create_action(subscribe_contact_action_data)
@@ -110,8 +115,6 @@ async function update_contact_subscriptions(contact: Contacts, subscription: Con
 
     return contacts[0]
 }
-
-
 
 function create_action_data(
     req: Request,

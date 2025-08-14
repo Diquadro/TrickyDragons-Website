@@ -5,6 +5,7 @@ import { Base64_Url } from '@shared/utils/base64_url'
 import { API, ENV } from '@shared/constants/app.constants'
 ;(function main() {
     main_button_handler()
+    secondary_button_handler()
 })()
 
 function main_button_handler() {
@@ -45,6 +46,21 @@ function main_button_handler() {
     )
 }
 
+function secondary_button_handler() {
+    const secondary_button = document.querySelector('.cta-secondary-button')
+    if (!secondary_button) return
+
+    const has_reserved = get_has_reserved_from_url()
+
+    if (has_reserved) {
+        secondary_button.childNodes.forEach((child) => {
+            if (child instanceof HTMLAnchorElement) {
+                child.href = '/welcome-back'
+            }
+        })
+    }
+}
+
 function get_email_from_url(): string | null {
     const urlParams = new URLSearchParams(window.location.search)
     const emailFromUrl = urlParams.get('email')
@@ -54,4 +70,10 @@ function get_email_from_url(): string | null {
     } catch {
         return null
     }
+}
+
+function get_has_reserved_from_url(): boolean {
+    const urlParams = new URLSearchParams(window.location.search)
+    const hasReservedFromUrl = urlParams.get('has_reserved')
+    return hasReservedFromUrl === 'true'
 }

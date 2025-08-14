@@ -24,6 +24,7 @@ export const subscribe_contact_response_schema = z.object({
             contact_id: z.string().optional(),
             processed_at: z.string().optional(),
             outcome: contact_response_outcome_enum,
+            has_reserved: z.boolean(),
         })
         .optional(),
 })

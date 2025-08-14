@@ -1,5 +1,63 @@
 # AI Journal - TrickyDragons Website
 
+## Reservation Status Feature Integration
+
+**Date**: 2025-01-14
+**Type**: Feature Enhancement
+
+**Changes Made**:
+
+- Enhanced `Subscribe_Contact_Response` schema with new `has_reserved` boolean parameter in `subscribe_contact.validation.ts`
+- Created centralized `check_kse_reservation.ts` utility module with reusable functions:
+    - `check_has_kse_reservation(contact_uuid)` - check by contact UUID
+    - `check_has_kse_reservation_by_email(email)` - check by email address
+- Modified `subscribe_contact.ts` controller to:
+    - Import and use new reservation check utility
+    - Calculate `has_reserved` status for each subscription response
+    - Include reservation status in action tracking details
+- Updated `cta.ts` (landingpage) with intelligent redirect logic:
+    - Modified `redirect_to_page()` to accept `has_reserved` parameter
+    - Users with existing reservations redirect to `/welcome-back` instead of `/reservation`
+    - Enhanced analytics tracking to include `has_reserved` in all events (Umami, PostHog, custom analytics)
+- Updated `cta.ts` (component) to include `has_reserved` in analytics tracking
+- Refactored `welcome_email_cron.ts` to use centralized reservation check utility
+- Enhanced tracking data for all systems (Umami, PostHog, custom analytics) with reservation status
+
+**Reasoning**:
+
+- Prevents duplicate reservation funnel for users who already purchased "Tricky Dragons KSE Reservation"
+- Improves user experience by directing existing customers to appropriate welcome-back page
+- Centralizes reservation logic to prevent code duplication and ensure consistency
+- Maintains comprehensive analytics tracking to understand user behavior patterns
+- Follows established codebase patterns for type safety and validation
+
+**Context**:
+
+- Reservation detection based on `line_items` description containing "tricky dragons kse reservation"
+- Only considers orders with `status = 'paid'` for valid reservations
+- Email-based lookup allows detection even for users not yet in contacts table
+- Preserves UTM parameters and email encoding for attribution tracking
+
+**Alternatives Considered**:
+
+- Contact UUID-only lookup: Rejected because some users might not have contact records yet
+- Client-side reservation checking: Rejected for security and performance reasons
+- Database join approach: Rejected in favor of separate service call for cleaner separation of concerns
+
+**Future Implications**:
+
+- Reservation status will be tracked in all analytics events for better user journey understanding
+- Welcome-back page can be enhanced with personalized content for existing customers
+- Additional reservation-based business logic can leverage the centralized utility functions
+- Analytics data will provide insights into conversion patterns between newsletter and reservations
+
+**Testing/Verification**:
+
+- TypeScript compilation successful for all modified files
+- Zod validation schemas properly extended with new field
+- Client-side redirect logic handles all subscription outcomes with reservation status
+- Analytics events include reservation data across all tracking systems
+
 ## Session-Based Page Tracking System
 
 **Date**: 2024-12-19

@@ -5,6 +5,7 @@ import { EMAIL_TEMPLATES } from '@shared/constants/emails.constants'
 import Contacts from '@shared/schemas/database/public/Contacts'
 import Orders from '@shared/schemas/database/public/Orders'
 import { ENV } from '@shared/constants/app.constants'
+import { check_has_kse_reservation } from '@server/services/check_kse_reservation'
 
 /**
  * Welcome Email Cron Job
@@ -109,34 +110,6 @@ async function get_eligible_contacts(): Promise<Contacts[]> {
     `
 
     return contacts
-}
-
-/**
- * Check if contact has a KSE (Kickstarter Edition) reservation order
- * @param contact_uuid Contact UUID to check
- * @returns true if contact has KSE reservation order
- */
-async function check_has_kse_reservation(contact_uuid: string): Promise<boolean> {
-    const orders = await sql<Orders[]>`
-        SELECT line_items FROM orders 
-        WHERE contact_uuid = ${contact_uuid}
-        AND line_items IS NOT NULL
-    `
-
-    for (const order of orders) {
-        if (order.line_items && Array.isArray(order.line_items)) {
-            for (const item of order.line_items as any[]) {
-                if (
-                    item.description &&
-                    item.description.toLowerCase().includes('tricky dragons kse reservation')
-                ) {
-                    return true
-                }
-            }
-        }
-    }
-
-    return false
 }
 
 /**
