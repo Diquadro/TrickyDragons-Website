@@ -59,19 +59,6 @@ export const send_welcome_email = async (contact_email: string) => {
         email_deactivation: `${API.URL}${redirect_endpoint}?data64=${email_deactivation_url_data64}`,
     }
 
-    // Email sending options with tracking
-    const sendgrid = {
-        headers: {
-            'X-SMTPAPI': JSON.stringify({
-                category: EMAIL_TEMPLATES.WELCOME,
-                unique_args: {
-                    environment: process.env.APP_ENV || 'development',
-                    template: EMAIL_TEMPLATES.WELCOME,
-                },
-            }),
-        },
-    }
-
     // SMTP2GO tracking options with X-Category
     const smtp2go = {
         headers: {
@@ -79,7 +66,7 @@ export const send_welcome_email = async (contact_email: string) => {
         },
     }
 
-    const email_options = { sendgrid, smtp2go }
+    const email_options = { smtp2go }
 
     return await send_email(from, to, subject, body_template_path, body_template_locals, email_options)
 }

@@ -6,6 +6,7 @@ import Contacts from '@shared/schemas/database/public/Contacts'
 import { ENV } from '@shared/constants/app.constants'
 import { check_has_kse_reservation } from '@server/services/check_kse_reservation'
 import ContactSubscriptions from '@shared/schemas/database/public/ContactSubscriptions'
+import { send_welcome_non_vip_1_email } from '@shared/templates/emails/welcome_non_vip_1/welcome_non_vip_1'
 
 /**
  * Welcome Email Cron Job
@@ -66,8 +67,9 @@ export async function process_welcome_emails() {
                 await mark_email_as_sent(contact.uuid, EMAIL_TEMPLATES.WELCOME_RESERVATION)
             } else {
                 // Send standard welcome email
-                await send_welcome_email(contact.email)
-                await mark_email_as_sent(contact.uuid, EMAIL_TEMPLATES.WELCOME)
+                // await send_welcome_email(contact.email)
+                await send_welcome_non_vip_1_email(contact.email)
+                await mark_email_as_sent(contact.uuid, EMAIL_TEMPLATES.WELCOME_NON_VIP_1)
 
                 console.log(`✅ Sent welcome email to ${contact.email}`)
             }
@@ -102,6 +104,7 @@ async function get_eligible_contacts(): Promise<Contacts[]> {
                 OR NOT (
                     sent_emails @> ARRAY[${EMAIL_TEMPLATES.WELCOME}]::text[]
                     OR sent_emails @> ARRAY[${EMAIL_TEMPLATES.WELCOME_RESERVATION}]::text[]
+                    OR sent_emails @> ARRAY[${EMAIL_TEMPLATES.WELCOME_NON_VIP_1}]::text[]
                 )
             )
             -- Must have been created at least the specified time ago

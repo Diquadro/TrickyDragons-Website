@@ -38,13 +38,11 @@ export async function send_email(
     mail_options.subject = subject
     mail_options.html = html
 
-    // SendGrid-specific options via direct headers
-    if (from === 'sendgrid_smtp' && email_options.sendgrid?.headers) {
-        mail_options.headers = email_options.sendgrid.headers
-    }
-
     // SMTP2GO-specific options via direct headers
-    if ((from === 'smtp2go_no_reply_prod_sandbox' || from === 'smtp2go_no_reply_prod') && email_options.smtp2go?.headers) {
+    if (
+        (from === 'smtp2go_no_reply_prod_sandbox' || from === 'smtp2go_no_reply_prod') &&
+        email_options.smtp2go?.headers
+    ) {
         mail_options.headers = email_options.smtp2go.headers
     }
 

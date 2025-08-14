@@ -9,6 +9,9 @@ export const LINKS = {
         NEWSLETTER: {
             UNSUBSCRIBE: `${CLIENT.URL}/unsubscribed`,
         },
+        RESERVATION: {
+            WELCOME: `${CLIENT.URL}/reservation`,
+        },
     },
     API: {
         REDIRECT: `${API.URL}${API.ENDPOINTS.REDIRECTS.REDIRECT}`,

@@ -3,6 +3,7 @@ import nodemailer, { Transporter } from 'nodemailer'
 export const EMAIL_TEMPLATES = {
     WELCOME: 'v1_welcome',
     WELCOME_RESERVATION: 'v1_welcome_reservation',
+    WELCOME_NON_VIP_1: 'v1_welcome_non_vip_1',
 }
 
 export const EMAILS_AVAILABLE: Record<string, { from_formatted: string; transporter: Transporter }> = {
@@ -74,6 +75,30 @@ export const EMAILS_AVAILABLE: Record<string, { from_formatted: string; transpor
             auth: {
                 user: process.env.SMTP2GO_USERNAME_PROD_SANDBOX,
                 pass: process.env.SMTP2GO_PASSWORD_PROD_SANDBOX,
+            },
+        }),
+    },
+    smtp2go_daniele_prod: {
+        from_formatted: `"Daniele D'Ambrosio from Tricky Dragons" <info@trickydragons.com>`,
+        transporter: nodemailer.createTransport({
+            host: 'mail.smtp2go.com',
+            port: 2525,
+            secure: false, // TLS on port 2525
+            auth: {
+                user: process.env.SMTP2GO_USERNAME_PROD,
+                pass: process.env.SMTP2GO_PASSWORD_PROD,
+            },
+        }),
+    },
+    smtp2go_daniele_no_reply_prod: {
+        from_formatted: `"Daniele D'Ambrosio from Tricky Dragons" <noreply@trickydragons.com>`,
+        transporter: nodemailer.createTransport({
+            host: 'mail.smtp2go.com',
+            port: 2525,
+            secure: false, // TLS on port 2525
+            auth: {
+                user: process.env.SMTP2GO_USERNAME_PROD,
+                pass: process.env.SMTP2GO_PASSWORD_PROD,
             },
         }),
     },
