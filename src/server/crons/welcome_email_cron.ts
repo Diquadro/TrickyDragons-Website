@@ -89,7 +89,7 @@ export async function process_welcome_emails() {
  * - Created at least 15 minutes ago (to allow funnel completion)
  */
 async function get_eligible_contacts(): Promise<Contacts[]> {
-    const seconds = Math.floor(time_interval / 1000)
+    const cutoff_date = new Date(Date.now() - time_interval)
 
     const contacts = await sql<Contacts[]>`
         SELECT * FROM contacts 
@@ -105,7 +105,7 @@ async function get_eligible_contacts(): Promise<Contacts[]> {
                 )
             )
             -- Must have been created at least the specified time ago
-            AND created_date <= NOW() - INTERVAL '${seconds} seconds'
+            AND created_date < ${cutoff_date}
         ORDER BY created_date ASC
         LIMIT 50 -- Process max 50 contacts per run to avoid overwhelming
     `
