@@ -20,16 +20,6 @@ export const send_welcome_vip_1_email = async (contact_email: string, first_name
           )
 
     // Create redirect payloads with simplified structure
-    const facebook_payload = redirect_payload_schema.parse({
-        redirect_url: LINKS.EXTERNAL.FACEBOOK,
-        email: contact_email,
-        utm_params: {
-            utm_source: 'email',
-            utm_campaign: EMAIL_TEMPLATES.WELCOME_VIP_1,
-            utm_medium: 'facebook_link',
-        },
-    })
-
     const facebook_vip_group_payload = redirect_payload_schema.parse({
         redirect_url: LINKS.EXTERNAL.FACEBOOK_VIP_GROUP,
         email: contact_email,
@@ -52,15 +42,13 @@ export const send_welcome_vip_1_email = async (contact_email: string, first_name
     })
 
     // Encode payloads to Base64 using the encode_json method
-    const facebook_url_data64 = Base64_Url.encode_json(facebook_payload)
     const facebook_vip_group_url_data64 = Base64_Url.encode_json(facebook_vip_group_payload)
     const unsubscribe_url_data64 = Base64_Url.encode_json(unsubscribe_payload)
 
     const redirect_endpoint = API.ENDPOINTS.REDIRECTS.REDIRECT
 
     const template_variables = {
-        First_Name: first_name || 'Dragon Enthusiast', // Fallback se il nome non è disponibile
-        FACEBOOK_LINK: `${API.URL}${redirect_endpoint}?data64=${facebook_url_data64}`,
+        First_Name: first_name || 'Friend', // Fallback se il nome non è disponibile
         FACEBOOK_VIP_GROUP_LINK: `${API.URL}${redirect_endpoint}?data64=${facebook_vip_group_url_data64}`,
         UNSUBSCRIBE_LINK: `${API.URL}${redirect_endpoint}?data64=${unsubscribe_url_data64}`,
     }
