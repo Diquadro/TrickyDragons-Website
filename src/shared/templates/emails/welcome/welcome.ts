@@ -4,10 +4,10 @@ import { Base64_Url } from '@shared/utils/base64_url'
 import { LINKS } from '@shared/constants/links.constants'
 import { API, ENV } from '@shared/constants/app.constants'
 import { redirect_payload_schema } from '@shared/validations/redirect.validation'
-import { EMAIL_TEMPLATES } from '@shared/constants/emails.constants'
+import { EMAIL_TEMPLATES, EMAIL_SENDERS } from '@shared/constants/emails.constants'
 
 export const send_welcome_email = async (contact_email: string) => {
-    const from = 'smtp2go_no_reply_prod'
+    const from = EMAIL_SENDERS.NOREPLY
     const to = contact_email
     const subject = 'Welcome to the world of Tricky Dragons – Your Adventure Awaits'
     const body_template_path = ENV.LOCAL

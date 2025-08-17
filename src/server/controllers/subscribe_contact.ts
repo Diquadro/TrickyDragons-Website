@@ -15,7 +15,7 @@ import { send_meta_event } from '../services/send_meta_event'
 import { create_action } from '../services/create_action'
 import { send_welcome_email } from '@shared/templates/emails/welcome/welcome'
 import { EMAIL_TEMPLATES } from '@shared/constants/emails.constants'
-import { check_has_kse_reservation } from '@server/services/check_kse_reservation'
+import { check_has_reservation } from '@server/services/check_reservation'
 
 export async function subscribe_contact(req: Request, res: Response) {
     const request_data = validate_request(req.body)
@@ -40,8 +40,8 @@ export async function subscribe_contact(req: Request, res: Response) {
         message = 'New contact created and subscribed successfully'
     }
 
-    // Check if user has KSE reservation
-    const has_reserved = await check_has_kse_reservation(contact?.uuid)
+    // Check if user has reservation
+    const has_reserved = await check_has_reservation(contact?.uuid)
 
     const response = validate_response({
         success: true,

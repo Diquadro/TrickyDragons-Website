@@ -7,7 +7,7 @@ import { apply_middlewares } from '@server/middlewares/middlewares'
 import { apply_routes } from '@server/routes'
 import { sql } from '@server/models/postgres_client'
 import { API } from '@shared/constants/app.constants'
-import { start_all_cron_jobs, stop_all_cron_jobs } from '@server/crons'
+import { start_all_cron_jobs, stop_all_cron_jobs } from '@server/crons/crons'
 
 // Main server initialization function
 async function start_server() {

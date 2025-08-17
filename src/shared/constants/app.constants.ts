@@ -96,6 +96,9 @@ export const STRIPE = {
     PRODUCT_MAP: {
         TD_RESERVATION: 'price_1RqonfA5ocAGWp3UYefbC6LT',
     },
+    PRODUCTS: {
+        TRICKY_DRAGONS_RESERVATION: 'Tricky Dragons Reservation',
+    },
 }
 
 // Database-related constants
