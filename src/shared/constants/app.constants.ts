@@ -40,7 +40,6 @@ export const API = {
             REDIRECT: `/${VERSION}/redirects`,
         },
         WEBHOOKS: {
-            SENDGRID: `/${VERSION}/webhooks/sendgrid`,
             SMTP2GO: `/${VERSION}/webhooks/smtp2go`,
             STRIPE: `/${VERSION}/webhooks/stripe`,
         },

@@ -3,7 +3,7 @@
 CREATE TABLE webhook_logs (
 	uuid UUID PRIMARY KEY DEFAULT uuid_generate_v4 (),
 	-- Request metadata
-	webhook_source VARCHAR(50) NOT NULL, -- 'sendgrid', 'smtp2go', 'stripe', etc.
+	webhook_source VARCHAR(50) NOT NULL, -- 'smtp2go', 'stripe', etc.
 	request_method VARCHAR(10) NOT NULL, -- 'POST', 'GET', etc.
 	request_url TEXT NOT NULL,
 	request_headers JSONB,
@@ -33,7 +33,7 @@ CREATE TABLE webhook_logs (
 -- Comments for documentation
 COMMENT ON TABLE webhook_logs IS 'Comprehensive logging of all webhook requests and responses for debugging and analytics';
 
-COMMENT ON COLUMN webhook_logs.webhook_source IS 'Source of the webhook (sendgrid, smtp2go, stripe, etc.)';
+COMMENT ON COLUMN webhook_logs.webhook_source IS 'Source of the webhook (smtp2go, stripe, etc.)';
 
 COMMENT ON COLUMN webhook_logs.processing_outcome IS 'Result of webhook processing: success, contact_not_found, validation_error, processing_error';
 

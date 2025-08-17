@@ -3,7 +3,7 @@ import { Request, Response, NextFunction } from 'express'
 
 export function block_bots(req: Request, res: Response, next: NextFunction) {
     // Allow webhooks to bypass bot detection
-    // Webhook services like SendGrid, AWS SNS may be identified as bots
+    // Webhook services like SMTP2GO, AWS SNS may be identified as bots
     if (req.path.startsWith('/v2/webhooks/')) {
         return next()
     }
