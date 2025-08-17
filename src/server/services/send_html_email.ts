@@ -27,19 +27,23 @@ function process_html_template(
     let processed = html_content
     const processed_placeholders = new Set<string>()
 
-    // Replace all placeholders
+    // Replace all placeholders (handle any spacing: {{KEY}}, {{ KEY }}, {{ KEY}}, {{KEY }})
     for (const [key, value] of Object.entries(variables)) {
-        const placeholder = `{{${key}}}`
-        const regex = new RegExp(placeholder.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'), 'g')
+        // Create regex that matches {{key}} with any amount of spaces around the key
+        // {{\s* matches {{ followed by any whitespace
+        // key (escaped) matches the exact key name
+        // \s*}} matches any whitespace followed by }}
+        const escapedKey = key.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')
+        const regex = new RegExp(`{{\\s*${escapedKey}\\s*}}`, 'g')
 
-        if (processed.includes(placeholder)) {
+        if (regex.test(processed)) {
             processed = processed.replace(regex, value)
             processed_placeholders.add(key)
         }
     }
 
-    // Check for unprocessed placeholders
-    const unprocessed_placeholders = processed.match(/{{[A-Z_]+}}/g) || []
+    // Check for unprocessed placeholders (any spacing format)
+    const unprocessed_placeholders = processed.match(/{{\s*[A-Z_]+\s*}}/g) || []
 
     if (unprocessed_placeholders.length > 0) {
         const message = `Unprocessed placeholders found: ${unprocessed_placeholders.join(', ')}`

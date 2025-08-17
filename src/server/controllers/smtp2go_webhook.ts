@@ -149,8 +149,6 @@ async function process_smtp2go_event(event: Smtp2go_Event, req: Request): Promis
 function normalize_recipients(rcpt?: string, recipients?: string | string[]): string[] {
     const emails: string[] = []
 
-    console.log('Normalizing recipients:', { rcpt, recipients })
-
     // Add rcpt if present
     if (rcpt) {
         emails.push(rcpt)
