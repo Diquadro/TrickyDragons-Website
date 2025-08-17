@@ -90,7 +90,7 @@ async function get_eligible_contacts(): Promise<Contacts[]> {
                 SELECT DISTINCT contact_uuid 
                 FROM orders 
                 WHERE status = 'paid'
-                AND name = ${STRIPE.PRODUCTS.TRICKY_DRAGONS_RESERVATION}
+                AND line_items::text LIKE '%' || ${STRIPE.PRODUCTS.TRICKY_DRAGONS_RESERVATION} || '%'
                 AND contact_uuid IS NOT NULL
             )
             
