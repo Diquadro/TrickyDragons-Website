@@ -117,24 +117,94 @@ body {
                 display: flex;
                 justify-content: center;
                 align-items: center;
+                animation:
+                    pulse-color 4s ease-in-out infinite,
+                    click-pattern 8s ease-in-out infinite;
+                animation-delay: 0s, 5s;
+                transition:
+                    transform 0.1s ease,
+                    box-shadow 0.1s ease;
                 cursor: pointer;
-                border: none;
-                border: 1px solid $color-black;
+                margin-bottom: 10px;
+                box-shadow: 0 8px $color-blue-gray-darkest;
                 border-radius: $border-radius;
-                background-color: $color-red;
+                background-color: $color-blue-gray;
+                padding: 10px 0;
                 width: 80%;
-                height: $cta-button-height;
 
                 > a {
                     color: $color-white;
-                    font-weight: $font-weight-bold;
+                    font-weight: $font-weight-extra-bold;
                     font-size: var(--font-size-lg);
-                    font-family: $font-family-bebas-neue-pro;
+                    font-family: $font-family-bebas-neue-pro-semi-expanded;
                     text-decoration: none;
                 }
 
-                &:hover {
-                    background-color: $color-red-dark;
+                &:active {
+                    transform: translateY(5px);
+                    animation-play-state: paused;
+                    box-shadow: 0 3px $color-blue-gray-darkest;
+                }
+
+                @keyframes pulse-color {
+                    0%,
+                    100% {
+                        background-color: $color-blue-gray;
+                    }
+                    50% {
+                        background-color: $color-blue-gray-dark;
+                    }
+                }
+
+                @keyframes click-pattern {
+                    /* Pausa iniziale: 0-2s */
+                    0%,
+                    25% {
+                        transform: translateY(0);
+                        box-shadow: 0 8px $color-blue-gray-darkest;
+                    }
+
+                    /* Primo click: 2-2.1s */
+                    26%,
+                    27% {
+                        transform: translateY(2px);
+                        box-shadow: 0 6px $color-blue-gray-darkest;
+                    }
+
+                    /* Pausa breve: 2.1-2.3s */
+                    28%,
+                    29% {
+                        transform: translateY(0);
+                        box-shadow: 0 8px $color-blue-gray-darkest;
+                    }
+
+                    /* Secondo click: 2.3-2.4s */
+                    30%,
+                    31% {
+                        transform: translateY(2px);
+                        box-shadow: 0 6px $color-blue-gray-darkest;
+                    }
+
+                    /* Pausa media: 2.4-4.8s */
+                    32%,
+                    60% {
+                        transform: translateY(0);
+                        box-shadow: 0 8px $color-blue-gray-darkest;
+                    }
+
+                    /* Singolo click: 4.8-4.9s */
+                    61%,
+                    62% {
+                        transform: translateY(2px);
+                        box-shadow: 0 6px $color-blue-gray-darkest;
+                    }
+
+                    /* Pausa finale: 4.9-8s */
+                    63%,
+                    100% {
+                        transform: translateY(0);
+                        box-shadow: 0 8px $color-blue-gray-darkest;
+                    }
                 }
             }
 

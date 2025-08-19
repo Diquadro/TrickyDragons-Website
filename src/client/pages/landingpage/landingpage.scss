@@ -196,6 +196,7 @@ $font-family-bebas-neue-pro-semi-expanded: 'Bebas Neue Pro SemiExpanded', 'Impac
             }
 
             > button[type='submit'] {
+                align-self: center;
                 animation:
                     pulse-color 4s ease-in-out infinite,
                     click-pattern 8s ease-in-out infinite;
@@ -209,6 +210,7 @@ $font-family-bebas-neue-pro-semi-expanded: 'Bebas Neue Pro SemiExpanded', 'Impac
                 border-radius: $border-radius;
                 background-color: $color-green;
                 padding: 10px 0;
+                width: 80%;
                 color: $color-white;
                 font-weight: $font-weight-extra-bold;
                 font-size: $font-size-lg;
@@ -491,7 +493,9 @@ $font-family-bebas-neue-pro-semi-expanded: 'Bebas Neue Pro SemiExpanded', 'Impac
             display: flex;
             grid-area: form;
             flex-direction: column;
+            justify-content: center;
             gap: 10px;
+            width: 80%;
 
             input[type='email'] {
                 border-radius: $border-radius;
@@ -523,25 +527,92 @@ $font-family-bebas-neue-pro-semi-expanded: 'Bebas Neue Pro SemiExpanded', 'Impac
         }
 
         button[type='submit'] {
-            transition: background-color 0.2s ease;
+            align-self: center;
+            animation:
+                pulse-color 4s ease-in-out infinite,
+                click-pattern 8s ease-in-out infinite;
+            animation-delay: 0s, 5s;
+            transition:
+                transform 0.1s ease,
+                box-shadow 0.1s ease;
             cursor: pointer;
+            box-shadow: 0 5px $color-green-darkest;
             border: none;
             border-radius: $border-radius;
-            background-color: #6a89a7; //hsl(100, 80%, 30%);
+            background-color: $color-green;
+            width: 100%;
             height: 35px;
             color: $color-white;
-
             font-weight: $font-weight-bold;
             font-size: $font-size-lg;
             font-family: $font-family-bebas-neue-pro;
 
-            // &:hover {
-            //     background-color: $color-red-dark;
-            // }
+            &:active {
+                transform: translateY(3px);
+                animation-play-state: paused;
+                box-shadow: 0 2px $color-green-darkest;
+            }
 
-            // &:active {
-            //     background-color: $color-red-darker;
-            // }
+            @keyframes pulse-color {
+                0%,
+                100% {
+                    background-color: $color-green;
+                }
+                50% {
+                    background-color: $color-green-dark;
+                }
+            }
+
+            @keyframes click-pattern {
+                /* Pausa iniziale: 0-2s */
+                0%,
+                25% {
+                    transform: translateY(0);
+                    box-shadow: 0 5px $color-green-darkest;
+                }
+
+                /* Primo click: 2-2.1s */
+                26%,
+                27% {
+                    transform: translateY(1.5px);
+                    box-shadow: 0 3.5px $color-green-darkest;
+                }
+
+                /* Pausa breve: 2.1-2.3s */
+                28%,
+                29% {
+                    transform: translateY(0);
+                    box-shadow: 0 5px $color-green-darkest;
+                }
+
+                /* Secondo click: 2.3-2.4s */
+                30%,
+                31% {
+                    transform: translateY(1.5px);
+                    box-shadow: 0 3.5px $color-green-darkest;
+                }
+
+                /* Pausa media: 2.4-4.8s */
+                32%,
+                60% {
+                    transform: translateY(0);
+                    box-shadow: 0 5px $color-green-darkest;
+                }
+
+                /* Singolo click: 4.8-4.9s */
+                61%,
+                62% {
+                    transform: translateY(1.5px);
+                    box-shadow: 0 3.5px $color-green-darkest;
+                }
+
+                /* Pausa finale: 4.9-8s */
+                63%,
+                100% {
+                    transform: translateY(0);
+                    box-shadow: 0 5px $color-green-darkest;
+                }
+            }
         }
 
         .members-counter {

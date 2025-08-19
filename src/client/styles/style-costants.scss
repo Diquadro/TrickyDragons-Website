@@ -25,9 +25,16 @@ $font-weight-extra-bold: 800;
 
 $color-black: hsl(0, 0%, 10%);
 $color-white: hsl(0, 0%, 95%);
-$color-red: hsl(210, 25%, 55%);
-$color-red-dark: hsl(210, 25%, 45%);
-$color-red-darker: hsl(210, 25%, 40%);
+$color-red: hsl(5, 70%, 50%);
+$color-red-dark: hsl(5, 70%, 45%);
+$color-red-darker: hsl(5, 70%, 40%);
+$color-green-dark: hsl(140, 80%, 35%);
+$color-green-darker: hsl(140, 80%, 30%);
+$color-green-darkest: hsl(140, 80%, 25%);
+$color-blue-gray: hsl(210, 25%, 55%);
+$color-blue-gray-dark: hsl(210, 25%, 45%);
+$color-blue-gray-darker: hsl(210, 25%, 40%);
+$color-blue-gray-darkest: hsl(210, 25%, 35%);
 
 $border-radius: 5px;
 $section-gap: 25px;
