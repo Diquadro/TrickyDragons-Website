@@ -196,19 +196,15 @@ $font-family-bebas-neue-pro-semi-expanded: 'Bebas Neue Pro SemiExpanded', 'Impac
                 cursor: pointer;
                 border: none;
                 border-radius: $border-radius;
-                background-color: $color-red;
+                background-color: hsl(210, 25%, 55%);
                 height: 35px;
                 color: $color-white;
-                font-weight: $font-weight-bold;
+                font-weight: $font-weight-extra-bold;
                 font-size: $font-size-lg;
-                font-family: $font-family-bebas-neue-pro;
+                font-family: $font-family-bebas-neue-pro-semi-expanded;
 
-                &:hover {
-                    background-color: $color-red-dark;
-                }
-
-                &:active {
-                    background-color: $color-red-darker;
+                &.in-view {
+                    background-color: hsl(140, 80%, 40%);
                 }
             }
         }
@@ -457,20 +453,21 @@ $font-family-bebas-neue-pro-semi-expanded: 'Bebas Neue Pro SemiExpanded', 'Impac
             cursor: pointer;
             border: none;
             border-radius: $border-radius;
-            background-color: $color-red;
+            background-color: #6a89a7; //hsl(100, 80%, 30%);
             height: 35px;
             color: $color-white;
+
             font-weight: $font-weight-bold;
             font-size: $font-size-lg;
             font-family: $font-family-bebas-neue-pro;
 
-            &:hover {
-                background-color: $color-red-dark;
-            }
+            // &:hover {
+            //     background-color: $color-red-dark;
+            // }
 
-            &:active {
-                background-color: $color-red-darker;
-            }
+            // &:active {
+            //     background-color: $color-red-darker;
+            // }
         }
 
         .members-counter {

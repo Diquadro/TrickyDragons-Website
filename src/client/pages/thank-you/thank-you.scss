@@ -119,9 +119,10 @@ body {
                 align-items: center;
                 cursor: pointer;
                 border: none;
+                border: 1px solid $color-black;
                 border-radius: $border-radius;
                 background-color: $color-red;
-                width: 100%;
+                width: 80%;
                 height: $cta-button-height;
 
                 > a {

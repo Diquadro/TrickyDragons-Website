@@ -139,11 +139,14 @@ body {
                 display: flex;
                 justify-content: center;
                 align-items: center;
+                animation: pulse-color 2s ease-in-out infinite;
                 cursor: pointer;
-                border: none;
+                margin-bottom: 10px;
+                box-shadow: 0 5px $color-red-darker;
+                border: 1px solid $color-red-darker;
                 border-radius: $border-radius;
                 background-color: $color-red;
-                width: 100%;
+                width: 80%;
                 height: $cta-button-height;
 
                 > a {
@@ -155,6 +158,22 @@ body {
                 }
 
                 &:hover {
+                    animation-play-state: paused;
+                    background-color: $color-red-dark;
+                }
+
+                &:active {
+                    translate: 0 3px;
+                    box-shadow: 0 2px $color-red-darker;
+                }
+            }
+
+            @keyframes pulse-color {
+                0%,
+                100% {
+                    background-color: $color-red;
+                }
+                50% {
                     background-color: $color-red-dark;
                 }
             }

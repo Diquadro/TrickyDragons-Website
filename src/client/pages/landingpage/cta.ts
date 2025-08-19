@@ -113,6 +113,8 @@ document.addEventListener('DOMContentLoaded', () => {
     forms.forEach((form) => {
         form.addEventListener('submit', handle_form_submit)
     })
+
+    initIntersectionObserver()
 })
 
 async function handle_form_submit(event: Event): Promise<void> {
@@ -200,5 +202,40 @@ async function handle_form_submit(event: Event): Promise<void> {
         return error_toast('The dragons are sleeping now. Please try again later.')
     } finally {
         show_spinner(false)
+    }
+}
+
+// Aggiungi questo script al tuo file JavaScript principale o in un nuovo file
+function initIntersectionObserver() {
+    // Controlla se siamo su mobile
+    const isMobile = window.matchMedia('(max-width: 768px)').matches
+
+    if (isMobile) {
+        const submitButton = document.querySelector('.cta form button[type="submit"]')
+
+        if (submitButton) {
+            // Crea l'Intersection Observer
+            const observer = new IntersectionObserver(
+                (entries) => {
+                    entries.forEach((entry) => {
+                        if (entry.isIntersecting) {
+                            // Elemento visibile nel 60% centrale
+                            entry.target.classList.add('in-view')
+                        } else {
+                            // Elemento non più visibile nel 60% centrale
+                            entry.target.classList.remove('in-view')
+                        }
+                    })
+                },
+                {
+                    // Configurazione per il 60% centrale dello schermo
+                    rootMargin: '-20% 0px -20% 0px', // 20% top + 20% bottom = 60% centrale
+                    threshold: 0.1, // Triggera quando almeno il 10% dell'elemento è visibile
+                },
+            )
+
+            // Inizia ad osservare il bottone
+            observer.observe(submitButton)
+        }
     }
 }
