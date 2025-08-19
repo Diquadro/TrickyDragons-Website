@@ -114,7 +114,7 @@ document.addEventListener('DOMContentLoaded', () => {
         form.addEventListener('submit', handle_form_submit)
     })
 
-    initIntersectionObserver()
+    // initIntersectionObserver()
 })
 
 async function handle_form_submit(event: Event): Promise<void> {

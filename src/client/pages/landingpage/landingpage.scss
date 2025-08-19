@@ -19,6 +19,10 @@ $color-white: hsl(0, 0%, 95%);
 $color-red: hsl(5, 70%, 50%);
 $color-red-dark: hsl(5, 70%, 45%);
 $color-red-darker: hsl(5, 70%, 40%);
+$color-green: hsl(140, 80%, 40%);
+$color-green-dark: hsl(140, 80%, 35%);
+$color-green-darker: hsl(140, 80%, 30%);
+$color-green-darkest: hsl(140, 80%, 25%);
 
 $border-radius: 5px;
 
@@ -192,19 +196,89 @@ $font-family-bebas-neue-pro-semi-expanded: 'Bebas Neue Pro SemiExpanded', 'Impac
             }
 
             > button[type='submit'] {
-                transition: background-color 0.2s ease;
+                animation:
+                    pulse-color 4s ease-in-out infinite,
+                    click-pattern 8s ease-in-out infinite;
+                animation-delay: 0s, 5s;
+                transition:
+                    transform 0.1s ease,
+                    box-shadow 0.1s ease;
                 cursor: pointer;
-                border: none;
+                margin-bottom: 5px;
+                box-shadow: 0 8px $color-green-darkest;
                 border-radius: $border-radius;
-                background-color: hsl(210, 25%, 55%);
-                height: 35px;
+                background-color: $color-green;
+                padding: 10px 0;
                 color: $color-white;
                 font-weight: $font-weight-extra-bold;
                 font-size: $font-size-lg;
                 font-family: $font-family-bebas-neue-pro-semi-expanded;
 
-                &.in-view {
-                    background-color: hsl(140, 80%, 40%);
+                &:active {
+                    transform: translateY(5px);
+                    animation-play-state: paused;
+                    box-shadow: 0 3px $color-green-darkest;
+                }
+
+                @keyframes pulse-color {
+                    0%,
+                    100% {
+                        background-color: $color-green;
+                    }
+                    50% {
+                        background-color: $color-green-dark;
+                    }
+                }
+
+                @keyframes click-pattern {
+                    /* Pausa iniziale: 0-2s */
+                    0%,
+                    25% {
+                        transform: translateY(0);
+                        box-shadow: 0 8px $color-green-darkest;
+                    }
+
+                    /* Primo click: 2-2.1s */
+                    26%,
+                    27% {
+                        transform: translateY(2px);
+                        box-shadow: 0 6px $color-green-darkest;
+                    }
+
+                    /* Pausa breve: 2.1-2.3s */
+                    28%,
+                    29% {
+                        transform: translateY(0);
+                        box-shadow: 0 8px $color-green-darkest;
+                    }
+
+                    /* Secondo click: 2.3-2.4s */
+                    30%,
+                    31% {
+                        transform: translateY(2px);
+                        box-shadow: 0 6px $color-green-darkest;
+                    }
+
+                    /* Pausa media: 2.4-4.8s */
+                    32%,
+                    60% {
+                        transform: translateY(0);
+                        box-shadow: 0 8px $color-green-darkest;
+                    }
+
+                    /* Singolo click: 4.8-4.9s */
+                    61%,
+                    62% {
+                        transform: translateY(2px);
+                        box-shadow: 0 6px $color-green-darkest;
+                    }
+
+                    /* Pausa finale: 4.9-8s */
+                    63%,
+                    100% {
+                        transform: translateY(0);
+                        box-shadow: 0 8px $color-green-darkest;
+                    }
                 }
             }
         }
