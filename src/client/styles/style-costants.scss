@@ -12,6 +12,7 @@
     --font-size-md: calc(20px + var(--delta-font-size));
     --font-size-sm: calc(16px + var(--delta-font-size));
     --font-size-xs: calc(14px + var(--delta-font-size));
+    --font-size-xxs: calc(12px + var(--delta-font-size));
 
     @include desktop {
         --delta-font-size: 4px;
