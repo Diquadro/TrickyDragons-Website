@@ -132,9 +132,9 @@ body {
                     box-shadow 0.1s ease;
                 cursor: pointer;
                 margin-bottom: 10px;
-                box-shadow: 0 8px $color-blue-gray-darkest;
+                box-shadow: 0 8px $color-orange-darkest;
                 border-radius: $border-radius;
-                background-color: $color-blue-gray;
+                background-color: $color-orange;
                 padding: 10px 0;
                 width: 80%;
 
@@ -148,17 +148,21 @@ body {
 
                 &:active {
                     transform: translateY(5px);
+                    animation: none;
                     animation-play-state: paused;
-                    box-shadow: 0 3px $color-blue-gray-darkest;
+                    transition:
+                        transform 0.1s ease,
+                        box-shadow 0.1s ease;
+                    box-shadow: 0 3px $color-orange-darkest;
                 }
 
                 @keyframes pulse-color {
                     0%,
                     100% {
-                        background-color: $color-blue-gray;
+                        background-color: $color-orange;
                     }
                     50% {
-                        background-color: $color-blue-gray-dark;
+                        background-color: $color-orange-dark;
                     }
                 }
 
@@ -167,49 +171,49 @@ body {
                     0%,
                     25% {
                         transform: translateY(0);
-                        box-shadow: 0 8px $color-blue-gray-darkest;
+                        box-shadow: 0 8px $color-orange-darkest;
                     }
 
                     /* Primo click: 2-2.1s */
                     26%,
                     27% {
                         transform: translateY(2px);
-                        box-shadow: 0 6px $color-blue-gray-darkest;
+                        box-shadow: 0 6px $color-orange-darkest;
                     }
 
                     /* Pausa breve: 2.1-2.3s */
                     28%,
                     29% {
                         transform: translateY(0);
-                        box-shadow: 0 8px $color-blue-gray-darkest;
+                        box-shadow: 0 8px $color-orange-darkest;
                     }
 
                     /* Secondo click: 2.3-2.4s */
                     30%,
                     31% {
                         transform: translateY(2px);
-                        box-shadow: 0 6px $color-blue-gray-darkest;
+                        box-shadow: 0 6px $color-orange-darkest;
                     }
 
                     /* Pausa media: 2.4-4.8s */
                     32%,
                     60% {
                         transform: translateY(0);
-                        box-shadow: 0 8px $color-blue-gray-darkest;
+                        box-shadow: 0 8px $color-orange-darkest;
                     }
 
                     /* Singolo click: 4.8-4.9s */
                     61%,
                     62% {
                         transform: translateY(2px);
-                        box-shadow: 0 6px $color-blue-gray-darkest;
+                        box-shadow: 0 6px $color-orange-darkest;
                     }
 
                     /* Pausa finale: 4.9-8s */
                     63%,
                     100% {
                         transform: translateY(0);
-                        box-shadow: 0 8px $color-blue-gray-darkest;
+                        box-shadow: 0 8px $color-orange-darkest;
                     }
                 }
             }

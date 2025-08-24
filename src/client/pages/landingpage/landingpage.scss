@@ -219,7 +219,11 @@ $font-family-bebas-neue-pro-semi-expanded: 'Bebas Neue Pro SemiExpanded', 'Impac
 
                 &:active {
                     transform: translateY(5px);
+                    animation: none;
                     animation-play-state: paused;
+                    transition:
+                        transform 0.1s ease,
+                        box-shadow 0.1s ease;
                     box-shadow: 0 3px $color-green-darkest;
                 }
 
@@ -550,7 +554,11 @@ $font-family-bebas-neue-pro-semi-expanded: 'Bebas Neue Pro SemiExpanded', 'Impac
 
             &:active {
                 transform: translateY(3px);
+                animation: none;
                 animation-play-state: paused;
+                transition:
+                    transform 0.1s ease,
+                    box-shadow 0.1s ease;
                 box-shadow: 0 2px $color-green-darkest;
             }
 
@@ -725,6 +733,12 @@ $font-family-bebas-neue-pro-semi-expanded: 'Bebas Neue Pro SemiExpanded', 'Impac
             'image text-p'
             'image bullet-point-container';
     }
+
+    .section-4 {
+        grid-template-areas:
+            'text-container image'
+            'text-p image';
+    }
 }
 
 .footer-layout {
@@ -765,5 +779,11 @@ $font-family-bebas-neue-pro-semi-expanded: 'Bebas Neue Pro SemiExpanded', 'Impac
 
     span {
         color: $color-white;
+    }
+}
+
+.section {
+    img {
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
     }
 }
