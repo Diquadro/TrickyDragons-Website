@@ -8,6 +8,9 @@ block head
         type='image/webp',
         crossorigin='anonymous'
     )
+    //- Prefetch next critical images
+    link(rel='prefetch', href='@public/imgs/3_dragons.webp', as='image', type='image/webp')
+    link(rel='prefetch', href='@public/imgs/game_preview_2.webp', as='image', type='image/webp')
 
 block body
     #page-container

@@ -13,6 +13,12 @@ link(rel='apple-touch-icon', sizes='180x180', href='@client/imgs/favicon/apple-t
 //- Default hreflang
 link(rel='alternate', href='https://www.trickydragons.com/', hreflang='x-default')
 
+//- Preconnect hints for external domains
+link(rel='preconnect', href='https://cloud.umami.is')
+link(rel='preconnect', href='https://api.trickydragons.com')
+link(rel='dns-prefetch', href='https://app.posthog.com')
+link(rel='dns-prefetch', href='https://connect.facebook.net')
+
 //- Security Headers
 meta(http-equiv='Strict-Transport-Security', content='max-age=31536000; includeSubDomains')
 meta(name='referrer', content='no-referrer-when-downgrade')
