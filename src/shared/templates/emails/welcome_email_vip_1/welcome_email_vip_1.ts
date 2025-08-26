@@ -48,7 +48,7 @@ export const send_welcome_vip_1_email = async (contact_email: string, first_name
     const redirect_endpoint = API.ENDPOINTS.REDIRECTS.REDIRECT
 
     const template_variables = {
-        First_Name: first_name || 'Friend', // Fallback se il nome non è disponibile
+        First_Name: first_name || 'there', // Fallback se il nome non è disponibile
         FACEBOOK_VIP_GROUP_LINK: `${API.URL}${redirect_endpoint}?data64=${facebook_vip_group_url_data64}`,
         UNSUBSCRIBE_LINK: `${API.URL}${redirect_endpoint}?data64=${unsubscribe_url_data64}`,
     }

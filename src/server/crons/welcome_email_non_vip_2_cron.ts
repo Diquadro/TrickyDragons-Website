@@ -23,10 +23,10 @@ import ContactSubscriptions from '@shared/schemas/database/public/ContactSubscri
  * Timing: Every 2 minutes (dev/local) or 10 minutes (production)
  */
 
-// Development: 2 minutes delay, check every 2 minutes
+// Development: 4 minutes delay, check every 4 minutes
 // Production: 24 hours delay, check every 10 minutes
-const EMAIL_DELAY = ENV.DEVELOPMENT ? 2 * 60 * 1000 : 24 * 60 * 60 * 1000 // 2min vs 24h
-const CRON_INTERVAL = ENV.PRODUCTION ? '*/10 * * * *' : '*/2 * * * *' // 10min vs 2min
+const EMAIL_DELAY = ENV.PRODUCTION ? 24 * 60 * 60 * 1000 : 4 * 60 * 1000 // 24h vs 4min
+const CRON_INTERVAL = ENV.PRODUCTION ? '*/10 * * * *' : '*/4 * * * *' // 10min vs 4min
 
 export const welcome_email_non_vip_2_cron = new CronJob(
     CRON_INTERVAL,

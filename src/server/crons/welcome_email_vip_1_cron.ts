@@ -20,10 +20,10 @@ import ContactSubscriptions from '@shared/schemas/database/public/ContactSubscri
  * Timing: Every 2 minutes (dev/local) or 10 minutes (production)
  */
 
-// Development: 2 minutes delay, check every 2 minutes
+// Development: 4 minutes delay, check every 4 minutes
 // Production: 24 hours delay, check every 10 minutes
-const EMAIL_DELAY = ENV.DEVELOPMENT ? 2 * 60 * 1000 : 24 * 60 * 60 * 1000 // 2min vs 24h
-const CRON_INTERVAL = ENV.PRODUCTION ? '*/10 * * * *' : '*/2 * * * *' // 10min vs 2min
+const EMAIL_DELAY = ENV.PRODUCTION ? 24 * 60 * 60 * 1000 : 4 * 60 * 1000 // 24h vs 4min
+const CRON_INTERVAL = ENV.PRODUCTION ? '*/10 * * * *' : '*/4 * * * *' // 10min vs 4min
 
 export const welcome_email_vip_1_cron = new CronJob(
     CRON_INTERVAL,
@@ -51,8 +51,8 @@ export async function process_welcome_vip_1_emails() {
 
     for (const contact of eligible_contacts) {
         try {
-            // Use first_name from contact, fallback to "Friend"
-            const first_name = contact.first_name || 'Friend'
+            // Use first_name from contact, fallback to "there"
+            const first_name = contact.first_name || 'there'
 
             await send_welcome_vip_1_email(contact.email, first_name)
             await mark_email_as_sent(contact.uuid, EMAIL_TEMPLATES.WELCOME_VIP_1)
