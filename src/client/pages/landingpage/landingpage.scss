@@ -32,8 +32,9 @@ $section-gap: 25px;
 
 $desktop-body-margin: 10svw;
 
-$font-family-bebas-neue-pro: 'Bebas Neue Pro', 'Impact', sans-serif;
-$font-family-bebas-neue-pro-semi-expanded: 'Bebas Neue Pro SemiExpanded', 'Impact', sans-serif;
+$font-family-bebas-neue-pro: 'Bebas Neue Pro', 'Bebas Neue Pro Fallback', 'Impact', sans-serif;
+$font-family-bebas-neue-pro-semi-expanded:
+    'Bebas Neue Pro SemiExpanded', 'Bebas Neue Pro SemiExpanded Fallback', 'Impact', sans-serif;
 
 * {
     margin: 0;
@@ -70,8 +71,6 @@ $font-family-bebas-neue-pro-semi-expanded: 'Bebas Neue Pro SemiExpanded', 'Impac
         > img {
             align-self: center;
             margin-right: -$mobile-body-margin;
-            margin-bottom: -50px;
-            // margin-bottom: -50px;
             margin-left: -$mobile-body-margin;
             aspect-ratio: 1/1;
             width: calc(100% + #{$mobile-body-margin * 2});
@@ -148,6 +147,9 @@ $font-family-bebas-neue-pro-semi-expanded: 'Bebas Neue Pro SemiExpanded', 'Impac
         gap: 12px;
         margin-right: -$mobile-body-margin;
         margin-left: -$mobile-body-margin;
+        background-image: url('@public/imgs/lulu_pattern.webp');
+        background-position: 25px 25px;
+        background-size: 66%;
         background-color: $color-black;
         padding: $mobile-body-margin;
 
@@ -307,6 +309,7 @@ $font-family-bebas-neue-pro-semi-expanded: 'Bebas Neue Pro SemiExpanded', 'Impac
     #dragons-image {
         display: block;
         border-radius: $border-radius;
+        aspect-ratio: 16/9;
         width: 100%;
     }
 
@@ -475,6 +478,9 @@ $font-family-bebas-neue-pro-semi-expanded: 'Bebas Neue Pro SemiExpanded', 'Impac
 
         margin-right: -$desktop-body-margin;
         margin-left: -$desktop-body-margin;
+        background-image: url('@public/imgs/lulu_pattern.webp');
+        background-position: 25px 35px;
+        background-size: 10%;
         background-color: $color-black;
         padding: 20px $desktop-body-margin;
         color: $color-white;

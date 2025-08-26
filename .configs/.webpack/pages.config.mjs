@@ -11,6 +11,8 @@ import not_found_config from '../../src/client/pages/404/404.config.mjs'
 import checkout_config from '../../src/client/pages/checkout/checkout.config.mjs'
 import reservation_config from '../../src/client/pages/reservation/reservation.config.mjs'
 import unsubscribed_config from '../../src/client/pages/unsubscribed/unsubscribed.config.mjs'
+import terms_and_conditions_config from '../../src/client/pages/terms-and-conditions/terms-and-conditions.config.mjs'
+import privacy_policy_config from '../../src/client/pages/privacy-policy/privacy-policy.config.mjs'
 
 const BASE_URL = 'https://www.trickydragons.com'
 const env = process.env.APP_ENV
@@ -32,4 +34,8 @@ export default [
     welcome_back_config({ env, BASE_URL }),
     // Unsubscribed page
     unsubscribed_config({ env, BASE_URL }),
+    // Terms and Conditions
+    terms_and_conditions_config({ env, BASE_URL }),
+    // Privacy Policy
+    privacy_policy_config({ env, BASE_URL }),
 ]

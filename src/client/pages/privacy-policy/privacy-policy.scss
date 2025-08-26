@@ -1,0 +1,157 @@
+body {
+    display: flex;
+    flex-direction: column;
+
+    margin: 0 auto;
+    background: #fff;
+    padding: 0 50px;
+    max-width: 700px;
+    color: #000;
+    font-size: 16px;
+    line-height: 28px;
+    font-family:
+        Helvetica Neue,
+        Helvetica,
+        Arial,
+        sans-serif;
+
+    text-align: justify;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+    text-align: left;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+li,
+p {
+    margin: 0 0 16px;
+}
+
+h1 {
+    font-size: 40px;
+    line-height: 60px;
+}
+
+h1,
+h2 {
+    font-weight: 700;
+}
+
+h2 {
+    font-size: 32px;
+    line-height: 48px;
+}
+
+h3 {
+    font-size: 24px;
+    line-height: 36px;
+}
+
+h3,
+h4 {
+    font-weight: 700;
+}
+
+h4 {
+    font-size: 20px;
+    line-height: 30px;
+}
+
+h5,
+h6 {
+    font-weight: 700;
+    font-size: 16px;
+    line-height: 24px;
+}
+
+a {
+    cursor: pointer;
+    color: #000;
+    text-decoration: none;
+}
+
+a:hover,
+a[rel~='nofollow'] {
+    text-decoration: underline;
+}
+
+a[rel~='nofollow'] {
+    color: #553df4;
+}
+
+a[rel~='nofollow']:hover {
+    text-decoration: none;
+}
+
+.visible {
+    display: block;
+}
+
+.hidden {
+    display: none;
+}
+
+.page {
+    width: 100%;
+}
+
+.container {
+    position: relative;
+    margin: 0 auto;
+    width: 90%;
+    max-width: 1024px;
+}
+
+.header {
+    padding: 16px 0;
+}
+
+.header .title {
+    margin: 0;
+    font-weight: 700;
+    font-size: 40px;
+    line-height: 60px;
+}
+
+.translations-list-container {
+    margin: 0 0 16px;
+    padding-bottom: 8px;
+}
+
+.translations-list-container .translations-list {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+.translations-list-container .translations-list .translations-list-item {
+    display: inline-block;
+    margin: 0 8px 8px 0;
+    padding: 0;
+    color: #553df4;
+    font-weight: 700;
+}
+
+.translations-list-container .translations-list .translations-list-item a {
+    display: inline-block;
+    border: 1px solid #553df4;
+    border-radius: 32px;
+    padding: 4px 16px;
+    color: #553df4;
+}
+
+.translations-content-container {
+    border-top: 1px solid #eee;
+    padding-top: 16px;
+}

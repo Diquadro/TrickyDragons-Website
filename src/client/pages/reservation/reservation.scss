@@ -300,13 +300,23 @@ body {
 .info-item {
     display: flex;
     flex-basis: 100%;
-    flex-direction: column;
     gap: 10px;
     box-shadow: 0 0 20px 0 rgba(0, 0, 0, 0.1);
     border: 1px solid $color-black;
     border-radius: $border-radius * 2;
     padding: 20px;
     text-align: justify;
+}
+
+.info-icon {
+    width: 100px;
+    object-fit: contain;
+}
+
+.info-text {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
 }
 
 .info-title {

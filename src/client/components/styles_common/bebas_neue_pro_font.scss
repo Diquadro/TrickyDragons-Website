@@ -52,3 +52,25 @@
     font-family: 'Bebas Neue Pro SemiExpanded';
     font-display: swap;
 }
+
+/* Font fallback ottimizzato per Bebas Neue Pro */
+@font-face {
+    font-stretch: condensed; /* Mantiene la compressione orizzontale */
+    size-adjust: 55%; /* Dimensione base */
+    src: local('Arial');
+    font-family: 'Bebas Neue Pro Fallback';
+    font-display: swap;
+    ascent-override: 150%; /* AUMENTA l'altezza sopra la baseline */
+    descent-override: 20%; /* Aumenta leggermente anche sotto */
+}
+
+/* Font fallback ottimizzato per Bebas Neue Pro SemiExpanded */
+@font-face {
+    font-stretch: semi-condensed; /* Meno compresso orizzontalmente */
+    size-adjust: 70%;
+    src: local('Arial');
+    font-family: 'Bebas Neue Pro SemiExpanded Fallback';
+    font-display: swap;
+    ascent-override: 150%; /* Più alto */
+    descent-override: 20%;
+}
