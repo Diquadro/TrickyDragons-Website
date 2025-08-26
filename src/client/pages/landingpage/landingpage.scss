@@ -49,6 +49,10 @@ $font-family-bebas-neue-pro-semi-expanded:
     text-box: trim-both cap alphabetic;
 }
 
+body {
+    background-color: $color-white;
+}
+
 @include mobile {
     body {
         display: flex;
@@ -753,6 +757,7 @@ $font-family-bebas-neue-pro-semi-expanded:
     justify-content: center;
     align-items: center;
     gap: 20px;
+    margin-top: -1px;
     background-color: $color-black;
     padding: 20px 0;
 
