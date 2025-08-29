@@ -155,7 +155,7 @@ body {
         background-position: 25px 25px;
         background-size: 66%;
         background-color: $color-black;
-        padding: $mobile-body-margin;
+        padding: 25px $mobile-body-margin;
 
         color: $color-white;
 
@@ -306,7 +306,7 @@ body {
     .content-container {
         display: flex;
         flex-direction: column;
-        gap: $section-gap;
+        gap: 40px;
         margin: $mobile-body-margin 0;
     }
 
@@ -337,6 +337,7 @@ body {
                 font-weight: $font-weight-bold;
                 font-size: $font-size-xxl;
                 font-family: $font-family-bebas-neue-pro;
+                text-align: left;
             }
         }
 
@@ -487,7 +488,7 @@ body {
         background-position: 25px 35px;
         background-size: 10%;
         background-color: $color-black;
-        padding: 20px $desktop-body-margin;
+        padding: 30px $desktop-body-margin;
         color: $color-white;
         // box-sizing: border-box;
 
@@ -750,6 +751,11 @@ body {
         grid-template-areas:
             'text-container image'
             'text-p image';
+    }
+    .section-5 {
+        grid-template-areas:
+            'image text-container'
+            'image text-p';
     }
 }
 
