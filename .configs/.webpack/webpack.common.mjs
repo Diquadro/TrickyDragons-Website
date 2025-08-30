@@ -23,6 +23,13 @@ export default {
                 },
             },
             {
+                test: /\.(mp4|webm|ogg|avi|mov)$/i,
+                type: 'asset/resource',
+                generator: {
+                    filename: 'assets/videos/[name].[hash:8][ext]',
+                },
+            },
+            {
                 test: /\.(woff|woff2|eot|ttf|otf|svg)$/i,
                 type: 'asset/resource',
                 generator: {

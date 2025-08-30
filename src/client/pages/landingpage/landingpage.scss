@@ -1,40 +1,4 @@
-@use '@client/components/styles_common/media' as *;
-@use '@client/components/styles_common/bebas_neue_pro_font' as *;
-
-$font-size-xxl: 40px;
-$font-size-xl: 32px;
-$font-size-lg: 24px;
-$font-size-md: 20px;
-$font-size-sm: 16px;
-$font-size-xs: 14px;
-
-$font-weight-light: 200;
-$font-weight-middle: 400;
-
-$font-weight-bold: 700;
-$font-weight-extra-bold: 800;
-
-$color-black: hsl(0, 0%, 10%);
-$color-white: hsl(0, 0%, 95%);
-$color-red: hsl(5, 70%, 50%);
-$color-red-dark: hsl(5, 70%, 45%);
-$color-red-darker: hsl(5, 70%, 40%);
-$color-red-darkest: hsl(5, 70%, 35%);
-$color-green: hsl(140, 80%, 40%);
-$color-green-dark: hsl(140, 80%, 35%);
-$color-green-darker: hsl(140, 80%, 30%);
-$color-green-darkest: hsl(140, 80%, 25%);
-
-$border-radius: 5px;
-
-$mobile-body-margin: 4svw;
-$section-gap: 25px;
-
-$desktop-body-margin: 10svw;
-
-$font-family-bebas-neue-pro: 'Bebas Neue Pro', 'Bebas Neue Pro Fallback', 'Impact', sans-serif;
-$font-family-bebas-neue-pro-semi-expanded:
-    'Bebas Neue Pro SemiExpanded', 'Bebas Neue Pro SemiExpanded Fallback', 'Impact', sans-serif;
+@use '@client/styles/style-costants' as *;
 
 * {
     margin: 0;
@@ -66,22 +30,22 @@ span.extra-bold {
     #page-container {
         display: flex;
         flex-direction: column;
-        margin: 0 $mobile-body-margin;
+        margin: 0 $page-margin-mobile;
         max-width: 600px;
     }
 
     #hero {
         display: flex;
         flex-direction: column;
-        margin-bottom: $mobile-body-margin;
+        margin-bottom: $page-margin-mobile;
         line-height: 0.75;
 
         > img {
             align-self: center;
-            margin-right: -$mobile-body-margin;
-            margin-left: -$mobile-body-margin;
+            margin-right: -$page-margin-mobile;
+            margin-left: -$page-margin-mobile;
             aspect-ratio: 1/1;
-            width: calc(100% + #{$mobile-body-margin * 2});
+            width: calc(100% + #{$page-margin-mobile * 2});
             max-width: 600px;
             height: auto;
             object-fit: cover;
@@ -99,7 +63,7 @@ span.extra-bold {
 
                 color: $color-black;
                 font-weight: $font-weight-light;
-                font-size: $font-size-lg;
+                font-size: var(--font-size-lg);
 
                 > span {
                     display: inline-block;
@@ -116,7 +80,7 @@ span.extra-bold {
                 gap: 5px;
                 height: fit-content;
                 font-weight: $font-weight-bold;
-                font-size: $font-size-xxl;
+                font-size: var(--font-size-xxl);
                 font-family: $font-family-bebas-neue-pro;
 
                 > span {
@@ -136,7 +100,7 @@ span.extra-bold {
                 gap: 5px;
                 height: fit-content;
                 font-weight: $font-weight-middle;
-                font-size: $font-size-xxl;
+                font-size: var(--font-size-xxl);
 
                 > span {
                     border-radius: 5px;
@@ -153,24 +117,24 @@ span.extra-bold {
         display: flex;
         flex-direction: column;
         gap: 12px;
-        margin-right: -$mobile-body-margin;
-        margin-left: -$mobile-body-margin;
+        margin-right: -$page-margin-mobile;
+        margin-left: -$page-margin-mobile;
         background-image: url('@public/imgs/lulu_pattern.webp');
         background-position: 25px 25px;
         background-size: 66%;
         background-color: $color-black;
-        padding: 25px $mobile-body-margin;
+        padding: 25px $page-margin-mobile;
 
         color: $color-white;
 
         > h1 {
-            font-size: $font-size-xxl;
+            font-size: var(--font-size-xxl);
             font-family: $font-family-bebas-neue-pro;
         }
 
         > p {
             font-weight: $font-weight-light;
-            font-size: $font-size-lg;
+            font-size: var(--font-size-lg);
         }
 
         > form {
@@ -179,13 +143,13 @@ span.extra-bold {
             gap: 12px;
 
             > input[type='email'] {
-                border-radius: $border-radius;
+                border-radius: $border-radius-components;
                 background-color: $color-white;
                 padding: 0 10px;
                 height: 35px;
                 color: $color-black;
                 font-weight: $font-weight-middle;
-                font-size: $font-size-sm;
+                font-size: var(--font-size-sm);
             }
 
             > .checkbox-container {
@@ -193,7 +157,7 @@ span.extra-bold {
                 align-items: center;
                 gap: 5px;
                 font-weight: $font-weight-light;
-                font-size: $font-size-xs;
+                font-size: var(--font-size-xs);
 
                 > input[type='checkbox'] {
                     cursor: pointer;
@@ -218,13 +182,13 @@ span.extra-bold {
                 cursor: pointer;
                 margin-bottom: 5px;
                 box-shadow: 0 8px $color-green-darkest;
-                border-radius: $border-radius;
+                border-radius: $border-radius-components;
                 background-color: $color-green;
                 padding: 10px 0;
                 width: 80%;
                 color: $color-white;
                 font-weight: $font-weight-extra-bold;
-                font-size: $font-size-lg;
+                font-size: var(--font-size-lg);
                 font-family: $font-family-bebas-neue-pro-semi-expanded;
 
                 &:active {
@@ -303,7 +267,7 @@ span.extra-bold {
         > .members-counter {
             align-self: center;
             font-weight: $font-weight-light;
-            font-size: $font-size-sm;
+            font-size: var(--font-size-sm);
         }
     }
 
@@ -311,12 +275,12 @@ span.extra-bold {
         display: flex;
         flex-direction: column;
         gap: 40px;
-        margin: $mobile-body-margin 0;
+        margin: $page-margin-mobile 0;
     }
 
     #dragons-image {
         display: block;
-        border-radius: $border-radius;
+        border-radius: $border-radius-media;
         aspect-ratio: 16/9;
         width: 100%;
     }
@@ -334,12 +298,12 @@ span.extra-bold {
 
             > h2 {
                 font-weight: $font-weight-light;
-                font-size: $font-size-lg;
+                font-size: var(--font-size-lg);
             }
 
             > h1 {
                 font-weight: $font-weight-bold;
-                font-size: $font-size-xxl;
+                font-size: var(--font-size-xxl);
                 font-family: $font-family-bebas-neue-pro;
                 text-align: left;
             }
@@ -347,13 +311,49 @@ span.extra-bold {
 
         > p {
             font-weight: $font-weight-middle;
-            font-size: $font-size-md;
+            font-size: var(--font-size-md);
         }
 
         > img {
-            border-radius: $border-radius;
+            border-radius: $border-radius-media;
             aspect-ratio: 1/1;
             width: 100%;
+        }
+
+        .cards-media-container {
+            position: relative;
+            border-radius: $border-radius-media;
+            aspect-ratio: 1/1;
+            width: 100%;
+            overflow: hidden;
+
+            .cards-placeholder-image,
+            .cards-main-video {
+                position: absolute;
+                top: 0;
+                left: 0;
+                border-radius: $border-radius-media;
+                width: 100%;
+                height: 100%;
+                object-fit: cover;
+            }
+
+            .cards-main-video {
+                visibility: hidden;
+                opacity: 0;
+            }
+
+            &.video-loaded {
+                .cards-placeholder-image {
+                    visibility: hidden;
+                    opacity: 0;
+                }
+
+                .cards-main-video {
+                    visibility: visible;
+                    opacity: 1;
+                }
+            }
         }
 
         .bullet-point-container {
@@ -362,7 +362,7 @@ span.extra-bold {
             gap: 5px;
             padding-left: 10px;
             font-weight: $font-weight-middle;
-            font-size: $font-size-md;
+            font-size: var(--font-size-md);
 
             .bullet-point-item {
                 display: flex;
@@ -388,7 +388,7 @@ span.extra-bold {
     #page-container {
         display: flex;
         flex-direction: column;
-        margin: 0 $desktop-body-margin;
+        margin: 0 $page-margin-desktop;
         width: 100%;
     }
 
@@ -423,7 +423,7 @@ span.extra-bold {
 
                 color: $color-black;
                 font-weight: $font-weight-light;
-                font-size: $font-size-lg;
+                font-size: var(--font-size-lg);
 
                 > span {
                     display: inline-block;
@@ -440,7 +440,7 @@ span.extra-bold {
                 gap: 5px;
                 height: fit-content;
                 font-weight: $font-weight-bold;
-                font-size: $font-size-xxl;
+                font-size: var(--font-size-xxl);
                 font-family: $font-family-bebas-neue-pro;
 
                 > span {
@@ -460,7 +460,7 @@ span.extra-bold {
                 gap: 5px;
                 height: fit-content;
                 font-weight: $font-weight-middle;
-                font-size: $font-size-xxl;
+                font-size: var(--font-size-xxl);
 
                 > span {
                     border-radius: 5px;
@@ -482,28 +482,30 @@ span.extra-bold {
             '. members . form .';
         gap: 10px 0;
 
-        margin-right: -$desktop-body-margin;
-        margin-left: -$desktop-body-margin;
+        margin-right: -$page-margin-desktop;
+        margin-left: -$page-margin-desktop;
         background-image: url('@public/imgs/lulu_pattern.webp');
         background-position: 25px 35px;
         background-size: 10%;
         background-color: $color-black;
-        padding: 30px $desktop-body-margin;
+        padding: 30px $page-margin-desktop;
         color: $color-white;
         // box-sizing: border-box;
 
         h1 {
             grid-area: title;
             place-self: end center;
-            font-size: $font-size-xxl;
+            font-size: var(--font-size-xxl);
             font-family: $font-family-bebas-neue-pro;
         }
 
         p {
             grid-area: subtitle;
             place-self: center;
+            max-width: 400px;
             font-weight: $font-weight-middle;
-            font-size: $font-size-lg;
+            font-size: var(--font-size-lg);
+            text-align: center;
         }
 
         form {
@@ -515,13 +517,13 @@ span.extra-bold {
             width: 80%;
 
             input[type='email'] {
-                border-radius: $border-radius;
+                border-radius: $border-radius-components;
                 background-color: $color-white;
                 padding: 0 10px;
                 height: 35px;
                 color: $color-black;
                 font-weight: $font-weight-middle;
-                font-size: $font-size-xs;
+                font-size: var(--font-size-xs);
             }
         }
 
@@ -530,7 +532,7 @@ span.extra-bold {
             align-items: center;
             gap: 5px;
             font-weight: $font-weight-light;
-            font-size: $font-size-xs;
+            font-size: var(--font-size-xs);
 
             > input[type='checkbox'] {
                 cursor: pointer;
@@ -555,13 +557,13 @@ span.extra-bold {
             cursor: pointer;
             box-shadow: 0 5px $color-green-darkest;
             border: none;
-            border-radius: $border-radius;
+            border-radius: $border-radius-components;
             background-color: $color-green;
             width: 100%;
             height: 35px;
             color: $color-white;
             font-weight: $font-weight-bold;
-            font-size: $font-size-lg;
+            font-size: var(--font-size-lg);
             font-family: $font-family-bebas-neue-pro;
 
             &:active {
@@ -640,7 +642,7 @@ span.extra-bold {
             grid-area: members;
             place-self: start center;
             font-weight: $font-weight-light;
-            font-size: $font-size-sm;
+            font-size: var(--font-size-sm);
         }
     }
 
@@ -673,12 +675,12 @@ span.extra-bold {
 
             > h2 {
                 font-weight: $font-weight-light;
-                font-size: $font-size-lg;
+                font-size: var(--font-size-lg);
             }
 
             > h1 {
                 font-weight: $font-weight-bold;
-                font-size: $font-size-xxl;
+                font-size: var(--font-size-xxl);
                 line-height: 1;
                 font-family: $font-family-bebas-neue-pro;
             }
@@ -687,7 +689,7 @@ span.extra-bold {
         > p {
             grid-area: text-p;
             font-weight: $font-weight-middle;
-            font-size: $font-size-md;
+            font-size: var(--font-size-md);
             text-align: justify;
         }
 
@@ -698,10 +700,49 @@ span.extra-bold {
         > img {
             grid-area: image;
             place-self: center;
-            border-radius: $border-radius;
+            border-radius: $border-radius-media;
             aspect-ratio: 1/1;
             width: 90%;
             max-width: 500px;
+        }
+
+        .cards-media-container {
+            position: relative;
+            grid-area: image;
+            place-self: center;
+            border-radius: $border-radius-media;
+            aspect-ratio: 1/1;
+            width: 90%;
+            max-width: 500px;
+            overflow: hidden;
+
+            .cards-placeholder-image,
+            .cards-main-video {
+                position: absolute;
+                top: 0;
+                left: 0;
+                border-radius: $border-radius-media;
+                width: 100%;
+                height: 100%;
+                object-fit: cover;
+            }
+
+            .cards-main-video {
+                visibility: hidden;
+                opacity: 0;
+            }
+
+            &.video-loaded {
+                .cards-placeholder-image {
+                    visibility: hidden;
+                    opacity: 0;
+                }
+
+                .cards-main-video {
+                    visibility: visible;
+                    opacity: 1;
+                }
+            }
         }
 
         .bullet-point-container {
@@ -711,7 +752,7 @@ span.extra-bold {
             gap: 5px;
             padding-left: 10px;
             font-weight: $font-weight-middle;
-            font-size: $font-size-md;
+            font-size: var(--font-size-md);
 
             .bullet-point-item {
                 display: flex;
@@ -773,16 +814,16 @@ span.extra-bold {
 
     @include mobile {
         flex-direction: column;
-        margin-right: -$mobile-body-margin;
-        margin-left: -$mobile-body-margin;
-        width: calc(100% + #{$mobile-body-margin * 2});
+        margin-right: -$page-margin-mobile;
+        margin-left: -$page-margin-mobile;
+        width: calc(100% + #{$page-margin-mobile * 2});
     }
 
     @include desktop {
         flex-direction: row;
-        margin-right: -$desktop-body-margin;
-        margin-left: -$desktop-body-margin;
-        width: calc(100% + #{$desktop-body-margin * 2});
+        margin-right: -$page-margin-desktop;
+        margin-left: -$page-margin-desktop;
+        width: calc(100% + #{$page-margin-desktop * 2});
     }
 
     .links-layout {
@@ -803,6 +844,6 @@ span.extra-bold {
 
 .section {
     img {
-        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
     }
 }

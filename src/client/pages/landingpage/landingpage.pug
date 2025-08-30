@@ -90,7 +90,21 @@ block body
                     span.extra-bold Tricky Dragons features 100+ original illustrations
                     |
                     | created by professional artists who understand that great games deserve great art. Every dragon has been meticulously crafted to capture both elemental power and individual personality.
-                img(src='@public/imgs/cards_zoom_2_100.webp', alt='wall of cards', loading='lazy')
+                .cards-media-container
+                    img.cards-placeholder-image(
+                        src='@public/imgs/cards_zoom_2_100.webp',
+                        alt='wall of cards',
+                        loading='lazy'
+                    )
+                    video.cards-main-video(
+                        src='@public/videos/cards_zoom_2_100.webm',
+                        poster='@public/imgs/cards_zoom_2_100.webp',
+                        preload='metadata',
+                        muted,
+                        loop,
+                        playsinline,
+                        aria-label='Animated preview of card designs'
+                    )
 
             .section.section-3
                 .title-container

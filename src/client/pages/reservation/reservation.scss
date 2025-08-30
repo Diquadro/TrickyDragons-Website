@@ -149,7 +149,7 @@ body {
                 cursor: pointer;
                 margin-bottom: 10px;
                 box-shadow: 0 8px $color-orange-darkest;
-                border-radius: $border-radius;
+                border-radius: $border-radius-components;
                 background-color: $color-orange;
                 padding: 10px 0;
                 width: 80%;
@@ -303,7 +303,7 @@ body {
     gap: 10px;
     box-shadow: 0 0 20px 0 rgba(0, 0, 0, 0.1);
     border: 1px solid $color-black;
-    border-radius: $border-radius * 2;
+    border-radius: $border-radius-components;
     padding: 20px;
     text-align: justify;
 }
