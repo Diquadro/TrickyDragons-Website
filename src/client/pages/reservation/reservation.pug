@@ -3,7 +3,7 @@ extends @client/layouts/layout_common/layout_common.pug
 block head
     link(
         rel='preload',
-        href='@public/imgs/dragons_and_muffin.webp',
+        href='@public/imgs/mini_expnasion_pack_8.webp',
         as='image',
         type='image/webp',
         crossorigin='anonymous'
@@ -15,10 +15,11 @@ block body
             .section-layout
                 .image-layout
                     img(
-                        src='@public/imgs/dragons_and_muffin.webp',
+                        src='@public/imgs/mini_expnasion_pack_8.webp',
                         alt='reservation confirmed',
                         loading='eager',
-                        crossorigin='anonymous'
+                        crossorigin='anonymous',
+                        fetchpriority='high'
                     )
                 .text-layout
                     .title-layout
@@ -66,7 +67,7 @@ block body
                         .faq-answer Your $1 deposit is fully refundable anytime before the production begins. Simply contact us and we'll process your refund immediately. You'll still receive launch notifications and can back the campaign without the bonus.
                     details.faq-item
                         summary.faq-question If I reserve, do I still have to pledge on Kickstarter?
-                        .faq-answer Yes! Your $1 reservation secures the bonus mini expansion, but you'll need to pledge for Tricky Dragons (starting at $24). The bonus expansion will be automatically added to your order.
+                        .faq-answer Yes! Your $1 reservation secures the bonus mini expansion, but you'll need to pledge for Tricky Dragons (starting at $29). The bonus expansion will be automatically added to your order.
 
             .infos-layout
                 .info-item
