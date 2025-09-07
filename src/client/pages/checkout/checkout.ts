@@ -36,7 +36,7 @@ async function initialize() {
         }
     })
 
-    const return_url = `${CLIENT.URL}/thank-you-1-dollar?${returnParams.toString()}`
+    const return_url = `${CLIENT.URL}/thank-you-vip?${returnParams.toString()}`
 
     const endpoint = ENV.LOCAL
         ? `${API.ENDPOINTS.STRIPE.CREATE_CHECKOUT_SESSION}`

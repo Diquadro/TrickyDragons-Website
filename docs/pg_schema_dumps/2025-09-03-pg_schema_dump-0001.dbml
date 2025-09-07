@@ -1,0 +1,252 @@
+
+            // PostgreSQL to DBML Schema Dump
+            // Generated on: 2025-09-03T16:40:12.566Z
+            // Database: test_db_001
+            // Host: localhost:5432
+            // Version: 0001
+            // 
+            // Generated using db2dbml tool
+            // This DBML file includes all tables, relationships, and constraints
+            // Compatible with dbdiagram.io and other DBML tools
+            //
+        Enum "action_direction" {
+  "inbound"
+  "outbound"
+}
+
+Enum "action_outcome" {
+  "success"
+  "failure"
+}
+
+Enum "address_type" {
+  "billing"
+  "shipping"
+}
+
+Enum "analytics_event_name" {
+  "page_view"
+  "page_leave"
+  "page_scroll"
+  "link_click"
+  "subscribe_to_newsletter"
+  "unsubscribe_to_newsletter"
+}
+
+Enum "contact_status" {
+  "lead"
+  "prospect"
+  "customer"
+}
+
+Enum "contact_subscriptions" {
+  "newsletter"
+}
+
+Enum "order_status" {
+  "paid"
+  "failed"
+  "canceled"
+  "refunded"
+  "pending"
+}
+
+Table "migrations" {
+  "migration_id" int4 [pk, not null, increment]
+  "created_at" timestamptz [not null, default: `now()`]
+  "name" text [note: 'Name or description of the migration.']
+  Note: 'Tracks database schema migrations and their execution history.'
+}
+
+Table "contacts" {
+  "uuid" uuid [pk, not null, default: `uuid_generate_v4()`, note: 'Universally unique identifier for the contact.']
+  "email" text [unique, not null, note: 'Primary email used for contact identification and communication.']
+  "status" contact_status [not null, note: 'Stage of the contact in the sales funnel: lead, prospect, or customer.']
+  "subscriptions" "contact_subscriptions[]" [note: 'List of subscriptions assigned to the contact.']
+  "created_by" text [note: 'User who created the record.']
+  "created_date" timestamptz [note: 'Timestamp when the record was created.']
+  "updated_by" text [note: 'User who last updated the record.']
+  "updated_date" timestamptz [note: 'Timestamp when the record was last updated.']
+  "sent_emails" "text[]" [note: 'Stores the list of email identifiers (e.g., "welcome", "20250401_newsletter") that have been sent to the contact by the system.']
+  "auto_serial" int4 [not null, increment, note: 'Auto-incrementing serial number for easier data analysis and sequential referencing.']
+  "first_name" text [note: 'First name of the contact, typically collected during checkout or registration']
+  "last_name" text [note: 'Last name of the contact, typically collected during checkout or registration']
+  Note: 'Stores contact details including leads, prospects, and customers.'
+}
+
+Table "actions" {
+  "uuid" uuid [pk, not null, default: `uuid_generate_v4()`, note: 'Universally unique identifier for the event.']
+  "contact_uuid" uuid [not null, note: 'Reference to the contact involved in the event. Always required as actions table tracks identified users only.']
+  "origin" text [note: 'Generic origin of the event']
+  "action" text [not null, note: 'Describes the type of event']
+  "outcome" action_outcome [not null, note: 'Outcome of the event, success or failure.']
+  "details" jsonb [note: 'Structured JSONB data capturing what happened, e.g., status codes, messages, or clicked URLs.']
+  "occurred_at" timestamptz [not null, note: 'Timestamp indicating when the event took place.']
+  "created_by" text [note: 'User who created the record.']
+  "created_date" timestamptz [note: 'Timestamp when the record was created.']
+  "updated_by" text [note: 'User who last updated the record.']
+  "updated_date" timestamptz [note: 'Timestamp when the record was last updated.']
+  "endpoint" text [note: 'Stores a summary of the HTTP method and endpoint (e.g., "POST - /api/subscribe").']
+  "direction" action_direction [note: 'Specifies the direction of the event: inbound (incoming) or outbound (outgoing).']
+  "utm_source" text [note: 'UTM source parameter identifying the traffic source (e.g., google, facebook, newsletter).']
+  "utm_medium" text [note: 'UTM medium parameter identifying the marketing medium (e.g., cpc, email, social).']
+  "utm_campaign" text [note: 'UTM campaign parameter identifying the specific campaign name.']
+  "utm_term" text [note: 'UTM term parameter for paid search keywords.']
+  "utm_content" text [note: 'UTM content parameter for A/B testing and content-targeted ads.']
+  "country" text [note: 'Country where the action occurred.']
+  "region" text [note: 'Region/State where the action occurred.']
+  "city" text [note: 'City where the action occurred.']
+  "timezone" text [note: 'Timezone of the action location.']
+  "latitude" float8 [note: 'Latitude coordinate of the action location.']
+  "longitude" float8 [note: 'Longitude coordinate of the action location.']
+  "local_occurred_at" timestamptz [note: 'Timestamp when the action occurred in the users local timezone - calculated server-side using client or IP-based timezone']
+  "auto_serial" int4 [not null, increment, note: 'Auto-incrementing serial number for easier data analysis and sequential referencing.']
+  "order_uuid" uuid [note: 'Reference to the order associated with this action, particularly useful for tracking webhook events and order-related activities']
+  "payload" jsonb [note: 'Complete webhook payload or request data - stores full original data for reference and debugging']
+
+  Indexes {
+    (action, occurred_at) [type: btree, name: "idx_actions_action_time"]
+    city [type: btree, name: "idx_actions_city"]
+    (contact_uuid, occurred_at) [type: btree, name: "idx_actions_contact_time"]
+    country [type: btree, name: "idx_actions_country"]
+    (country, occurred_at) [type: btree, name: "idx_actions_country_time"]
+    order_uuid [type: btree, name: "idx_actions_order_uuid"]
+    utm_campaign [type: btree, name: "idx_actions_utm_campaign"]
+    (utm_campaign, occurred_at) [type: btree, name: "idx_actions_utm_campaign_time"]
+    utm_source [type: btree, name: "idx_actions_utm_source"]
+    (utm_source, occurred_at) [type: btree, name: "idx_actions_utm_source_time"]
+    contact_uuid [type: btree, name: "idx_events_contact_uuid"]
+  }
+  Note: 'Tracks all events, including system-generated communications and user actions, even for anonymous visitors.'
+}
+
+Table "analytics_events" {
+  "uuid" uuid [pk, not null, default: `uuid_generate_v4()`, note: 'Universally unique identifier for the analytics event.']
+  "session_id" text [note: 'Anonymous session identifier (e.g., generated client-side hash) - unique per browser session.']
+  "visitor_id" text [note: 'Anonymous visitor fingerprint for cross-session tracking - persists across sessions for same device/browser.']
+  "event_name" analytics_event_name [not null, note: 'Type of analytics event being tracked.']
+  "page_url" text [note: 'Full URL of the page where the event occurred.']
+  "page_title" text [note: 'Title of the page where the event occurred.']
+  "page_referrer" text [note: 'Referrer URL that brought the user to this page.']
+  "utm_source" text [note: 'UTM source parameter identifying the traffic source (e.g., google, facebook, newsletter).']
+  "utm_medium" text [note: 'UTM medium parameter identifying the marketing medium (e.g., cpc, email, social).']
+  "utm_campaign" text [note: 'UTM campaign parameter identifying the specific campaign name.']
+  "utm_term" text [note: 'UTM term parameter for paid search keywords.']
+  "utm_content" text [note: 'UTM content parameter for A/B testing and content-targeted ads.']
+  "user_agent" text [note: 'Browser user agent string for device and browser identification.']
+  "browser_name" text [note: 'Name of the browser (e.g., Chrome, Firefox, Safari).']
+  "browser_version" text [note: 'Version of the browser.']
+  "os_name" text [note: 'Operating system name (e.g., Windows, macOS, Linux, Android, iOS).']
+  "os_version" text [note: 'Version of the operating system.']
+  "device_type" text [note: 'Type of device used (e.g., desktop, mobile, tablet).']
+  "country" text [note: 'Country where the event occurred.']
+  "region" text [note: 'Region/State where the event occurred.']
+  "city" text [note: 'City where the event occurred.']
+  "timezone" text [note: 'Timezone of the user when the event occurred.']
+  "latitude" float8 [note: 'Latitude coordinate of the event location.']
+  "longitude" float8 [note: 'Longitude coordinate of the event location.']
+  "screen_resolution" text [note: 'Screen resolution of the user device (e.g., 1920x1080).']
+  "viewport_size" text [note: 'Browser viewport size (e.g., 1440x900).']
+  "language" text [note: 'Browser language setting (e.g., it-IT, en-US).']
+  "occurred_at" timestamptz [not null, default: `now()`, note: 'Timestamp when the event actually occurred (can be different from created_date for batch processing).']
+  "created_date" timestamptz [not null, default: `now()`, note: 'Timestamp when the record was created in the database.']
+  "details" jsonb
+  "created_by" text [not null, note: 'User who created the record.']
+  "updated_by" text [not null, note: 'User who last updated the record.']
+  "updated_date" timestamptz [not null, note: 'Timestamp when the record was last updated.']
+  "local_occurred_at" timestamptz [note: 'Timestamp when the event occurred in the users local timezone - calculated server-side using client or IP-based timezone']
+
+  Indexes {
+    country [type: btree, name: "idx_analytics_events_country"]
+    device_type [type: btree, name: "idx_analytics_events_device"]
+    event_name [type: btree, name: "idx_analytics_events_event_name"]
+    (event_name, occurred_at) [type: btree, name: "idx_analytics_events_name_time"]
+    occurred_at [type: btree, name: "idx_analytics_events_occurred_at"]
+    page_url [type: btree, name: "idx_analytics_events_page_url"]
+    session_id [type: btree, name: "idx_analytics_events_session_id"]
+    (session_id, occurred_at) [type: btree, name: "idx_analytics_events_session_time"]
+    (page_url, occurred_at) [type: btree, name: "idx_analytics_events_url_time"]
+    utm_campaign [type: btree, name: "idx_analytics_events_utm_campaign"]
+    utm_source [type: btree, name: "idx_analytics_events_utm_source"]
+  }
+  Note: 'Stores anonymous analytics events with denormalized data for high-volume tracking and fast aggregations.'
+}
+
+Table "addresses" {
+  "uuid" uuid [pk, not null, default: `uuid_generate_v4()`, note: 'Universally unique identifier for the address']
+  "contact_uuid" uuid [not null, note: 'Reference to the contact who owns this address']
+  "type" address_type [not null, note: 'Type of address: billing for payment or shipping for delivery']
+  "line1" text [not null, note: 'First line of the address (street address, PO Box, company name)']
+  "line2" text [note: 'Second line of the address (apartment, suite, unit, building, floor)']
+  "city" text [note: 'City, district, suburb, town, or village']
+  "state" text [note: 'State, county, province, or region']
+  "postal_code" text [note: 'ZIP or postal code']
+  "country" text [note: 'Two-letter country code (ISO 3166-1 alpha-2)']
+  "is_default" bool [default: false, note: 'Whether this is the default address of this type for the contact']
+  "created_date" timestamptz [not null, default: `now()`, note: 'Timestamp when the record was created']
+  "updated_date" timestamptz [note: 'Timestamp when the record was last updated']
+  "created_by" text [note: 'User who created the record']
+  "updated_by" text [note: 'User who last updated the record']
+  "auto_serial" int4 [not null, increment, note: 'Auto-incrementing serial number for easier data analysis and sequential referencing']
+
+  Indexes {
+    (contact_uuid, type) [type: btree, name: "idx_addresses_unique_default"]
+    contact_uuid [type: btree, name: "idx_addresses_contact_uuid"]
+    created_date [type: btree, name: "idx_addresses_created_date"]
+    is_default [type: btree, name: "idx_addresses_is_default"]
+    type [type: btree, name: "idx_addresses_type"]
+  }
+  Note: 'Stores billing and shipping addresses for contacts, collected during checkout or profile updates'
+}
+
+Table "orders" {
+  "uuid" uuid [pk, not null, default: `uuid_generate_v4()`, note: 'Universally unique identifier for the order']
+  "contact_uuid" uuid [note: 'Reference to the contact who placed the order, nullable if contact is deleted']
+  "email" text [not null, note: 'Email address of the customer, preserved even if contact is deleted']
+  "stripe_session_id" text [unique, note: 'Stripe Checkout Session ID for tracking payment flow']
+  "stripe_payment_intent_id" text [unique, note: 'Stripe Payment Intent ID for tracking payment status']
+  "amount_total" numeric(12,2) [not null, note: 'Order total in major currency units (e.g., 1.00 USD). Previously stored as integer cents.']
+  "currency" bpchar(3) [not null, default: 'USD', note: 'Three-letter ISO currency code']
+  "billing_address_uuid" uuid [note: 'Reference to the billing address used for this order']
+  "shipping_address_uuid" uuid [note: 'Reference to the shipping address used for this order']
+  "line_items" jsonb [note: 'JSON array of purchased items from Stripe session']
+  "occurred_at" timestamptz [not null, default: `now()`, note: 'Timestamp when the order was placed']
+  "local_occurred_at" timestamptz [note: 'Timestamp when the order was placed in the customer local timezone']
+  "created_date" timestamptz [not null, default: `now()`, note: 'Timestamp when the record was created']
+  "updated_date" timestamptz [note: 'Timestamp when the record was last updated']
+  "created_by" text [note: 'User who created the record']
+  "updated_by" text [note: 'User who last updated the record']
+  "auto_serial" int4 [not null, increment, note: 'Auto-incrementing serial number for easier data analysis and sequential referencing']
+  "status" order_status [not null, default: 'failed', note: 'Current final status of the order - Set default to "failed" as a safety measure (though orders should always be created with explicit status)']
+  "billing_name" text [note: 'Full billing name captured at checkout (Stripe customer_details.name)']
+  "billing_email" text [note: 'Billing email captured at checkout (Stripe customer_details.email)']
+  "billing_phone" text [note: 'Billing phone captured at checkout (Stripe customer_details.phone)']
+  "billing_country" text [note: 'Billing country code (ISO-2) captured at checkout']
+  "billing_region" text [note: 'Billing state/region captured at checkout']
+  "billing_city" text [note: 'Billing city captured at checkout']
+  "billing_postal_code" text [note: 'Billing postal/ZIP code captured at checkout']
+  "billing_line1" text [note: 'Billing address line 1 captured at checkout']
+  "billing_line2" text [note: 'Billing address line 2 captured at checkout']
+
+  Indexes {
+    contact_uuid [type: btree, name: "idx_orders_contact_uuid"]
+    created_date [type: btree, name: "idx_orders_created_date"]
+    email [type: btree, name: "idx_orders_email"]
+    occurred_at [type: btree, name: "idx_orders_occurred_at"]
+    stripe_payment_intent_id [type: btree, name: "idx_orders_stripe_payment_intent_id"]
+    stripe_session_id [type: btree, name: "idx_orders_stripe_session_id"]
+  }
+  Note: 'Stores customer orders with Stripe payment integration and tracking information'
+}
+
+Ref "actions_order_uuid_fkey":"orders"."uuid" < "actions"."order_uuid" [delete: set null]
+
+Ref "evnts_conctacts_uuid_fkey":"contacts"."uuid" < "actions"."contact_uuid" [delete: cascade]
+
+Ref "addresses_contact_uuid_fkey":"contacts"."uuid" < "addresses"."contact_uuid" [delete: cascade]
+
+Ref "orders_billing_address_uuid_fkey":"addresses"."uuid" < "orders"."billing_address_uuid" [delete: set null]
+
+Ref "orders_contact_uuid_fkey":"contacts"."uuid" < "orders"."contact_uuid" [delete: set null]
+
+Ref "orders_shipping_address_uuid_fkey":"addresses"."uuid" < "orders"."shipping_address_uuid" [delete: set null]

@@ -1,0 +1,49 @@
+extends @client/layouts/layout_common/layout_common.pug
+
+block head
+    title Admin Dashboard - TrickyDragons
+    meta(name='robots', content='noindex, nofollow')
+    link(
+        rel='stylesheet',
+        href='https://cdn.datatables.net/2.3.3/css/dataTables.dataTables.css',
+        nonce='nonce-datatables'
+    )
+
+block body
+    .admin-container
+        header.admin-header
+            h1 📊 Admin Dashboard
+            .user-info
+                span Welcome, Admin
+
+        nav.admin-nav
+            button.tab-btn.active(data-table='contacts')
+                span 👥 Contacts
+                #contacts-count.count
+            button.tab-btn(data-table='orders') 
+                span 💰 Orders
+                #orders-count.count
+            button.tab-btn(data-table='analytics')
+                span 📈 Analytics
+                #analytics-count.count
+
+        main.admin-main
+            .table-header
+                h2#table-title Contacts
+                .table-controls
+                    button#refresh-btn 🔄 Refresh
+                    select#page-length
+                        option(value='25') 25 per page
+                        option(value='50') 50 per page
+                        option(value='100') 100 per page
+                    input#search-input(type='text', placeholder='Search...')
+
+            .table-container
+                table#data-table.display(style='width: 100%')
+                    thead
+                    tbody
+
+            .loading-overlay
+                .spinner
+                .loading-text Loading data...
+    script(src='./admin.ts', defer)

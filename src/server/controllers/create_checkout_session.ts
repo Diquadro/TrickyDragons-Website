@@ -1,9 +1,10 @@
 import { Request, Response } from 'express'
 import Stripe from 'stripe'
+import { STRIPE } from '@shared/constants/app.constants'
 
 // This is your test secret API key.
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!, {
-    apiVersion: '2025-07-30.basil',
+    apiVersion: STRIPE.API_VERSION,
 })
 
 export async function create_checkout_session(req: Request, res: Response): Promise<void> {

@@ -1,6 +1,6 @@
 import { Request, Response } from 'express'
 import { HTTP_STATUS, API, ENV } from '@shared/constants/app.constants'
-import Contacts, { ContactsUuid } from '@shared/schemas/database/public/Contacts'
+import { ContactsUuid } from '@shared/schemas/database/public/Contacts'
 import ContactSubscriptions from '@shared/schemas/database/public/ContactSubscriptions'
 import { sql } from '@server/models/postgres_client'
 import {
@@ -17,7 +17,6 @@ import {
     type Smtp2go_Reject_Event,
 } from '@shared/validations/smtp2go_webhook.validation'
 import { create_action } from '@server/services/create_action'
-import { log_webhook_event } from '@server/services/log_webhook'
 
 /**
  * SMTP2GO Event Webhook Controller
@@ -31,20 +30,6 @@ export async function smtp2go_webhook(req: Request, res: Response) {
         // Guard: Verify Basic Authentication
         if (!verify_basic_auth(req)) {
             console.error('❌ SMTP2GO webhook authentication failed')
-
-            // Log authentication error
-            await log_webhook_event({
-                webhook_source: 'smtp2go',
-                request_method: req.method,
-                request_url: req.originalUrl,
-                request_headers: req.headers,
-                request_body: req.body,
-                processing_outcome: 'validation_error',
-                processing_message: 'Basic authentication validation failed',
-                error_details: { error: 'Authentication failed' },
-                response_status: 401,
-            })
-
             return res.status(HTTP_STATUS.UNAUTHORIZED).json({ error: 'Unauthorized' })
         }
 
@@ -59,19 +44,6 @@ export async function smtp2go_webhook(req: Request, res: Response) {
         // REQUEST ENDS HERE
     } catch (error) {
         console.error('❌ SMTP2GO webhook error:', error)
-
-        // Log validation or processing error
-        await log_webhook_event({
-            webhook_source: 'smtp2go',
-            request_method: req.method,
-            request_url: req.originalUrl,
-            request_headers: req.headers,
-            request_body: req.body,
-            processing_outcome: 'validation_error',
-            processing_message: 'SMTP2GO webhook processing failed',
-            error_details: { error: error },
-            response_status: error instanceof Error && error.name === 'ZodError' ? 400 : 500,
-        })
 
         // Return 400 for validation errors, 500 for others
         const status =
@@ -107,17 +79,6 @@ async function process_smtp2go_event(event: Smtp2go_Event, req: Request): Promis
                 category: category,
             })
 
-            // Log only the error case - contact not found
-            await log_webhook_event({
-                webhook_source: 'smtp2go',
-                request_method: req.method,
-                request_url: req.originalUrl,
-                request_body: event,
-                processing_outcome: 'contact_not_found',
-                processing_message: `SMTP2GO ${event_type} event - contact not found: ${recipient_email}`,
-                response_status: 200, // We still return 200 to the webhook sender
-            })
-
             continue // Skip this recipient, continue with others
         }
 
@@ -126,19 +87,6 @@ async function process_smtp2go_event(event: Smtp2go_Event, req: Request): Promis
             await process_event_for_recipient(event, contact, recipient_email, category)
         } catch (error) {
             console.error('❌ Error processing SMTP2GO event for recipient:', error)
-
-            // Log processing error for this specific recipient
-            await log_webhook_event({
-                webhook_source: 'smtp2go',
-                request_method: req.method,
-                request_url: req.originalUrl,
-                request_body: event,
-                processing_outcome: 'processing_error',
-                processing_message: `Error processing SMTP2GO ${event_type} event for ${recipient_email}`,
-                error_details: { error: error },
-                contact_uuid: contact.uuid,
-                response_status: 500,
-            })
         }
     }
 }

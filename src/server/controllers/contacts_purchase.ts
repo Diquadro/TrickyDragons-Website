@@ -1,17 +1,18 @@
 import { Request, Response } from 'express'
-import { HTTP_STATUS, API, META_EVENTS } from '@shared/constants/app.constants'
+import { HTTP_STATUS, API, META_EVENTS, STRIPE } from '@shared/constants/app.constants'
 import { validate_request, validate_response } from '@shared/validations/contacts_purchase.validation'
 import { sql } from '@server/models/postgres_client'
 import Contacts, { ContactsInitializer } from '@shared/schemas/database/public/Contacts'
 import ContactStatus from '@shared/schemas/database/public/ContactStatus'
 import Orders from '@shared/schemas/database/public/Orders'
+import Actions from '@shared/schemas/database/public/Actions'
 import { create_action } from '@server/services/create_action'
 import { send_meta_event } from '@server/services/send_meta_event'
 import Stripe from 'stripe'
 
 // Initialize Stripe with secret key
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!, {
-    apiVersion: '2025-07-30.basil',
+    apiVersion: STRIPE.API_VERSION,
 })
 
 /**
@@ -71,13 +72,47 @@ export async function contacts_purchase(req: Request, res: Response) {
     // 4. Check if order exists (should have been created by webhook)
     const existing_order = await get_order_by_session_id(session_id)
 
-    // 5. Send Meta Purchase event with value and currency
+    // 5. Check for duplicate purchase actions to prevent multiple Meta events and actions
+    if (existing_order) {
+        // If order exists, check by contact + order combination
+        const duplicate_action = await check_existing_purchase_action(contact.uuid, existing_order.uuid)
+        if (duplicate_action) {
+            console.warn('Duplicate purchase action detected - skipping Meta event and action creation:', {
+                contact_uuid: contact.uuid,
+                order_uuid: existing_order.uuid,
+                session_id: session_id,
+                existing_action_uuid: duplicate_action.uuid,
+                existing_action_date: duplicate_action.occurred_at,
+            })
+            return // Early return to prevent duplicate processing
+        }
+    } else {
+        // If order doesn't exist yet (webhook hasn't processed), check by session_id in action details
+        const duplicate_action_by_session = await check_existing_purchase_action_by_session(
+            contact.uuid,
+            session_id,
+        )
+        if (duplicate_action_by_session) {
+            console.warn(
+                'Duplicate purchase action detected by session - skipping Meta event and action creation:',
+                {
+                    contact_uuid: contact.uuid,
+                    session_id: session_id,
+                    existing_action_uuid: duplicate_action_by_session.uuid,
+                    existing_action_date: duplicate_action_by_session.occurred_at,
+                },
+            )
+            return // Early return to prevent duplicate processing
+        }
+    }
+
+    // 6. Send Meta Purchase event with value and currency
     await send_meta_event(META_EVENTS.PURCHASE, null, req, contact.uuid, utm_params, {
         value: session.amount_total ? session.amount_total / 100 : 0, // Convert from cents to dollars
         currency: session.currency?.toUpperCase() || 'USD',
     })
 
-    // 6. Record action in actions table (with order reference if available)
+    // 7. Record action in actions table (with order reference if available)
     await create_action({
         action: API.EVENTS.ACTIONS.PURCHASE,
         req,
@@ -188,4 +223,36 @@ async function get_order_by_session_id(session_id: string): Promise<Orders | nul
     `
 
     return orders.length > 0 ? orders[0] : null
+}
+
+async function check_existing_purchase_action(
+    contact_uuid: string,
+    order_uuid: string,
+): Promise<Actions | null> {
+    const actions = await sql<Actions[]>`
+        SELECT * FROM actions 
+        WHERE contact_uuid = ${contact_uuid}
+        AND order_uuid = ${order_uuid}
+        AND action = ${API.EVENTS.ACTIONS.PURCHASE}
+        AND outcome = 'success'
+        LIMIT 1
+    `
+
+    return actions.length > 0 ? actions[0] : null
+}
+
+async function check_existing_purchase_action_by_session(
+    contact_uuid: string,
+    session_id: string,
+): Promise<Actions | null> {
+    const actions = await sql<Actions[]>`
+        SELECT * FROM actions 
+        WHERE contact_uuid = ${contact_uuid}
+        AND action = ${API.EVENTS.ACTIONS.PURCHASE}
+        AND outcome = 'success'
+        AND details->>'session_id' = ${session_id}
+        LIMIT 1
+    `
+
+    return actions.length > 0 ? actions[0] : null
 }

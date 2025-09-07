@@ -5,13 +5,14 @@ import { z } from 'zod';
 
 /**
  * Represents the enum public.order_status
- * Defines the final status of an order: paid (payment successful), failed (payment failed), canceled (order canceled), refunded (payment refunded).
+ * Defines the status of an order: pending (payment intent created), paid (payment successful), failed (payment failed), canceled (order canceled), refunded (payment refunded).
  */
 enum OrderStatus {
   paid = 'paid',
   failed = 'failed',
   canceled = 'canceled',
   refunded = 'refunded',
+  pending = 'pending',
 };
 
 export default OrderStatus;
@@ -22,4 +23,5 @@ export const orderStatus = z.enum([
   'failed',
   'canceled',
   'refunded',
+  'pending',
 ]);

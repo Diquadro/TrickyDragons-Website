@@ -14,6 +14,13 @@ import { contacts_add_to_cart } from '@server/controllers/contacts_add_to_cart'
 import { contacts_purchase } from '@server/controllers/contacts_purchase'
 import { stripe_webhook } from '@server/controllers/stripe_webhook'
 
+// Welcome email controllers
+import { send_welcome_email_vip_controller } from '@server/controllers/send_welcome_email_vip'
+import { send_welcome_email_non_vip_controller } from '@server/controllers/send_welcome_email_non_vip'
+
+// Admin controllers
+import { getTableData, getTableCounts } from '@server/controllers/admin'
+
 // Configures routes for the Express application
 // @param app Express application instance
 export function apply_routes(app: express.Application): void {
@@ -33,6 +40,10 @@ export function apply_routes(app: express.Application): void {
     app.post(API.ENDPOINTS.CONTACTS.ADD_TO_CART, contacts_add_to_cart)
     app.post(API.ENDPOINTS.CONTACTS.PURCHASE, contacts_purchase)
 
+    // Welcome email routes
+    app.post(API.ENDPOINTS.EMAILS.SEND_WELCOME_VIP, send_welcome_email_vip_controller)
+    app.post(API.ENDPOINTS.EMAILS.SEND_WELCOME_NON_VIP, send_welcome_email_non_vip_controller)
+
     // Webhooks routes
     app.post(API.ENDPOINTS.WEBHOOKS.SMTP2GO, smtp2go_webhook)
     app.post(API.ENDPOINTS.WEBHOOKS.STRIPE, stripe_webhook)
@@ -40,6 +51,10 @@ export function apply_routes(app: express.Application): void {
     // Stripe routes
     app.post(API.ENDPOINTS.STRIPE.CREATE_CHECKOUT_SESSION, create_checkout_session)
     app.get(API.ENDPOINTS.STRIPE.SESSION_STATUS, get_session_status)
+
+    // Admin routes
+    app.get(`${API.ENDPOINTS.ADMIN.TABLES}/:tableName`, getTableData)
+    app.get(API.ENDPOINTS.ADMIN.COUNTS, getTableCounts)
 
     // 404 handler for undefined routes (must be last)
     app.use((req, res) => {

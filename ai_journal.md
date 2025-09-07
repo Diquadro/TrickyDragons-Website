@@ -1,4 +1,59 @@
-# AI Journal - TrickyDragons Website
+# AI Journal - TrickyDra**Context**:
+
+- Purchase flow uses webhook-first architecture where orders are created by Stripe webhooks
+- Thank you page calls this controller which could be accessed multiple times or before webhook completion
+- Meta events are critical for Facebook/Instagram advertising attribution and optimization
+- Actions table tracks all user interactions and needs to remain clean for proper analytics
+- Session ID is stored in action details JSONB field for fallback deduplication when order doesn't exist yetebsite
+
+## Purchase Action Deduplication System
+
+**Date**: 2025-09-07
+**Type**: Feature Implementation / Optimization
+
+**Changes Made**:
+
+- Implemented deduplication system in `src/server/controllers/contacts_purchase.ts`:
+    - Added `check_existing_purchase_action()` function to detect duplicate purchase actions by order UUID
+    - Added `check_existing_purchase_action_by_session()` function to detect duplicates by session ID when order doesn't exist yet
+    - Dual-strategy deduplication: uses order UUID when available, falls back to session ID from action details
+    - Added early return logic to prevent duplicate Meta events and action creation
+    - Enhanced logging to track when duplicates are detected with relevant context
+    - Imported `Actions` type from database schema for proper TypeScript typing
+
+**Reasoning**:
+
+- Prevents duplicate Meta pixel events that could skew advertising analytics and waste budget
+- Avoids creating redundant action records in the database for the same purchase
+- Essential for webhook-first architecture where multiple sources might trigger the same purchase confirmation
+- Improves data integrity and reduces noise in analytics systems
+
+**Context**:
+
+- Purchase flow uses webhook-first approach where orders are created by Stripe webhooks
+- Thank you page calls this controller which could be accessed multiple times
+- Meta events are critical for Facebook/Instagram advertising attribution and optimization
+- Actions table tracks all user interactions and needs to remain clean for proper analytics
+
+**Alternatives Considered**:
+
+- Database-level unique constraints: Rejected because actions table serves multiple purposes beyond purchases
+- Caching-based deduplication: Rejected in favor of database-based approach for persistence
+- Session-based deduplication: Rejected because it wouldn't prevent webhook + page view duplicates
+
+**Future Implications**:
+
+- Purchase confirmation can be safely called multiple times without creating duplicate records
+- Meta advertising data will be more accurate and reliable
+- Foundation for similar deduplication in other action types if needed
+- Maintains clean audit trail in actions table
+
+**Testing/Verification**:
+
+- Primary function checks for exact match on `contact_uuid`, `order_uuid`, `action = PURCHASE`, and `outcome = success`
+- Fallback function checks for `contact_uuid`, `session_id` in details JSONB, `action = PURCHASE`, and `outcome = success`
+- Early return prevents both Meta event sending and action creation in both scenarios
+- Comprehensive logging for monitoring duplicate detection in production
 
 ## Newsletter Unsubscription Automation
 

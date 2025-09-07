@@ -1,12 +1,34 @@
 import '@client/layouts/layout_common/layout_common'
-import './thank-you-1-dollar.scss'
+import './thank-you-vip.scss'
 import { API, ENV } from '@shared/constants/app.constants'
 import { Base64_Url } from '@shared/utils/base64_url'
 import { get_timezone } from '@client/ts/timezone'
 import { get_utm_params } from '@client/ts/utm_params'
 ;(function main() {
     handle_purchase_confirmation()
+    handle_welcome_email()
 })()
+
+async function handle_welcome_email() {
+    const email = get_email_from_url()
+
+    if (!email) {
+        console.warn('Missing email for welcome email')
+        return
+    }
+
+    try {
+        await send_vip_welcome_email({
+            contact_email: email,
+        })
+        console.info('VIP welcome email sent successfully:', { email })
+    } catch (error) {
+        console.error('Failed to send VIP welcome email:', {
+            email,
+            error: error instanceof Error ? error.message : 'Unknown error',
+        })
+    }
+}
 
 async function handle_purchase_confirmation() {
     const session_id = get_session_id_from_url()
@@ -99,6 +121,27 @@ async function confirm_purchase(email: string, session_id: string) {
 
     if (!response.ok) {
         throw new Error(`Failed to confirm purchase: ${response.status}`)
+    }
+
+    return await response.json()
+}
+
+async function send_vip_welcome_email(params: { contact_email: string }) {
+    const endpoint = ENV.LOCAL
+        ? `${API.ENDPOINTS.EMAILS.SEND_WELCOME_VIP}`
+        : `${API.URL}${API.ENDPOINTS.EMAILS.SEND_WELCOME_VIP}`
+
+    const response = await fetch(endpoint, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        credentials: 'include',
+        body: JSON.stringify(params),
+    })
+
+    if (!response.ok) {
+        throw new Error(`Failed to send VIP welcome email: ${response.status}`)
     }
 
     return await response.json()

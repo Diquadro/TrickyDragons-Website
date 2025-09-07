@@ -47,6 +47,14 @@ export const API = {
             CREATE_CHECKOUT_SESSION: `/${VERSION}/stripe/create-checkout-session`,
             SESSION_STATUS: `/${VERSION}/stripe/session-status`,
         },
+        ADMIN: {
+            TABLES: `/${VERSION}/admin/tables`,
+            COUNTS: `/${VERSION}/admin/counts`,
+        },
+        EMAILS: {
+            SEND_WELCOME_VIP: `/${VERSION}/send-email-welcome-vip`,
+            SEND_WELCOME_NON_VIP: `/${VERSION}/send-email-welcome-non-vip`,
+        },
     },
 
     EVENTS: {
@@ -67,6 +75,13 @@ export const API = {
             SMTP2GO_EMAIL_SPAM: `${VERSION}_smtp2go_email_spam`,
             SMTP2GO_EMAIL_UNSUBSCRIBED: `${VERSION}_smtp2go_email_unsubscribed`,
             SMTP2GO_EMAIL_REJECTED: `${VERSION}_smtp2go_email_rejected`,
+
+            // Stripe Webhook Events
+            STRIPE_WEBHOOK_PAYMENT_INTENT_CREATED: 'stripe_webhook_payment_intent_created',
+            STRIPE_WEBHOOK_PAYMENT_SUCCEEDED: 'stripe_webhook_payment_succeeded',
+            STRIPE_WEBHOOK_PAYMENT_FAILED: 'stripe_webhook_payment_failed',
+            STRIPE_WEBHOOK_PAYMENT_CANCELED: 'stripe_webhook_payment_canceled',
+            STRIPE_WEBHOOK_REFUND_CREATED: 'stripe_webhook_refund_created',
         },
 
         ORIGINS: {
@@ -97,6 +112,14 @@ export const STRIPE = {
     },
     PRODUCTS: {
         TRICKY_DRAGONS_RESERVATION: 'Tricky Dragons Reservation',
+    },
+    API_VERSION: '2025-07-30.basil' as const,
+    WEBHOOK_EVENTS: {
+        PAYMENT_INTENT_CREATED: 'payment_intent.created',
+        PAYMENT_INTENT_SUCCEEDED: 'payment_intent.succeeded',
+        PAYMENT_INTENT_PAYMENT_FAILED: 'payment_intent.payment_failed',
+        PAYMENT_INTENT_CANCELED: 'payment_intent.canceled',
+        REFUND_CREATED: 'refund.created',
     },
 }
 

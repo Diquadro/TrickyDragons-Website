@@ -97,6 +97,7 @@ async function get_eligible_contacts(): Promise<Contacts[]> {
                 OR NOT (
                     c.sent_emails @> ARRAY[${EMAIL_TEMPLATES.WELCOME}]::text[]
                     OR c.sent_emails @> ARRAY[${EMAIL_TEMPLATES.WELCOME_NON_VIP_1}]::text[]
+                    OR c.sent_emails @> ARRAY[${EMAIL_TEMPLATES.WELCOME_VIP_1}]::text[]
                 )
             )
             

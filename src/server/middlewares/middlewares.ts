@@ -10,18 +10,18 @@ import { block_bots } from './block_bots'
 import { morgan_middleware } from './morgan'
 import { error_handler } from './error_handler'
 import { cookie_parser } from './cookie_parser'
+import { inbound_logger } from './inbound_logger'
 
 // Applies all middlewares to the Express application
 // Order is important!
 //
 // @param app Express application instance
 export function apply_middlewares(app: express.Application): void {
-    // Logging - must be first to log all requests
+    // Logging (Morgan) - first for standard HTTP logging
     app.use(morgan_middleware)
 
     // Security - early in the middleware chain
     app.use(block_bots)
-    app.use(rate_limiter)
     app.use(cors_middleware)
 
     // Request parsing
@@ -33,6 +33,10 @@ export function apply_middlewares(app: express.Application): void {
     app.use(geo_info_middleware)
     app.use(browser_info_middleware)
     app.use(time_infos_middleware) // Must be after geo_info for IP timezone fallback
+
+    // Inbound Request Logger - AFTER parsing so we get body and query params
+    app.use(inbound_logger)
+    app.use(rate_limiter)
 
     // Error handling - must be last
     app.use(error_handler)

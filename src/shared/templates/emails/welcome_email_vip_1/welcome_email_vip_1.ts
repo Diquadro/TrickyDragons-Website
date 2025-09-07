@@ -9,7 +9,7 @@ import { EMAIL_TEMPLATES, EMAIL_SENDERS } from '@shared/constants/emails.constan
 export const send_welcome_vip_1_email = async (contact_email: string, first_name?: string) => {
     const from = EMAIL_SENDERS.DANIELE_DAMBROSIO_INFO
     const to = contact_email
-    const subject = 'Thank you and welcome to our VIP Community! Important Tricky Dragons info inside!'
+    const subject = 'Thank you and welcome to our VIP Community!'
     const html_template_path = ENV.LOCAL
         ? path.resolve(__dirname, 'welcome_email_vip_1.html')
         : path.resolve(

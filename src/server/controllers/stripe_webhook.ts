@@ -1,5 +1,5 @@
 import { Request, Response } from 'express'
-import { HTTP_STATUS } from '@shared/constants/app.constants'
+import { HTTP_STATUS, STRIPE, API } from '@shared/constants/app.constants'
 import {
     validate_webhook_event,
     validate_payment_intent,
@@ -20,7 +20,7 @@ import Stripe from 'stripe'
 
 // Initialize Stripe for webhook signature verification and API calls
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!, {
-    apiVersion: '2025-07-30.basil',
+    apiVersion: STRIPE.API_VERSION,
 })
 
 const WEBHOOK_SECRET = process.env.STRIPE_WEBHOOK_SECRET!
@@ -60,19 +60,23 @@ export async function stripe_webhook(req: Request, res: Response): Promise<void>
  */
 async function process_stripe_event(event: Stripe_Webhook_Event, req: Request): Promise<void> {
     switch (event.type) {
-        case 'payment_intent.succeeded':
+        case STRIPE.WEBHOOK_EVENTS.PAYMENT_INTENT_CREATED:
+            await handle_payment_intent_created(event, req)
+            break
+
+        case STRIPE.WEBHOOK_EVENTS.PAYMENT_INTENT_SUCCEEDED:
             await handle_payment_intent_succeeded(event, req)
             break
 
-        case 'payment_intent.payment_failed':
+        case STRIPE.WEBHOOK_EVENTS.PAYMENT_INTENT_PAYMENT_FAILED:
             await handle_payment_intent_failed(event, req)
             break
 
-        case 'payment_intent.canceled':
+        case STRIPE.WEBHOOK_EVENTS.PAYMENT_INTENT_CANCELED:
             await handle_payment_intent_canceled(event, req)
             break
 
-        case 'refund.created':
+        case STRIPE.WEBHOOK_EVENTS.REFUND_CREATED:
             await handle_refund_created(event, req)
             break
 
@@ -83,12 +87,36 @@ async function process_stripe_event(event: Stripe_Webhook_Event, req: Request): 
 }
 
 /**
+ * Handle payment intent created
+ * Creates order with pending status when PaymentIntent is first created
+ */
+async function handle_payment_intent_created(event: Stripe_Webhook_Event, req: Request): Promise<void> {
+    const payment_intent = validate_payment_intent(event.data.object)
+    const action_name = API.EVENTS.ACTIONS.STRIPE_WEBHOOK_PAYMENT_INTENT_CREATED
+
+    // 1. Check idempotency
+    const existing_action = await check_event_already_processed(event.id, action_name)
+    if (existing_action) {
+        return
+    }
+
+    // 2. Retrieve session (optional enrichment) and upsert order
+    const session = await get_session_for_payment_intent(payment_intent.id)
+    const order = await upsert_order_from_event({
+        req,
+        status: OrderStatus.pending,
+        payment_intent,
+        session,
+    })
+}
+
+/**
  * Handle successful payment intent
  * Primary event for order creation - most reliable indicator of completed payment
  */
 async function handle_payment_intent_succeeded(event: Stripe_Webhook_Event, req: Request): Promise<void> {
     const payment_intent = validate_payment_intent(event.data.object)
-    const action_name = 'stripe_webhook_payment_succeeded'
+    const action_name = API.EVENTS.ACTIONS.STRIPE_WEBHOOK_PAYMENT_SUCCEEDED
 
     // 1. Check idempotency
     const existing_action = await check_event_already_processed(event.id, action_name)
@@ -104,15 +132,6 @@ async function handle_payment_intent_succeeded(event: Stripe_Webhook_Event, req:
         payment_intent,
         session,
     })
-
-    // 3. Log webhook action
-    await log_webhook_action(event, action_name, order.uuid, order.contact_uuid!, req, {
-        payment_intent_id: payment_intent.id,
-        session_id: session?.id ?? null,
-        amount_total: (session?.amount_total ?? payment_intent.amount) / 100,
-        currency: (session?.currency ?? payment_intent.currency ?? 'usd').toLowerCase(),
-        order_status: OrderStatus.paid,
-    })
 }
 
 /**
@@ -120,7 +139,7 @@ async function handle_payment_intent_succeeded(event: Stripe_Webhook_Event, req:
  */
 async function handle_payment_intent_failed(event: Stripe_Webhook_Event, req: Request): Promise<void> {
     const payment_intent = validate_payment_intent(event.data.object)
-    const action_name = 'stripe_webhook_payment_failed'
+    const action_name = API.EVENTS.ACTIONS.STRIPE_WEBHOOK_PAYMENT_FAILED
 
     // 1. Check idempotency
     const existing_action = await check_event_already_processed(event.id, action_name)
@@ -136,16 +155,6 @@ async function handle_payment_intent_failed(event: Stripe_Webhook_Event, req: Re
         payment_intent,
         session,
     })
-
-    // 3. Log webhook action
-    await log_webhook_action(event, action_name, order.uuid, order.contact_uuid!, req, {
-        payment_intent_id: payment_intent.id,
-        session_id: session?.id ?? null,
-        amount_total: (session?.amount_total ?? payment_intent.amount) / 100,
-        currency: (session?.currency ?? payment_intent.currency ?? 'usd').toLowerCase(),
-        order_status: OrderStatus.failed,
-        failure_reason: 'payment_failed',
-    })
 }
 
 /**
@@ -153,7 +162,7 @@ async function handle_payment_intent_failed(event: Stripe_Webhook_Event, req: Re
  */
 async function handle_payment_intent_canceled(event: Stripe_Webhook_Event, req: Request): Promise<void> {
     const payment_intent = validate_payment_intent(event.data.object)
-    const action_name = 'stripe_webhook_payment_canceled'
+    const action_name = API.EVENTS.ACTIONS.STRIPE_WEBHOOK_PAYMENT_CANCELED
 
     // 1. Check idempotency
     const existing_action = await check_event_already_processed(event.id, action_name)
@@ -169,16 +178,6 @@ async function handle_payment_intent_canceled(event: Stripe_Webhook_Event, req: 
         payment_intent,
         session,
     })
-
-    // 3. Log webhook action
-    await log_webhook_action(event, action_name, order.uuid, order.contact_uuid!, req, {
-        payment_intent_id: payment_intent.id,
-        session_id: session?.id ?? null,
-        amount_total: (session?.amount_total ?? payment_intent.amount) / 100,
-        currency: (session?.currency ?? payment_intent.currency ?? 'usd').toLowerCase(),
-        order_status: OrderStatus.canceled,
-        cancellation_reason: 'user_canceled',
-    })
 }
 
 /**
@@ -187,7 +186,7 @@ async function handle_payment_intent_canceled(event: Stripe_Webhook_Event, req: 
  */
 async function handle_refund_created(event: Stripe_Webhook_Event, req: Request): Promise<void> {
     const refund = validate_refund(event.data.object)
-    const action_name = 'stripe_webhook_refund_created'
+    const action_name = API.EVENTS.ACTIONS.STRIPE_WEBHOOK_REFUND_CREATED
 
     // 1. Check idempotency
     const existing_action = await check_event_already_processed(event.id, action_name)
@@ -237,17 +236,6 @@ async function handle_refund_created(event: Stripe_Webhook_Event, req: Request):
             current_status: order.status,
         })
     }
-
-    // 4. Log webhook action
-    await log_webhook_action(event, action_name, order.uuid, order.contact_uuid!, req, {
-        refund_id: refund.id,
-        payment_intent_id: payment_intent_id,
-        charge_id: charge_id,
-        amount: refund.amount,
-        currency: refund.currency,
-        reason: refund.reason,
-        order_status: OrderStatus.refunded,
-    })
 }
 
 /**
@@ -314,10 +302,10 @@ async function upsert_order_from_event(params: UpsertOrderFromEventParams): Prom
     // Maybe create billing address
     const billing_address_uuid = session?.customer_details?.address
         ? ((await create_or_get_address(
-            contact.uuid,
-            AddressType.billing,
-            session.customer_details.address,
-        )) as any)
+              contact.uuid,
+              AddressType.billing,
+              session.customer_details.address,
+          )) as any)
         : null
 
     // Check existing order (by session or PI)
@@ -396,8 +384,8 @@ async function upsert_order_from_event(params: UpsertOrderFromEventParams): Prom
 
 /**
  * Determine if order status should be updated based on status hierarchy
- * Hierarchy: paid -> refunded
- * failed/canceled/refunded are final states
+ * Hierarchy: pending -> paid/failed/canceled -> refunded
+ * refunded is final state
  */
 function should_update_order_status(current_status: OrderStatus, new_status: OrderStatus): boolean {
     // If status is the same, no update needed
@@ -407,14 +395,21 @@ function should_update_order_status(current_status: OrderStatus, new_status: Ord
 
     // Status hierarchy rules
     switch (current_status) {
+        case OrderStatus.pending:
+            // pending can become any other status
+            return true
+
         case OrderStatus.paid:
             // paid can only become refunded
             return new_status === OrderStatus.refunded
 
         case OrderStatus.failed:
         case OrderStatus.canceled:
+            // These are final states for failed/canceled flow, no updates allowed
+            return false
+
         case OrderStatus.refunded:
-            // These are final states, no updates allowed
+            // refunded is the final state, no updates allowed
             return false
 
         default:
@@ -425,33 +420,6 @@ function should_update_order_status(current_status: OrderStatus, new_status: Ord
             })
             return true
     }
-}
-
-/**
- * Log webhook action with order reference for comprehensive tracking
- */
-async function log_webhook_action(
-    event: Stripe_Webhook_Event,
-    action_name: string,
-    order_uuid: OrdersUuid,
-    contact_uuid: ContactsUuid,
-    req: Request,
-    additional_details: Record<string, any> = {},
-): Promise<void> {
-    const action_details = {
-        stripe_event_id: event.id,
-        stripe_event_type: event.type,
-        ...additional_details,
-    }
-
-    await create_action({
-        action: action_name,
-        req: req,
-        contact_uuid: contact_uuid,
-        order_uuid: order_uuid,
-        outcome: ActionOutcome.success,
-        details: action_details,
-    })
 }
 
 /**
