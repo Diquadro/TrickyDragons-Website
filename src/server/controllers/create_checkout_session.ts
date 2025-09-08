@@ -28,7 +28,7 @@ export async function create_checkout_session(req: Request, res: Response): Prom
             },
         ],
         mode: 'payment',
-        payment_method_types: ['card'],
+        // payment_method_types: ['card', 'apple_pay'],
         return_url: final_return_url,
         payment_intent_data: {
             receipt_email: customer_email,
