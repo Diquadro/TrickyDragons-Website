@@ -8,9 +8,14 @@ import { Base64_Url } from '@shared/utils/base64_url'
 declare const Stripe: any
 
 // This is your test publishable API key.
-const stripe = Stripe(
-    'pk_test_51RqfdZA5ocAGWp3UhiwfQM4od6zdj88T6Yr5jOiCgVHN9UzzGoMdaw5RhglAKmVUjGmFkNKeRFkGRBYeu13W8CVi00RlOFRF0a',
-)
+let public_key
+if (ENV.PRODUCTION)
+    public_key =
+        'pk_live_51RqfdEPGPHlGjxKBI86w32jO288rCTqSBjvrzE4ifFNvRN3LYreVDrrN2QYSoTDK2dSNrII1DKajy8Yf2VQpgwl000we1iPUjB'
+else
+    public_key =
+        'pk_test_51RqfdZA5ocAGWp3UhiwfQM4od6zdj88T6Yr5jOiCgVHN9UzzGoMdaw5RhglAKmVUjGmFkNKeRFkGRBYeu13W8CVi00RlOFRF0a'
+const stripe = Stripe(public_key)
 
 let checkout: any
 initialize()
