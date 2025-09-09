@@ -6,6 +6,7 @@ block head
         href='@public/imgs/kickstarter_box_4.2.webp',
         as='image',
         type='image/webp',
+        fetchpriority='high',
         crossorigin='anonymous'
     )
     //- Prefetch next critical images
@@ -20,7 +21,8 @@ block body
                 alt='kickstarter box',
                 loading='eager',
                 crossorigin='anonymous',
-                fetchpriority='high'
+                fetchpriority='high',
+                decoding='sync'
             )
             .text-container
                 h2

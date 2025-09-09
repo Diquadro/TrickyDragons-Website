@@ -10,15 +10,36 @@ import { get_utm_params } from '@client/ts/utm_params'
 import AnalyticsEventName from '@shared/schemas/database/public/AnalyticsEventName'
 import posthog from 'posthog-js'
 
+// Meta Pixel può rimanere subito (è critico per ads)
 initialize_meta_pixel()
-initialize_utm_params()
-initialize_screen_infos()
-initialize_analytics()
-initialize_posthog()
-initialize_umami()
 
-// Global link tracking (exclude landing page and checkout which have their own logic)
-;(function init_global_link_tracking() {
+// Ritarda tutto il resto fino a dopo LCP
+function initializeAnalyticsAfterLCP() {
+    // Usa requestIdleCallback per non bloccare il main thread
+    const initAnalytics = () => {
+        initialize_utm_params()
+        initialize_screen_infos()
+        initialize_analytics()
+        initialize_posthog()
+        initialize_umami()
+        initGlobalLinkTracking()
+    }
+
+    if ('requestIdleCallback' in window) {
+        requestIdleCallback(initAnalytics, { timeout: 2000 })
+    } else {
+        setTimeout(initAnalytics, 1000)
+    }
+}
+
+// Aspetta che la pagina sia completamente caricata
+if (document.readyState === 'complete') {
+    initializeAnalyticsAfterLCP()
+} else {
+    window.addEventListener('load', initializeAnalyticsAfterLCP)
+}
+
+function initGlobalLinkTracking() {
     const path = window.location.pathname
     if (path === '/' || path.startsWith('/checkout')) return
 
@@ -36,9 +57,16 @@ initialize_umami()
                 ...get_utm_params(),
             }
 
-            track_custom_event(AnalyticsEventName.link_click, payload)
-            window.umami?.track(AnalyticsEventName.link_click, payload)
-            posthog.capture(AnalyticsEventName.link_click, payload)
+            // Verifica che i servizi siano inizializzati prima di usarli
+            if (typeof track_custom_event === 'function') {
+                track_custom_event(AnalyticsEventName.link_click, payload)
+            }
+            if (window.umami?.track) {
+                window.umami.track(AnalyticsEventName.link_click, payload)
+            }
+            if (posthog.capture) {
+                posthog.capture(AnalyticsEventName.link_click, payload)
+            }
         },
     })
-})()
+}
