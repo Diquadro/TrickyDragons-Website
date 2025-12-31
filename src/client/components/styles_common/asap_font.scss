@@ -1,0 +1,15 @@
+@font-face {
+	font-style: normal;
+	font-weight: 100 900;
+	src: url('@client/fonts/Asap-VariableFont_wdth,wght.woff2') format('woff2-variations');
+	font-family: 'Asap';
+	font-display: swap;
+}
+
+@font-face {
+	font-style: italic;
+	font-weight: 100 900;
+	src: url('@client/fonts/Asap-Italic-VariableFont_wdth,wght.woff2') format('woff2-variations');
+	font-family: 'Asap';
+	font-display: swap;
+}

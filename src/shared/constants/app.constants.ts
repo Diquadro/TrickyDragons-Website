@@ -108,7 +108,8 @@ export const API = {
 
 export const STRIPE = {
     PRODUCT_MAP: {
-        TD_RESERVATION: 'price_1RqonfA5ocAGWp3UYefbC6LT',
+        TD_RESERVATION: ENV.PRODUCTION ? 'price_1Rx9ukPGPHlGjxKBMe9LozjH' : 'price_1RqonfA5ocAGWp3UYefbC6LT', // PROD : DEV
+        // TD_RESERVATION: 'price_1Rx9ukPGPHlGjxKBMe9LozjH', // PROD
     },
     PRODUCTS: {
         TRICKY_DRAGONS_RESERVATION: 'Tricky Dragons Reservation',

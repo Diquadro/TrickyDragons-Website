@@ -5,9 +5,9 @@
     margin: 0;
     border: 0;
     padding: 0;
+
     color: $color-black;
-    font-weight: $font-weight-light;
-    font-family: $font-family-bebas-neue-pro-semi-expanded;
+    font-family: $font-family;
 }
 
 *:not(input):not(textarea):not(select) {
@@ -94,7 +94,7 @@ body {
                 font-weight: $font-weight-bold;
                 font-size: var(--font-size-xxl);
                 line-height: 1;
-                font-family: $font-family-bebas-neue-pro;
+                font-family: $font-family;
             }
         }
 
@@ -142,7 +142,7 @@ body {
                     color: $color-white;
                     font-weight: $font-weight-extra-bold;
                     font-size: var(--font-size-lg);
-                    font-family: $font-family-bebas-neue-pro-semi-expanded;
+                    font-family: $font-family;
                     text-decoration: none;
                 }
 
@@ -161,6 +161,7 @@ body {
                     100% {
                         background-color: $color-orange;
                     }
+
                     50% {
                         background-color: $color-orange-dark;
                     }

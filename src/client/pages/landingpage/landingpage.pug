@@ -3,6 +3,13 @@ extends @client/layouts/layout_common/layout_common.pug
 block head
     link(
         rel='preload',
+        href='@public/imgs/kickstarter_box_4.2-lowres.webp',
+        as='image',
+        type='image/webp',
+        fetchpriority='high'
+    )
+    link(
+        rel='preload',
         href='@public/imgs/kickstarter_box_4.2.webp',
         as='image',
         type='image/webp',
@@ -14,205 +21,235 @@ block head
 
 block body
     #page-container
-        #hero
-            img(
+        #hero.full-width.desktop-section-image-left.mobile-full-content
+            h1.title THE ULTIMATE FAST-PACE CARD GAME WHERE TACTICAL DRAGON COMBAT MEETS ELEMENTAL CHAOS
+
+            img.image(
                 src='@public/imgs/kickstarter_box_4.2.webp',
                 alt='kickstarter box',
                 loading='eager',
                 crossorigin='anonymous',
-                fetchpriority='high'
+                fetchpriority='high',
+                decoding='sync',
+                width='600',
+                height='600'
             )
-            .text-container
-                h2
-                    span 
-                    |
-                    | WARNING! IMPOSSIBLE TO PUT DOWN!
-                h1 WHEN STRATEGY
-                    |
-                    |
-                    span MEETS CHAOS
-                p
-                    span ADDICTIVE
-                    |
-                    | CARD GAME
-                p
-                    span ADORABLE
-                    |
-                    | ARTWORK
-                p
-                    span FAST-PACED
-                    |
-                    | GAMEPLAY
 
-        .cta
-            h1 JOIN OUR 500+ SUPPORTERS
-            p
-                span.extra-bold Be the first to know
-                |
-                | when we launch and
-                |
-                span.extra-bold receive a special offer
-                |
-                | for our backers!
+            p.description Never judge a dragon by its cuteness! Their sneaky powers fill each game with elemental combos and unpredictable tricks that keep everyone on their toes
+                br
+                br
+                | These adorable troublemakers don't play fair. They'll scorch, flood, or overgrow their way to victory
+
+            .horizontal-divider.on-dark
+                div 
+
+            .cta.full-width.mobile-full-content
+                h3 WE'RE LAUNCHING SOON
+                p Sign up to be the first to know when we launch and receive a exclusive offer for our backers
+                form.cta-form
+                    input(type='email', placeholder='Enter your email', required)
+                    input.form_name(type='text', placeholder='Enter your name')
+                    .checkbox-container
+                        input#newsletter-consent-bottom(type='checkbox', name='checkbox', required)
+                        label(for='newsletter-consent-bottom') I agree to receive the newsletter
+                    button(type='submit') UNLOCK THE EXCLUSIVE OFFER
+
+        img#dragons-image(
+            src='@public/imgs/3_dragons.webp',
+            alt='3 dragons',
+            loading='lazy',
+            width='600',
+            height='338'
+        )
+
+        .section.full-width.desktop-section-image-right-with-quote.mobile-full-content
+            h3.title OVER 100 DRAGONS MADE BY PRO ITALIAN ARTISTS
+            p.description The deck bursts with colors, personalities, and details. Each dragon is unique and was designed to capture both elemental power and it’s own style
+            img.image(
+                src='@public/imgs/cards_zoom_2_100.webp',
+                alt='wall of cards',
+                loading='lazy',
+                width='600',
+                height='600'
+            )
+            p.quote "The dragon illustrations are adorable. I can't pick a favorite" - Maria D.
+
+        .section.full-width.desktop-section-image-left.mobile-full-content
+            h3.title THE CLASSIC TRICK-TAKING GAME REINVENTED
+            p.description We took the classic card game formula and built an entire new game around it. Elements, Powers and Effects transform simple card play into dynamic battles where anything can happen
+            img.image(
+                src='@public/imgs/playing_viola_mano_5.webp',
+                alt='playing cards',
+                loading='lazy',
+                width='600',
+                height='600'
+            )
+
+        .cta.full-width.mobile-full-content
+            h3 JOIN 1000+ SUPPORTERS
+            p Sign up to be the first to know when we launch and receive a exclusive offer for our backers
             form.cta-form
                 input(type='email', placeholder='Enter your email', required)
+                input.form_name(type='text', placeholder='Enter your name')
                 .checkbox-container
                     input#newsletter-consent-bottom(type='checkbox', name='checkbox', required)
                     label(for='newsletter-consent-bottom') I agree to receive the newsletter
-                button(type='submit') NOTIFY ME!
-            .members-counter Launching soon on Kickstarter
+                button(type='submit') ENTER THE DRAGON'S LAIR
 
-        .content-container
-            img#dragons-image(src='@public/imgs/3_dragons.webp', alt='3 dragons', loading='lazy')
+        .section.full-width.desktop-section-image-right-with-quote.mobile-full-content
+            h3.title QUICK AND EASY ROUNDS, ONE CARD AT A TIME
+            p.description Each turn, play a card that matches or beats the one on top. But wait, there is a trick! Your dragons wield elemental powers that can flip the game
+            img.image(
+                src='@public/imgs/game_preview_6_100.webp',
+                alt='game preview',
+                loading='lazy',
+                width='600',
+                height='600'
+            )
+            p.quote "Looks simple. Plays deep. I'm still discovering new combos" - Alex N.
 
-            .section.section-1
-                .title-container
-                    h2 DRAW ◦ PLAY ◦ WIN
-                    h1 THE PERFECT COMBO: EASY AND FAST GAME + OUTSTANDING ART
-                p We wanted a game that was dynamic, fun to play and had a spark of strategy, that's why we created
-                    |
-                    |
-                    span.extra-bold Tricky Dragons.
-                    |
-                    | But we didn't stop there. We added professional artwork that makes every card a collectible.
-                    br
-                    br
-                    | In the end, we had something special:
-                    |
-                    span.extra-bold A card game that's easy to learn, impossible to master, and beautiful to own.
-                img(src='@public/imgs/game_preview_6_100.webp', alt='game preview', loading='lazy')
+        .section.full-width.desktop-section-image-left.mobile-full-content
+            h3.title FIRE BURNS GRASS
+                br 
+                | GRASS ABSORBS WATER
+                br 
+                | WATER EXTINGUISH FIRE
+            p.description At the heart of Tricky Dragons lies a simple elemental system, yet it transforms every card play. Suddenly, your low-value cards can beat their high-value cards. Your worst hand becomes your best strategy
+            img.image(
+                src='@public/imgs/element_card_circle_spread_8_100.webp',
+                alt='Elemental system example',
+                loading='lazy',
+                width='600',
+                height='600'
+            )
 
-            .section.section-2
-                .title-container
-                    h2 MEET THE DRAGONS
-                    h1 EVERY CARD IS A WORK OF ART THAT BRINGS DRAGONS TO LIFE
-                p
-                    span.extra-bold Tricky Dragons features 100+ original illustrations
-                    |
-                    | created by professional artists who understand that great games deserve great art. Every dragon has been
-                    |
-                    span.extra-bold meticulously crafted
-                    |
-                    | to capture both elemental power and individual personality.
-                .cards-media-container
-                    img.cards-placeholder-image(
-                        src='@public/imgs/cards_zoom_2_100.webp',
-                        alt='wall of cards',
-                        loading='lazy'
-                    )
-                    //- video.cards-main-video(
-                    //-     src='@public/videos/cards_zoom_2_100.webm',
-                    //-     poster='@public/imgs/cards_zoom_2_100.webp',
-                    //-     preload='metadata',
-                    //-     muted,
-                    //-     loop,
-                    //-     playsinline,
-                    //-     aria-label='Animated preview of card designs'
-                    //- )
+        .cta.full-width.mobile-full-content
+            h3 BE AMONG THE FIRST
+            p Sign up to be the first to know when we launch and receive a exclusive offer for our backers
+            form.cta-form
+                input(type='email', placeholder='Enter your email', required)
+                input.form_name(type='text', placeholder='Enter your name')
+                .checkbox-container
+                    input#newsletter-consent-bottom(type='checkbox', name='checkbox', required)
+                    label(for='newsletter-consent-bottom') I agree to receive the newsletter
+                button(type='submit') RESERVE YOUR DRAGON
 
-            .section.section-3
-                .title-container
-                    h2 THE POWER OF ELEMENTS
-                    h1 HARNESS THE ELEMENTS AND UNLEASH YOUR TACTICAL GENIUS
-                p At the heart of
-                    |
-                    |
-                    span.extra-bold Tricky Dragons
-                    |
-                    | lies a simple elemental system new players learn in seconds, yet it transforms every card play into meaningful tactical choice. Understanding it isn't just helpful,
-                    |
-                    |
-                    span.extra-bold IT'S SURVIVAL.
+        #how-to-play.section.full-width.mobile-full-content
+            h3.title HOW TO PLAY
+            p.description
+                b Draw Your Dragons
+                | : Each player starts with a hand of elemental dragons, each with unique powers
+            img.image(
+                src='@public/imgs/hand_with_cards.webp',
+                alt='group playing',
+                loading='lazy',
+                width='919',
+                height='741'
+            )
 
-                .bullet-point-container
-                    .bullet-point-item
-                        img.bullet-point-img(src='@public/imgs/FUOCO.webp', alt='fire', loading='lazy')
-                        span Fire burns Grass
-                    .bullet-point-item
-                        img.bullet-point-img(src='@public/imgs/ACQUA.webp', alt='water', loading='lazy')
-                        span Water extinguishes Fire
-                    .bullet-point-item
-                        img.bullet-point-img(src='@public/imgs/ERBA.webp', alt='grass', loading='lazy')
-                        span Grass absorbs Water
+            p.description
+                b Play to the Arena
+                | : Play your cards in turns, outplay your friends with the power of elements, and be the one to play the last card to win the round
+            img.image(
+                src='@public/imgs/hand_playing_card_drawing.webp',
+                alt='group playing',
+                loading='lazy',
+                width='1154',
+                height='725'
+            )
+
+            p.description
+                b Claim Your Victory
+                | : Win Dragon Eggs each round. First to collect 7 eggs, becomes the Tricky Dragon Master
+            img.image(
+                src='@public/imgs/trophy.webp',
+                alt='group playing',
+                loading='lazy',
+                width='533',
+                height='736'
+            )
+
+        .horizontal-divider.on-light
+            div
+
+        #quick-facts.section.full-width.mobile-full-content
+            h3.title QUICK FACTS
+
+            #infografic
                 img(
-                    src='@public/imgs/element_card_circle_spread_8_100.webp',
-                    alt='element card circle spread',
-                    loading='lazy'
+                    src='@public/imgs/info_age.webp',
+                    alt='info age',
+                    loading='lazy',
+                    width='297',
+                    height='297'
+                )
+                img(
+                    src='@public/imgs/info_time.webp',
+                    alt='info time',
+                    loading='lazy',
+                    width='297',
+                    height='297'
+                )
+                img(
+                    src='@public/imgs/info_players.webp',
+                    alt='info players',
+                    loading='lazy',
+                    width='297',
+                    height='297'
                 )
 
-        .cta
-            h1 JOIN OUR 500+ SUPPORTERS
-            p
-                span.extra-bold Be the first to know
-                |
-                | when we launch and
-                |
-                span.extra-bold receive a special offer
-                |
-                | for our backers!
-            form.cta-form
-                input(type='email', placeholder='Enter your email', required)
-                .checkbox-container
-                    input#newsletter-consent-bottom(type='checkbox', name='checkbox', required)
-                    label(for='newsletter-consent-bottom') I agree to receive the newsletter
-                button(type='submit') WANT A BONUS MINI EXPANSION?
-            .members-counter Launching soon on Kickstarter
+            ul.description
+                li
+                    b Players
+                    | : 2-6
+                li
+                    b Playtime
+                    | : 15-30 Minutes
+                li
+                    b Learn Time
+                    | : One Round
+                li
+                    b Age
+                    | : 10+
+                li
+                    b Genre
+                    | : Elemental Trick-Taking Card Game
+                li
+                    b Replayability
+                    | : Infinite
 
-        .content-container
-            .section.section-4
-                .title-container
-                    h2 INSTANT ACTION
-                    h1 ONE ROUND TO LEARN, LIFETIME TO PERFECT
-                p
-                    | Deal the cards, play one round, become an expert.
-                    |
-                    span.extra-bold Tricky Dragons
-                    |
-                    | eliminates the biggest barrier to great gaming: complicated rules that take forever to learn.
-                    |
-                    span.extra-bold Simple enough to teach anyone, deep enough to challenge everyone.
-                img(src='@public/imgs/Red Rulebook.webp', alt='red rulebook preview', loading='lazy')
+        p.quote “Every time a dragon effect was played, I felt an incredible thrill” - Louise F.
 
-            .section.section-5
-                .title-container
-                    h2 TRICK-TAKING REIMAGINED
-                    h1 THE CARD GAME THAT BREAKS ALL THE RULES
-                p
-                    | We took the beloved trick-taking foundation and built an entire new game around it. Elements, Powers, and Effects transform simple card play into dynamic battles where anything can happen, making
-                    |
-                    span.extra-bold Tricky Dragons
-                    |
-                    | the ideal light game for any game night.
-                    |
-                    |
-                    span.extra-bold One purchase, unlimited entertainment.
-                img(src='@public/imgs/playing_viola_mano_5.webp', alt='playing cards', loading='lazy')
+        #last-cta.full-width.mobile-full-content
+            h3.title DON'T MISS THE LAUNCH DAY & CLAIM THE MINI EXPANSION
+            img.image(
+                src='@public/imgs/mini_expnasion_pack_new_1_modified.webp',
+                alt='mini expansion pack',
+                loading='lazy',
+                width='600',
+                height='600'
+            )
 
-        .cta
-            h1 JOIN OUR 500+ SUPPORTERS
-            p
-                span.extra-bold Be the first to know
-                |
-                | when we launch and
-                |
-                span.extra-bold receive a special offer
-                |
-                | for our backers!
-            form.cta-form
-                input(type='email', placeholder='Enter your email', required)
-                .checkbox-container
-                    input#newsletter-consent-bottom(type='checkbox', name='checkbox', required)
-                    label(for='newsletter-consent-bottom') I agree to receive the newsletter
-                button(type='submit') 500+ CAN'T BE WRONG!
-            .members-counter Launching soon on Kickstarter
+            .horizontal-divider.on-dark
+                div
 
-        .footer-layout
-            span A game by Daniele D'Ambrosio
-            .links-layout
-                span.link
-                    a(href='/privacy-policy') Privacy Policy
-                span.link
-                    a(href='/terms-of-service') Terms of Service
+            .cta
+                p Sign up to be the first to know when we launch and receive a exclusive offer for our backers
+                form.cta-form
+                    input(type='email', placeholder='Enter your email', required)
+                    input.form_name(type='text', placeholder='Enter your name')
+                    .checkbox-container
+                        input#newsletter-consent-bottom(type='checkbox', name='checkbox', required)
+                        label(for='newsletter-consent-bottom') I agree to receive the newsletter
+                    button(type='submit') RESERVE YOUR DRAGON
+
+            .footer-layout
+                span A game by Daniele D'Ambrosio
+                .links-layout
+                    span.link
+                        a(href='/privacy-policy') Privacy Policy
+                    span.link
+                        a(href='/terms-of-service') Terms of Service
 
     include @client/components/spinner/spinner
     script(src='./landingpage.ts', type='module', defer)

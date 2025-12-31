@@ -25,38 +25,22 @@ meta(name='referrer', content='no-referrer-when-downgrade')
 meta(http-equiv='Permissions-Policy', content='geolocation=(), microphone=(), camera=()')
 
 //- Font START
+
 link(
     rel='preload',
-    href='@client/fonts/bebas_neue_pro/Bebas-Neue-Pro-Bold.woff2',
+    href='@client/fonts/Asap-VariableFont_wdth,wght.woff2',
     as='font',
     type='font/woff2',
+    fetchpriority='high',
+    loading='eager',
     crossorigin
 )
 link(
     rel='preload',
-    href='@client/fonts/bebas_neue_pro/Bebas-Neue-Pro-SemiExpanded-Bold.woff2',
+    href='@client/fonts/Asap-Italic-VariableFont_wdth,wght.woff2',
     as='font',
     type='font/woff2',
-    crossorigin
-)
-link(
-    rel='preload',
-    href='@client/fonts/bebas_neue_pro/Bebas-Neue-Pro-SemiExpanded-Middle.woff2',
-    as='font',
-    type='font/woff2',
-    crossorigin
-)
-link(
-    rel='preload',
-    href='@client/fonts/bebas_neue_pro/Bebas-Neue-Pro-SemiExpanded-Book.woff2',
-    as='font',
-    type='font/woff2',
-    crossorigin
-)
-link(
-    rel='preload',
-    href='@client/fonts/bebas_neue_pro/Bebas-Neue-Pro-SemiExpanded-ExtraBold.woff2',
-    as='font',
-    type='font/woff2',
+    fetchpriority='high',
+    loading='eager',
     crossorigin
 )

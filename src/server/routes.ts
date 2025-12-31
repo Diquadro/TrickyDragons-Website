@@ -53,8 +53,8 @@ export function apply_routes(app: express.Application): void {
     app.get(API.ENDPOINTS.STRIPE.SESSION_STATUS, get_session_status)
 
     // Admin routes
-    app.get(`${API.ENDPOINTS.ADMIN.TABLES}/:tableName`, getTableData)
-    app.get(API.ENDPOINTS.ADMIN.COUNTS, getTableCounts)
+    // app.get(`${API.ENDPOINTS.ADMIN.TABLES}/:tableName`, getTableData)
+    // app.get(API.ENDPOINTS.ADMIN.COUNTS, getTableCounts)
 
     // 404 handler for undefined routes (must be last)
     app.use((req, res) => {

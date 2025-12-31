@@ -1,13 +1,12 @@
 @forward '@client/styles/media';
-@forward '@client/styles/bebas_neue_pro_font';
 
 @use '@client/styles/media' as *;
-@use '@client/styles/bebas_neue_pro_font' as *;
+@use '@client/styles/asap_font' as *;
 
 :root {
     --delta-font-size: 0px;
-    --font-size-xxl: calc(40px + var(--delta-font-size));
-    --font-size-xl: calc(32px + var(--delta-font-size));
+    --font-size-xxl: calc(30px + var(--delta-font-size));
+    --font-size-xl: calc(28px + var(--delta-font-size));
     --font-size-lg: calc(24px + var(--delta-font-size));
     --font-size-md: calc(20px + var(--delta-font-size));
     --font-size-sm: calc(16px + var(--delta-font-size));
@@ -18,12 +17,17 @@
         --delta-font-size: 4px;
     }
 
-    @media (max-width: 410px) {
-        --font-size-xxl: 36px;
+    // Page margin for responsive design
+
+    & {
+        --page-margin: 0sww;
     }
 
-    @media (max-width: 370px) {
-        --font-size-xxl: 34px;
+    @include desktop {
+        --page-margin: 10svw;
+    }
+    @include mobile {
+        --page-margin: 4svw;
     }
 }
 
@@ -31,8 +35,9 @@ $font-weight-light: 200;
 $font-weight-middle: 400;
 $font-weight-bold: 700;
 $font-weight-extra-bold: 800;
+$font-weight-black: 900;
 
-$color-black: hsl(0, 0%, 10%);
+$color-black: hsl(0, 0%, 5%);
 $color-white: hsl(0, 0%, 95%);
 $color-red: hsl(5, 70%, 50%);
 $color-red-dark: hsl(5, 70%, 45%);
@@ -50,14 +55,24 @@ $color-orange: hsl(20, 80%, 55%);
 $color-orange-dark: hsl(20, 80%, 50%);
 $color-orange-darker: hsl(20, 80%, 45%);
 $color-orange-darkest: hsl(20, 80%, 40%);
+$color-yellow: hsl(40, 80%, 55%);
+$color-yellow-dark: hsl(40, 80%, 50%);
+$color-yellow-darker: hsl(40, 80%, 45%);
+$color-yellow-darkest: hsl(40, 80%, 40%);
 
 $border-radius-media: 10px; // For images, videos, cards
 $border-radius-components: 5px; // For inputs, buttons, form elements
+
+$content-gap: 40px;
 $section-gap: 25px;
+$gap-grid: 25px;
+
 $page-margin-mobile: 4svw;
 $page-margin-desktop: 10svw;
+
+$cta-gap: 15px;
 $cta-button-height: 40px;
 
-$font-family-bebas-neue-pro: 'Bebas Neue Pro', 'Bebas Neue Pro Fallback', 'Impact', sans-serif;
-$font-family-bebas-neue-pro-semi-expanded:
-    'Bebas Neue Pro SemiExpanded', 'Bebas Neue Pro SemiExpanded Fallback', 'Impact', sans-serif;
+$image-box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+
+$font-family: 'Asap', 'Segoe UI', 'Roboto', 'Helvetica Neue', 'Arial', sans-serif;

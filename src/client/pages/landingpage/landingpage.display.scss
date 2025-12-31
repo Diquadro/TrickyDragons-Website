@@ -1,0 +1,287 @@
+@use '@client/styles/style-costants' as *;
+
+#page-container {
+    display: grid;
+
+    @include desktop {
+        grid-template-columns:
+            [full-width-start] minmax(var(--page-margin), 1fr)
+            [full-content-start content-left-start] minmax(300px, 600px) [content-left-end]
+            calc($gap-grid * 2)
+            [content-right-start] minmax(300px, 600px) [content-right-end full-content-end]
+            minmax(var(--page-margin), 1fr) [full-width-end];
+    }
+
+    @include mobile {
+        grid-template-columns:
+            [full-width-start] minmax(var(--page-margin), 1fr)
+            [full-content-start] minmax(300px, 600px) [full-content-end]
+            minmax(var(--page-margin), 1fr) [full-width-end];
+    }
+}
+
+#hero {
+    > .cta {
+        @include mobile {
+            grid-column: full-width;
+        }
+    }
+
+    > .horizontal-divider {
+        @include mobile {
+            grid-column: full-width;
+        }
+    }
+}
+
+.horizontal-divider {
+    display: grid;
+    grid-template-columns: inherit;
+    grid-column: full-width;
+
+    @include desktop {
+        > * {
+            grid-column: full-content;
+        }
+    }
+
+    @include mobile {
+        > * {
+            grid-column: full-content;
+        }
+    }
+}
+
+.cta {
+    @include desktop {
+        grid-template-areas:
+            '. title . form .'
+            '. description . form .';
+        row-gap: $gap-grid;
+
+        > h3 {
+            grid-area: title;
+            align-self: flex-end;
+        }
+
+        > p {
+            grid-area: description;
+        }
+
+        > form {
+            grid-area: form;
+        }
+    }
+
+    > form {
+        display: flex;
+        flex-direction: column;
+        gap: calc($cta-gap / 2);
+
+        > input.form_name {
+            display: none;
+        }
+    }
+}
+
+#dragons-image {
+    @include desktop {
+        display: none;
+    }
+
+    @include mobile {
+        grid-column: full-content;
+    }
+}
+
+.quote {
+    grid-column: full-content;
+}
+
+#how-to-play {
+    grid-column: full-content;
+
+    > .image {
+        place-self: center;
+    }
+
+    @include desktop {
+        display: inline-grid;
+        grid-template-rows: repeat(3, min-content);
+        grid-template-columns: 1fr 1fr 1fr;
+        grid-template-areas:
+            'title title title'
+            '. . .'
+            '. . .';
+        grid-auto-flow: column;
+        column-gap: $gap-grid * 2;
+        row-gap: $gap-grid;
+
+        > .title {
+            grid-area: title;
+            place-self: center;
+        }
+    }
+}
+
+#quick-facts {
+    grid-column: full-content;
+
+    @include desktop {
+        display: inline-grid;
+        grid-template-columns: 1fr 1fr;
+        grid-template-areas:
+            'title title '
+            'infografic description';
+        grid-auto-flow: column;
+        column-gap: $gap-grid * 2;
+        row-gap: $gap-grid;
+
+        > .title {
+            grid-area: title;
+            place-self: center;
+        }
+
+        > #infografic {
+            grid-area: infografic;
+            place-self: center;
+        }
+
+        > .description {
+            grid-area: description;
+            align-self: center;
+        }
+    }
+}
+
+#last-cta {
+    > .horizontal-divider {
+        @include desktop {
+            display: none;
+        }
+    }
+
+    @include desktop {
+        grid-template-areas:
+            '. image . title .'
+            '. image . cta .'
+            'footer footer footer footer footer';
+        row-gap: $gap-grid;
+
+        > .title {
+            grid-area: title;
+            align-self: flex-end;
+        }
+
+        > .cta {
+            display: flex;
+
+            grid-area: cta;
+            flex-direction: column;
+        }
+
+        > .image {
+            grid-area: image;
+        }
+
+        > .footer-layout {
+            grid-area: footer;
+        }
+    }
+}
+
+// Utility classes
+
+.full-width {
+    display: grid;
+    grid-template-columns: inherit;
+    grid-column: full-width;
+}
+
+.desktop-section-image-left {
+    @include desktop {
+        grid-template-areas:
+            '. image . title .'
+            '. image . description .';
+        row-gap: $gap-grid;
+
+        > .title {
+            grid-area: title;
+            align-self: flex-end;
+        }
+
+        > .description {
+            grid-area: description;
+        }
+
+        > .image {
+            grid-area: image;
+            place-self: center;
+        }
+    }
+}
+
+.desktop-section-image-right-with-quote {
+    @include desktop {
+        grid-template-rows: 1fr max-content 1fr;
+        grid-template-areas:
+            '. title . image .'
+            '. description . image .'
+            '. quote . image .';
+        row-gap: $gap-grid;
+
+        > .title {
+            grid-area: title;
+            align-self: flex-end;
+        }
+
+        > .description {
+            grid-area: description;
+        }
+
+        > .image {
+            grid-area: image;
+            place-self: center;
+        }
+
+        > .quote {
+            grid-area: quote;
+            place-self: flex-start center;
+        }
+    }
+}
+
+.desktop-section-image-right {
+    @include desktop {
+        grid-template-areas:
+            '. title . image .'
+            '. description . image .';
+        row-gap: $gap-grid;
+
+        > .title {
+            grid-area: title;
+            align-self: flex-end;
+        }
+
+        > .description {
+            grid-area: description;
+        }
+
+        > .image {
+            grid-area: image;
+            place-self: center;
+        }
+    }
+}
+
+.mobile-full-content {
+    @include mobile {
+        > * {
+            grid-column: full-content;
+        }
+
+        > .image {
+            place-self: center;
+        }
+    }
+}

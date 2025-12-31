@@ -6,7 +6,7 @@ export default function landingpage_config({ env, BASE_URL }) {
         data: {
             env,
             url: `${BASE_URL}/`,
-            title: 'Tricky Dragons - Fast-Paced Card Game of Strategy & Chaos',
+            title: 'Tricky Dragons - The Ultimate Fast-Paced Card Game of Dragon & Chaos',
             description:
                 'Discover Tricky Dragons, a fast-paced card game where strategy meets chaos! Master the elements and outsmart your friends. Coming soon on Kickstarter.',
             keywords: [
