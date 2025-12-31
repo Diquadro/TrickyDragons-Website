@@ -28,7 +28,6 @@ img {
     shape-margin: 1rem;
     background-size: cover;
     background-repeat: no-repeat;
-    aspect-ratio: auto;
     width: 100%;
     height: auto;
 }
@@ -144,6 +143,7 @@ img {
             display: flex;
             align-items: center;
             gap: 5px;
+
             font-weight: $font-weight-light;
             font-size: var(--font-size-xs);
 
@@ -153,7 +153,7 @@ img {
                 height: 15px;
             }
 
-            > label {
+            > span {
                 cursor: pointer;
                 color: $color-white;
             }

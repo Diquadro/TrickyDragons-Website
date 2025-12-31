@@ -76,7 +76,7 @@
     > form {
         display: flex;
         flex-direction: column;
-        gap: calc($cta-gap / 2);
+        gap: calc($gap-grid / 2);
 
         > input.form_name {
             display: none;

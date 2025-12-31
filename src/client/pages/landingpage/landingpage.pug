@@ -3,13 +3,6 @@ extends @client/layouts/layout_common/layout_common.pug
 block head
     link(
         rel='preload',
-        href='@public/imgs/kickstarter_box_4.2-lowres.webp',
-        as='image',
-        type='image/webp',
-        fetchpriority='high'
-    )
-    link(
-        rel='preload',
         href='@public/imgs/kickstarter_box_4.2.webp',
         as='image',
         type='image/webp',
@@ -47,11 +40,11 @@ block body
                 h3 WE'RE LAUNCHING SOON
                 p Sign up to be the first to know when we launch and receive a exclusive offer for our backers
                 form.cta-form
-                    input(type='email', placeholder='Enter your email', required)
-                    input.form_name(type='text', placeholder='Enter your name')
-                    .checkbox-container
-                        input#newsletter-consent-bottom(type='checkbox', name='checkbox', required)
-                        label(for='newsletter-consent-bottom') I agree to receive the newsletter
+                    input(type='email', name='email', autocomplete='email', required)
+                    input.form_name(type='text', name='name', autocomplete='off')
+                    label.checkbox-container
+                        input(type='checkbox', name='newsletter_consent', required)
+                        span I agree to receive the newsletter
                     button(type='submit') UNLOCK THE EXCLUSIVE OFFER
 
         img#dragons-image(
@@ -89,11 +82,11 @@ block body
             h3 JOIN 1000+ SUPPORTERS
             p Sign up to be the first to know when we launch and receive a exclusive offer for our backers
             form.cta-form
-                input(type='email', placeholder='Enter your email', required)
-                input.form_name(type='text', placeholder='Enter your name')
-                .checkbox-container
-                    input#newsletter-consent-bottom(type='checkbox', name='checkbox', required)
-                    label(for='newsletter-consent-bottom') I agree to receive the newsletter
+                input(type='email', name='email', autocomplete='email', required)
+                input.form_name(type='text', name='name', , autocomplete='off')
+                label.checkbox-container
+                    input(type='checkbox', name='newsletter_consent', required)
+                    span I agree to receive the newsletter
                 button(type='submit') ENTER THE DRAGON'S LAIR
 
         .section.full-width.desktop-section-image-right-with-quote.mobile-full-content
@@ -127,11 +120,11 @@ block body
             h3 BE AMONG THE FIRST
             p Sign up to be the first to know when we launch and receive a exclusive offer for our backers
             form.cta-form
-                input(type='email', placeholder='Enter your email', required)
-                input.form_name(type='text', placeholder='Enter your name')
-                .checkbox-container
-                    input#newsletter-consent-bottom(type='checkbox', name='checkbox', required)
-                    label(for='newsletter-consent-bottom') I agree to receive the newsletter
+                input(type='email', name='email', autocomplete='email', required)
+                input.form_name(type='text', name='name', autocomplete='off')
+                label.checkbox-container
+                    input(type='checkbox', name='newsletter_consent', required)
+                    span I agree to receive the newsletter
                 button(type='submit') RESERVE YOUR DRAGON
 
         #how-to-play.section.full-width.mobile-full-content
@@ -236,11 +229,11 @@ block body
             .cta
                 p Sign up to be the first to know when we launch and receive a exclusive offer for our backers
                 form.cta-form
-                    input(type='email', placeholder='Enter your email', required)
-                    input.form_name(type='text', placeholder='Enter your name')
-                    .checkbox-container
-                        input#newsletter-consent-bottom(type='checkbox', name='checkbox', required)
-                        label(for='newsletter-consent-bottom') I agree to receive the newsletter
+                    input(type='email', name='email', autocomplete='email', required)
+                    input.form_name(type='text', name='name', autocomplete='off')
+                    label.checkbox-container
+                        input(type='checkbox', name='newsletter_consent', required)
+                        span I agree to receive the newsletter
                     button(type='submit') RESERVE YOUR DRAGON
 
             .footer-layout
