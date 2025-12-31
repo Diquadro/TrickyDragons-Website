@@ -14,10 +14,12 @@ link(rel='apple-touch-icon', sizes='180x180', href='@client/imgs/favicon/apple-t
 link(rel='alternate', href='https://www.trickydragons.com/', hreflang='x-default')
 
 //- Preconnect hints for external domains
-link(rel='preconnect', href='https://cloud.umami.is')
-link(rel='preconnect', href='https://api.trickydragons.com')
-link(rel='dns-prefetch', href='https://app.posthog.com')
-link(rel='dns-prefetch', href='https://connect.facebook.net')
+link(rel='preconnect', href='https://cloud.umami.is', crossorigin)
+link(rel='preconnect', href='https://api.trickydragons.com', crossorigin)
+link(rel='preconnect', href='https://app.posthog.com', crossorigin)
+link(rel='preconnect', href='https://connect.facebook.net', crossorigin)
+//- Dev server prefetch
+link(rel='dns-prefetch', href='https://dev-trickydragons-server.onrender.com')
 
 //- Security Headers
 meta(http-equiv='Strict-Transport-Security', content='max-age=31536000; includeSubDomains')

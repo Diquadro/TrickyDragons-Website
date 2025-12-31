@@ -44,15 +44,16 @@ img {
     background-color: $color-black;
     padding-top: $gap-grid * 1.5;
 
-    > h1 {
+    > .title {
         color: $color-white;
         font-weight: $font-weight-black;
         font-size: var(--font-size-xxl);
         text-align: center;
     }
 
-    > p {
+    > .description {
         color: $color-white;
+        font-weight: normal;
         font-size: var(--font-size-md);
         text-align: justify;
     }
@@ -60,6 +61,8 @@ img {
     > img {
         margin: -5% 0;
         background-image: url(@public/imgs/kickstarter_box_4.2-lowres.webp);
+        aspect-ratio: 1 / 1;
+
         @include mobile {
             margin-top: -8%;
         }

@@ -28,17 +28,19 @@ function initializeAnalyticsAfterLCP() {
     }
 
     if ('requestIdleCallback' in window) {
-        requestIdleCallback(initAnalytics, { timeout: 2000 })
+        requestIdleCallback(initAnalytics, { timeout: 3000 })
     } else {
-        setTimeout(initAnalytics, 1000)
+        setTimeout(initAnalytics, 2000)
     }
 }
 
-// Aspetta che la pagina sia completamente caricata
+// Aspetta che la pagina sia completamente caricata e attendi un po' di più per LCP
 if (document.readyState === 'complete') {
-    initializeAnalyticsAfterLCP()
+    setTimeout(initializeAnalyticsAfterLCP, 500)
 } else {
-    window.addEventListener('load', initializeAnalyticsAfterLCP)
+    window.addEventListener('load', () => {
+        setTimeout(initializeAnalyticsAfterLCP, 500)
+    })
 }
 
 function initGlobalLinkTracking() {
