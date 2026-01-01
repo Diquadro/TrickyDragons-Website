@@ -3,6 +3,14 @@ extends @client/layouts/layout_common/layout_common.pug
 block head
     link(
         rel='preload',
+        href='@public/imgs/kickstarter_box_4.2-lowres.webp',
+        as='image',
+        type='image/webp',
+        crossorigin='anonymous',
+        fetchpriority='high'
+    )
+    link(
+        rel='preload',
         href='@public/imgs/kickstarter_box_4.2.webp',
         as='image',
         type='image/webp',
@@ -11,12 +19,12 @@ block head
     )
     //- Prefetch next critical images
     link(rel='prefetch', href='@public/imgs/3_dragons.webp', as='image', type='image/webp')
-    link(rel='prefetch', href='@public/imgs/game_preview_6_100.webp', as='image', type='image/webp')
+    link(rel='prefetch', href='@public/imgs/cards_zoom_2_100.webp', as='image', type='image/webp')
 
 block body
     main#page-container
         #hero.full-width.desktop-section-image-left.mobile-full-content
-            h1.title THE ULTIMATE FAST-PACE CARD GAME WHERE TACTICAL DRAGON COMBAT MEETS ELEMENTAL CHAOS
+            h1.title THE ULTIMATE CARD GAME WHERE TACTICAL DRAGON COMBAT MEETS ELEMENTAL CHAOS
 
             img.image(
                 src='@public/imgs/kickstarter_box_4.2.webp',

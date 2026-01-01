@@ -12,16 +12,16 @@ import AnalyticsEventName from '@shared/schemas/database/public/AnalyticsEventNa
 import posthog from 'posthog-js'
 
 // Inizializza analytics dopo il caricamento completo
-window.addEventListener('load', () => {
-    initialize_meta_pixel()
-    initialize_utm_params()
-    initialize_screen_infos()
-    initialize_analytics()
-    initialize_posthog()
-    initialize_umami()
-    initialize_mixpanel()
-    initGlobalLinkTracking()
-})
+// window.addEventListener('load', () => {
+initialize_meta_pixel()
+initialize_utm_params()
+initialize_screen_infos()
+initialize_analytics()
+initialize_posthog()
+initialize_umami()
+initialize_mixpanel()
+initGlobalLinkTracking()
+// })
 
 function initGlobalLinkTracking() {
     const path = window.location.pathname
