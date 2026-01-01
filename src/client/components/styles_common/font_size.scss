@@ -9,7 +9,7 @@
 :root {
     // Desktop: 16px fisso
     font-size: 16px;
-    font-family: 'Asap', 'Segoe UI', 'Roboto', 'Helvetica Neue', 'Arial', sans-serif;
+    font-family: 'Asap', 'Asap Fallback', Arial, sans-serif;
 }
 
 @include mobile {

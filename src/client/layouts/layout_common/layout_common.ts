@@ -11,37 +11,17 @@ import { get_utm_params } from '@client/ts/utm_params'
 import AnalyticsEventName from '@shared/schemas/database/public/AnalyticsEventName'
 import posthog from 'posthog-js'
 
-// Meta Pixel può rimanere subito (è critico per ads)
-initialize_meta_pixel()
-
-// Ritarda tutto il resto fino a dopo LCP
-function initializeAnalyticsAfterLCP() {
-    // Usa requestIdleCallback per non bloccare il main thread
-    const initAnalytics = () => {
-        initialize_utm_params()
-        initialize_screen_infos()
-        initialize_analytics()
-        initialize_posthog()
-        initialize_umami()
-        initialize_mixpanel()
-        initGlobalLinkTracking()
-    }
-
-    if ('requestIdleCallback' in window) {
-        requestIdleCallback(initAnalytics, { timeout: 3000 })
-    } else {
-        setTimeout(initAnalytics, 2000)
-    }
-}
-
-// Aspetta che la pagina sia completamente caricata e attendi un po' di più per LCP
-if (document.readyState === 'complete') {
-    setTimeout(initializeAnalyticsAfterLCP, 500)
-} else {
-    window.addEventListener('load', () => {
-        setTimeout(initializeAnalyticsAfterLCP, 500)
-    })
-}
+// Inizializza analytics dopo il caricamento completo
+window.addEventListener('load', () => {
+    initialize_meta_pixel()
+    initialize_utm_params()
+    initialize_screen_infos()
+    initialize_analytics()
+    initialize_posthog()
+    initialize_umami()
+    initialize_mixpanel()
+    initGlobalLinkTracking()
+})
 
 function initGlobalLinkTracking() {
     const path = window.location.pathname

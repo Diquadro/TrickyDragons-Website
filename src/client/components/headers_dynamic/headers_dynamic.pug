@@ -50,3 +50,7 @@ meta(
     http-equiv='Content-Security-Policy',
     content=`default-src 'self'; script-src ${script_src.join(' ')}; style-src ${style_src.join(' ')}; img-src ${img_src.join(' ')}; font-src ${font_src.join(' ')}; frame-src ${frame_src.join(' ')}; connect-src ${connect_src.join(' ')}; object-src 'none'; upgrade-insecure-requests;`
 )
+
+//- Dev server prefetch
+if is_dev
+    link(rel='preconnect', href='https://dev-trickydragons-server.onrender.com')

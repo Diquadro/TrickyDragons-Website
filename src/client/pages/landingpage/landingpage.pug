@@ -6,14 +6,15 @@ block head
         href='@public/imgs/kickstarter_box_4.2.webp',
         as='image',
         type='image/webp',
-        crossorigin='anonymous'
+        crossorigin='anonymous',
+        fetchpriority='high'
     )
     //- Prefetch next critical images
     link(rel='prefetch', href='@public/imgs/3_dragons.webp', as='image', type='image/webp')
     link(rel='prefetch', href='@public/imgs/game_preview_6_100.webp', as='image', type='image/webp')
 
 block body
-    #page-container
+    main#page-container
         #hero.full-width.desktop-section-image-left.mobile-full-content
             h1.title THE ULTIMATE FAST-PACE CARD GAME WHERE TACTICAL DRAGON COMBAT MEETS ELEMENTAL CHAOS
 
@@ -40,7 +41,13 @@ block body
                 h3 WE'RE LAUNCHING SOON
                 p Sign up to be the first to know when we launch and receive a exclusive offer for our backers
                 form.cta-form
-                    input(type='email', name='email', autocomplete='email', required)
+                    input(
+                        type='email',
+                        name='email',
+                        placeholder='Enter your email',
+                        autocomplete='email',
+                        required
+                    )
                     input.form_name(type='text', name='name', autocomplete='off')
                     label.checkbox-container
                         input(type='checkbox', name='newsletter_consent', required)
@@ -82,7 +89,13 @@ block body
             h3 JOIN 1000+ SUPPORTERS
             p Sign up to be the first to know when we launch and receive a exclusive offer for our backers
             form.cta-form
-                input(type='email', name='email', autocomplete='email', required)
+                input(
+                    type='email',
+                    name='email',
+                    placeholder='Enter your email',
+                    autocomplete='email',
+                    required
+                )
                 input.form_name(type='text', name='name', , autocomplete='off')
                 label.checkbox-container
                     input(type='checkbox', name='newsletter_consent', required)
@@ -120,7 +133,13 @@ block body
             h3 BE AMONG THE FIRST
             p Sign up to be the first to know when we launch and receive a exclusive offer for our backers
             form.cta-form
-                input(type='email', name='email', autocomplete='email', required)
+                input(
+                    type='email',
+                    name='email',
+                    placeholder='Enter your email',
+                    autocomplete='email',
+                    required
+                )
                 input.form_name(type='text', name='name', autocomplete='off')
                 label.checkbox-container
                     input(type='checkbox', name='newsletter_consent', required)
@@ -229,7 +248,13 @@ block body
             .cta
                 p Sign up to be the first to know when we launch and receive a exclusive offer for our backers
                 form.cta-form
-                    input(type='email', name='email', autocomplete='email', required)
+                    input(
+                        type='email',
+                        name='email',
+                        placeholder='Enter your email',
+                        autocomplete='email',
+                        required
+                    )
                     input.form_name(type='text', name='name', autocomplete='off')
                     label.checkbox-container
                         input(type='checkbox', name='newsletter_consent', required)
