@@ -44,6 +44,10 @@ img {
     background-color: $color-black;
     padding-top: $gap-grid * 1.5;
 
+    * {
+        color: $color-white;
+    }
+
     > .title {
         color: $color-white;
         font-weight: $font-weight-black;

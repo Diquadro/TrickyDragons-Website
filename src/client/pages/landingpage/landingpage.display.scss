@@ -198,6 +198,36 @@
     grid-column: full-width;
 }
 
+.desktop-section-image-left-with-quote {
+    @include desktop {
+        grid-template-rows: 1fr max-content 1fr;
+        grid-template-areas:
+            '. image . title .'
+            '. image . description .'
+            '. image . quote .';
+        row-gap: $gap-grid;
+
+        > .title {
+            grid-area: title;
+            align-self: flex-end;
+        }
+
+        > .description {
+            grid-area: description;
+        }
+
+        > .image {
+            grid-area: image;
+            place-self: center;
+        }
+
+        > .quote {
+            grid-area: quote;
+            place-self: flex-start center;
+        }
+    }
+}
+
 .desktop-section-image-left {
     @include desktop {
         grid-template-areas:
