@@ -11,17 +11,18 @@ import { get_utm_params } from '@client/ts/utm_params'
 import AnalyticsEventName from '@shared/schemas/database/public/AnalyticsEventName'
 import posthog from 'posthog-js'
 
-// Inizializza analytics dopo il caricamento completo
-// window.addEventListener('load', () => {
 initialize_meta_pixel()
-initialize_utm_params()
-initialize_screen_infos()
-initialize_analytics()
-initialize_posthog()
-initialize_umami()
 initialize_mixpanel()
-initGlobalLinkTracking()
-// })
+
+// Inizializza analytics dopo il caricamento completo
+window.addEventListener('load', () => {
+    initialize_utm_params()
+    initialize_screen_infos()
+    initialize_analytics()
+    initialize_posthog()
+    initialize_umami()
+    initGlobalLinkTracking()
+})
 
 function initGlobalLinkTracking() {
     const path = window.location.pathname

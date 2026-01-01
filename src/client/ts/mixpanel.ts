@@ -78,5 +78,9 @@ export function initialize_mixpanel() {
     window.mixpanel.init(mixpanelToken, {
         autocapture: true,
         record_sessions_percent: 100,
+        record_mask_text_selector: '',
+        record_block_selector: '',
+        record_heatmap_data: true,
+        record_console: true,
     })
 }
