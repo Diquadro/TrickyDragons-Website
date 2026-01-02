@@ -15,6 +15,14 @@ $font-size-xxs: 12px;
 
     width: 100%;
 
+    > #reservation_image {
+        @include mobile {
+            width: 85%;
+            max-width: 300px;
+            max-height: 300px;
+        }
+    }
+
     > #reservation_details {
         display: flex;
         flex-direction: column;
