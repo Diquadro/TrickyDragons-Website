@@ -50,18 +50,19 @@ block body
                 #express-checkout-separator
                     span Or
 
-            .section
-                span Email
-                input#email_address_input(type='email', disabled)
+            #manual_checkout
+                .section
+                    span Email
+                    input#email_address_input(type='email', disabled)
 
-            span.section
-                #billing-address-element
-                    //- Stripe.js injects the Address Element
+                .section
+                    #billing-address-element
+                        //- Stripe.js injects the Address Element
 
-            span.section
-                span Payment Information
-                #payment-element
-                    //- Stripe.js injects the Payment Element
+                .section
+                    span Payment Information
+                    #payment-element
+                        //- Stripe.js injects the Payment Element
 
             button#submit
                 span#button-text Pay

@@ -59,6 +59,13 @@ img {
     }
 }
 
+#manual_checkout {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    width: 100%;
+}
+
 #disclaimer {
     display: flex;
     flex-direction: column;

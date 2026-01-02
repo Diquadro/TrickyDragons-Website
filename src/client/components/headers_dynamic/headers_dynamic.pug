@@ -39,7 +39,7 @@ title= title
 //- Content-Security-Policy
 - const is_dev = env === 'development'
 - const script_src = ["'self'", "'nonce-beasties-critical-css-001'", "'nonce-datatables'", 'https://connect.facebook.net', 'https://cloud.umami.is', 'https://api-gateway.umami.dev', 'https://eu.i.posthog.com', 'https://eu-assets.i.posthog.com', 'https://js.stripe.com', 'https://cdn.mxpnl.com']
-- const style_src = ["'self'", "'nonce-beasties-critical-css-001'", "'nonce-datatables'", 'https://fonts.bunny.net', 'https://cdn.datatables.net']
+- const style_src = ["'self'", "'unsafe-inline'", "'nonce-beasties-critical-css-001'", "'nonce-datatables'", 'https://fonts.bunny.net', 'https://cdn.datatables.net']
 - const img_src = ["'self'", 'https://www.facebook.com']
 - const font_src = ["'self'", 'https://fonts.bunny.net']
 - const frame_src = ["'self'", 'https://js.stripe.com', 'https://checkout.stripe.com']

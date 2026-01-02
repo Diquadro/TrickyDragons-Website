@@ -86,6 +86,9 @@ async function initialize() {
     // Express Checkout Element
     const expressCheckoutElement = checkout.createExpressCheckoutElement({
         buttonHeight: 48,
+        layout: {
+            overflow: 'never',
+        },
     })
 
     // Create promises to wait for all elements to be ready
