@@ -92,11 +92,11 @@
     padding: $gap-grid * 2 0;
 
     @include mobile {
-        background-size: 50%;
+        background-size: 66%;
     }
 
     @include desktop {
-        background-size: 15%;
+        background-size: 25%;
     }
 
     > h3 {
@@ -326,7 +326,7 @@ p.quote {
 
     @include mobile {
         margin-top: $gap-grid;
-        background-size: 50%;
+        background-size: 66%;
 
         > img {
             margin-top: calc($gap-grid / 2);
@@ -334,7 +334,7 @@ p.quote {
     }
 
     @include desktop {
-        background-size: 15%;
+        background-size: 25%;
     }
 
     > h3 {
