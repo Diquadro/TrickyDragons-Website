@@ -253,7 +253,7 @@
 }
 
 .section {
-    row-gap: calc($gap-grid / 1.5);
+    row-gap: calc($gap-grid / 1.2);
     padding: $gap-grid 0;
 
     > .title {
@@ -274,7 +274,8 @@
 
     > .quote {
         @include mobile {
-            margin-top: $gap-grid * 1.5;
+            margin-top: $gap-grid;
+            margin-bottom: calc($gap-grid - $gap-grid * 1.2);
         }
     }
 }
