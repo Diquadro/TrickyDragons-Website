@@ -2,16 +2,6 @@
 
 * {
     box-sizing: border-box;
-    margin: 0;
-    border: 0;
-    padding: 0;
-
-    color: $color-black;
-    font-family: $font-family;
-}
-
-*:not(input):not(textarea):not(select) {
-    text-box: trim-both cap alphabetic;
 }
 
 body {
@@ -153,15 +143,16 @@ body {
                 box-shadow: 0 8px $color-orange-darkest;
                 border-radius: $border-radius-components;
                 background-color: $color-orange;
-                padding: 10px;
+                padding: 10px 0;
                 width: 100%;
 
                 > a {
                     color: $color-white;
-                    font-weight: $font-weight-extra-bold;
+                    font-weight: $font-weight-black;
                     font-size: var(--font-size-lg);
                     font-family: $font-family;
                     text-decoration: none;
+                    text-wrap: balance;
                 }
 
                 &:active {

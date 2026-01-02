@@ -76,3 +76,48 @@ $cta-button-height: 40px;
 $image-box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
 
 $font-family: 'Asap', 'Asap Fallback', Arial, sans-serif;
+
+// reset styles
+* {
+    margin: 0;
+    border: 0;
+    padding: 0;
+
+    color: $color-black;
+    font-family: $font-family;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p,
+span {
+    text-box: trim-both cap alphabetic;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+    text-wrap: balance;
+}
+
+p {
+    text-wrap: pretty;
+}
+
+img {
+    // https://www.youtube.com/watch?v=345V2MU3E_w
+    // image default
+    vertical-align: middle;
+    shape-margin: 1rem;
+    background-size: cover;
+    background-repeat: no-repeat;
+    width: 100%;
+    height: auto;
+}

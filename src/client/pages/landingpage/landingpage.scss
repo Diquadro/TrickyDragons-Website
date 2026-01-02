@@ -1,37 +1,6 @@
 @use '@client/styles/style-costants' as *;
 @use './landingpage.display.scss';
 
-* {
-    margin: 0;
-    border: 0;
-    padding: 0;
-
-    color: $color-black;
-    font-family: $font-family;
-}
-
-h1,
-h2,
-h3,
-h4,
-h5,
-h6,
-p,
-span {
-    text-box: trim-both cap alphabetic;
-}
-
-img {
-    // https://www.youtube.com/watch?v=345V2MU3E_w
-    // image default
-    vertical-align: middle;
-    shape-margin: 1rem;
-    background-size: cover;
-    background-repeat: no-repeat;
-    width: 100%;
-    height: auto;
-}
-
 #page-container {
     background-color: $color-white;
 
@@ -183,13 +152,14 @@ img {
             margin-bottom: 5px;
             box-shadow: 0 8px $color-green-darkest;
             border-radius: $border-radius-components;
-            background-color: $color-green;
+            background-color: $color-green-dark;
             padding: 10px 0;
             width: 100%;
             color: $color-white;
             font-weight: $font-weight-black;
             font-size: var(--font-size-lg);
             font-family: $font-family;
+            text-wrap: balance;
 
             &:active {
                 transform: translateY(5px);
@@ -204,11 +174,11 @@ img {
             @keyframes pulse-color {
                 0%,
                 100% {
-                    background-color: $color-green;
+                    background-color: $color-green-dark;
                 }
 
                 50% {
-                    background-color: $color-green-dark;
+                    background-color: $color-green;
                 }
             }
 
