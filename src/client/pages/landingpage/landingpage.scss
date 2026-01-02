@@ -126,7 +126,7 @@
             height: 35px;
             color: $color-black;
             font-weight: $font-weight-middle;
-            font-size: var(--font-size-xs);
+            font-size: var(--font-size-md);
         }
 
         > .checkbox-container {
@@ -135,7 +135,7 @@
             gap: 5px;
 
             font-weight: $font-weight-light;
-            font-size: var(--font-size-xs);
+            font-size: var(--font-size-sm);
 
             > input[type='checkbox'] {
                 cursor: pointer;
