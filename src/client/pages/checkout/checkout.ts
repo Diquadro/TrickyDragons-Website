@@ -116,9 +116,7 @@ async function initialize() {
 
     // Handle express checkout confirm event
     expressCheckoutElement.on('confirm', async (event: any) => {
-        const { error: confirmError } = await checkout.confirm({
-            return_url: checkout.session().returnUrl,
-        })
+        const { error: confirmError } = await checkout.confirm()
 
         if (confirmError) {
             console.error('Express checkout confirmation error:', confirmError)
