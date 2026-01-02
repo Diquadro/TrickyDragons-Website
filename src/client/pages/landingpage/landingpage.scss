@@ -44,10 +44,6 @@ img {
     background-color: $color-black;
     padding-top: $gap-grid * 1.5;
 
-    * {
-        color: $color-white;
-    }
-
     > .title {
         color: $color-white;
         font-weight: $font-weight-black;
@@ -60,6 +56,10 @@ img {
         font-weight: normal;
         font-size: var(--font-size-md);
         text-align: justify;
+
+        > i {
+            color: $color-white;
+        }
     }
 
     > img {
@@ -79,9 +79,13 @@ img {
     }
 
     > .cta {
-        background-image: none;
+        // background-image: none;
         background-color: transparent;
         padding: $gap-grid 0 $gap-grid * 1.5;
+
+        @include desktop {
+            margin-top: -$gap-grid;
+        }
     }
 }
 

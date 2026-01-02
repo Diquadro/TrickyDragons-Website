@@ -49,7 +49,7 @@ body {
 
 @include desktop {
     .page-outer-layout {
-        margin: 0 $page-margin-desktop;
+        margin: 0 var(--page-margin);
     }
 
     .page-inner-layout {
@@ -115,7 +115,7 @@ body {
             }
 
             > .title {
-                font-weight: $font-weight-bold;
+                font-weight: $font-weight-black;
                 font-size: var(--font-size-xxl);
                 line-height: 1;
                 font-family: $font-family;
@@ -153,8 +153,8 @@ body {
                 box-shadow: 0 8px $color-orange-darkest;
                 border-radius: $border-radius-components;
                 background-color: $color-orange;
-                padding: 10px 0;
-                width: 80%;
+                padding: 10px;
+                width: 100%;
 
                 > a {
                     color: $color-white;

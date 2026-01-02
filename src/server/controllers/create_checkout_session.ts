@@ -20,7 +20,7 @@ export async function create_checkout_session(req: Request, res: Response): Prom
     const session = await stripe.checkout.sessions.create({
         ui_mode: 'custom',
         customer_email: customer_email,
-        billing_address_collection: 'auto',
+        billing_address_collection: 'required',
         line_items: [
             {
                 price: req.body.product_id,
