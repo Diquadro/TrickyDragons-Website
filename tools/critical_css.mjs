@@ -27,6 +27,9 @@ async function run() {
         const html = await fs.readFile(file, 'utf-8')
         let processed = await beasties.process(html)
 
+        // Fix background-image URLs: ../imgs -> ./assets/imgs
+        processed = processed.replace(/url\(\.\.\/imgs\//g, 'url(./assets/imgs/')
+
         processed = processed.replace(/<style[^>]*>/g, (tag) => {
             // Se contiene già un nonce, non modifichiamo nulla
             if (tag.includes('nonce=')) return tag

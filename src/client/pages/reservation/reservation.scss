@@ -2,16 +2,6 @@
 
 * {
     box-sizing: border-box;
-    margin: 0;
-    border: 0;
-    padding: 0;
-    color: $color-black;
-    font-weight: $font-weight-light;
-    font-family: $font-family-bebas-neue-pro-semi-expanded;
-}
-
-*:not(input):not(textarea):not(select) {
-    text-box: trim-both cap alphabetic;
 }
 
 body {
@@ -49,7 +39,7 @@ body {
 
 @include desktop {
     .page-outer-layout {
-        margin: 0 $page-margin-desktop;
+        margin: 0 var(--page-margin);
     }
 
     .page-inner-layout {
@@ -67,7 +57,7 @@ body {
         grid-template-columns: 1fr 1fr;
         align-items: center;
         gap: 100px;
-        padding: 20px 0;
+        padding: 50px 0 20px;
     }
 
     .faqs-layout {
@@ -91,6 +81,7 @@ body {
         justify-content: center;
 
         > img {
+            box-shadow: $image-box-shadow;
             border-radius: $border-radius-media;
             aspect-ratio: 1/1;
             width: 100%;
@@ -114,10 +105,10 @@ body {
             }
 
             > .title {
-                font-weight: $font-weight-bold;
+                font-weight: $font-weight-black;
                 font-size: var(--font-size-xxl);
                 line-height: 1;
-                font-family: $font-family-bebas-neue-pro;
+                font-family: $font-family;
             }
         }
 
@@ -134,7 +125,7 @@ body {
             display: flex;
             flex-direction: column;
             align-items: center;
-            gap: 5px;
+            gap: 10px;
 
             > .cta-main-button {
                 display: flex;
@@ -153,14 +144,15 @@ body {
                 border-radius: $border-radius-components;
                 background-color: $color-orange;
                 padding: 10px 0;
-                width: 80%;
+                width: 100%;
 
                 > a {
                     color: $color-white;
-                    font-weight: $font-weight-extra-bold;
+                    font-weight: $font-weight-black;
                     font-size: var(--font-size-lg);
-                    font-family: $font-family-bebas-neue-pro-semi-expanded;
+                    font-family: $font-family;
                     text-decoration: none;
+                    text-wrap: balance;
                 }
 
                 &:active {
@@ -178,6 +170,7 @@ body {
                     100% {
                         background-color: $color-orange;
                     }
+
                     50% {
                         background-color: $color-orange-dark;
                     }
@@ -236,7 +229,7 @@ body {
             }
 
             > .cta-secondary-button {
-                font-size: var(--font-size-sm);
+                font-size: var(--font-size-md);
             }
         }
     }
@@ -283,13 +276,13 @@ body {
 }
 
 .faq-description {
-    font-size: var(--font-size-sm);
+    // font-size: var(--font-size-sm);
 }
 
 .faq-item {
     display: flex;
     flex-direction: column;
-    gap: 10px;
+    // gap: 10px;
 }
 
 .faq-question {
@@ -317,6 +310,7 @@ body {
 .info-text {
     display: flex;
     flex-direction: column;
+    justify-content: center;
     gap: 10px;
 }
 

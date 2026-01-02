@@ -3,6 +3,7 @@ import './checkout.scss'
 import { API, CLIENT, ENV, STRIPE } from '@shared/constants/app.constants'
 import { show_spinner } from '@client/components/spinner/spinner'
 import { Base64_Url } from '@shared/utils/base64_url'
+import { link } from 'fs'
 
 // Declare global Stripe from script tag
 declare const Stripe: any
@@ -60,15 +61,13 @@ async function initialize() {
         .then((r) => r.clientSecret)
 
     const appearance = {
-        theme: 'flat',
+        // theme: 'flat',
     }
 
     checkout = await stripe.initCheckout({
         fetchClientSecret: () => promise,
         elementsOptions: { appearance, loader: 'always' },
     })
-
-    create_items(checkout.session())
 
     const emailInput = document.querySelector('#email_address_input') as HTMLInputElement
     if (emailInput?.value !== undefined) {
@@ -80,29 +79,72 @@ async function initialize() {
             name: 'split',
         },
     })
-    billingElement.mount('#billing-address-element')
 
-    const paymentElement = checkout.createPaymentElement()
-    paymentElement.mount('#payment-element')
-
-    document.querySelector('#button-text')!.textContent = `Pay ${checkout.session().total.total.amount} now`
-    show_spinner(false)
-}
-
-function create_items(session: any) {
-    const items = document.querySelector('#items') as HTMLElement
-    items.innerHTML = ''
-
-    session.lineItems.forEach((item: any) => {
-        const itemElement = document.createElement('div')
-        itemElement.classList.add('item')
-        itemElement.innerHTML = `
-            <div class="item_name">${item.name}</div>
-            <div class="item_description">${item.description}</div>
-            <div class="item_price">${item.total.amount}</div>
-        `
-        items.appendChild(itemElement)
+    const paymentElement = checkout.createPaymentElement({
+        wallets: {
+            applePay: 'never',
+            googlePay: 'never',
+            link: 'never',
+        },
     })
+
+    // Express Checkout Element
+    const expressCheckoutElement = checkout.createExpressCheckoutElement({
+        buttonHeight: 48,
+        layout: {
+            overflow: 'never',
+        },
+    })
+
+    // Create promises to wait for all elements to be ready
+    const billingReady = new Promise((resolve) => {
+        billingElement.on('ready', resolve)
+    })
+
+    const paymentReady = new Promise((resolve) => {
+        paymentElement.on('ready', resolve)
+    })
+
+    const expressReady = new Promise((resolve) => {
+        expressCheckoutElement.on('ready', ({ availablePaymentMethods }: any) => {
+            const expressSection = document.querySelector('#express-checkout-section') as HTMLElement
+
+            if (availablePaymentMethods && Object.keys(availablePaymentMethods).length > 0) {
+                expressSection.style.display = 'block'
+            } else {
+                expressSection.style.display = 'none'
+            }
+
+            resolve(availablePaymentMethods)
+        })
+    })
+
+    // Handle express checkout confirm event
+    expressCheckoutElement.on('confirm', async (event: any) => {
+        const { error: confirmError } = await checkout.confirm({
+            expressCheckoutConfirmEvent: event,
+        })
+
+        if (confirmError) {
+            console.error('Express checkout confirmation error:', confirmError)
+            // Show error to user if needed
+        }
+    })
+
+    // Mount all elements
+    billingElement.mount('#billing-address-element')
+    paymentElement.mount('#payment-element')
+    expressCheckoutElement.mount('#express-checkout-element')
+
+    // Wait for ALL elements to be ready before showing the form
+    await Promise.all([billingReady, paymentReady, expressReady])
+
+    document.querySelector('#button-text')!.textContent = `Pay ${checkout.session().total.total.amount}`
+
+    // Show form and hide spinner only when everything is ready
+    const paymentForm = document.querySelector('#payment-form') as HTMLElement
+    paymentForm.classList.remove('hidden')
+    show_spinner(false)
 }
 
 async function handleSubmit(e: Event) {
@@ -117,28 +159,28 @@ async function handleSubmit(e: Event) {
     // your `return_url`. For some payment methods like iDEAL, your customer will
     // be redirected to an intermediate site first to authorize the payment, then
     // redirected to the `return_url`.
-    showMessage(error.message)
+    // showMessage(error.message)
 
     setLoading(false)
 }
 
 // ------- UI helpers -------
 
-function showMessage(messageText: string) {
-    const messageContainer = document.querySelector('#payment-message')!
+// function showMessage(messageText: string) {
+//     const messageContainer = document.querySelector('#payment-message')!
 
-    messageContainer.classList.remove('hidden')
-    ;(messageContainer as HTMLElement).style.color = 'rgb(223, 27, 65)'
-    ;(messageContainer as HTMLElement).style.textAlign = 'center'
-    ;(messageContainer as HTMLElement).style.fontSize = '15px'
-    ;(messageContainer as HTMLElement).style.fontWeight = '400'
-    messageContainer.textContent = messageText
+//     messageContainer.classList.remove('hidden')
+//     ;(messageContainer as HTMLElement).style.color = 'rgb(223, 27, 65)'
+//     ;(messageContainer as HTMLElement).style.textAlign = 'center'
+//     ;(messageContainer as HTMLElement).style.fontSize = '15px'
+//     ;(messageContainer as HTMLElement).style.fontWeight = '400'
+//     messageContainer.textContent = messageText
 
-    setTimeout(function () {
-        messageContainer.classList.add('hidden')
-        messageContainer.textContent = ''
-    }, 4000)
-}
+//     setTimeout(function () {
+//         messageContainer.classList.add('hidden')
+//         messageContainer.textContent = ''
+//     }, 4000)
+// }
 
 // Show a spinner on payment submission
 function setLoading(isLoading: boolean) {

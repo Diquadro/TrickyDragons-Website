@@ -20,14 +20,14 @@ export default merge(common, {
         watchFiles: ['src/www/**/*'], // Per ricaricare i file automaticamente
         liveReload: true, // Ricarica la pagina quando un file cambia
         allowedHosts: 'all',
-        client: {
-            webSocketURL: {
-                protocol: 'wss',
-                hostname: 'trickydragons.loca.lt',
-                port: 443,
-                pathname: '/ws',
-            },
-        },
+        // client: {
+        //     webSocketURL: {
+        //         protocol: 'wss',
+        //         hostname: 'trickydragons.loca.lt',
+        //         port: 443,
+        //         pathname: '/ws',
+        //     },
+        // },
         // Headers per HTTPS
         headers: {
             'Access-Control-Allow-Origin': '*',

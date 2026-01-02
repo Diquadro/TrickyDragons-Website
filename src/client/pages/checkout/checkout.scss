@@ -2,113 +2,129 @@
 
 $font-size-xxs: 12px;
 
-$font-checkout:
-    $font-family-bebas-neue-pro-semi-expanded,
-    -apple-system,
-    BlinkMacSystemFont,
-    'Segoe UI',
-    Roboto,
-    Oxygen,
-    Ubuntu,
-    Cantarell,
-    'Open Sans',
-    'Helvetica Neue',
-    sans-serif;
-
 * {
-    margin: 0;
-    border: 0;
-    padding: 0;
-    font-weight: $font-weight-light;
-
-    font-family: $font-checkout;
+    font-family:
+        -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans',
+        'Helvetica Neue', sans-serif;
 }
 
-*:not(input):not(textarea):not(select) {
-    text-box: trim-both cap alphabetic;
-}
+#main {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 
-#page_title {
-    font-weight: $font-weight-extra-bold;
-    font-size: var(--font-size-xxl);
-}
+    width: 100%;
 
-#page_description {
-    margin-top: 15px;
-    font-size: var(--font-size-md);
-    line-height: 1.2;
-    text-align: justify;
-}
-
-.item {
-    display: grid;
-    grid-template-columns: auto auto;
-    grid-template-areas:
-        'name price'
-        'description price';
-    gap: 10px;
-    border: 2px solid $color-blue-gray;
-    border-radius: 12px;
-    padding: 20px;
-
-    .item_name {
-        grid-area: name;
-        font-weight: $font-weight-extra-bold;
-        font-size: var(--font-size-md);
+    > #reservation_image {
+        @include mobile {
+            width: 85%;
+            max-width: 300px;
+            max-height: 300px;
+        }
     }
 
-    .item_description {
-        grid-area: description;
-        font-size: var(--font-size-sm);
-    }
+    > #reservation_details {
+        display: flex;
+        flex-direction: column;
+        gap: 5px;
 
-    .item_price {
-        grid-area: price;
-        place-self: center center;
-        font-weight: $font-weight-bold;
-        font-size: var(--font-size-lg);
+        > .name {
+            font-weight: 600;
+        }
+
+        > .price {
+            color: #8a8a8a;
+            font-weight: 400;
+            text-align: center;
+        }
     }
+}
+
+#manual_checkout {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    width: 100%;
 }
 
 #disclaimer {
     display: flex;
     flex-direction: column;
-    gap: 10px;
+    gap: 5px;
 
     #disclaimer_title {
         font-weight: 500;
-        font-size: var(--font-size-xs);
+        font-size: var(--font-size-sm);
     }
 
     #disclaimer_text {
-        font-size: $font-size-xxs;
+        font-size: var(--font-size-sm);
         line-height: 1;
         text-align: justify;
+    }
+}
+
+#express-checkout-section {
+    display: none;
+}
+
+#express-checkout-element {
+    margin-bottom: 24px;
+}
+
+#express-checkout-separator {
+    display: flex;
+    align-items: center;
+    text-align: center;
+
+    &::before,
+    &::after {
+        flex: 1;
+        border-bottom: 1px solid #e5e7eb;
+        content: '';
+    }
+
+    span {
+        padding: 0 16px;
+        color: #6b7280;
+        font-size: 14px;
     }
 }
 
 #payment-form {
     display: flex;
     flex-direction: column;
-    gap: 20px;
+    gap: 25px;
+
+    &.hidden {
+        visibility: hidden;
+        opacity: 0;
+        pointer-events: none;
+    }
 
     #email_address_input {
         display: block;
         box-sizing: border-box;
-        border-radius: 12px;
-        background-color: #f1f1f1;
+        border: 1px solid lightgray;
+        border-radius: 5px;
+        background-color: #f5f5f5;
         padding: 16px;
         width: 100%;
-        height: 50px;
+        height: 45px;
         color: #8a8a8a;
         font-weight: 400;
         font-size: 16px;
     }
 
-    .section_text {
+    .section {
         display: flex;
         flex-direction: column;
-        gap: 10px;
+
+        > span {
+            margin-bottom: 7px;
+            color: hsl(236, 12%, 30%);
+            font-size: 15px;
+        }
     }
 
     h4 {
@@ -124,16 +140,14 @@ $font-checkout:
     button#submit {
         cursor: pointer;
         box-sizing: border-box;
-        border-radius: $border-radius-components;
+        border-radius: 5px;
         background-color: $color-black;
         width: 100%;
         height: 50px;
-        color: $color-white;
 
         > #button-text {
-            font-weight: $font-weight-bold;
-            font-size: var(--font-size-sm);
-            text-transform: uppercase;
+            color: $color-white;
+            font-size: var(--font-size-md);
         }
     }
 }
@@ -149,18 +163,37 @@ $font-checkout:
 
     #page-container {
         display: grid;
-        grid-template-columns: 1fr;
+        grid-template-rows: auto auto 1fr auto auto;
+        grid-template-columns: $page-margin-mobile minmax(1fr, 600px) $page-margin-mobile;
         grid-template-areas:
-            'main'
-            'items'
-            'form'
-            'disclaimer';
-        gap: $section-gap;
-        margin: 50px $page-margin-mobile;
-        max-width: 600px;
+            'main main main'
+            '. form . '
+            '. . .'
+            '. disclaimer .'
+            'footer footer footer';
+        gap: calc($section-gap / 2);
+        width: 100%;
+        min-height: 100svh;
 
         #main {
             grid-area: main;
+
+            background-image:
+                linear-gradient(
+                    to bottom,
+                    rgba(255, 255, 255, 0) 0%,
+                    rgba(255, 255, 255, 0) 75%,
+                    rgba(255, 255, 255, 1) 100%
+                ),
+                url('@public/imgs/lulu_pattern.webp');
+            background-position:
+                center bottom,
+                center center;
+            background-size:
+                100% 100%,
+                66%;
+            background-repeat: no-repeat, repeat;
+            padding: 25px 0;
         }
 
         #page_description {
@@ -177,6 +210,11 @@ $font-checkout:
 
         #disclaimer {
             grid-area: disclaimer;
+            margin-top: 25px;
+        }
+
+        .footer-layout {
+            grid-area: footer;
         }
     }
 }
@@ -187,40 +225,42 @@ $font-checkout:
         flex-direction: column;
         justify-content: center;
         align-items: center;
-        margin: 0 $page-margin-desktop;
+
         overflow-x: hidden;
     }
 
     #page-container {
         display: grid;
-        grid-template-columns: 1fr 5svw 1fr;
+        grid-template-rows: auto auto 1fr auto;
+        grid-template-columns:
+            [full-width-start] minmax(var(--page-margin), 1fr)
+            [content-left-start] minmax(300px, 500px) [content-left-end]
+            5svw
+            [content-right-start] minmax(300px, 500px) [content-right-end]
+            minmax(var(--page-margin), 1fr) [full-width-end];
         gap: $section-gap;
-        margin-top: 50px;
-        margin-bottom: 10px;
+        padding-top: 50px;
+        width: 100%;
+        min-height: calc(100svh - 50px);
 
-        // Posizionamento esplicito per ogni elemento
         #main {
             grid-row: 1;
-            grid-column: 1;
-            max-width: 500px;
-        }
-
-        #items {
-            grid-row: 2;
-            grid-column: 1;
-            max-width: 500px;
+            grid-column: content-left;
         }
 
         #disclaimer {
-            grid-row: 3;
-            grid-column: 1;
-            max-width: 500px;
+            grid-row: 2;
+            grid-column: content-left;
         }
 
         #payment-form {
-            grid-row: 1 / span 4; // Dalla riga 1 alla riga 3 (span di 3 righe)
-            grid-column: 3;
-            max-width: 500px;
+            grid-row: 1 / span 3;
+            grid-column: content-right;
+        }
+
+        .footer-layout {
+            grid-row: 4;
+            grid-column: full-width;
         }
     }
 }
@@ -230,25 +270,19 @@ $font-checkout:
 
     justify-content: center;
     align-items: center;
-    gap: 20px;
+    gap: calc($gap-grid / 2);
     background-color: $color-black;
-    padding: 20px 0;
+    padding: calc($gap-grid / 1.5) 0;
+    width: 100%;
 
     color: $color-white;
 
     @include mobile {
         flex-direction: column;
-        margin-right: -$page-margin-mobile;
-        margin-left: -$page-margin-mobile;
-        width: calc(100% + #{$page-margin-mobile * 2});
     }
 
     @include desktop {
         flex-direction: row;
-        align-self: center;
-        margin-right: -$page-margin-desktop;
-        margin-left: -$page-margin-desktop;
-        width: 100svw;
     }
 
     .links-layout {

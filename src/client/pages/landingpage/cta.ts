@@ -140,6 +140,12 @@ async function handle_form_submit(event: Event): Promise<void> {
         return
     }
 
+    const name_input = form.querySelector('input.form_name') as HTMLInputElement
+    if (name_input?.value) {
+        console.log(name_input?.value)
+        throw new Error('Name field should not be present in the form.')
+    }
+
     show_spinner(true)
 
     try {

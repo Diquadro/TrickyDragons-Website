@@ -13,15 +13,11 @@ link(rel='apple-touch-icon', sizes='180x180', href='@client/imgs/favicon/apple-t
 //- Default hreflang
 link(rel='alternate', href='https://www.trickydragons.com/', hreflang='x-default')
 
-//- Preconnect hints for external domains (OTTIMIZZATO)
-link(rel='preconnect', href='https://eu.i.posthog.com', crossorigin)
+//- Preconnect hints for external domains
 link(rel='preconnect', href='https://cloud.umami.is', crossorigin)
 link(rel='preconnect', href='https://api.trickydragons.com', crossorigin)
+link(rel='preconnect', href='https://app.posthog.com', crossorigin)
 link(rel='preconnect', href='https://connect.facebook.net', crossorigin)
-
-//- DNS prefetch for less critical domains
-link(rel='dns-prefetch', href='https://app.posthog.com')
-link(rel='dns-prefetch', href='https://graph.facebook.com')
 
 //- Security Headers
 meta(http-equiv='Strict-Transport-Security', content='max-age=31536000; includeSubDomains')
@@ -29,38 +25,13 @@ meta(name='referrer', content='no-referrer-when-downgrade')
 meta(http-equiv='Permissions-Policy', content='geolocation=(), microphone=(), camera=()')
 
 //- Font START
+
 link(
     rel='preload',
-    href='@client/fonts/bebas_neue_pro/Bebas-Neue-Pro-Bold.woff2',
+    href='@client/fonts/Asap-VariableFont_wdth,wght.woff2',
     as='font',
     type='font/woff2',
-    crossorigin
-)
-link(
-    rel='preload',
-    href='@client/fonts/bebas_neue_pro/Bebas-Neue-Pro-SemiExpanded-Bold.woff2',
-    as='font',
-    type='font/woff2',
-    crossorigin
-)
-link(
-    rel='preload',
-    href='@client/fonts/bebas_neue_pro/Bebas-Neue-Pro-SemiExpanded-Middle.woff2',
-    as='font',
-    type='font/woff2',
-    crossorigin
-)
-link(
-    rel='preload',
-    href='@client/fonts/bebas_neue_pro/Bebas-Neue-Pro-SemiExpanded-Book.woff2',
-    as='font',
-    type='font/woff2',
-    crossorigin
-)
-link(
-    rel='preload',
-    href='@client/fonts/bebas_neue_pro/Bebas-Neue-Pro-SemiExpanded-ExtraBold.woff2',
-    as='font',
-    type='font/woff2',
+    fetchpriority='high',
+    loading='eager',
     crossorigin
 )

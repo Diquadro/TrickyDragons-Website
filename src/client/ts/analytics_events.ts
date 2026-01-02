@@ -371,9 +371,9 @@ export function initialize_analytics(): void {
         update_existing_page_leave_on_refresh()
     }
 
-    // Track scroll event (one-shot)
+    // Track scroll event (one-shot, non-blocking)
     const scroll_handler = () => {
-        track_page_scroll()
+        track_page_scroll().catch()
         window.removeEventListener('scroll', scroll_handler)
     }
     window.addEventListener('scroll', scroll_handler, { passive: true })

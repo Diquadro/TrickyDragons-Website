@@ -1,0 +1,6 @@
+mixin ld_section()
+	.ld-section
+		h3.title= title
+		p.description !{ content }
+		if imgSrc
+        	img(src=imgSrc, alt=imgAlt, loading='lazy')

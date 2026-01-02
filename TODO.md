@@ -32,6 +32,8 @@ Object.entries(analytics_event).filter(([*, value]) => value !== null && value !
 [X] SES_LINK branded link seslink.trickydragons.com
 [] API on same origin
 
+[] Per la gestione degli eventi di stripe verificare la data dell'evento... Perchè gli ordini possono fallire ma le persone posso ritentare e pagere
+
 UTM TEST PARAMS -> ?utm_source=WEB_TEST&utm_medium=M_TEST&utm_campaign=C_TEST&utm_term=T_TEST&utm_content=CON_TEST&utm_id=ID_TEST
 
 MAYBE

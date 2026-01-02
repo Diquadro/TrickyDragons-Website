@@ -1,53 +1,75 @@
 extends @client/layouts/layout_common/layout_common.pug
 
 block head
-    meta(name='description', content='A demo of a payment on Stripe')
-    meta(name='viewport', content='width=device-width, initial-scale=1')
+    link(
+        rel='preload',
+        href='@public/imgs/mini_expnasion_pack_new_1_modified.webp',
+        as='image',
+        type='image/webp',
+        crossorigin='anonymous',
+        fetchpriority='high'
+    )
+
     script(src='https://js.stripe.com/basil/stripe.js')
     script(src='./checkout.ts', defer)
 
 block body
     #page-container
         #main
-            #page_title TRICKY DRAGONS
-            #page_description Thank you for getting this far! We really appreciate your support, it means a lot to us. After checkout you will receive a thank you email with more information about the launch.
-        #items
-            .item
-                //- .item_name Tricky Dragons Reservation
-                //- .item_description Exclusive expansion pack for Tricky Dragons
-                //- .item_price 1$
+            #reservation_image
+                picture
+                    img(
+                        src='@public/imgs/mini_expnasion_pack_new_1_modified.webp',
+                        alt='Tricky Dragons Mini Expansion Pack',
+                        loading='eager',
+                        crossorigin='anonymous',
+                        fetchpriority='high',
+                        decoding='sync',
+                        width='500',
+                        height='500',
+                        style='max-width: 500px; max-height: 500px'
+                    )
+            #reservation_details
+                .name Tricky Dragons Reservation
+                .price $1
 
         #disclaimer
             #disclaimer_title Disclaimer
-            #disclaimer_text Tricky Dragons is still in development and the final designs may change. The images for current editions are the latest prototypes that we have, and we will update you with any changes to appearance, cost, or function. Final Superfan bundle prices are subject to change; we will notify you of any update before the campaign launches.
+            #disclaimer_text Tricky Dragons is still in development and the final designs may change. The images for current editions are the latest prototypes that we have, and we will update you with any changes to appearance, cost, or function. Final prices are subject to change; we will notify you of any update before the campaign launches.
 
         //- Display a payment form
-        form#payment-form
-            .section_text
-                h4 1. Email Address
-                h5 All transactions are secure and encrypted
-            input#email_address_input(type='email', disabled)
+        form#payment-form.hidden
+            #express-checkout-section
+                #express-checkout-element
+                    //- Stripe.js injects Express Checkout buttons here
 
-            .section_text
-                h4 2. Information
-                h5 All transactions are secure and encrypted
-            #billing-address-element
-                //- Stripe.js injects the Address Element
-            .section_text
-                h4 3. Payment
-                h5 All transactions are secure and encrypted
-            #payment-element
-                //- Stripe.js injects the Payment Element
+                #express-checkout-separator
+                    span Or pay with card
+
+            #manual_checkout
+                .section
+                    span Email
+                    input#email_address_input(type='email', disabled)
+
+                .section
+                    #billing-address-element
+                        //- Stripe.js injects the Address Element
+
+                .section
+                    span Payment Information
+                    #payment-element
+                        //- Stripe.js injects the Payment Element
+
             button#submit
-                span#button-text Pay now
-            #payment-message.hidden
+                span#button-text Pay
+            //- #payment-message.hidden
 
-    .footer-layout
-        span A game by Daniele D'Ambrosio
-        .links-layout
-            span.link
-                a(href='/privacy-policy') Privacy Policy
-            span.link
-                a(href='/terms-of-service') Terms of Service
+        .footer-layout
+            span A game by Daniele D'Ambrosio
+            .links-layout
+                span.link
+                    a(href='/privacy-policy') Privacy Policy
+                span.link
+                    a(href='/terms-of-service') Terms of Service
 
     include @client/components/spinner/spinner.pug

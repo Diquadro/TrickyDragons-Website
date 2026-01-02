@@ -1,0 +1,25 @@
+@font-face {
+    font-style: normal;
+    font-weight: 100 900;
+    src: url('@client/fonts/Asap-VariableFont_wdth,wght.woff2') format('woff2-variations');
+    font-family: 'Asap';
+    font-display: swap;
+}
+
+@font-face {
+    font-style: italic;
+    font-weight: 100 900;
+    src: url('@client/fonts/Asap-Italic-VariableFont_wdth,wght.woff2') format('woff2-variations');
+    font-family: 'Asap';
+    font-display: swap;
+}
+
+/* Fallback font ottimizzato per ridurre CLS */
+@font-face {
+    size-adjust: 95%;
+    src: local('Arial');
+    font-family: 'Asap Fallback';
+    ascent-override: 98%; //92.6%;
+    descent-override: 21.02%;
+    line-gap-override: 0%;
+}
