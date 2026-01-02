@@ -114,6 +114,18 @@ async function initialize() {
         })
     })
 
+    // Handle express checkout confirm event
+    expressCheckoutElement.on('confirm', async (event: any) => {
+        const { error: confirmError } = await checkout.confirm({
+            return_url: checkout.session().returnUrl,
+        })
+
+        if (confirmError) {
+            console.error('Express checkout confirmation error:', confirmError)
+            // Show error to user if needed
+        }
+    })
+
     // Mount all elements
     billingElement.mount('#billing-address-element')
     paymentElement.mount('#payment-element')
