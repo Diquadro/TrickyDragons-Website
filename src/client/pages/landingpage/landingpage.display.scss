@@ -5,11 +5,11 @@
 
     @include desktop {
         grid-template-columns:
-            [full-width-start] minmax(var(--page-margin), 1fr)
-            [full-content-start content-left-start] minmax(300px, 600px) [content-left-end]
-            calc($gap-grid * 2)
-            [content-right-start] minmax(300px, 600px) [content-right-end full-content-end]
-            minmax(var(--page-margin), 1fr) [full-width-end];
+            [full-width-start] minmax(calc(var(--page-margin) / 3), 1fr)
+            [full-content-start content-left-start] minmax(415px, 550px) [content-left-end]
+            calc($gap-grid * 2.5)
+            [content-right-start] minmax(415px, 550px) [content-right-end full-content-end]
+            minmax(calc(var(--page-margin) / 3), 1fr) [full-width-end];
     }
 
     @include mobile {

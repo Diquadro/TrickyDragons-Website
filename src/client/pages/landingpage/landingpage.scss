@@ -18,6 +18,10 @@
         font-weight: $font-weight-black;
         font-size: var(--font-size-xxl);
         text-align: center;
+
+        @include desktop {
+            text-wrap: pretty;
+        }
     }
 
     > .description {
@@ -153,7 +157,7 @@
             box-shadow: 0 8px $color-green-darkest;
             border-radius: $border-radius-components;
             background-color: $color-green-dark;
-            padding: 10px 0;
+            padding: 10px;
             width: 100%;
             color: $color-white;
             font-weight: $font-weight-black;
