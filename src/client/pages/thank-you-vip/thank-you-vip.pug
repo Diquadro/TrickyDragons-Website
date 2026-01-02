@@ -8,7 +8,8 @@ block head
         href='@public/imgs/thank-you-card.webp',
         as='image',
         type='image/webp',
-        crossorigin='anonymous'
+        crossorigin='anonymous',
+        fetchpriority='high'
     )
 
 block body
@@ -20,7 +21,10 @@ block body
                         src='@public/imgs/thank-you-card.webp',
                         alt='thank you for your support',
                         loading='eager',
-                        crossorigin='anonymous'
+                        crossorigin='anonymous',
+                        fetchpriority='high',
+                        width='600',
+                        height='600'
                     )
                 .text-layout
                     .title-layout
