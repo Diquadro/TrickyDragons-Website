@@ -57,7 +57,7 @@ body {
         grid-template-columns: 1fr 1fr;
         align-items: center;
         gap: 100px;
-        padding: 20px 0;
+        padding: 50px 0 20px;
     }
 
     .faqs-layout {
@@ -125,7 +125,7 @@ body {
             display: flex;
             flex-direction: column;
             align-items: center;
-            gap: 5px;
+            gap: 10px;
 
             > .cta-main-button {
                 display: flex;
@@ -229,7 +229,7 @@ body {
             }
 
             > .cta-secondary-button {
-                font-size: var(--font-size-sm);
+                font-size: var(--font-size-md);
             }
         }
     }
@@ -276,13 +276,13 @@ body {
 }
 
 .faq-description {
-    font-size: var(--font-size-sm);
+    // font-size: var(--font-size-sm);
 }
 
 .faq-item {
     display: flex;
     flex-direction: column;
-    gap: 10px;
+    // gap: 10px;
 }
 
 .faq-question {
@@ -310,6 +310,7 @@ body {
 .info-text {
     display: flex;
     flex-direction: column;
+    justify-content: center;
     gap: 10px;
 }
 

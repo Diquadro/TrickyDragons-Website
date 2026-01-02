@@ -17,6 +17,10 @@
         --delta-font-size: 4px;
     }
 
+    @include mobile {
+        --delta-font-size: -4px;
+    }
+
     // Page margin for responsive design
 
     & {

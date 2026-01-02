@@ -22,6 +22,11 @@
         @include desktop {
             text-wrap: pretty;
         }
+
+        > span.no-wrap {
+            color: $color-white;
+            white-space: nowrap;
+        }
     }
 
     > .description {
@@ -89,7 +94,7 @@
     background-image: url('@public/imgs/lulu_pattern.webp');
     background-position: center center;
     background-color: $color-black;
-    padding: $gap-grid * 2 0;
+    padding: $gap-grid * 1.5 0;
 
     @include mobile {
         background-size: 66%;

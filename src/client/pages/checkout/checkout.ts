@@ -56,7 +56,7 @@ async function initialize() {
         .then((r) => r.clientSecret)
 
     const appearance = {
-        theme: 'flat',
+        // theme: 'flat',
     }
 
     checkout = await stripe.initCheckout({
