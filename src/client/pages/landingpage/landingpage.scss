@@ -248,6 +248,7 @@
 
 #dragons-image {
     margin-top: $gap-grid;
+    margin-bottom: $gap-grid * 0.5;
     box-shadow: $image-box-shadow;
     border-radius: $border-radius-media;
 }
@@ -271,13 +272,6 @@
         border-radius: $border-radius-media;
         max-width: 500px;
     }
-
-    > .quote {
-        @include mobile {
-            margin-top: $gap-grid;
-            margin-bottom: calc($gap-grid - $gap-grid * 1.2);
-        }
-    }
 }
 
 p.quote {
@@ -287,6 +281,11 @@ p.quote {
 
     @include desktop {
         margin: $gap-grid 0;
+    }
+
+    @include mobile {
+        margin-top: $gap-grid * 0.8;
+        margin-bottom: calc($gap-grid * 0.8 - $gap-grid * 1.2);
     }
 }
 
