@@ -133,12 +133,12 @@ async function handle_form_submit(event: Event): Promise<void> {
     }
     const email = email_input.value.trim().toLowerCase()
 
-    const consent_checkbox = form.querySelector('input[type="checkbox"]') as HTMLInputElement
+    // const consent_checkbox = form.querySelector('input[type="checkbox"]') as HTMLInputElement
 
-    if (!consent_checkbox || !consent_checkbox.checked) {
-        error_toast('You must agree to the Privacy Policy.')
-        return
-    }
+    // if (!consent_checkbox || !consent_checkbox.checked) {
+    //     error_toast('You must agree to the Privacy Policy.')
+    //     return
+    // }
 
     const name_input = form.querySelector('input.form_name') as HTMLInputElement
     if (name_input?.value) {
@@ -199,7 +199,7 @@ async function handle_form_submit(event: Event): Promise<void> {
         }
 
         email_input.value = ''
-        consent_checkbox.checked = false
+        // consent_checkbox.checked = false
         return
     } catch (err) {
         if (err instanceof Error) {
