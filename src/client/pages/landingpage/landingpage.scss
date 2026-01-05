@@ -118,6 +118,11 @@
         text-align: justify;
     }
 
+    > p > span.exclusive-offer {
+        color: $color-green-dark;
+        font-weight: $font-weight-bold;
+    }
+
     form {
         > input {
             border-radius: $border-radius-components;
@@ -374,6 +379,11 @@ p.quote.custom-quote {
             @include mobile {
                 margin-bottom: calc($gap-grid / 2);
             }
+        }
+
+        > p > span.exclusive-offer {
+            color: $color-yellow;
+            // font-weight: $font-weight-bold;
         }
 
         > form > button[type='submit'] {
