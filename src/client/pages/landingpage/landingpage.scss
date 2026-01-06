@@ -60,7 +60,7 @@
     > .cta {
         // background-image: none;
         background-color: transparent;
-        padding: $gap-grid 0 $gap-grid * 1.5;
+        padding: $gap-grid * 1.5 0 $gap-grid * 1.5;
 
         @include desktop {
             margin-top: -$gap-grid;
@@ -110,6 +110,11 @@
         font-weight: $font-weight-black;
         font-size: var(--font-size-xxl);
         font-family: $font-family;
+
+        @include mobile {
+            margin-bottom: calc($gap-grid / 3);
+            text-align: center;
+        }
     }
 
     > p {
@@ -124,11 +129,15 @@
     }
 
     form {
+        @include mobile {
+            margin-top: calc($gap-grid / 2);
+        }
+
         > input {
             border-radius: $border-radius-components;
             background-color: $color-white;
             padding: 0 10px;
-            height: 35px;
+            height: 45px;
             color: $color-black;
             font-weight: $font-weight-middle;
             font-size: var(--font-size-md);
