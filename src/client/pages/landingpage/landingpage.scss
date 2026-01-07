@@ -423,9 +423,7 @@ p.quote.custom-quote {
         padding: $gap-grid 0;
 
         > p {
-            @include mobile {
-                margin-bottom: calc($gap-grid / 2);
-            }
+            margin-bottom: calc($gap-grid);
         }
 
         > p > span.exclusive-offer {
