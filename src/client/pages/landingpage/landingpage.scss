@@ -393,7 +393,7 @@ p.quote.custom-quote {
     background-position: center center;
 
     background-color: $color-black;
-    padding: $gap-grid 0;
+    padding: $gap-grid * 2 0 $gap-grid;
 
     @include mobile {
         margin-top: $gap-grid * 1.5;
