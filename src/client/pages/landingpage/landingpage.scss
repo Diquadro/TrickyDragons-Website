@@ -10,40 +10,58 @@
 }
 
 #hero {
-    background-color: $color-black;
+    // background-color: $color-black;
     padding-top: $gap-grid * 1.5;
 
+    @include mobile {
+        background-image:
+            linear-gradient(
+                to bottom,
+                rgba(255, 255, 255, 1) 0%,
+                rgba(255, 255, 255, 1) 30%,
+                rgba(255, 255, 255, 0) 100%
+            ),
+            url('@public/imgs/lulu_pattern.webp'), url('@public/imgs/lulu_pattern.webp');
+        background-position:
+            center center,
+            center center,
+            center center;
+        background-size:
+            100% 100%,
+            66%,
+            66%;
+        background-repeat: no-repeat, repeat, repeat;
+    }
+
+    @include desktop {
+        padding-bottom: $gap-grid * 1.5;
+    }
+
     > .title {
-        color: $color-white;
+        // color: $color-white;
         font-weight: $font-weight-black;
         font-size: var(--font-size-xxl);
-        text-align: center;
+        // text-align: center;
 
         @include desktop {
             text-wrap: pretty;
         }
 
         > span.no-wrap {
-            color: $color-white;
             white-space: nowrap;
         }
     }
 
     > .description {
-        color: $color-white;
         font-weight: normal;
         font-size: var(--font-size-md);
         text-align: justify;
         text-wrap: pretty;
-
-        > i {
-            color: $color-white;
-        }
     }
 
     > img {
         margin: -5% 0;
-        background-image: url(@public/imgs/kickstarter_box_4.2-lowres.webp);
+        background-image: url(@public/imgs/kickstarter_box_5-lowres.webp);
         aspect-ratio: 1 / 1;
 
         @include mobile {
@@ -57,18 +75,20 @@
         }
     }
 
-    > .cta {
-        // background-image: none;
-        background-color: transparent;
-        padding: $gap-grid * 1.5 0 $gap-grid * 1.5;
+    // > .cta {
+    //     // background-image: none;
+    //     // background-color: transparent;
+    //     padding: $gap-grid * 2 0 $gap-grid * 2;
 
-        @include desktop {
-            margin-top: -$gap-grid;
-        }
-    }
+    //     // @include desktop {
+    //     //     margin-top: -$gap-grid;
+    //     // }
+    // }
 }
 
 .horizontal-divider {
+    margin: $gap-grid 0;
+
     > div {
         height: 1px;
     }
@@ -95,7 +115,7 @@
     background-image: url('@public/imgs/lulu_pattern.webp');
     background-position: center center;
     background-color: $color-black;
-    padding: $gap-grid * 1.5 0;
+    padding: $gap-grid * 2 0;
 
     @include mobile {
         background-size: 66%;
@@ -329,19 +349,36 @@ p.quote.custom-quote {
     }
 }
 
+#infografic-container {
+    margin-top: $gap-grid * 1.5;
+    margin-bottom: $gap-grid;
+
+    @include desktop {
+        grid-column: full-content;
+
+        padding: 0 20%;
+    }
+
+    @include mobile {
+        display: grid;
+        grid-template-columns: inherit;
+        grid-column: full-width;
+    }
+}
+
+#infografic {
+    display: flex;
+    justify-content: space-between;
+
+    > img {
+        box-shadow: none;
+        max-width: 25%;
+    }
+}
+
 #quick-facts {
     > .title {
         text-align: center;
-    }
-
-    > #infografic {
-        display: flex;
-        justify-content: space-between;
-
-        > img {
-            box-shadow: none;
-            max-width: 25%;
-        }
     }
 
     > ul {
@@ -359,7 +396,7 @@ p.quote.custom-quote {
     padding: $gap-grid 0;
 
     @include mobile {
-        margin-top: $gap-grid;
+        margin-top: $gap-grid * 1.5;
         background-size: 66%;
 
         > img {
@@ -368,6 +405,7 @@ p.quote.custom-quote {
     }
 
     @include desktop {
+        margin-top: $gap-grid * 1.5;
         background-size: 25%;
     }
 

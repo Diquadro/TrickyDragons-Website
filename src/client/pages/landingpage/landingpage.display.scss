@@ -21,6 +21,12 @@
 }
 
 #hero {
+    > .description {
+        @include mobile {
+            margin-top: $gap-grid;
+        }
+    }
+
     > .cta {
         @include mobile {
             grid-column: full-width;
