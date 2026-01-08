@@ -36,6 +36,7 @@
     }
 
     @include desktop {
+        padding-top: $gap-grid * 2.5;
         padding-bottom: $gap-grid * 1.5;
     }
 
