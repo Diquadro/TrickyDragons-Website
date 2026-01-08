@@ -14,11 +14,12 @@
     padding-top: $gap-grid * 1.5;
 
     @include mobile {
+        margin-bottom: -$gap-grid;
         background-image:
             linear-gradient(
                 to bottom,
                 rgba(255, 255, 255, 1) 0%,
-                rgba(255, 255, 255, 1) 30%,
+                rgba(255, 255, 255, 1) 15%,
                 rgba(255, 255, 255, 0) 100%
             ),
             url('@public/imgs/lulu_pattern.webp'), url('@public/imgs/lulu_pattern.webp');
@@ -31,6 +32,7 @@
             66%,
             66%;
         background-repeat: no-repeat, repeat, repeat;
+        padding-bottom: $gap-grid;
     }
 
     @include desktop {
@@ -60,12 +62,11 @@
     }
 
     > img {
-        margin: -5% 0;
-        background-image: url(@public/imgs/kickstarter_box_5-lowres.webp);
-        aspect-ratio: 1 / 1;
+        background-image: url(@public/imgs/hero_image_low_res.webp);
+        max-width: 500px;
 
         @include mobile {
-            margin-top: -8%;
+            margin: $gap-grid 0;
         }
     }
 
@@ -112,6 +113,7 @@
 
 .cta {
     row-gap: calc($gap-grid / 2);
+    margin: $gap-grid 0;
     background-image: url('@public/imgs/lulu_pattern.webp');
     background-position: center center;
     background-color: $color-black;
@@ -289,13 +291,13 @@
 
 #dragons-image {
     margin-top: $gap-grid;
-    margin-bottom: $gap-grid * 0.5;
+    margin-bottom: $gap-grid;
     box-shadow: $image-box-shadow;
     border-radius: $border-radius-media;
 }
 
 .section {
-    row-gap: calc($gap-grid / 1.2);
+    row-gap: $gap-grid;
     padding: $gap-grid 0;
 
     > .title {
@@ -385,6 +387,10 @@ p.quote.custom-quote {
         padding-left: $page-margin-mobile;
         font-size: var(--font-size-md);
         list-style-type: disc;
+
+        > li {
+            text-align: left;
+        }
     }
 }
 
@@ -409,6 +415,10 @@ p.quote.custom-quote {
         background-size: 25%;
     }
 
+    > .horizontal-divider {
+        margin: 10px 0 0;
+    }
+
     > h3 {
         color: $color-yellow;
         font-weight: $font-weight-black;
@@ -420,7 +430,7 @@ p.quote.custom-quote {
         background-image: none;
         background-color: transparent;
 
-        padding: $gap-grid 0;
+        padding: 0;
 
         > p {
             margin-bottom: calc($gap-grid);

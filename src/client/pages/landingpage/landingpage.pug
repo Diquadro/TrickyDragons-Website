@@ -3,7 +3,7 @@ extends @client/layouts/layout_common/layout_common.pug
 block head
     link(
         rel='preload',
-        href='@public/imgs/kickstarter_box_5-lowres.webp',
+        href='@public/imgs/hero_image_low_res.webp',
         as='image',
         type='image/webp',
         crossorigin='anonymous',
@@ -11,7 +11,7 @@ block head
     )
     link(
         rel='preload',
-        href='@public/imgs/kickstarter_box_5.webp',
+        href='@public/imgs/hero_image.webp',
         as='image',
         type='image/webp',
         crossorigin='anonymous',
@@ -32,31 +32,28 @@ block body
                 | CARD GAME WHERE CUTE DRAGONS MEET ELEMENTAL CHAOS
 
             h2.description Never judge a dragon by its cuteness!
+                br
+                |
+                |
+                | In
                 |
                 |
                 i Tricky Dragons
-                |
-                | takes the classic trick-taking game formula and builds an entirely new game around it.
-                br
-                br
-                | Dragons, Elements, Powers and Effects transform simple card play into exciting battles where anything can happen.
+                | , you and your friends will master the elements and command dragons in exciting battles to prove who is the trickiest dragon master.
 
             img.image(
-                src='@public/imgs/kickstarter_box_5.webp',
-                alt='kickstarter box',
+                src='@public/imgs/hero_image.webp',
+                alt='kickstarter box plus components',
                 loading='eager',
                 crossorigin='anonymous',
                 fetchpriority='high',
                 decoding='sync',
                 width='600',
-                height='600'
+                height='800'
             )
 
-            //- .horizontal-divider.on-dark
-            //-     div 
-
         .cta.full-width.mobile-full-content
-            h3 JOIN 1000+ SUPPORTERS
+            h3 WE'RE LAUNCHING SOON
             p Sign up to be the first to know when we launch and receive
                 |
                 |
@@ -77,29 +74,13 @@ block body
                 //-     span I agree to receive the newsletter
                 button(type='submit') UNLOCK THE EXCLUSIVE OFFER
 
-        #infografic-container.mobile-full-content
-            #infografic
-                img(
-                    src='@public/imgs/info_age.webp',
-                    alt='info age',
-                    loading='lazy',
-                    width='297',
-                    height='297'
-                )
-                img(
-                    src='@public/imgs/info_time.webp',
-                    alt='info time',
-                    loading='lazy',
-                    width='297',
-                    height='297'
-                )
-                img(
-                    src='@public/imgs/info_players.webp',
-                    alt='info players',
-                    loading='lazy',
-                    width='297',
-                    height='297'
-                )
+        img#dragons-image(
+            src='@public/imgs/3_dragons.webp',
+            alt='3 dragons',
+            loading='lazy',
+            width='600',
+            height='338'
+        )
 
         .section.full-width.desktop-section-image-right-with-quote.mobile-full-content
             h3.title OVER 100 DRAGONS MADE BY PRO ITALIAN ARTISTS
@@ -115,7 +96,12 @@ block body
 
         .section.full-width.desktop-section-image-left-with-quote.mobile-full-content
             h3.title QUICK AND EASY ROUNDS, ONE CARD AT A TIME
-            p.description Each turn, play a card that matches or beats the one on top. But wait, there is a trick! Your dragons wield elemental powers that can flip the game.
+            p.description Each turn, play a card that matches or beats the one on top.
+                |
+                |
+                i But wait, there is a trick!
+                |
+                | Your dragons wield elemental powers that can flip the game.
             img.image(
                 src='@public/imgs/playing_viola_mano_5.webp',
                 alt='game preview',
@@ -145,8 +131,27 @@ block body
                 height='600'
             )
 
-        .horizontal-divider.on-light
-            div 
+        .cta.full-width.mobile-full-content
+            h3 JOIN 1000+ SUPPORTERS
+            p Sign up to be the first to know when we launch and receive
+                |
+                |
+                span.exclusive-offer an exclusive mini expansion offer
+                |
+                | for our backers.
+            form.cta-form
+                input(
+                    type='email',
+                    name='email',
+                    placeholder='Enter your email',
+                    autocomplete='email',
+                    required
+                )
+                input.form_name(type='text', name='name', autocomplete='off')
+                //- label.checkbox-container
+                //-     input(type='checkbox', name='newsletter_consent', required)
+                //-     span I agree to receive the newsletter
+                button(type='submit') RESERVE YOUR DRAGON
 
         #how-to-play.section.full-width.mobile-full-content
             h3.title HOW TO PLAY
@@ -183,15 +188,55 @@ block body
                 height='736'
             )
 
-        p.quote.custom-quote “Every time a dragon effect was played, I felt an incredible thrill” - Louise F.
+        .horizontal-divider.on-light
+            div
 
-        img#dragons-image(
-            src='@public/imgs/3_dragons.webp',
-            alt='3 dragons',
-            loading='lazy',
-            width='600',
-            height='338'
-        )
+        #quick-facts.section.full-width.mobile-full-content
+            h3.title QUICK FACTS
+
+            #infografic
+                img(
+                    src='@public/imgs/info_age.webp',
+                    alt='info age',
+                    loading='lazy',
+                    width='297',
+                    height='297'
+                )
+                img(
+                    src='@public/imgs/info_time.webp',
+                    alt='info time',
+                    loading='lazy',
+                    width='297',
+                    height='297'
+                )
+                img(
+                    src='@public/imgs/info_players.webp',
+                    alt='info players',
+                    loading='lazy',
+                    width='297',
+                    height='297'
+                )
+
+            ul.description
+                li
+                    span Learn in
+                    |
+                    |
+                    b Just One Round!
+                li
+                    b 100+ Unique Effects
+                    |
+                    | for endeless combos!
+                li
+                    b Alternative Rules
+                    |
+                    | for every group.
+                li
+                    span Balanced for casual and competitive play.
+                li
+                    span Infinite replayability guaranteed.
+
+        p.quote.custom-quote “Every time a dragon effect was played, I felt an incredible thrill” - Louise F.
 
         #last-cta.full-width.mobile-full-content
             h3.title BE AMONG THE FIRST & CLAIM THE MINI EXPANSION
