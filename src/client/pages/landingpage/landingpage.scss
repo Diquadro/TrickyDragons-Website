@@ -63,7 +63,7 @@
     }
 
     > img {
-        background-image: url(@public/imgs/hero_image_low_res.webp);
+        // background-image: url(@public/imgs/hero_image_low_res.webp);
         max-width: 500px;
 
         @include mobile {
