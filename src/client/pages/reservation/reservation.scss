@@ -143,8 +143,9 @@ body {
                 box-shadow: 0 8px $color-orange-darkest;
                 border-radius: $border-radius-components;
                 background-color: $color-orange;
-                padding: 10px 0;
+                padding: 10px;
                 width: 100%;
+                text-wrap: pretty;
 
                 > a {
                     color: $color-white;
