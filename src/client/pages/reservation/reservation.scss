@@ -114,7 +114,7 @@ body {
 
         > .description-layout {
             font-size: var(--font-size-md);
-            text-align: justify;
+            // text-align: justify;
 
             > span {
                 color: $color-black;
@@ -247,7 +247,7 @@ body {
         grid-area: faq-title-container;
         flex-direction: column;
         gap: 10px;
-        text-align: justify;
+        // text-align: justify;
     }
 
     .faq-items-layout {
@@ -266,7 +266,7 @@ body {
     }
 
     .faq-answer {
-        text-align: justify;
+        // text-align: justify;
     }
 }
 
