@@ -112,10 +112,32 @@ document.addEventListener('DOMContentLoaded', () => {
     const forms = document.querySelectorAll('.cta-form')
     forms.forEach((form) => {
         form.addEventListener('submit', handle_form_submit)
+
+        // Handle mobile keyboard covering input
+        const email_input = form.querySelector('input[type="email"]') as HTMLInputElement
+        if (email_input) {
+            email_input.addEventListener('focus', handle_input_focus)
+        }
     })
 
     // initIntersectionObserver()
 })
+
+/**
+ * Scroll input into view when focused on mobile to prevent keyboard covering it
+ */
+function handle_input_focus(event: FocusEvent): void {
+    const input = event.target as HTMLInputElement
+
+    // Small timeout to wait for mobile keyboard to open
+    setTimeout(() => {
+        input.scrollIntoView({
+            behavior: 'smooth',
+            block: 'center',
+            inline: 'nearest',
+        })
+    }, 300)
+}
 
 async function handle_form_submit(event: Event): Promise<void> {
     event.preventDefault()
