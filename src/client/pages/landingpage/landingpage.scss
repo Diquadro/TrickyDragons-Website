@@ -9,6 +9,10 @@
     // }
 }
 
+.no-wrap {
+    white-space: nowrap;
+}
+
 #hero {
     // background-color: $color-black;
     padding-top: $gap-grid * 1.5;
@@ -48,10 +52,6 @@
 
         @include desktop {
             text-wrap: pretty;
-        }
-
-        > span.no-wrap {
-            white-space: nowrap;
         }
     }
 
