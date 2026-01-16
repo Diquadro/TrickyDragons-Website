@@ -129,24 +129,23 @@ document.addEventListener('DOMContentLoaded', () => {
 function handle_input_focus(event: FocusEvent): void {
     const input = event.target as HTMLInputElement
 
+    // Only apply on touch devices (mobile/tablet)
+    const is_touch_device = window.matchMedia('(pointer: coarse)').matches
+    if (!is_touch_device) return
+
     // Small timeout to wait for mobile keyboard to open
     setTimeout(() => {
-        // Check if input is already fully visible in viewport
         const rect = input.getBoundingClientRect()
-        const is_visible =
-            rect.top >= 0 &&
-            rect.left >= 0 &&
-            rect.bottom <= window.innerHeight &&
-            rect.right <= window.innerWidth
+        const viewport_height = window.visualViewport?.height || window.innerHeight
 
-        // Only scroll if not already visible
-        if (!is_visible) {
-            input.scrollIntoView({
-                behavior: 'smooth',
-                block: 'center',
-                inline: 'nearest',
-            })
-        }
+        // Guard: don't scroll if input is still visible
+        if (rect.bottom <= viewport_height) return
+
+        input.scrollIntoView({
+            behavior: 'smooth',
+            block: 'center',
+            inline: 'nearest',
+        })
     }, 300)
 }
 
