@@ -131,11 +131,22 @@ function handle_input_focus(event: FocusEvent): void {
 
     // Small timeout to wait for mobile keyboard to open
     setTimeout(() => {
-        input.scrollIntoView({
-            behavior: 'smooth',
-            block: 'center',
-            inline: 'nearest',
-        })
+        // Check if input is already fully visible in viewport
+        const rect = input.getBoundingClientRect()
+        const is_visible =
+            rect.top >= 0 &&
+            rect.left >= 0 &&
+            rect.bottom <= window.innerHeight &&
+            rect.right <= window.innerWidth
+
+        // Only scroll if not already visible
+        if (!is_visible) {
+            input.scrollIntoView({
+                behavior: 'smooth',
+                block: 'center',
+                inline: 'nearest',
+            })
+        }
     }, 300)
 }
 
