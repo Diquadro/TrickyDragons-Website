@@ -11,12 +11,7 @@ block head
     )
     //- Prefetch next critical images
     link(rel='prefetch', href='@public/imgs/3_dragons.webp', as='image', type='image/webp')
-    link(
-        rel='prefetch',
-        href='@public/imgs/2026_01_16_Card_Wall_V01_092.webp',
-        as='image',
-        type='image/webp'
-    )
+    link(rel='prefetch', href='@public/imgs/playing_viola_mano_5.webp', as='image', type='image/webp')
 
 block body
     main#page-container
@@ -93,23 +88,6 @@ block body
         )
 
         .section.full-width.desktop-section-image-right-with-quote.mobile-full-content
-            h3.title.tw-wrap OVER 100
-                |
-                |
-                span.no-wrap HAND-DRAWN
-                |
-                | DRAGONS BY ITALIAN ARTISTS
-            p.description The deck bursts with colors, personalities, and details. Each dragon is unique and was designed to capture both elemental power and it's own style.
-            img.image(
-                src='@public/imgs/2026_01_16_Card_Wall_V01_092.webp',
-                alt='wall of cards',
-                loading='lazy',
-                width='600',
-                height='600'
-            )
-            p.quote "The dragon illustrations are adorable. I can't pick a favorite" - Maria D.
-
-        .section.full-width.desktop-section-image-left-with-quote.mobile-full-content
             h3.title QUICK AND EASY ROUNDS, ONE CARD AT A TIME
             p.description Each turn, play a card that matches or beats the one on top.
                 |
@@ -126,7 +104,7 @@ block body
             )
             p.quote "Looks simple. Plays deep. I'm still discovering new strategies" - Alex N.
 
-        .section.full-width.desktop-section-image-right.mobile-full-content
+        .section.full-width.desktop-section-image-left.mobile-full-content
             h3.title FIRE BURNS GRASS
                 br 
                 | GRASS ABSORBS WATER
@@ -145,6 +123,23 @@ block body
                 width='600',
                 height='600'
             )
+
+        .section.full-width.desktop-section-image-right-with-quote.mobile-full-content
+            h3.title.tw-wrap OVER 100
+                |
+                |
+                span.no-wrap HAND-DRAWN
+                |
+                | DRAGONS BY ITALIAN ARTISTS
+            p.description The deck bursts with colors, personalities, and details. Each dragon is unique and was designed to capture both elemental power and it's own style.
+            img.image(
+                src='@public/imgs/2026_01_16_Card_Wall_V02_100.webp',
+                alt='wall of cards',
+                loading='lazy',
+                width='600',
+                height='600'
+            )
+            p.quote "The dragon illustrations are adorable. I can't pick a favorite" - Maria D.
 
         .cta.full-width.mobile-full-content
             h3 JOIN 1000+ SUPPORTERS
