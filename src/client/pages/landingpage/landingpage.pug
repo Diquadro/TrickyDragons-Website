@@ -1,17 +1,9 @@
 extends @client/layouts/layout_common/layout_common.pug
 
 block head
-    //- link(
-    //-     rel='preload',
-    //-     href='@public/imgs/hero_image_low_res.webp',
-    //-     as='image',
-    //-     type='image/webp',
-    //-     crossorigin='anonymous',
-    //-     fetchpriority='high'
-    //- )
     link(
         rel='preload',
-        href='@public/imgs/hero_image.webp',
+        href='@public/imgs/hero_image_450.webp',
         as='image',
         type='image/webp',
         crossorigin='anonymous',
@@ -19,7 +11,12 @@ block head
     )
     //- Prefetch next critical images
     link(rel='prefetch', href='@public/imgs/3_dragons.webp', as='image', type='image/webp')
-    link(rel='prefetch', href='@public/imgs/cards_zoom_2_100.webp', as='image', type='image/webp')
+    link(
+        rel='prefetch',
+        href='@public/imgs/2026_01_16_Card_Wall_V01_092.webp',
+        as='image',
+        type='image/webp'
+    )
 
 block body
     main#page-container
@@ -41,19 +38,32 @@ block body
                 i Tricky Dragons
                 | , you will master the elements and command dragons in exciting battles. Prove yourself and become the trickiest dragon master!
 
-            img.image(
-                src='@public/imgs/hero_image.webp',
-                alt='kickstarter box plus components',
-                loading='eager',
-                crossorigin='anonymous',
-                fetchpriority='high',
-                decoding='sync',
-                width='600',
-                height='800'
-            )
+            picture.image
+                source(
+                    media='(max-width: 450px)',
+                    srcset='@public/imgs/hero_image_450.webp',
+                    type='image/webp',
+                    fetchpriority='high'
+                )
+                source(
+                    media='(min-width: 451px)',
+                    srcset='@public/imgs/hero_image.webp',
+                    type='image/webp',
+                    fetchpriority='high'
+                )
+                img(
+                    src='@public/imgs/hero_image.webp',
+                    alt='kickstarter box plus components',
+                    loading='eager',
+                    crossorigin='anonymous',
+                    fetchpriority='high',
+                    decoding='sync',
+                    width='600',
+                    height='800'
+                )
 
         .cta.full-width.mobile-full-content
-            h3 WE'RE LAUNCHING SOON
+            h3 LAUNCHING IN MARCH
             p Sign up to be the first to know when we launch and receive
                 |
                 |
@@ -91,7 +101,7 @@ block body
                 | DRAGONS BY ITALIAN ARTISTS
             p.description The deck bursts with colors, personalities, and details. Each dragon is unique and was designed to capture both elemental power and it's own style.
             img.image(
-                src='@public/imgs/cards_zoom_2_100.webp',
+                src='@public/imgs/2026_01_16_Card_Wall_V01_092.webp',
                 alt='wall of cards',
                 loading='lazy',
                 width='600',

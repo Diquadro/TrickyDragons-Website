@@ -66,12 +66,18 @@
         text-wrap: pretty;
     }
 
-    > img {
+    > .image {
         // background-image: url(@public/imgs/hero_image_low_res.webp);
         max-width: 500px;
 
         @include mobile {
             margin: $gap-grid 0;
+        }
+
+        > img {
+            display: block;
+            width: 100%;
+            height: auto;
         }
     }
 

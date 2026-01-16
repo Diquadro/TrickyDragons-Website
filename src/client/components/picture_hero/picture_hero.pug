@@ -1,0 +1,14 @@
+mixin picture_hero(mobileSrc, desktopSrc, alt, width, height, breakpoint='450')
+    picture.picture-hero
+        source(media=`(max-width: ${breakpoint}px)`, srcset=mobileSrc, type='image/webp')
+        source(media=`(min-width: ${breakpoint + 1}px)`, srcset=desktopSrc, type='image/webp')
+        img.image(
+            src=desktopSrc,
+            alt=alt,
+            loading='eager',
+            crossorigin='anonymous',
+            fetchpriority='high',
+            decoding='sync',
+            width=width,
+            height=height
+        )
