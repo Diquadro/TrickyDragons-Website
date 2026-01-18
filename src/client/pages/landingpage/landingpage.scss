@@ -495,13 +495,13 @@ p.quote.custom-quote {
 }
 
 #mid-cta {
+    margin: $gap-grid * 1.5 0;
     background-image: url('@public/imgs/lulu_pattern.webp');
     background-position: center center;
     background-color: $color-black;
     padding: $gap-grid * 2 0 $gap-grid;
 
     @include mobile {
-        margin-top: $gap-grid * 1.5;
         background-size: 66%;
 
         > img {
@@ -510,8 +510,8 @@ p.quote.custom-quote {
     }
 
     @include desktop {
-        margin-top: $gap-grid * 1.5;
         background-size: 25%;
+        padding: $gap-grid * 2 0;
     }
 
     > .horizontal-divider {
