@@ -173,27 +173,39 @@ block body
             )
             p.quote "The dragon illustrations are adorable. I can't pick a favorite" - Maria D.
 
-        .cta.full-width.mobile-full-content
-            h3 JOIN 1000+ SUPPORTERS
-            p Sign up to be the first to know when we launch and receive
-                |
-                |
-                span.exclusive-offer an exclusive mini expansion offer
-                |
-                | for our backers.
-            form.cta-form
-                input(
-                    type='email',
-                    name='email',
-                    placeholder='Enter your email',
-                    autocomplete='email',
-                    required
-                )
-                input.form_name(type='text', name='name', autocomplete='off')
-                //- label.checkbox-container
-                //-     input(type='checkbox', name='newsletter_consent', required)
-                //-     span I agree to receive the newsletter
-                button(type='submit') RESERVE YOUR DRAGON
+        #mid-cta.full-width.mobile-full-content
+            h3.title BE AMONG THE FIRST & CLAIM THE MINI EXPANSION
+            img.image(
+                src='@public/imgs/mini_expnasion_pack_new_1_modified.webp',
+                alt='mini expansion pack',
+                loading='lazy',
+                width='600',
+                height='600'
+            )
+
+            .horizontal-divider.on-dark
+                div
+
+            .cta
+                p Sign up to be the first to know when we launch, plus
+                    |
+                    |
+                    span.exclusive-offer get the mini expansion at a special price
+                    |
+                    | if you reserve your copy.
+                form.cta-form
+                    input(
+                        type='email',
+                        name='email',
+                        placeholder='Enter your email',
+                        autocomplete='email',
+                        required
+                    )
+                    input.form_name(type='text', name='name', autocomplete='off')
+                    //- label.checkbox-container
+                    //-     input(type='checkbox', name='newsletter_consent', required)
+                    //-     span I agree to receive the newsletter
+                    button(type='submit') DON'T MISS THE EXCLUSIVE OFFER
 
         #how-to-play.section.full-width.mobile-full-content
             h3.title HOW TO PLAY
@@ -282,39 +294,27 @@ block body
 
         p.quote.custom-quote “Every time a dragon effect was played, I felt an incredible thrill” - Louise F.
 
-        #last-cta.full-width.mobile-full-content
-            h3.title BE AMONG THE FIRST & CLAIM THE MINI EXPANSION
-            img.image(
-                src='@public/imgs/mini_expnasion_pack_new_1_modified.webp',
-                alt='mini expansion pack',
-                loading='lazy',
-                width='600',
-                height='600'
-            )
-
-            .horizontal-divider.on-dark
-                div
-
-            .cta
-                p Sign up to be the first to know when we launch, plus
-                    |
-                    |
-                    span.exclusive-offer get the mini expansion at a special price
-                    |
-                    | if you reserve your copy.
-                form.cta-form
-                    input(
-                        type='email',
-                        name='email',
-                        placeholder='Enter your email',
-                        autocomplete='email',
-                        required
-                    )
-                    input.form_name(type='text', name='name', autocomplete='off')
-                    //- label.checkbox-container
-                    //-     input(type='checkbox', name='newsletter_consent', required)
-                    //-     span I agree to receive the newsletter
-                    button(type='submit') DON'T MISS THE EXCLUSIVE OFFER
+        #last-cta.cta.full-width.mobile-full-content
+            h3.title JOIN 1000+ SUPPORTERS
+            p.description Sign up to be the first to know when we launch and receive
+                |
+                |
+                span.exclusive-offer an exclusive mini expansion offer
+                |
+                | for our backers.
+            form.cta-form
+                input(
+                    type='email',
+                    name='email',
+                    placeholder='Enter your email',
+                    autocomplete='email',
+                    required
+                )
+                input.form_name(type='text', name='name', autocomplete='off')
+                //- label.checkbox-container
+                //-     input(type='checkbox', name='newsletter_consent', required)
+                //-     span I agree to receive the newsletter
+                button(type='submit') RESERVE YOUR DRAGON
 
             .footer-layout
                 span A game by Daniele D'Ambrosio

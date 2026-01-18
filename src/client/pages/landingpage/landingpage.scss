@@ -102,6 +102,10 @@ html.ab-variant #hero {
     > .variant {
         .image {
             margin-top: -25px;
+
+            @include desktop {
+                margin: -50px 0 -75px;
+            }
         }
 
         > .text-container {
@@ -136,6 +140,10 @@ html.ab-variant #hero {
                 font-weight: $font-weight-bold;
                 font-size: var(--font-size-lg);
 
+                @include desktop {
+                    font-size: var(--font-size-xxl);
+                }
+
                 > span {
                     border-radius: 5px;
                     background-color: $color-black;
@@ -153,6 +161,10 @@ html.ab-variant #hero {
                 height: fit-content;
                 font-weight: $font-weight-middle;
                 font-size: var(--font-size-lg);
+
+                @include desktop {
+                    font-size: var(--font-size-xl);
+                }
 
                 > span {
                     border-radius: 5px;
@@ -473,10 +485,9 @@ p.quote.custom-quote {
     }
 }
 
-#last-cta {
+#mid-cta {
     background-image: url('@public/imgs/lulu_pattern.webp');
     background-position: center center;
-
     background-color: $color-black;
     padding: $gap-grid * 2 0 $gap-grid;
 
@@ -499,7 +510,118 @@ p.quote.custom-quote {
     }
 
     > h3 {
-        color: $color-yellow;
+        color: $color-yellow-dark;
+        font-weight: $font-weight-black;
+        font-size: var(--font-size-xxl);
+        text-align: center;
+    }
+
+    > .cta {
+        background-image: none;
+        background-color: transparent;
+        padding: 0;
+
+        > p {
+            margin-bottom: calc($gap-grid);
+        }
+
+        > p > span.exclusive-offer {
+            color: $color-yellow-dark;
+        }
+
+        > form > button[type='submit'] {
+            animation:
+                pulse-color-yellow 4s ease-in-out infinite,
+                click-pattern-yellow 8s ease-in-out infinite;
+            box-shadow: 0 8px $color-yellow-darkest;
+            background-color: $color-yellow-dark;
+
+            &:active {
+                box-shadow: 0 3px $color-yellow-darkest;
+            }
+
+            @keyframes pulse-color-yellow {
+                0%,
+                100% {
+                    background-color: $color-yellow-dark;
+                }
+
+                50% {
+                    background-color: $color-yellow;
+                }
+            }
+
+            @keyframes click-pattern-yellow {
+                0%,
+                25% {
+                    transform: translateY(0);
+                    box-shadow: 0 8px $color-yellow-darkest;
+                }
+
+                26%,
+                27% {
+                    transform: translateY(2px);
+                    box-shadow: 0 6px $color-yellow-darkest;
+                }
+
+                28%,
+                29% {
+                    transform: translateY(0);
+                    box-shadow: 0 8px $color-yellow-darkest;
+                }
+
+                30%,
+                31% {
+                    transform: translateY(2px);
+                    box-shadow: 0 6px $color-yellow-darkest;
+                }
+
+                32%,
+                60% {
+                    transform: translateY(0);
+                    box-shadow: 0 8px $color-yellow-darkest;
+                }
+
+                61%,
+                62% {
+                    transform: translateY(2px);
+                    box-shadow: 0 6px $color-yellow-darkest;
+                }
+
+                63%,
+                100% {
+                    transform: translateY(0);
+                    box-shadow: 0 8px $color-yellow-darkest;
+                }
+            }
+        }
+    }
+}
+
+#last-cta {
+    margin-bottom: 0;
+    background-image: url('@public/imgs/lulu_pattern.webp');
+    background-position: center center;
+
+    background-color: $color-black;
+    padding: $gap-grid * 2 0 $gap-grid;
+
+    @include mobile {
+        margin-top: $gap-grid * 1.5;
+        background-size: 66%;
+
+        > img {
+            margin-top: calc($gap-grid / 2);
+        }
+    }
+
+    @include desktop {
+        margin-top: $gap-grid * 1.5;
+        background-size: 25%;
+    }
+
+    > .title {
+        color: $color-white;
         font-weight: $font-weight-black;
         font-size: var(--font-size-xxl);
         text-align: center;
@@ -510,10 +632,6 @@ p.quote.custom-quote {
         background-color: transparent;
 
         padding: 0;
-
-        > p {
-            margin-bottom: calc($gap-grid);
-        }
 
         > p > span.exclusive-offer {
             color: $color-yellow;
@@ -602,7 +720,8 @@ p.quote.custom-quote {
     justify-content: center;
     align-items: center;
     gap: calc($gap-grid / 2);
-    padding-top: calc($gap-grid / 2);
+    background-color: transparent;
+    padding: $gap-grid * 1.5 0 0;
 
     color: $color-white;
 

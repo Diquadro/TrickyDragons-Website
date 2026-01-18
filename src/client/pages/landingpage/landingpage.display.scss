@@ -156,7 +156,7 @@
     }
 }
 
-#last-cta {
+#mid-cta {
     > .horizontal-divider {
         @include desktop {
             display: none;
@@ -166,8 +166,7 @@
     @include desktop {
         grid-template-areas:
             '. image . title .'
-            '. image . cta .'
-            'footer footer footer footer footer';
+            '. image . cta .';
         row-gap: $gap-grid;
 
         > .title {
@@ -177,7 +176,6 @@
 
         > .cta {
             display: flex;
-
             grid-area: cta;
             flex-direction: column;
         }
@@ -185,10 +183,41 @@
         > .image {
             grid-area: image;
         }
+    }
+}
+
+#last-cta {
+    @include desktop {
+        display: grid;
+        grid-template-columns: inherit;
+        grid-template-areas:
+            '. title . form .'
+            '. description . form .'
+            'footer footer footer footer footer';
+        row-gap: $gap-grid;
+
+        > h3 {
+            grid-area: title;
+            align-self: flex-end;
+        }
+
+        > p {
+            grid-area: description;
+        }
+
+        > form {
+            grid-area: form;
+        }
 
         > .footer-layout {
             grid-area: footer;
         }
+    }
+}
+
+.footer-layout {
+    @include desktop {
+        grid-column: full-width;
     }
 }
 
