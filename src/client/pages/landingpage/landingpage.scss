@@ -122,7 +122,7 @@ html.ab-variant #hero {
 
                 color: $color-black;
                 font-weight: $font-weight-light;
-                font-size: var(--font-size-md);
+                font-size: calc(var(--font-size-md) + 2px);
 
                 > span {
                     display: inline-block;
@@ -140,10 +140,17 @@ html.ab-variant #hero {
                 height: fit-content;
                 font-weight: $font-weight-bold;
                 font-stretch: condensed;
-                font-size: var(--font-size-xxl);
+                font-size: calc(var(--font-size-xxl) + 6px);
+
+                @media screen and (max-width: 429px) {
+                    flex-direction: column;
+                    align-items: flex-start;
+                    margin-bottom: 10px;
+                    font-size: calc(var(--font-size-xxl) + 12px);
+                }
 
                 @include desktop {
-                    font-size: var(--font-size-xxl);
+                    font-size: calc(var(--font-size-xxl) + 10px);
                 }
 
                 > span {
@@ -162,10 +169,10 @@ html.ab-variant #hero {
                 gap: 5px;
                 height: fit-content;
                 font-weight: $font-weight-middle;
-                font-size: var(--font-size-xxl);
+                font-size: calc(var(--font-size-xxl) + 6px);
 
                 @include desktop {
-                    font-size: var(--font-size-xl);
+                    font-size: calc(var(--font-size-xxl) + 6px);
                 }
 
                 > span {
