@@ -55,6 +55,9 @@ export const API = {
             SEND_WELCOME_VIP: `/${VERSION}/send-email-welcome-vip`,
             SEND_WELCOME_NON_VIP: `/${VERSION}/send-email-welcome-non-vip`,
         },
+        AB_TEST: {
+            HERO: `/${VERSION}/ab-test/hero`,
+        },
     },
 
     EVENTS: {

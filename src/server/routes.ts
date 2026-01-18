@@ -9,6 +9,7 @@ import { redirect } from '@server/controllers/redirect'
 import { smtp2go_webhook } from '@server/controllers/smtp2go_webhook'
 import { create_checkout_session } from '@server/controllers/create_checkout_session'
 import { get_session_status } from '@server/controllers/get_session_status'
+import { get_ab_test_variant } from '@server/controllers/get_ab_test_variant'
 
 import { contacts_add_to_cart } from '@server/controllers/contacts_add_to_cart'
 import { contacts_purchase } from '@server/controllers/contacts_purchase'
@@ -35,6 +36,9 @@ export function apply_routes(app: express.Application): void {
     // Analytics events routes
     app.post(API.ENDPOINTS.ANALYTICS_EVENTS.CREATE, create_analytics_event_http)
     app.post(API.ENDPOINTS.ANALYTICS_EVENTS.UPDATE, update_analytics_event_http)
+
+    // AB Test routes
+    app.get(API.ENDPOINTS.AB_TEST.HERO, get_ab_test_variant)
 
     // Contacts cart routes
     app.post(API.ENDPOINTS.CONTACTS.ADD_TO_CART, contacts_add_to_cart)

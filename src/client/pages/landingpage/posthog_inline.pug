@@ -1,48 +1,8 @@
-//- A/B Test: Inline PostHog script must run before body renders
+//- A/B Test: Inline script to get variant from server and show before body renders
 script(nonce='posthog-ab-test').
-    // PostHog snippet (loads SDK asynchronously)
-    !(function (t, e) {
-        var o, n, p, r
-        e.__SV ||
-            ((window.posthog = e),
-            (e._i = []),
-            (e.init = function (i, s, a) {
-                function g(t, e) {
-                    var o = e.split('.')
-                    2 == o.length && ((t = t[o[0]]), (e = o[1])),
-                        (t[e] = function () {
-                            t.push([e].concat(Array.prototype.slice.call(arguments, 0)))
-                        })
-                }
-                ;((p = t.createElement('script')).type = 'text/javascript'), (p.crossOrigin = 'anonymous'), (p.async = !0), (p.src = s.api_host.replace('.i.posthog.com', '-assets.i.posthog.com') + '/static/array.js'), (r = t.getElementsByTagName('script')[0]).parentNode.insertBefore(p, r)
-                var u = e
-                for (
-                    void 0 !== a ? (u = e[a] = []) : (a = 'posthog'),
-                        u.people = u.people || [],
-                        u.toString = function (t) {
-                            var e = 'posthog'
-                            return 'posthog' !== a && (e += '.' + a), t || (e += ' (stub)'), e
-                        },
-                        u.people.toString = function () {
-                            return u.toString(1) + '.people (stub)'
-                        },
-                        o = 'init capture register register_once register_for_session unregister unregister_for_session getFeatureFlag getFeatureFlagPayload isFeatureEnabled reloadFeatureFlags updateEarlyAccessFeatureEnrollment getEarlyAccessFeatures on onFeatureFlags onSessionId getSurveys getActiveMatchingSurveys renderSurvey canRenderSurvey getNextSurveyStep identify setPersonProperties group resetGroups setPersonPropertiesForFlags resetPersonPropertiesForFlags setGroupPropertiesForFlags resetGroupPropertiesForFlags reset get_distinct_id getGroups get_session_id get_session_replay_url alias set_config startSessionRecording stopSessionRecording sessionRecordingStarted captureException loadToolbar get_property getSessionProperty createPersonProfile opt_in_capturing opt_out_capturing has_opted_in_capturing has_opted_out_capturing clear_opt_in_out_capturing debug'.split(' '),
-                        n = 0;
-                    n < o.length;
-                    n++
-                )
-                    g(u, o[n])
-                e._i.push([i, s, a])
-            }),
-            (e.__SV = 1))
-    })(document, window.posthog || [])
-
-    const posthog = window.posthog
-    const FEATURE_FLAG_NAME = 'hero_test'
     const STORAGE_KEY = 'ab_hero_variant'
-    const TIMEOUT_INIT_MS = 500
-    const TIMEOUT_FLAGS_MS = 500
     const QUERY_PARAM = 'ab_test'
+    const API_ENDPOINT = '/v2/ab-test/hero'
 
     // 1. Check for query parameter override (for testing/preview)
     function check_query_param_override() {
@@ -67,46 +27,17 @@ script(nonce='posthog-ab-test').
         return null
     }
 
-    // 3. Initialize PostHog and get feature flag (new visitor)
-    async function get_variant_from_posthog() {
-        // Only run PostHog on production domain
-        if (window.location.hostname !== 'trickydragons.com') {
-            return 'control'
-        }
-
+    // 3. Get variant from server (new visitor)
+    async function get_variant_from_server() {
         try {
-            // Initialize PostHog if not already loaded
-            if (!posthog.__loaded) {
-                await new Promise((resolve, reject) => {
-                    const timeoutId = setTimeout(() => reject(new Error('PostHog init timeout')), TIMEOUT_INIT_MS)
+            const response = await fetch(API_ENDPOINT)
 
-                    posthog.init('phc_gv5ftx8FjCnhDNr3kEcXYPTZtqcSjR91357r6ePqod0', {
-                        api_host: 'https://eu.i.posthog.com',
-                        person_profiles: 'always',
-                        session_recording: {
-                            maskAllInputs: false,
-                        },
-                        loaded: () => {
-                            clearTimeout(timeoutId)
-                            resolve()
-                        },
-                    })
-                })
+            if (!response.ok) {
+                throw new Error('Server response not ok')
             }
 
-            // Wait for feature flags to load
-            await new Promise((resolve, reject) => {
-                const timeoutId = setTimeout(() => reject(new Error('Feature flags timeout')), TIMEOUT_FLAGS_MS)
-
-                posthog.onFeatureFlags(() => {
-                    clearTimeout(timeoutId)
-                    resolve()
-                })
-            })
-
-            // Get feature flag value: true = variant, false/undefined = control
-            const isEnabled = posthog.isFeatureEnabled(FEATURE_FLAG_NAME)
-            return isEnabled ? 'variant' : 'control'
+            const data = await response.json()
+            return data.variant || 'control'
         } catch (error) {
             // Silent fail, fallback to control
             return 'control'
@@ -139,23 +70,14 @@ script(nonce='posthog-ab-test').
         const stored_variant = check_stored_variant()
         if (stored_variant) return stored_variant
 
-        // 3. Get from PostHog
-        return await get_variant_from_posthog()
+        // 3. Get from server
+        return await get_variant_from_server()
     }
 
     // Main A/B test flow
     async function main() {
         // Get variant with default fallback to control
         const variant = (await get_variant()) || 'control'
-
-        // Track variant shown (only for new visitors from PostHog)
-        const is_new_visitor = !check_query_param_override() && !check_stored_variant()
-        if (is_new_visitor && window.location.hostname === 'trickydragons.com' && posthog.__loaded) {
-            posthog.capture('ab_test_variant_shown', {
-                test_name: FEATURE_FLAG_NAME,
-                variant: variant,
-            })
-        }
 
         // Save to localStorage
         save_variant(variant)
