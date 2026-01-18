@@ -24,6 +24,19 @@ let current_tracked_session_id: string | null = null
 let final_update_sent: boolean = false
 
 /**
+ * Get A/B test variant from localStorage
+ * Returns format: ab_hero_control or ab_hero_variant
+ */
+function get_ab_variant(): string | undefined {
+    try {
+        const stored_variant = localStorage.getItem('ab_hero_variant')
+        return stored_variant ? `ab_hero_${stored_variant}` : undefined
+    } catch (e) {
+        return undefined
+    }
+}
+
+/**
  * Create complete analytics event data
  */
 async function create_event_data(
@@ -34,6 +47,7 @@ async function create_event_data(
     const utm_params = get_utm_params()
     const timezone = get_timezone()
     const screen_infos = get_screen_infos()
+    const ab_variant = get_ab_variant()
 
     return {
         session_id: get_session_id(),
@@ -44,6 +58,7 @@ async function create_event_data(
         timezone,
         screen_infos,
         utm_params,
+        ab_variant,
         details: details,
     }
 }

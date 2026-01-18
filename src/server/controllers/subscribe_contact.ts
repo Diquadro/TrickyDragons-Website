@@ -19,7 +19,7 @@ import { check_has_reservation } from '@server/services/check_reservation'
 
 export async function subscribe_contact(req: Request, res: Response) {
     const request_data = validate_request(req.body)
-    const { email, subscription, utm_params, timezone } = request_data
+    const { email, subscription, utm_params, timezone, ab_variant } = request_data
 
     let contact = await get_contact(email)
     let outcome: Subscribe_Contact_Response_Outcome
@@ -130,5 +130,6 @@ function create_action_data(
         details: details,
         utm_params: request_data.utm_params,
         timezone: request_data.timezone,
+        ab_test_variant: request_data.ab_variant,
     }
 }

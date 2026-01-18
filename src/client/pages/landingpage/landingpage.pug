@@ -3,7 +3,15 @@ extends @client/layouts/layout_common/layout_common.pug
 block head
     link(
         rel='preload',
-        href='@public/imgs/hero_image_450.webp',
+        href='@public/imgs/landingpage/hero_image_600_v4.webp',
+        as='image',
+        type='image/webp',
+        crossorigin='anonymous',
+        fetchpriority='high'
+    )
+    link(
+        rel='preload',
+        href='@public/imgs/landingpage/kickstarter_box_7_100.webp',
         as='image',
         type='image/webp',
         crossorigin='anonymous',
@@ -13,49 +21,73 @@ block head
     link(rel='prefetch', href='@public/imgs/3_dragons.webp', as='image', type='image/webp')
     link(rel='prefetch', href='@public/imgs/playing_viola_mano_5.webp', as='image', type='image/webp')
 
+    include posthog_inline.pug
+
 block body
     main#page-container
         #hero.full-width.desktop-section-image-left.mobile-full-content
-            h1.title THE ULTIMATE
-                |
-                |
-                span.no-wrap FAST-PACED
-                |
-                | CARD GAME WHERE CUTE DRAGONS MEET ELEMENTAL CHAOS
+            .control.full-width.desktop-section-image-left.mobile-full-content
+                h1.title THE ULTIMATE
+                    |
+                    |
+                    span.no-wrap FAST-PACED
+                    |
+                    | CARD GAME WHERE CUTE DRAGONS MEET ELEMENTAL CHAOS
 
-            h2.description Never judge a dragon by its cuteness!
-                br
-                |
-                |
-                | In
-                |
-                |
-                i Tricky Dragons
-                | , you will master the elements and command dragons in exciting battles. Prove yourself and become the trickiest dragon master!
+                h2.description Never judge a dragon by its cuteness!
+                    br
+                    |
+                    |
+                    | In
+                    |
+                    |
+                    i Tricky Dragons
+                    | , you will master the elements and command dragons in exciting battles. Prove yourself and become the trickiest dragon master!
 
-            picture.image
-                source(
-                    media='(max-width: 450px)',
-                    srcset='@public/imgs/hero_image_450.webp',
-                    type='image/webp',
-                    fetchpriority='high'
-                )
-                source(
-                    media='(min-width: 451px)',
-                    srcset='@public/imgs/hero_image.webp',
-                    type='image/webp',
-                    fetchpriority='high'
-                )
-                img(
-                    src='@public/imgs/hero_image.webp',
+                img.image(
+                    src='@public/imgs/landingpage/hero_image_600_v4.webp',
                     alt='kickstarter box plus components',
                     loading='eager',
                     crossorigin='anonymous',
                     fetchpriority='high',
                     decoding='sync',
                     width='600',
-                    height='800'
+                    height='600'
                 )
+
+            .variant.full-width.desktop-section-image-left.mobile-full-content
+                img.image(
+                    src='@public/imgs/landingpage/kickstarter_box_7_100.webp',
+                    alt='kickstarter box',
+                    loading='eager',
+                    crossorigin='anonymous',
+                    fetchpriority='high',
+                    decoding='sync',
+                    width='600',
+                    height='600'
+                )
+
+                .text-container.description
+                    h2
+                        span 
+                        |
+                        | WARNING! IMPOSSIBLE TO PUT DOWN!
+                    h1 WHEN STRATEGY
+                        |
+                        |
+                        span MEETS CHAOS
+                    p
+                        span ADDICTIVE
+                        |
+                        | CARD GAME
+                    p
+                        span BEAUTIFUL
+                        |
+                        | ARTWORK
+                    p
+                        span FAST-PACED
+                        |
+                        | GAMEPLAY
 
         .cta.full-width.mobile-full-content
             h3 LAUNCHING IN MARCH

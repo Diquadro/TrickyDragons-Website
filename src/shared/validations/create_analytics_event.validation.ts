@@ -13,6 +13,7 @@ export const create_analytics_event_request_schema = z.object({
     timezone: z.string().optional(), // IANA timezone format (e.g., Europe/Rome)
     screen_infos: screen_infos_schema.optional(),
     utm_params: utm_params_schema.optional(),
+    ab_variant: z.string().optional(),
 })
 
 export const create_analytics_event_response_schema = z.object({

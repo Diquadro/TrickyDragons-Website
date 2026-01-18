@@ -98,6 +98,9 @@ export default interface Actions {
 
   /** Complete webhook payload or request data - stores full original data for reference and debugging */
   payload: unknown | null;
+
+  /** A/B test variant shown to user (e.g., hero_test_control, hero_test_variant). Format: {test_name}_{variant} */
+  ab_test_variant: string | null;
 }
 
 /**
@@ -194,6 +197,9 @@ export interface ActionsInitializer {
 
   /** Complete webhook payload or request data - stores full original data for reference and debugging */
   payload?: unknown | null;
+
+  /** A/B test variant shown to user (e.g., hero_test_control, hero_test_variant). Format: {test_name}_{variant} */
+  ab_test_variant?: string | null;
 }
 
 /**
@@ -284,6 +290,9 @@ export interface ActionsMutator {
 
   /** Complete webhook payload or request data - stores full original data for reference and debugging */
   payload?: unknown | null;
+
+  /** A/B test variant shown to user (e.g., hero_test_control, hero_test_variant). Format: {test_name}_{variant} */
+  ab_test_variant?: string | null;
 }
 
 export const actionsUuid = z.string() as unknown as z.Schema<ActionsUuid>;
@@ -317,6 +326,7 @@ export const actions = z.object({
   auto_serial: z.number(),
   order_uuid: ordersUuid.nullable(),
   payload: z.unknown().nullable(),
+  ab_test_variant: z.string().nullable(),
 }) as unknown as z.Schema<Actions>;
 
 export const actionsInitializer = z.object({
@@ -348,6 +358,7 @@ export const actionsInitializer = z.object({
   auto_serial: z.number().optional(),
   order_uuid: ordersUuid.optional().nullable(),
   payload: z.unknown().optional().nullable(),
+  ab_test_variant: z.string().optional().nullable(),
 }) as unknown as z.Schema<ActionsInitializer>;
 
 export const actionsMutator = z.object({
@@ -379,4 +390,5 @@ export const actionsMutator = z.object({
   auto_serial: z.number().optional(),
   order_uuid: ordersUuid.optional().nullable(),
   payload: z.unknown().optional().nullable(),
+  ab_test_variant: z.string().optional().nullable(),
 }) as unknown as z.Schema<ActionsMutator>;

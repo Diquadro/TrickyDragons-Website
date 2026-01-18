@@ -183,22 +183,35 @@ async function handle_form_submit(event: Event): Promise<void> {
     try {
         const utm_params = get_utm_params()
 
+        // Get A/B test variant from localStorage
+        const stored_variant = localStorage.getItem('ab_hero_variant')
+        const ab_variant = stored_variant ? `ab_hero_${stored_variant}` : undefined
+
         const result: Subscribe_Contact_Response = await subscribe_contact({
             email: email,
             subscription: ContactSubscriptions.newsletter,
             utm_params,
             timezone: get_timezone(),
+            ab_variant,
         })
 
         if (!result || !result.data) {
             throw new Error('No contact found')
         } else if (result.data.outcome === CONTACT_RESPONSE_OUTCOME.RESUBSCRIBED) {
-            window.umami?.track('resubscribed', { ...utm_params, has_reserved: result.data.has_reserved })
-            posthog.capture('resubscribed', { has_reserved: result.data.has_reserved })
+            window.umami?.track('resubscribed', {
+                ...utm_params,
+                has_reserved: result.data.has_reserved,
+                ab_test_variant: ab_variant,
+            })
+            posthog.capture('resubscribed', {
+                has_reserved: result.data.has_reserved,
+                ab_test_variant: ab_variant,
+            })
             track_custom_event(AnalyticsEventName.subscribe_to_newsletter, {
                 email: email,
                 outcome: result.data.outcome,
                 has_reserved: result.data.has_reserved,
+                ab_test_variant: ab_variant,
                 ...utm_params,
             })
             redirect_to_page(SUBSCRIPTION_EVENT.RESUBSCRIBED, email, result.data.has_reserved)
@@ -206,12 +219,17 @@ async function handle_form_submit(event: Event): Promise<void> {
             window.umami?.track('already-subscribed', {
                 ...utm_params,
                 has_reserved: result.data.has_reserved,
+                ab_test_variant: ab_variant,
             })
-            posthog.capture('already-subscribed', { has_reserved: result.data.has_reserved })
+            posthog.capture('already-subscribed', {
+                has_reserved: result.data.has_reserved,
+                ab_test_variant: ab_variant,
+            })
             track_custom_event(AnalyticsEventName.subscribe_to_newsletter, {
                 email: email,
                 outcome: result.data.outcome,
                 has_reserved: result.data.has_reserved,
+                ab_test_variant: ab_variant,
                 ...utm_params,
             })
             redirect_to_page(SUBSCRIPTION_EVENT.ALREADY_SUBSCRIBED, email, result.data.has_reserved)
@@ -219,12 +237,17 @@ async function handle_form_submit(event: Event): Promise<void> {
             window.umami?.track('subscribed_to_newsletter', {
                 ...utm_params,
                 has_reserved: result.data.has_reserved,
+                ab_test_variant: ab_variant,
             })
-            posthog.capture('subscribed_to_newsletter', { has_reserved: result.data.has_reserved })
+            posthog.capture('subscribed_to_newsletter', {
+                has_reserved: result.data.has_reserved,
+                ab_test_variant: ab_variant,
+            })
             track_custom_event(AnalyticsEventName.subscribe_to_newsletter, {
                 email: email,
                 outcome: result.data.outcome,
                 has_reserved: result.data.has_reserved,
+                ab_test_variant: ab_variant,
                 ...utm_params,
             })
             redirect_to_page(SUBSCRIPTION_EVENT.NEW_CONTACT, email, result.data.has_reserved)

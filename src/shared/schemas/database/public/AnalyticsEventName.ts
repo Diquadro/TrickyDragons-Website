@@ -11,6 +11,8 @@ enum AnalyticsEventName {
   link_click = 'link_click',
   subscribe_to_newsletter = 'subscribe_to_newsletter',
   unsubscribe_to_newsletter = 'unsubscribe_to_newsletter',
+  add_to_cart = 'add_to_cart',
+  purchase = 'purchase',
 };
 
 export default AnalyticsEventName;
@@ -23,4 +25,6 @@ export const analyticsEventName = z.enum([
   'link_click',
   'subscribe_to_newsletter',
   'unsubscribe_to_newsletter',
+  'add_to_cart',
+  'purchase',
 ]);

@@ -267,11 +267,16 @@ async function handle_form_submit(event: Event): Promise<void> {
     try {
         const utm_params = get_utm_params()
 
+        // Get A/B test variant from localStorage
+        const stored_variant = localStorage.getItem('ab_hero_variant')
+        const ab_variant = stored_variant ? `ab_hero_${stored_variant}` : undefined
+
         const result: Subscribe_Contact_Response = await subscribe_contact({
             email: email,
             subscription: ContactSubscriptions.newsletter,
             utm_params,
             timezone: get_timezone(),
+            ab_variant,
         })
 
         if (!result || !result.data) {
@@ -279,16 +284,22 @@ async function handle_form_submit(event: Event): Promise<void> {
         } else if (result.data.outcome === CONTACT_RESPONSE_OUTCOME.RESUBSCRIBED) {
             show_modal('modal_email_reactivated')
             mark_user_as_subscribed()
+            posthog.capture('resubscribed', { ab_test_variant: ab_variant })
         } else if (result.data.outcome === CONTACT_RESPONSE_OUTCOME.ALREADY_SUBSCRIBED) {
             show_modal('modal_email_duplicate')
             // User is already subscribed, so show the message
             mark_user_as_subscribed()
+            posthog.capture('already_subscribed', { ab_test_variant: ab_variant })
         } else if (result.data.outcome === CONTACT_RESPONSE_OUTCOME.NEW_CONTACT) {
             window.umami?.track('subscribed_to_newsletter', {
                 ...utm_params,
                 has_reserved: result.data.has_reserved,
+                ab_test_variant: ab_variant,
             })
-            posthog.capture('subscribed_to_newsletter', { has_reserved: result.data.has_reserved })
+            posthog.capture('subscribed_to_newsletter', {
+                has_reserved: result.data.has_reserved,
+                ab_test_variant: ab_variant,
+            })
             success_message?.classList.remove('hidden')
 
             show_modal('modal_email_sent')
@@ -299,6 +310,7 @@ async function handle_form_submit(event: Event): Promise<void> {
             email: email,
             outcome: result.data.outcome,
             has_reserved: result.data.has_reserved,
+            ab_test_variant: ab_variant,
             ...utm_params,
         })
 

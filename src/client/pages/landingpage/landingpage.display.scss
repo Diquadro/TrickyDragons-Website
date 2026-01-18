@@ -21,21 +21,17 @@
 }
 
 #hero {
-    > .description {
-        @include mobile {
-            margin-top: $gap-grid;
+    > .control {
+        > .description {
+            @include mobile {
+                margin-top: $gap-grid;
+            }
         }
-    }
 
-    > .cta {
-        @include mobile {
-            grid-column: full-width;
-        }
-    }
-
-    > .horizontal-divider {
-        @include mobile {
-            grid-column: full-width;
+        > .cta {
+            @include mobile {
+                grid-column: full-width;
+            }
         }
     }
 }
@@ -240,6 +236,10 @@
             '. image . title .'
             '. image . description .';
         row-gap: $gap-grid;
+
+        &.variant {
+            grid-template-areas: '. image . description .';
+        }
 
         > .title {
             grid-area: title;

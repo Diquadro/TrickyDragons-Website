@@ -30,6 +30,7 @@ interface action_data {
     latitude?: number
     longitude?: number
     payload?: Record<string, any>
+    ab_test_variant?: string
 }
 
 export async function create_action(action_data: action_data) {
@@ -51,7 +52,8 @@ export async function create_action(action_data: action_data) {
         country,
         latitude,
         longitude,
-        payload
+        payload,
+        ab_test_variant,
     } = action_data
 
     const action_event: ActionsInitializer = {
@@ -77,9 +79,8 @@ export async function create_action(action_data: action_data) {
         utm_campaign: utm_params?.utm_campaign,
         utm_term: utm_params?.utm_term,
         utm_content: utm_params?.utm_content,
+        ab_test_variant: ab_test_variant || null,
     }
 
     return sql.insert<Actions[]>('actions', [action_event])
 }
-
-

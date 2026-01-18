@@ -15,6 +15,7 @@ interface Analytics_Event {
     timezone?: string | null | undefined
     screen_infos?: screen_infos | null | undefined
     utm_params?: utm_params | null | undefined
+    ab_variant?: string | null | undefined
 }
 
 /**
@@ -60,6 +61,7 @@ export async function create_analytics_event(event_data: Analytics_Event, req: R
         language: req.get('Accept-Language')?.split(',')[0],
 
         details: event_data.details,
+        ab_test_variant: event_data.ab_variant,
 
         // Server-side timestamp (UTC) - use middleware calculated UTC timestamp for consistency
         occurred_at: req.time_infos?.utc_occurred_at || new Date(),

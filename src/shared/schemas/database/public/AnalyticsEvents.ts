@@ -112,6 +112,9 @@ export default interface AnalyticsEvents {
 
   /** Timestamp when the event occurred in the users local timezone - calculated server-side using client or IP-based timezone */
   local_occurred_at: Date | null;
+
+  /** A/B test variant shown to user (e.g., hero_test_control, hero_test_variant). Format: {test_name}_{variant} */
+  ab_test_variant: string | null;
 }
 
 /**
@@ -228,6 +231,9 @@ export interface AnalyticsEventsInitializer {
 
   /** Timestamp when the event occurred in the users local timezone - calculated server-side using client or IP-based timezone */
   local_occurred_at?: Date | null;
+
+  /** A/B test variant shown to user (e.g., hero_test_control, hero_test_variant). Format: {test_name}_{variant} */
+  ab_test_variant?: string | null;
 }
 
 /**
@@ -335,6 +341,9 @@ export interface AnalyticsEventsMutator {
 
   /** Timestamp when the event occurred in the users local timezone - calculated server-side using client or IP-based timezone */
   local_occurred_at?: Date | null;
+
+  /** A/B test variant shown to user (e.g., hero_test_control, hero_test_variant). Format: {test_name}_{variant} */
+  ab_test_variant?: string | null;
 }
 
 export const analyticsEventsUuid = z.string() as unknown as z.Schema<AnalyticsEventsUuid>;
@@ -374,6 +383,7 @@ export const analyticsEvents = z.object({
   updated_by: z.string(),
   updated_date: z.date(),
   local_occurred_at: z.date().nullable(),
+  ab_test_variant: z.string().nullable(),
 }) as unknown as z.Schema<AnalyticsEvents>;
 
 export const analyticsEventsInitializer = z.object({
@@ -411,6 +421,7 @@ export const analyticsEventsInitializer = z.object({
   updated_by: z.string(),
   updated_date: z.date(),
   local_occurred_at: z.date().optional().nullable(),
+  ab_test_variant: z.string().optional().nullable(),
 }) as unknown as z.Schema<AnalyticsEventsInitializer>;
 
 export const analyticsEventsMutator = z.object({
@@ -448,4 +459,5 @@ export const analyticsEventsMutator = z.object({
   updated_by: z.string().optional(),
   updated_date: z.date().optional(),
   local_occurred_at: z.date().optional().nullable(),
+  ab_test_variant: z.string().optional().nullable(),
 }) as unknown as z.Schema<AnalyticsEventsMutator>;

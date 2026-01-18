@@ -12,6 +12,7 @@ export const subscribe_contact_request_schema = z.object({
     subscription: contact_subscription_enum,
     timezone: z.string().optional(),
     utm_params: utm_params_schema.optional(),
+    ab_variant: z.string().optional(),
 })
 
 export const contact_response_outcome_enum = z.enum(['ALREADY_SUBSCRIBED', 'RESUBSCRIBED', 'NEW_CONTACT'])

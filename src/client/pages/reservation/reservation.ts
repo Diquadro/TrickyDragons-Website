@@ -5,6 +5,9 @@ import { get_timezone } from '@client/ts/timezone'
 import { Base64_Url } from '@shared/utils/base64_url'
 import { API, ENV } from '@shared/constants/app.constants'
 import { SUBSCRIPTION_EVENT } from '@shared/constants/subscription-events.constants'
+import posthog from 'posthog-js'
+import { track_custom_event } from '@client/ts/analytics_events'
+import AnalyticsEventName from '@shared/schemas/database/public/AnalyticsEventName'
 ;(function main() {
     main_button_handler()
     secondary_button_handler()
@@ -29,6 +32,9 @@ function main_button_handler() {
                 const email = get_email_from_url()
                 if (!email) return
                 const payload = { email, timezone: get_timezone(), utm_params: get_utm_params() }
+
+                // Track add_to_cart event on analytics platforms
+                track_add_to_cart_event(email)
 
                 if (navigator.sendBeacon) {
                     const blob = new Blob([JSON.stringify(payload)], { type: 'application/json' })
@@ -72,6 +78,41 @@ function get_email_from_url(): string | null {
         return Base64_Url.decode(emailFromUrl)
     } catch {
         return null
+    }
+}
+
+/**
+ * Track add_to_cart event when user clicks the main CTA button
+ */
+function track_add_to_cart_event(email: string) {
+    try {
+        const utm_params = get_utm_params()
+
+        // Get A/B test variant from localStorage
+        const stored_variant = localStorage.getItem('ab_hero_variant')
+        const ab_variant = stored_variant ? `hero_test_${stored_variant}` : undefined
+
+        // PostHog tracking
+        posthog.capture('add_to_cart', {
+            email,
+            ab_test_variant: ab_variant,
+        })
+
+        // Umami tracking
+        window.umami?.track('add_to_cart', {
+            email,
+            ab_test_variant: ab_variant,
+            ...utm_params,
+        })
+
+        // Internal analytics tracking
+        track_custom_event(AnalyticsEventName.add_to_cart, {
+            email,
+            ab_test_variant: ab_variant,
+            ...utm_params,
+        })
+    } catch (error) {
+        console.error('Error tracking add_to_cart:', error)
     }
 }
 

@@ -4,6 +4,9 @@ import { API, ENV } from '@shared/constants/app.constants'
 import { Base64_Url } from '@shared/utils/base64_url'
 import { get_timezone } from '@client/ts/timezone'
 import { get_utm_params } from '@client/ts/utm_params'
+import posthog from 'posthog-js'
+import { track_custom_event } from '@client/ts/analytics_events'
+import AnalyticsEventName from '@shared/schemas/database/public/AnalyticsEventName'
 ;(function main() {
     handle_purchase_confirmation()
     handle_welcome_email()
@@ -51,7 +54,10 @@ async function handle_purchase_confirmation() {
         // 2. Send purchase confirmation to backend
         await confirm_purchase(email, session_id)
 
-        // 3. Mark checkout as completed to prevent remove_from_cart events
+        // 3. Track purchase event on analytics platforms
+        track_purchase_event(email, session_id, session_status)
+
+        // 4. Mark checkout as completed to prevent remove_from_cart events
         sessionStorage.setItem('checkout_completed', 'true')
 
         console.info('Purchase confirmed successfully:', { session_id, email })
@@ -145,4 +151,42 @@ async function send_vip_welcome_email(params: { contact_email: string }) {
     }
 
     return await response.json()
+}
+
+/**
+ * Track purchase event on PostHog, Umami, and internal analytics
+ */
+function track_purchase_event(email: string, session_id: string, session_status: any) {
+    try {
+        const utm_params = get_utm_params()
+
+        // Get A/B test variant from localStorage
+        const stored_variant = localStorage.getItem('ab_hero_variant')
+        const ab_variant = stored_variant ? `hero_test_${stored_variant}` : undefined
+
+        const purchase_data = {
+            session_id,
+            email,
+            payment_status: session_status.payment_status,
+            status: session_status.status,
+            ab_test_variant: ab_variant,
+        }
+
+        // PostHog tracking with ecommerce properties
+        posthog.capture('purchase', purchase_data)
+
+        // Umami tracking
+        window.umami?.track('purchase', {
+            ...purchase_data,
+            ...utm_params,
+        })
+
+        // Internal analytics tracking
+        track_custom_event(AnalyticsEventName.purchase, {
+            ...purchase_data,
+            ...utm_params,
+        })
+    } catch (error) {
+        console.error('Error tracking purchase event:', error)
+    }
 }

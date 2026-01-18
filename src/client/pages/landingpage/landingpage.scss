@@ -9,6 +9,28 @@
     // }
 }
 
+// A/B Test: Show control by default, hide variant
+#hero {
+    > .control {
+        display: grid;
+    }
+
+    > .variant {
+        display: none;
+    }
+}
+
+// Hide control and show variant when html has ab-variant class
+html.ab-variant #hero {
+    > .control {
+        display: none;
+    }
+
+    > .variant {
+        display: grid;
+    }
+}
+
 .no-wrap {
     white-space: nowrap;
 }
@@ -48,55 +70,100 @@
         padding-bottom: $gap-grid * 1.5;
     }
 
-    > .title {
-        // color: $color-white;
-        font-weight: $font-weight-black;
-        font-size: var(--font-size-xxl);
-        // text-align: center;
+    > .control {
+        > .title {
+            // color: $color-white;
+            font-weight: $font-weight-black;
+            font-size: var(--font-size-xxl);
+            // text-align: center;
 
-        @include desktop {
+            @include desktop {
+                text-wrap: pretty;
+            }
+        }
+
+        > .description {
+            font-weight: normal;
+            font-size: var(--font-size-md);
+            // text-align: justify;
             text-wrap: pretty;
         }
-    }
 
-    > .description {
-        font-weight: normal;
-        font-size: var(--font-size-md);
-        // text-align: justify;
-        text-wrap: pretty;
-    }
-
-    > .image {
-        aspect-ratio: 600 / 800; // Reserve space to prevent layout shift
-        // background-image: url(@public/imgs/hero_image_low_res.webp);
-        max-width: 500px;
-
-        @include mobile {
-            margin: $gap-grid 0;
-        }
-
-        > img {
+        > .image {
             display: block;
-            width: 100%;
-            height: auto;
+
+            @include mobile {
+                grid-column: full-width;
+                margin: $gap-grid 0;
+            }
         }
     }
 
-    > .horizontal-divider {
-        @include mobile {
-            margin-top: $gap-grid;
+    > .variant {
+        .image {
+            margin-top: -25px;
+        }
+
+        > .text-container {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            gap: 10px;
+
+            > h2 {
+                display: flex;
+                align-items: center;
+                gap: 5px;
+
+                color: $color-black;
+                font-weight: $font-weight-light;
+                font-size: var(--font-size-sm);
+
+                > span {
+                    display: inline-block;
+                    border-radius: 5px;
+                    background-color: $color-red;
+                    width: 20px;
+                    height: 5px;
+                }
+            }
+
+            > h1 {
+                display: flex;
+                align-items: center;
+                gap: 5px;
+                height: fit-content;
+                font-weight: $font-weight-bold;
+                font-size: var(--font-size-lg);
+
+                > span {
+                    border-radius: 5px;
+                    background-color: $color-black;
+                    padding: 5px;
+                    color: $color-white;
+                    font-weight: $font-weight-bold;
+                }
+            }
+
+            > p {
+                display: flex;
+                align-items: center;
+
+                gap: 5px;
+                height: fit-content;
+                font-weight: $font-weight-middle;
+                font-size: var(--font-size-lg);
+
+                > span {
+                    border-radius: 5px;
+                    background-color: $color-red;
+                    padding: 5px;
+                    color: $color-white;
+                    font-weight: $font-weight-bold;
+                }
+            }
         }
     }
-
-    // > .cta {
-    //     // background-image: none;
-    //     // background-color: transparent;
-    //     padding: $gap-grid * 2 0 $gap-grid * 2;
-
-    //     // @include desktop {
-    //     //     margin-top: -$gap-grid;
-    //     // }
-    // }
 }
 
 .horizontal-divider {
