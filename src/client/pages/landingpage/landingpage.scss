@@ -113,6 +113,7 @@ html.ab-variant #hero {
             flex-direction: column;
             justify-content: center;
             gap: 10px;
+            font-stretch: condensed;
 
             > h2 {
                 display: flex;
@@ -121,7 +122,7 @@ html.ab-variant #hero {
 
                 color: $color-black;
                 font-weight: $font-weight-light;
-                font-size: var(--font-size-sm);
+                font-size: var(--font-size-md);
 
                 > span {
                     display: inline-block;
@@ -138,7 +139,8 @@ html.ab-variant #hero {
                 gap: 5px;
                 height: fit-content;
                 font-weight: $font-weight-bold;
-                font-size: var(--font-size-lg);
+                font-stretch: condensed;
+                font-size: var(--font-size-xxl);
 
                 @include desktop {
                     font-size: var(--font-size-xxl);
@@ -160,7 +162,7 @@ html.ab-variant #hero {
                 gap: 5px;
                 height: fit-content;
                 font-weight: $font-weight-middle;
-                font-size: var(--font-size-lg);
+                font-size: var(--font-size-xxl);
 
                 @include desktop {
                     font-size: var(--font-size-xl);
