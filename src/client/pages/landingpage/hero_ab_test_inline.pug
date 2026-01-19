@@ -2,7 +2,21 @@
 script(nonce='posthog-ab-test').
     const STORAGE_KEY = 'ab_hero_variant'
     const QUERY_PARAM = 'ab_test'
-    const API_ENDPOINT = '#{process.env.APP_ENV}' === 'local' ? '/v2/ab-test/hero' : '#{process.env.API_URL}/v2/ab-test/hero'
+
+    // Determine API endpoint based on hostname
+    let API_ENDPOINT
+    const hostname = window.location.hostname
+
+    if (hostname === 'trickydragons.com' || hostname === 'www.trickydragons.com') {
+        // Production
+        API_ENDPOINT = 'https://api.trickydragons.com/v2/ab-test/hero'
+    } else if (hostname === 'dev-trickydragons-website.onrender.com') {
+        // Development
+        API_ENDPOINT = 'https://dev-trickydragons-server.onrender.com/v2/ab-test/hero'
+    } else {
+        // Local (localhost, 127.0.0.1, etc.)
+        API_ENDPOINT = '/v2/ab-test/hero'
+    }
 
     // 1. Check for query parameter override (for testing/preview)
     function check_query_param_override() {
