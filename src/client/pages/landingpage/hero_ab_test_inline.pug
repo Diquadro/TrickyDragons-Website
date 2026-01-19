@@ -1,22 +1,7 @@
-//- A/B Test: Inline script to get variant from server and show before body renders
+//- A/B Test: Inline script to determine and show variant before body renders
 script(nonce='posthog-ab-test').
     const STORAGE_KEY = 'ab_hero_variant'
     const QUERY_PARAM = 'ab_test'
-
-    // Determine API endpoint based on hostname
-    let API_ENDPOINT
-    const hostname = window.location.hostname
-
-    if (hostname === 'trickydragons.com' || hostname === 'www.trickydragons.com') {
-        // Production
-        API_ENDPOINT = 'https://api.trickydragons.com/v2/ab-test/hero'
-    } else if (hostname === 'dev-trickydragons-website.onrender.com') {
-        // Development
-        API_ENDPOINT = 'https://dev-trickydragons-server.onrender.com/v2/ab-test/hero'
-    } else {
-        // Local (localhost, 127.0.0.1, etc.)
-        API_ENDPOINT = '/v2/ab-test/hero'
-    }
 
     // 1. Check for query parameter override (for testing/preview)
     function check_query_param_override() {
@@ -41,21 +26,10 @@ script(nonce='posthog-ab-test').
         return null
     }
 
-    // 3. Get variant from server (new visitor)
-    async function get_variant_from_server() {
-        try {
-            const response = await fetch(API_ENDPOINT)
-
-            if (!response.ok) {
-                throw new Error('Server response not ok')
-            }
-
-            const data = await response.json()
-            return data.variant || 'control'
-        } catch (error) {
-            // Silent fail, fallback to control
-            return 'control'
-        }
+    // 3. Generate random variant for new visitor
+    function get_random_variant() {
+        // 50/50 split
+        return Math.random() < 0.5 ? 'control' : 'variant'
     }
 
     // 4. Save variant to localStorage
@@ -75,7 +49,7 @@ script(nonce='posthog-ab-test').
     }
 
     // Get A/B test variant with early returns
-    async function get_variant() {
+    function get_variant() {
         // 1. Check query parameter override
         const override_variant = check_query_param_override()
         if (override_variant) return override_variant
@@ -84,14 +58,14 @@ script(nonce='posthog-ab-test').
         const stored_variant = check_stored_variant()
         if (stored_variant) return stored_variant
 
-        // 3. Get from server
-        return await get_variant_from_server()
+        // 3. Generate random variant
+        return get_random_variant()
     }
 
     // Main A/B test flow
-    async function main() {
+    function main() {
         // Get variant with default fallback to control
-        const variant = (await get_variant()) || 'control'
+        const variant = get_variant() || 'control'
 
         // Save to localStorage
         save_variant(variant)
