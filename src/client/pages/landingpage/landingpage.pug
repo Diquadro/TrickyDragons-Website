@@ -27,40 +27,11 @@ block head
         type='image/webp'
     )
 
-    include hero_ab_test_inline.pug
+    //- include hero_ab_test_inline.pug
 
 block body
     main#page-container
         #hero.full-width
-            .control.full-width.desktop-section-image-left.mobile-full-content
-                h1.title THE ULTIMATE
-                    |
-                    |
-                    span.no-wrap FAST-PACED
-                    |
-                    | CARD GAME WHERE CUTE DRAGONS MEET ELEMENTAL CHAOS
-
-                h2.description Never judge a dragon by its cuteness!
-                    br
-                    |
-                    |
-                    | In
-                    |
-                    |
-                    i Tricky Dragons
-                    | , you will master the elements and command dragons in exciting battles. Prove yourself and become the trickiest dragon master!
-
-                img.image(
-                    src='@public/imgs/landingpage/hero_image_600_v4.webp',
-                    alt='kickstarter box plus components',
-                    loading='eager',
-                    crossorigin='anonymous',
-                    fetchpriority='high',
-                    decoding='sync',
-                    width='600',
-                    height='600'
-                )
-
             .variant.full-width.desktop-section-image-left.mobile-full-content
                 img.image(
                     src='@public/imgs/landingpage/kickstarter_box_7_100.webp',
@@ -87,7 +58,7 @@ block body
                         |
                         | CARD GAME
                     p
-                        span BEAUTIFUL
+                        span ADORABLE
                         |
                         | ARTWORK
                     p
@@ -126,7 +97,7 @@ block body
         )
 
         .section.full-width.desktop-section-image-right-with-quote.mobile-full-content
-            h3.title QUICK AND EASY ROUNDS, ONE CARD AT A TIME
+            h3.title QUICK AND EASY ROUNDS, ONE DRAGON AT A TIME
             p.description Each turn, play a card that matches or beats the one on top.
                 |
                 |
@@ -149,11 +120,11 @@ block body
                 br 
                 | WATER EXTINGUISHES FIRE
             p.description At the heart of Tricky Dragons lies a simple elemental system, yet it transforms every card play into a meaningful tactical choice.
-                |
-                br
-                br
-                |
-                | Low-value cards with the right element can be played on top of high-value cards. Suddenly, your worst hand becomes your best strategy.
+                //- |
+                //- br
+                //- br
+                //- |
+                //- | Low-value cards with the right element can be played on top of high-value cards. Suddenly, your worst hand becomes your best strategy.
             img.image(
                 src='@public/imgs/element_card_circle_spread_8_100.webp',
                 alt='Elemental system example',
@@ -301,7 +272,7 @@ block body
         p.quote.custom-quote “Every time a dragon effect was played, I felt an incredible thrill” - Louise F.
 
         #last-cta.cta.full-width.mobile-full-content
-            h3.title JOIN 1000+ SUPPORTERS
+            h3.title JOIN 1500+ SUPPORTERS
             p.description Sign up to be the first to know when we launch and receive
                 |
                 |

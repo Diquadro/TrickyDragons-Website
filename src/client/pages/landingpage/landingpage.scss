@@ -10,15 +10,15 @@
 }
 
 // A/B Test: Show control by default, hide variant
-#hero {
-    > .control {
-        display: grid;
-    }
+// #hero {
+//     > .control {
+//         display: grid;
+//     }
 
-    > .variant {
-        display: none;
-    }
-}
+//     > .variant {
+//         display: none;
+//     }
+// }
 
 // Hide control and show variant when html has ab-variant class
 html.ab-variant #hero {
