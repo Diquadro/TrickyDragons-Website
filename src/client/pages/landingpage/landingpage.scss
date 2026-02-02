@@ -21,15 +21,15 @@
 // }
 
 // Hide control and show variant when html has ab-variant class
-html.ab-variant #hero {
-    > .control {
-        display: none;
-    }
+// html.ab-variant #hero {
+//     > .control {
+//         display: none;
+//     }
 
-    > .variant {
-        display: grid;
-    }
-}
+//     > .variant {
+//         display: grid;
+//     }
+// }
 
 .no-wrap {
     white-space: nowrap;
