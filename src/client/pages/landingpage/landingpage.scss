@@ -31,6 +31,36 @@
 //     }
 // }
 
+// A/B Test Hero Image: Show red box by default, hide blue box
+#hero {
+    .variant {
+        .image {
+            &.hero-red-box {
+                display: block;
+            }
+
+            &.hero-blue-box {
+                display: none;
+            }
+        }
+    }
+}
+
+// When html has ab-hero-blue-box class, show blue box and hide red box
+html.ab-hero-blue-box #hero {
+    .variant {
+        .image {
+            &.hero-red-box {
+                display: none;
+            }
+
+            &.hero-blue-box {
+                display: block;
+            }
+        }
+    }
+}
+
 .no-wrap {
     white-space: nowrap;
 }

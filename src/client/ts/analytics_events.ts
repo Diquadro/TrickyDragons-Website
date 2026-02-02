@@ -25,12 +25,12 @@ let final_update_sent: boolean = false
 
 /**
  * Get A/B test variant from localStorage
- * Returns format: ab_hero_control or ab_hero_variant
+ * Returns format: ab_hero_blue_box or ab_hero_red_box
  */
 function get_ab_variant(): string | undefined {
     try {
-        const stored_variant = localStorage.getItem('ab_hero_variant')
-        return stored_variant ? `ab_hero_${stored_variant}` : undefined
+        const stored_variant = localStorage.getItem('ab_test_hero_image')
+        return stored_variant || undefined
     } catch (e) {
         return undefined
     }

@@ -161,8 +161,8 @@ function track_purchase_event(email: string, session_id: string, session_status:
         const utm_params = get_utm_params()
 
         // Get A/B test variant from localStorage
-        const stored_variant = localStorage.getItem('ab_hero_variant')
-        const ab_variant = stored_variant ? `hero_test_${stored_variant}` : undefined
+        const stored_variant = localStorage.getItem('ab_test_hero_image')
+        const ab_variant = stored_variant || undefined
 
         const purchase_data = {
             session_id,

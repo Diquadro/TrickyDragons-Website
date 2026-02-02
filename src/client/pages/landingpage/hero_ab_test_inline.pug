@@ -1,23 +1,63 @@
-//- A/B Test: Inline script to determine and show variant before body renders
-script(nonce='posthog-ab-test').
-    const STORAGE_KEY = 'ab_hero_variant'
+//- A/B Test: Inline script to preload image and show hero variant before body renders
+script(nonce='hero-ab-test').
+    const STORAGE_KEY = 'ab_test_hero_image'
     const QUERY_PARAM = 'ab_test'
 
-    // 1. Check for query parameter override (for testing/preview)
-    function check_query_param_override() {
-        const urlParams = new URLSearchParams(window.location.search)
-        const override = urlParams.get(QUERY_PARAM)
-        if (override === 'control' || override === 'variant') {
-            return override
+    // Valid variant values from query param
+    const VALID_QUERY_VARIANTS = {
+        hero_blue_box: 'ab_hero_blue_box',
+        hero_red_box: 'ab_hero_red_box',
+    }
+
+    // Default variant (red box)
+    const DEFAULT_VARIANT = 'ab_hero_red_box'
+
+    /**
+     * Preload hero image based on variant
+     */
+    function preload_hero_image(variant) {
+        try {
+            const imageUrl = variant === 'ab_hero_blue_box' ? '/imgs/landingpage/base_box_1_100.webp' : '/imgs/landingpage/kickstarter_box_7_100.webp'
+
+            const link = document.createElement('link')
+            link.rel = 'preload'
+            link.href = imageUrl
+            link.as = 'image'
+            link.type = 'image/webp'
+            link.crossOrigin = 'anonymous'
+            link.fetchPriority = 'high'
+            document.head.appendChild(link)
+        } catch (e) {
+            // Silent fail
+        }
+    }
+
+    /**
+     * Get variant from URL query parameter
+     * Returns: 'ab_hero_blue_box' | 'ab_hero_red_box' | null
+     */
+    function get_query_variant() {
+        try {
+            const urlParams = new URLSearchParams(window.location.search)
+            const queryValue = urlParams.get(QUERY_PARAM)
+
+            if (queryValue && VALID_QUERY_VARIANTS[queryValue]) {
+                return VALID_QUERY_VARIANTS[queryValue]
+            }
+        } catch (e) {
+            // Silent fail
         }
         return null
     }
 
-    // 2. Check localStorage for stored variant (returning visitor)
-    function check_stored_variant() {
+    /**
+     * Get stored variant from localStorage (returning visitor)
+     * Returns: 'ab_hero_blue_box' | 'ab_hero_red_box' | null
+     */
+    function get_stored_variant() {
         try {
             const stored = localStorage.getItem(STORAGE_KEY)
-            if (stored === 'control' || stored === 'variant') {
+            if (stored === 'ab_hero_blue_box' || stored === 'ab_hero_red_box') {
                 return stored
             }
         } catch (e) {
@@ -26,13 +66,9 @@ script(nonce='posthog-ab-test').
         return null
     }
 
-    // 3. Generate random variant for new visitor
-    function get_random_variant() {
-        // 50/50 split
-        return Math.random() < 0.5 ? 'control' : 'variant'
-    }
-
-    // 4. Save variant to localStorage
+    /**
+     * Save variant to localStorage for future visits
+     */
     function save_variant(variant) {
         try {
             localStorage.setItem(STORAGE_KEY, variant)
@@ -41,38 +77,43 @@ script(nonce='posthog-ab-test').
         }
     }
 
-    // 5. Show variant (control is already visible by default)
-    function show_variant(variant) {
-        if (variant === 'variant') {
-            document.documentElement.classList.add('ab-variant')
+    /**
+     * Apply CSS class to show the correct variant
+     * Blue box requires class, red box is default (no class needed)
+     */
+    function apply_variant_class(variant) {
+        if (variant === 'ab_hero_blue_box') {
+            document.documentElement.classList.add('ab-hero-blue-box')
         }
+        // Red box doesn't need a class (it's the default)
     }
 
-    // Get A/B test variant with early returns
-    function get_variant() {
-        // 1. Check query parameter override
-        const override_variant = check_query_param_override()
-        if (override_variant) return override_variant
-
-        // 2. Check localStorage
-        const stored_variant = check_stored_variant()
-        if (stored_variant) return stored_variant
-
-        // 3. Generate random variant
-        return get_random_variant()
-    }
-
-    // Main A/B test flow
+    /**
+     * Main A/B test logic
+     */
     function main() {
-        // Get variant with default fallback to control
-        const variant = get_variant() || 'control'
+        // Priority 1: Check query parameter (from Meta Ads)
+        let variant = get_query_variant()
 
-        // Save to localStorage
+        // Priority 2: Check localStorage (returning visitor)
+        if (!variant) {
+            variant = get_stored_variant()
+        }
+
+        // Priority 3: Default to red box
+        if (!variant) {
+            variant = DEFAULT_VARIANT
+        }
+
+        // Preload the correct hero image
+        preload_hero_image(variant)
+
+        // Save to localStorage for future visits
         save_variant(variant)
 
-        // Show the variant (only adds class if variant)
-        show_variant(variant)
+        // Apply CSS class to show correct image
+        apply_variant_class(variant)
     }
 
-    // Execute
+    // Execute immediately
     main()

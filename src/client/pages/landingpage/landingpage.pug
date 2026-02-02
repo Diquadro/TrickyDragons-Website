@@ -1,14 +1,16 @@
 extends @client/layouts/layout_common/layout_common.pug
 
 block head
-    link(
-        rel='preload',
-        href='@public/imgs/landingpage/kickstarter_box_7_100.webp',
-        as='image',
-        type='image/webp',
-        crossorigin='anonymous',
-        fetchpriority='high'
-    )
+    //- Old static preload (replaced by dynamic preload in hero_ab_test_inline.pug)
+    //- link(
+    //-     rel='preload',
+    //-     href='@public/imgs/landingpage/kickstarter_box_7_100.webp',
+    //-     as='image',
+    //-     type='image/webp',
+    //-     crossorigin='anonymous',
+    //-     fetchpriority='high'
+    //- )
+
     //- Prefetch next critical images
     link(rel='prefetch', href='@public/imgs/3_dragons.webp', as='image', type='image/webp')
     link(rel='prefetch', href='@public/imgs/playing_viola_mano_5.webp', as='image', type='image/webp')
@@ -19,15 +21,28 @@ block head
         type='image/webp'
     )
 
-    //- include hero_ab_test_inline.pug
+    include hero_ab_test_inline.pug
 
 block body
     main#page-container
         #hero.full-width
             .variant.full-width.desktop-section-image-left.mobile-full-content
-                img.image(
+                //- Red Box (default variant)
+                img.image.hero-red-box(
                     src='@public/imgs/landingpage/kickstarter_box_7_100.webp',
                     alt='kickstarter box',
+                    loading='eager',
+                    crossorigin='anonymous',
+                    fetchpriority='high',
+                    decoding='sync',
+                    width='600',
+                    height='600'
+                )
+
+                //- Blue Box (A/B test variant)
+                img.image.hero-blue-box(
+                    src='@public/imgs/landingpage/base_box_1_100.webp',
+                    alt='base box',
                     loading='eager',
                     crossorigin='anonymous',
                     fetchpriority='high',

@@ -184,8 +184,8 @@ async function handle_form_submit(event: Event): Promise<void> {
         const utm_params = get_utm_params()
 
         // Get A/B test variant from localStorage
-        const stored_variant = localStorage.getItem('ab_hero_variant')
-        const ab_variant = stored_variant ? `ab_hero_${stored_variant}` : undefined
+        const stored_variant = localStorage.getItem('ab_test_hero_image')
+        const ab_variant = stored_variant || undefined
 
         const result: Subscribe_Contact_Response = await subscribe_contact({
             email: email,
