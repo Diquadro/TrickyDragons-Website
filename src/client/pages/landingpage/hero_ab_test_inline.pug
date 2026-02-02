@@ -13,26 +13,6 @@ script(nonce='posthog-ab-test').
     const DEFAULT_VARIANT = 'ab_hero_red_box'
 
     /**
-     * Preload hero image based on variant
-     */
-    function preload_hero_image(variant) {
-        try {
-            const imageUrl = variant === 'ab_hero_blue_box' ? '/imgs/landingpage/base_box_1_100.webp' : '/imgs/landingpage/kickstarter_box_7_100.webp'
-
-            const link = document.createElement('link')
-            link.rel = 'preload'
-            link.href = imageUrl
-            link.as = 'image'
-            link.type = 'image/webp'
-            link.crossOrigin = 'anonymous'
-            link.fetchPriority = 'high'
-            document.head.appendChild(link)
-        } catch (e) {
-            // Silent fail
-        }
-    }
-
-    /**
      * Get variant from URL query parameter
      * Returns: 'ab_hero_blue_box' | 'ab_hero_red_box' | null
      */
@@ -104,9 +84,6 @@ script(nonce='posthog-ab-test').
         if (!variant) {
             variant = DEFAULT_VARIANT
         }
-
-        // Preload the correct hero image
-        preload_hero_image(variant)
 
         // Save to localStorage for future visits
         save_variant(variant)
