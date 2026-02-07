@@ -38,12 +38,12 @@ title= title
 
 //- Content-Security-Policy
 - const is_dev = env === 'development'
-- const script_src = ["'self'", "'nonce-beasties-critical-css-001'", "'nonce-datatables'", "'nonce-posthog-ab-test'", 'https://connect.facebook.net', 'https://cloud.umami.is', 'https://api-gateway.umami.dev', 'https://eu.i.posthog.com', 'https://eu-assets.i.posthog.com', 'https://js.stripe.com', 'https://cdn.mxpnl.com']
+- const script_src = ["'self'", "'nonce-beasties-critical-css-001'", "'nonce-datatables'", "'nonce-posthog-ab-test'", 'https://connect.facebook.net', 'https://cloud.umami.is', 'https://api-gateway.umami.dev', 'https://eu.i.posthog.com', 'https://eu-assets.i.posthog.com', 'https://js.stripe.com', 'https://cdn.mxpnl.com', 'https://analytics.tiktok.com']
 - const style_src = ["'self'", "'unsafe-inline'", 'https://fonts.bunny.net', 'https://cdn.datatables.net', 'https://eu.i.posthog.com', 'https://us.posthog.com']
 - const img_src = ["'self'", 'data:', 'https://www.facebook.com', 'https://*.stripe.com', 'https://eu-assets.i.posthog.com']
 - const font_src = ["'self'", 'https://fonts.bunny.net']
 - const frame_src = ["'self'", 'https://js.stripe.com', 'https://checkout.stripe.com', 'https://hooks.stripe.com', 'https://*.hcaptcha.com', 'https://*.stripecdn.com']
-- const connect_src = ["'self'", 'https://graph.facebook.com', 'https://www.facebook.com', 'https://api.trickydragons.com', 'https://api-gateway.umami.dev', 'https://eu.i.posthog.com', 'https://eu-assets.i.posthog.com', 'https://internal-j.posthog.com', 'https://us.posthog.com', 'https://api.stripe.com', 'https://checkout.stripe.com', 'https://q.stripe.com', 'https://api-js.mixpanel.com', 'https://cdn.mxpnl.com', 'https://*.stripecdn.com', 'https://payments-eu.amazon.com']
+- const connect_src = ["'self'", 'https://graph.facebook.com', 'https://www.facebook.com', 'https://api.trickydragons.com', 'https://api-gateway.umami.dev', 'https://eu.i.posthog.com', 'https://eu-assets.i.posthog.com', 'https://internal-j.posthog.com', 'https://us.posthog.com', 'https://api.stripe.com', 'https://checkout.stripe.com', 'https://q.stripe.com', 'https://api-js.mixpanel.com', 'https://cdn.mxpnl.com', 'https://*.stripecdn.com', 'https://payments-eu.amazon.com', 'https://analytics.tiktok.com']
 - if (is_dev) connect_src.push('https://dev-trickydragons-server.onrender.com')
 
 meta(
