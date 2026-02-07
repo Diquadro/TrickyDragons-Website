@@ -66,6 +66,7 @@ export default {
             'process.env.API_URL': JSON.stringify(process.env.API_URL),
             'process.env.SERVER_PORT': JSON.stringify(process.env.SERVER_PORT),
             'process.env.META_PIXEL_ID': JSON.stringify(process.env.META_PIXEL_ID),
+            'process.env.TIKTOK_PIXEL_ID': JSON.stringify(process.env.TIKTOK_PIXEL_ID),
         }),
         new CopyPlugin({
             patterns: [

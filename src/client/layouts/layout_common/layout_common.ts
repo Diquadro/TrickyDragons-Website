@@ -1,5 +1,6 @@
 import { initialize_umami } from '@client/ts/umami'
 import { initialize_meta_pixel } from '@client/ts/cookie_meta_pixel'
+import { initialize_tiktok_pixel } from '@client/ts/cookie_tiktok_pixel'
 // import { initialize_mixpanel } from '@client/ts/mixpanel'
 import { initialize_analytics } from '@client/ts/analytics_events'
 import { initialize_screen_infos } from '@client/ts/screen_infos'
@@ -11,8 +12,9 @@ import { get_utm_params } from '@client/ts/utm_params'
 import AnalyticsEventName from '@shared/schemas/database/public/AnalyticsEventName'
 import posthog from 'posthog-js'
 
-// Meta Pixel può rimanere subito (è critico per ads)
+// Meta Pixel e TikTok Pixel possono rimanere subito (sono critici per ads)
 initialize_meta_pixel()
+initialize_tiktok_pixel()
 initialize_posthog()
 initialize_umami()
 
