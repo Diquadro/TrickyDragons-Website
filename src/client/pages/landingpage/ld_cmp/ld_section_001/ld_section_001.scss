@@ -20,6 +20,7 @@
     @include desktop {
         // grid-template-rows: 1fr 1fr;
         grid-template-columns: inherit;
+        grid-gap: $gap-grid * 2;
 
         > .title {
             grid-column: full-width;
