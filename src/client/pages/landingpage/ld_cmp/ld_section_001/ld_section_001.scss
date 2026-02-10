@@ -1,0 +1,38 @@
+@use '@client/styles/style-costants' as *;
+
+#ld_section_001 {
+    display: grid;
+    row-gap: $gap-grid;
+    padding: $gap-grid 0;
+
+    > .title {
+        font-weight: $font-weight-black;
+        font-size: var(--font-size-xxl);
+        text-align: center;
+        // text-wrap: wrap;
+    }
+
+    > img {
+        max-width: 100%;
+        height: auto;
+    }
+
+    @include desktop {
+        // grid-template-rows: 1fr 1fr;
+        grid-template-columns: inherit;
+
+        > .title {
+            grid-column: full-width;
+        }
+
+        > #three_dragons {
+            grid-column: content-left;
+            place-self: center;
+        }
+
+        > #infographic {
+            grid-column: content-right;
+            place-self: center;
+        }
+    }
+}

@@ -21,6 +21,10 @@ block head
 
     //- Prefetch next critical images
     link(rel='prefetch', href='@public/imgs/3_dragons.webp', as='image', type='image/webp')
+    link(rel='prefetch', href='@public/imgs/landingpage/3_Draghi.webp', as='image', type='image/webp')
+    link(rel='prefetch', href='@public/imgs/hand_with_cards.webp', as='image', type='image/webp')
+    link(rel='prefetch', href='@public/imgs/hand_playing_card_drawing.webp', as='image', type='image/webp')
+    link(rel='prefetch', href='@public/imgs/trophy.webp', as='image', type='image/webp')
     link(rel='prefetch', href='@public/imgs/playing_viola_mano_5.webp', as='image', type='image/webp')
     link(
         rel='prefetch',
@@ -82,7 +86,7 @@ block body
                         | GAMEPLAY
 
         .cta.full-width.mobile-full-content
-            h3 LAUNCHING IN MARCH
+            h3 JOIN 1500+ SUPPORTERS
             p Sign up to be the first to know when we launch and receive
                 |
                 |
@@ -101,15 +105,47 @@ block body
                 //- label.checkbox-container
                 //-     input(type='checkbox', name='newsletter_consent', required)
                 //-     span I agree to receive the newsletter
-                button(type='submit') UNLOCK THE EXCLUSIVE OFFER
+                button(type='submit') UNLOCK YOUR EXCLUSIVE OFFER
 
-        img#dragons-image(
-            src='@public/imgs/3_dragons.webp',
-            alt='3 dragons',
-            loading='lazy',
-            width='600',
-            height='338'
-        )
+        include ./ld_cmp/ld_section_001/ld_section_001.pug
+
+        #how-to-play.section.full-width.mobile-full-content
+            h3.title HOW TO PLAY
+            p.description
+                b Draw Your Dragons
+                | : Each player starts with a hand of elemental dragons, each with unique powers.
+            img.image(
+                src='@public/imgs/hand_with_cards.webp',
+                alt='group playing',
+                loading='lazy',
+                width='919',
+                height='741'
+            )
+
+            p.description
+                b Play to the Arena
+                | : Play your cards in turns, outplay your friends with the power of elements, and be the one to play the last card to win the round.
+            img.image(
+                src='@public/imgs/hand_playing_card_drawing.webp',
+                alt='group playing',
+                loading='lazy',
+                width='1154',
+                height='725'
+            )
+
+            p.description
+                b Claim Your Victory
+                | : Win Dragon Eggs each round. First to collect 7 eggs, becomes the Tricky Dragon Master.
+            img.image(
+                src='@public/imgs/trophy.webp',
+                alt='group playing',
+                loading='lazy',
+                width='533',
+                height='736'
+            )
+
+        .horizontal-divider.on-light
+            div
 
         .section.full-width.desktop-section-image-right-with-quote.mobile-full-content
             h3.title QUICK AND EASY ROUNDS, ONE DRAGON AT A TIME
@@ -165,103 +201,16 @@ block body
             )
             p.quote "The dragon illustrations are adorable. I can't pick a favorite" - Maria D.
 
-        #mid-cta.full-width.mobile-full-content
-            h3.title BE AMONG THE FIRST & CLAIM THE MINI EXPANSION
-            img.image(
-                src='@public/imgs/mini_expnasion_pack_new_1_modified.webp',
-                alt='mini expansion pack',
-                loading='lazy',
-                width='600',
-                height='600'
-            )
-
-            .horizontal-divider.on-dark
-                div
-
-            .cta
-                p Sign up to be the first to know when we launch, plus
-                    |
-                    |
-                    span.exclusive-offer get the mini expansion at a special price
-                    |
-                    | if you reserve your copy.
-                form.cta-form
-                    input(
-                        type='email',
-                        name='email',
-                        placeholder='Enter your email',
-                        autocomplete='email',
-                        required
-                    )
-                    input.form_name(type='text', name='name', autocomplete='off')
-                    //- label.checkbox-container
-                    //-     input(type='checkbox', name='newsletter_consent', required)
-                    //-     span I agree to receive the newsletter
-                    button(type='submit') DON'T MISS THE EXCLUSIVE OFFER
-
-        #how-to-play.section.full-width.mobile-full-content
-            h3.title HOW TO PLAY
-            p.description
-                b Draw Your Dragons
-                | : Each player starts with a hand of elemental dragons, each with unique powers.
-            img.image(
-                src='@public/imgs/hand_with_cards.webp',
-                alt='group playing',
-                loading='lazy',
-                width='919',
-                height='741'
-            )
-
-            p.description
-                b Play to the Arena
-                | : Play your cards in turns, outplay your friends with the power of elements, and be the one to play the last card to win the round.
-            img.image(
-                src='@public/imgs/hand_playing_card_drawing.webp',
-                alt='group playing',
-                loading='lazy',
-                width='1154',
-                height='725'
-            )
-
-            p.description
-                b Claim Your Victory
-                | : Win Dragon Eggs each round. First to collect 7 eggs, becomes the Tricky Dragon Master.
-            img.image(
-                src='@public/imgs/trophy.webp',
-                alt='group playing',
-                loading='lazy',
-                width='533',
-                height='736'
-            )
-
-        .horizontal-divider.on-light
-            div
-
         #quick-facts.section.full-width.mobile-full-content
             h3.title QUICK FACTS
 
-            #infografic
-                img(
-                    src='@public/imgs/info_age.webp',
-                    alt='info age',
-                    loading='lazy',
-                    width='297',
-                    height='297'
-                )
-                img(
-                    src='@public/imgs/info_time.webp',
-                    alt='info time',
-                    loading='lazy',
-                    width='297',
-                    height='297'
-                )
-                img(
-                    src='@public/imgs/info_players.webp',
-                    alt='info players',
-                    loading='lazy',
-                    width='297',
-                    height='297'
-                )
+            img#people_image.image(
+                src='@public/imgs/landingpage/people_image.webp',
+                alt='people image',
+                loading='lazy',
+                width='500',
+                height='500'
+            )
 
             ul.description
                 li
@@ -270,7 +219,7 @@ block body
                     |
                     b Just One Round!
                 li
-                    b 100+ Unique Effects
+                    b 90+ Unique Effects
                     |
                     | for endeless combos!
                 li
@@ -286,27 +235,39 @@ block body
 
         p.quote.custom-quote “Every time a dragon effect was played, I felt an incredible thrill” - Louise F.
 
-        #last-cta.cta.full-width.mobile-full-content
-            h3.title JOIN 1500+ SUPPORTERS
-            p.description Sign up to be the first to know when we launch and receive
-                |
-                |
-                span.exclusive-offer an exclusive mini expansion offer
-                |
-                | for our backers.
-            form.cta-form
-                input(
-                    type='email',
-                    name='email',
-                    placeholder='Enter your email',
-                    autocomplete='email',
-                    required
-                )
-                input.form_name(type='text', name='name', autocomplete='off')
-                //- label.checkbox-container
-                //-     input(type='checkbox', name='newsletter_consent', required)
-                //-     span I agree to receive the newsletter
-                button(type='submit') RESERVE YOUR DRAGON
+        #final-cta.full-width.mobile-full-content
+            h3.title BE AMONG THE FIRST & CLAIM THE MINI EXPANSION
+            img.image(
+                src='@public/imgs/mini_expnasion_pack_new_1_modified.webp',
+                alt='mini expansion pack',
+                loading='lazy',
+                width='600',
+                height='600'
+            )
+
+            .horizontal-divider.on-dark
+                div
+
+            .cta
+                p Sign up for game updates, plus
+                    |
+                    |
+                    span.exclusive-offer get the mini expansion offer
+                    |
+                    | if you reserve spot in line.
+                form.cta-form
+                    input(
+                        type='email',
+                        name='email',
+                        placeholder='Enter your email',
+                        autocomplete='email',
+                        required
+                    )
+                    input.form_name(type='text', name='name', autocomplete='off')
+                    //- label.checkbox-container
+                    //-     input(type='checkbox', name='newsletter_consent', required)
+                    //-     span I agree to receive the newsletter
+                    button(type='submit') CLAIM YOUR BONUS DRAGONS
 
             .footer-layout
                 span A game by Daniele D'Ambrosio

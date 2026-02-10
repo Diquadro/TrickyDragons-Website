@@ -134,7 +134,7 @@
         grid-template-columns: 1fr 1fr;
         grid-template-areas:
             'title title '
-            'infografic description';
+            'people_image description';
         grid-auto-flow: column;
         column-gap: $gap-grid * 2;
         row-gap: $gap-grid;
@@ -144,8 +144,8 @@
             place-self: center;
         }
 
-        > #infografic {
-            grid-area: infografic;
+        > #people_image {
+            grid-area: people_image;
             place-self: center;
         }
 
@@ -156,7 +156,7 @@
     }
 }
 
-#mid-cta {
+#final-cta {
     > .horizontal-divider {
         @include desktop {
             display: none;
@@ -166,7 +166,8 @@
     @include desktop {
         grid-template-areas:
             '. image . title .'
-            '. image . cta .';
+            '. image . cta .'
+            'footer footer footer footer footer';
         row-gap: $gap-grid;
 
         > .title {
@@ -183,37 +184,14 @@
         > .image {
             grid-area: image;
         }
-    }
-}
-
-#last-cta {
-    @include desktop {
-        display: grid;
-        grid-template-columns: inherit;
-        grid-template-areas:
-            '. title . form .'
-            '. description . form .'
-            'footer footer footer footer footer';
-        row-gap: $gap-grid;
-
-        > h3 {
-            grid-area: title;
-            align-self: flex-end;
-        }
-
-        > p {
-            grid-area: description;
-        }
-
-        > form {
-            grid-area: form;
-        }
 
         > .footer-layout {
             grid-area: footer;
         }
     }
 }
+
+// #last-cta removed and merged into #final-cta
 
 .footer-layout {
     @include desktop {

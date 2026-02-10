@@ -1,5 +1,6 @@
 @use '@client/styles/style-costants' as *;
 @use './landingpage.display.scss';
+@use './ld_cmp/ld_section_001/ld_section_001.scss';
 
 #page-container {
     background-color: $color-white;
@@ -481,7 +482,7 @@ p.quote.custom-quote {
     }
 }
 
-#infografic-container {
+#infographic-container {
     margin-top: $gap-grid * 1.5;
     margin-bottom: $gap-grid;
 
@@ -498,7 +499,7 @@ p.quote.custom-quote {
     }
 }
 
-#infografic {
+#infographic {
     display: flex;
     justify-content: space-between;
 
@@ -522,10 +523,14 @@ p.quote.custom-quote {
             text-align: left;
         }
     }
+
+    @include desktop {
+        row-gap: $gap-grid * 2;
+    }
 }
 
-#mid-cta {
-    margin: $gap-grid * 1.5 0;
+#final-cta {
+    margin: $gap-grid * 1.5 0 0;
     background-image: url('@public/imgs/lulu_pattern.webp');
     background-position: center center;
     background-color: $color-black;
@@ -535,7 +540,7 @@ p.quote.custom-quote {
         background-size: 66%;
 
         > img {
-            margin-top: calc($gap-grid / 2);
+            margin: $gap-grid 0 $gap-grid * 0.5;
         }
     }
 
@@ -637,121 +642,7 @@ p.quote.custom-quote {
     }
 }
 
-#last-cta {
-    margin-bottom: 0;
-    background-image: url('@public/imgs/lulu_pattern.webp');
-    background-position: center center;
-
-    background-color: $color-black;
-    padding: $gap-grid * 2 0 $gap-grid;
-
-    @include mobile {
-        margin-top: $gap-grid * 1.5;
-        background-size: 66%;
-
-        > img {
-            margin-top: calc($gap-grid / 2);
-        }
-    }
-
-    @include desktop {
-        margin-top: $gap-grid * 1.5;
-        background-size: 25%;
-    }
-
-    > .title {
-        color: $color-white;
-        font-weight: $font-weight-black;
-        font-size: var(--font-size-xxl);
-        text-align: center;
-    }
-
-    > .cta {
-        background-image: none;
-        background-color: transparent;
-
-        padding: 0;
-
-        > p > span.exclusive-offer {
-            color: $color-yellow;
-            // font-weight: $font-weight-bold;
-        }
-
-        > form > button[type='submit'] {
-            animation:
-                pulse-color-yellow 4s ease-in-out infinite,
-                click-pattern-yellow 8s ease-in-out infinite;
-            box-shadow: 0 8px $color-yellow-darkest;
-            background-color: $color-yellow;
-
-            &:active {
-                box-shadow: 0 3px $color-yellow-darkest;
-            }
-
-            @keyframes pulse-color-yellow {
-                0%,
-                100% {
-                    background-color: $color-yellow;
-                }
-
-                50% {
-                    background-color: $color-yellow-dark;
-                }
-            }
-
-            @keyframes click-pattern-yellow {
-                /* Pausa iniziale: 0-2s */
-                0%,
-                25% {
-                    transform: translateY(0);
-                    box-shadow: 0 8px $color-yellow-darkest;
-                }
-
-                /* Primo click: 2-2.1s */
-                26%,
-                27% {
-                    transform: translateY(2px);
-                    box-shadow: 0 6px $color-yellow-darkest;
-                }
-
-                /* Pausa breve: 2.1-2.3s */
-                28%,
-                29% {
-                    transform: translateY(0);
-                    box-shadow: 0 8px $color-yellow-darkest;
-                }
-
-                /* Secondo click: 2.3-2.4s */
-                30%,
-                31% {
-                    transform: translateY(2px);
-                    box-shadow: 0 6px $color-yellow-darkest;
-                }
-
-                /* Pausa media: 2.4-4.8s */
-                32%,
-                60% {
-                    transform: translateY(0);
-                    box-shadow: 0 8px $color-yellow-darkest;
-                }
-
-                /* Singolo click: 4.8-4.9s */
-                61%,
-                62% {
-                    transform: translateY(2px);
-                    box-shadow: 0 6px $color-yellow-darkest;
-                }
-
-                /* Pausa finale: 4.9-8s */
-                63%,
-                100% {
-                    transform: translateY(0);
-                    box-shadow: 0 8px $color-yellow-darkest;
-                }
-            }
-        }
-    }
-}
+// #last-cta removed and merged into #final-cta
 
 .footer-layout {
     display: flex;
