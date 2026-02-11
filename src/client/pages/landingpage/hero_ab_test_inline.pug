@@ -9,8 +9,8 @@ script(nonce='posthog-ab-test').
         hero_red_box: 'ab_hero_red_box',
     }
 
-    // Default variant (red box)
-    const DEFAULT_VARIANT = 'ab_hero_red_box'
+    // Default variant (blue box)
+    const DEFAULT_VARIANT = 'ab_hero_blue_box'
 
     /**
      * Get variant from URL query parameter
@@ -59,13 +59,13 @@ script(nonce='posthog-ab-test').
 
     /**
      * Apply CSS class to show the correct variant
-     * Blue box requires class, red box is default (no class needed)
+     * Red box requires class, blue box is default (no class needed)
      */
     function apply_variant_class(variant) {
-        if (variant === 'ab_hero_blue_box') {
-            document.documentElement.classList.add('ab-hero-blue-box')
+        if (variant === 'ab_hero_red_box') {
+            document.documentElement.classList.add('ab-hero-red-box')
         }
-        // Red box doesn't need a class (it's the default)
+        // Blue box doesn't need a class (it's the default)
     }
 
     /**

@@ -4,20 +4,20 @@ block head
     //- Preload both hero images (A/B test variants)
     link(
         rel='preload',
-        href='@public/imgs/landingpage/kickstarter_box_7_100.webp',
-        as='image',
-        type='image/webp',
-        crossorigin='anonymous',
-        fetchpriority='high'
-    )
-    link(
-        rel='preload',
         href='@public/imgs/landingpage/base_box_1_100.webp',
         as='image',
         type='image/webp',
         crossorigin='anonymous',
         fetchpriority='high'
     )
+    //- link(
+    //-     rel='preload',
+    //-     href='@public/imgs/landingpage/kickstarter_box_7_100.webp',
+    //-     as='image',
+    //-     type='image/webp',
+    //-     crossorigin='anonymous',
+    //-     fetchpriority='high'
+    //- )
 
     //- Prefetch next critical images
     link(rel='prefetch', href='@public/imgs/3_dragons.webp', as='image', type='image/webp')
