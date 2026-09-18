@@ -155,6 +155,7 @@ async function create_contact_from_session(
         subscriptions: [], // Empty subscriptions array
         first_name: customer_details?.name?.split(' ')[0] || null,
         last_name: customer_details?.name?.split(' ').slice(1).join(' ') || null,
+        source: 'website',
     }
 
     const contacts = await sql.insert<Contacts[]>('contacts', [contact_data])

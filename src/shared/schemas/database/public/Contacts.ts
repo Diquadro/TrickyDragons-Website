@@ -48,6 +48,9 @@ export default interface Contacts {
 
   /** Last name of the contact, typically collected during checkout or registration */
   last_name: string | null;
+
+  /** Origin of the contact record: website (organic signup/purchase flow) or migration (bulk-imported from external campaigns). */
+  source: string;
 }
 
 /**
@@ -96,6 +99,9 @@ export interface ContactsInitializer {
 
   /** Last name of the contact, typically collected during checkout or registration */
   last_name?: string | null;
+
+  /** Origin of the contact record: website (organic signup/purchase flow) or migration (bulk-imported from external campaigns). */
+  source: string;
 }
 
 /**
@@ -138,6 +144,9 @@ export interface ContactsMutator {
 
   /** Last name of the contact, typically collected during checkout or registration */
   last_name?: string | null;
+
+  /** Origin of the contact record: website (organic signup/purchase flow) or migration (bulk-imported from external campaigns). */
+  source?: string;
 }
 
 export const contactsUuid = z.string() as unknown as z.Schema<ContactsUuid>;
@@ -155,6 +164,7 @@ export const contacts = z.object({
   auto_serial: z.number(),
   first_name: z.string().nullable(),
   last_name: z.string().nullable(),
+  source: z.string(),
 }) as unknown as z.Schema<Contacts>;
 
 export const contactsInitializer = z.object({
@@ -170,6 +180,7 @@ export const contactsInitializer = z.object({
   auto_serial: z.number().optional(),
   first_name: z.string().optional().nullable(),
   last_name: z.string().optional().nullable(),
+  source: z.string(),
 }) as unknown as z.Schema<ContactsInitializer>;
 
 export const contactsMutator = z.object({
@@ -185,4 +196,5 @@ export const contactsMutator = z.object({
   auto_serial: z.number().optional(),
   first_name: z.string().optional().nullable(),
   last_name: z.string().optional().nullable(),
+  source: z.string().optional(),
 }) as unknown as z.Schema<ContactsMutator>;

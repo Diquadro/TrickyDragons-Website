@@ -84,10 +84,13 @@ async function get_eligible_contacts(): Promise<Contacts[]> {
 
     const contacts = await sql<Contacts[]>`
         SELECT c.* FROM contacts c
-        WHERE 
+        WHERE
             -- Must be subscribed to newsletter
             c.subscriptions @> ARRAY[${ContactSubscriptions.newsletter}]::contact_subscriptions[]
-            
+
+            -- Must be a website-originated contact (exclude bulk-imported/migrated contacts)
+            AND c.source = 'website'
+
             -- Must HAVE reservation (exists in paid orders for "Tricky Dragons Reservation")
             AND c.uuid IN (
                 SELECT DISTINCT contact_uuid 

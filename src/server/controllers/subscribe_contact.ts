@@ -90,6 +90,7 @@ async function create_contact(email: string, subscription: ContactSubscriptions)
         email,
         status: ContactStatus.lead,
         subscriptions: [subscription],
+        source: 'website',
     }
 
     const new_contacts = await sql.insert<Contacts[]>('contacts', [new_contact])
