@@ -7,7 +7,7 @@ import { redirect_payload_schema } from '@shared/validations/redirect.validation
 import { EMAIL_TEMPLATES, EMAIL_SENDERS } from '@shared/constants/emails.constants'
 
 export const send_welcome_vip_1_email = async (contact_email: string, first_name?: string) => {
-    const from = EMAIL_SENDERS.DANIELE_DAMBROSIO_INFO
+    const from = EMAIL_SENDERS.INFO
     const to = contact_email
     const subject = 'Thank you and welcome to our VIP Community!'
     const html_template_path = ENV.LOCAL
