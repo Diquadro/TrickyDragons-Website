@@ -2,7 +2,7 @@ import { send_html_email } from '@server/services/send_html_email'
 import path from 'path'
 import { Base64_Url } from '@shared/utils/base64_url'
 import { LINKS } from '@shared/constants/links.constants'
-import { API, ENV } from '@shared/constants/app.constants'
+import { API } from '@shared/constants/app.constants'
 import { redirect_payload_schema } from '@shared/validations/redirect.validation'
 import { EMAIL_TEMPLATES, EMAIL_SENDERS } from '@shared/constants/emails.constants'
 
@@ -10,9 +10,10 @@ export const send_pre_launch_vip_1_email = async (contact_email: string) => {
     const from = EMAIL_SENDERS.INFO
     const to = contact_email
     const subject = 'It’s coming! Kickstarter Launch Date Confirmed! 😱'
-    const html_template_path = ENV.LOCAL
-        ? path.resolve(__dirname, 'pre_launch_vip_1.html')
-        : path.resolve(__dirname, '..', 'shared/templates/emails/pre_launch_vip_1', 'pre_launch_vip_1.html')
+    // Always resolved next to this file - unlike the welcome_* senders, this one is only ever
+    // run via tsx directly (src/server/scripts/send_pre_launch_emails.ts), never through the
+    // esbuild-bundled server, so there's no separate "bundled" path to branch on.
+    const html_template_path = path.resolve(__dirname, 'pre_launch_vip_1.html')
 
     const unsubscribe_payload = redirect_payload_schema.parse({
         redirect_url: `${LINKS.INTERNAL.NEWSLETTER.UNSUBSCRIBE}?utm_source=email&utm_campaign=${EMAIL_TEMPLATES.PRE_LAUNCH_VIP_1}&utm_medium=unsubscribe_link`,
