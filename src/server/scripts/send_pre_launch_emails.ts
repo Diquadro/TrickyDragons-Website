@@ -31,6 +31,8 @@ import ContactSubscriptions from '@shared/schemas/database/public/ContactSubscri
  * Usage:
  *   npx tsx src/server/scripts/send_pre_launch_emails.ts non_vip [--dry-run] [--delay-ms=100]
  *   npx tsx src/server/scripts/send_pre_launch_emails.ts vip [--dry-run] [--delay-ms=100]
+ *   npx tsx src/server/scripts/send_pre_launch_emails.ts vip [--dry-run] --delay-ms=30000
+ *
  *
  * --delay-ms controls the pause between sends (default 100ms = ~10 emails/sec).
  * On a transient send failure, the contact is retried a couple of times with backoff
@@ -43,6 +45,10 @@ type SqlClient = typeof import('@server/models/postgres_client').sql
 
 const MAX_RETRIES = 2
 const RETRY_BACKOFF_MS = 3000
+
+// Exact `source` value used by the one-off CSV import for this campaign
+// (src/server/scripts/import_contacts.ts) - not the generic 'migration' string.
+const MIGRATION_SOURCE = '2026_09_18_Migration'
 
 async function main() {
     // Loaded lazily (after dotenv.config() above) so that every env-var-sensitive module
@@ -64,17 +70,23 @@ async function main() {
             status: ContactStatus
             template: string
             send_email: (contact_email: string) => Promise<unknown>
+            order: 'ASC' | 'DESC'
+            require_authentic_subscribe: boolean
         }
     > = {
         non_vip: {
             status: ContactStatus.lead,
             template: EMAIL_TEMPLATES.PRE_LAUNCH_NON_VIP_1,
             send_email: send_pre_launch_non_vip_1_email,
+            order: 'DESC',
+            require_authentic_subscribe: true,
         },
         vip: {
             status: ContactStatus.prospect,
             template: EMAIL_TEMPLATES.PRE_LAUNCH_VIP_1,
             send_email: send_pre_launch_vip_1_email,
+            order: 'DESC',
+            require_authentic_subscribe: false,
         },
     }
 
@@ -97,7 +109,13 @@ async function main() {
         }
 
         const config = segment_config[segment_arg]
-        const eligible_contacts = await get_eligible_contacts(sql, config.status, config.template)
+        const eligible_contacts = await get_eligible_contacts(
+            sql,
+            config.status,
+            config.template,
+            config.order,
+            config.require_authentic_subscribe,
+        )
 
         console.log(
             `📧 Found ${eligible_contacts.length} contacts eligible for ${config.template} (segment: ${segment_arg}, delay: ${delay_ms}ms)`,
@@ -160,23 +178,48 @@ async function send_with_retry(send: () => Promise<unknown>, contact_email: stri
  * - Subscribed to newsletter
  * - Matching status for the segment (lead for non-vip, prospect for vip)
  * - Haven't already received this template
+ * - If `require_authentic_subscribe`: either bulk-imported (already vetted) or backed by a
+ *   real subscribe_contact action with a utm_source (came from a tracked ad/link, not a
+ *   direct bot hit on the API).
  *
- * No `source` filter and no creation-date cutoff on purpose: unlike the welcome-email
- * crons, this is a one-off send meant to reach everyone eligible right now, including
- * contacts bulk-imported from external campaigns.
+ * No creation-date cutoff on purpose: unlike the welcome-email crons, this is a one-off
+ * send meant to reach everyone eligible right now.
  */
 async function get_eligible_contacts(
     sql: SqlClient,
     status: ContactStatus,
     template: string,
+    order: 'ASC' | 'DESC',
+    require_authentic_subscribe: boolean,
 ): Promise<Contacts[]> {
+    // Both fragments below only ever come from our own segment_config (never user input),
+    // so it's safe to interpolate directly - sql`` would otherwise quote them as string
+    // literals, which isn't valid inside ORDER BY / as a bare boolean condition.
+    const order_clause = order === 'DESC' ? sql`created_date DESC` : sql`created_date ASC`
+
+    const authenticity_clause = require_authentic_subscribe
+        ? sql`
+            AND (
+                source = ${MIGRATION_SOURCE}
+                OR EXISTS (
+                    SELECT 1 FROM actions a
+                    WHERE a.contact_uuid = contacts.uuid
+                      AND a.action LIKE '%subscribe_contact'
+                      AND a.action NOT LIKE '%unsubscribe%'
+                      AND a.utm_source IS NOT NULL
+                )
+            )
+        `
+        : sql``
+
     const contacts = await sql<Contacts[]>`
         SELECT * FROM contacts
         WHERE
             subscriptions @> ARRAY[${ContactSubscriptions.newsletter}]::contact_subscriptions[]
             AND status = ${status}
             AND NOT (COALESCE(sent_emails, ARRAY[]::text[]) @> ARRAY[${template}]::text[])
-        ORDER BY created_date ASC
+            ${authenticity_clause}
+        ORDER BY ${order_clause}
     `
 
     return contacts

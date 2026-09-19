@@ -35,6 +35,9 @@ export const EMAIL_TRANSPORTERS: Record<string, Transporter> = {
             user: process.env.SMTP2GO_USERNAME_PROD,
             pass: process.env.SMTP2GO_PASSWORD_PROD,
         },
+        pool: true,
+        maxConnections: 5,
+        maxMessages: 5000,
     }),
     smtp2go_transporter_prod_sandbox: nodemailer.createTransport({
         host: 'mail.smtp2go.com',
@@ -44,6 +47,9 @@ export const EMAIL_TRANSPORTERS: Record<string, Transporter> = {
             user: process.env.SMTP2GO_USERNAME_PROD_SANDBOX,
             pass: process.env.SMTP2GO_PASSWORD_PROD_SANDBOX,
         },
+        pool: true,
+        maxConnections: 5,
+        maxMessages: 5000,
     }),
 }
 
