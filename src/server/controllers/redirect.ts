@@ -19,7 +19,9 @@ export async function redirect(req: Request, res: Response) {
 
     // 2. Perform redirect first (fail-fast for user experience)
     if (payload.keep_data64) {
-        res.redirect(302, `${payload.redirect_url}?data64=${req.query.data64}`)
+        const redirect_url = new URL(payload.redirect_url)
+        redirect_url.searchParams.set('data64', req.query.data64 as string)
+        res.redirect(302, redirect_url.toString())
     } else {
         res.redirect(302, payload.redirect_url)
     }
