@@ -31,7 +31,7 @@ import ContactSubscriptions from '@shared/schemas/database/public/ContactSubscri
  * Usage:
  *   npx tsx src/server/scripts/send_pre_launch_emails.ts non_vip [--dry-run] [--delay-ms=100]
  *   npx tsx src/server/scripts/send_pre_launch_emails.ts vip [--dry-run] [--delay-ms=100]
- *   npx tsx src/server/scripts/send_pre_launch_emails.ts vip [--dry-run] --delay-ms=30000
+ *   npx tsx src/server/scripts/send_pre_launch_emails.ts vip [--dry-run] --delay-ms=20000
  *
  *
  * --delay-ms controls the pause between sends (default 100ms = ~10 emails/sec).
