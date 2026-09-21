@@ -10,6 +10,8 @@ export const EMAIL_TEMPLATES = {
     WELCOME_VIP_2: 'v1_welcome_vip_2',
     PRE_LAUNCH_NON_VIP_1: 'v1_pre_launch_non_vip_1',
     PRE_LAUNCH_VIP_1: 'v1_pre_launch_vip_1',
+    PRE_LAUNCH_NON_VIP_2: 'v1_pre_launch_non_vip_2',
+    PRE_LAUNCH_VIP_2: 'v1_pre_launch_vip_2',
 }
 
 export const EMAIL_SENDERS = {
