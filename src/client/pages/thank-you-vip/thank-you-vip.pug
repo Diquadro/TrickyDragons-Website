@@ -3,6 +3,8 @@ extends @client/layouts/layout_common/layout_common.pug
 include @client/components/redirect_link/redirect_link.pug
 
 block head
+    include @client/components/kickstarter_redirect/kickstarter_redirect.pug
+
     link(
         rel='preload',
         href='@public/imgs/thank-you-card.webp',

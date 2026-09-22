@@ -1,6 +1,8 @@
 extends @client/layouts/layout_common/layout_common.pug
 
 block head
+    include @client/components/kickstarter_redirect/kickstarter_redirect.pug
+
     link(
         rel='preload',
         href='@public/imgs/mini_expnasion_pack_new_1_modified.webp',
