@@ -9,7 +9,7 @@ import { EMAIL_TEMPLATES, EMAIL_SENDERS } from '@shared/constants/emails.constan
 export const send_launch_all_3_email = async (contact_email: string) => {
     const from = EMAIL_SENDERS.INFO
     const to = contact_email
-    const subject = 'We raised $13,193 in 24 hours 🤯'
+    const subject = '$13.193 in ONLY 24 HOURS! 🔥🔥🔥'
     // Always resolved next to this file - only ever run via tsx directly
     // (src/server/scripts/send_launch_all_3_email.ts), never through the esbuild-bundled server.
     const html_template_path = path.resolve(__dirname, 'launch_all_3.html')
