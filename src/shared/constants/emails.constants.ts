@@ -15,6 +15,7 @@ export const EMAIL_TEMPLATES = {
     LAUNCH_ALL_1: 'v1_launch_all_1',
     LAUNCH_ALL_2: 'v1_launch_all_2',
     LAUNCH_ALL_3: 'v1_launch_all_3',
+    LAUNCH_ALL_4: 'v1_launch_all_4',
 }
 
 export const EMAIL_SENDERS = {
