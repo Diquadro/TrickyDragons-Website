@@ -19,6 +19,7 @@ export const EMAIL_TEMPLATES = {
     LAUNCH_ALL_DAY_7: 'v1_launch_all_day_7',
     LAUNCH_ALL_LAST_3_DAYS: 'v1_launch_all_last_3_days',
     LAUNCH_ALL_LAST_DAYS_001: 'v1_launch_all_last_days_001',
+    LAUNCH_ALL_LAST_DAYS_002: 'v1_launch_all_last_days_002',
 }
 
 export const EMAIL_SENDERS = {
